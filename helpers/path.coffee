@@ -24,7 +24,8 @@ module.exports =
 		path[path.length-1] is '/'
 
 	removeLocPartial: (locPaths, partial) ->
-		paths = {}
+		paths   = {}
+		partial = @format partial
 		partial += '/' if not @hasTrailingSlash partial
 		for own k, v of locPaths
 			paths[k] = []
