@@ -2,9 +2,6 @@
 
 **Under Development (not for use yet)**
 
-Rapid build system utilizing Node.js,
-Express and AngularJS.
-
 ## Installation
 ```bash
 $ npm install rapid-build
