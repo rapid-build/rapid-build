@@ -1,0 +1,57 @@
+# prep options
+# ============
+module.exports = (config, options) ->
+	log    = require "#{config.req.helpers}/log"
+	isType = require "#{config.req.helpers}/isType"
+
+	# options
+	# =======
+	formatOptions = ->
+		['dist', 'src'].forEach (v1) ->
+			options[v1] = {} if not isType.object options[v1]
+			options[v1].dir = null if not isType.string options[v1].dir
+			['client', 'server'].forEach (v2) ->
+				# dir
+				options[v1][v2] = {} if not isType.object options[v1][v2]
+				options[v1][v2].dir = null if not isType.string options[v1][v2].dir
+				return if v2 is 'server'
+				# types dir
+				['images', 'libs', 'scripts', 'styles', 'views'].forEach (v3) ->
+					options[v1][v2][v3] = {} if not isType.object options[v1][v2][v3]
+					options[v1][v2][v3].dir = null if not isType.string options[v1][v2][v3].dir
+				# spa dist file
+				if v1 is 'dist'
+					options[v1][v2].spa = {} if not isType.object options[v1][v2].spa
+					options[v1][v2].spa.file = null if not isType.string options[v1][v2].spa.file
+
+	formatServerOptions	= -> # app server dist entry file
+		options.dist.server.file = null if not isType.string options.dist.server.file
+
+	formatPortOptions = -> # server ports
+		options.ports = {} if not isType.object options.ports
+		options.ports.server = null if not isType.number options.ports.server
+		options.ports.reload = null if not isType.number options.ports.reload
+
+	formatOrderOptions = ->
+		options.order = {} if not isType.object options.order
+		options.order.scripts = {} if not isType.object options.order.scripts
+		options.order.styles  = {} if not isType.object options.order.styles
+		options.order.scripts.first = null if not isType.array options.order.scripts.first
+		options.order.scripts.last  = null if not isType.array options.order.scripts.last
+		options.order.styles.first  = null if not isType.array options.order.styles.first
+		options.order.styles.last   = null if not isType.array options.order.styles.last
+
+	formatOptions()
+	formatServerOptions()
+	formatPortOptions()
+	formatOrderOptions()
+
+	# logs
+	# ====
+	# log.json options, 'options ='
+
+	# return
+	# ======
+	options
+
+
