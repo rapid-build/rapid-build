@@ -14,7 +14,7 @@ rapid-build depends on [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/
 This will get you started:
 
 ```javascript
-var config = {} // config documentation coming soon
+var config = {} // optional config, documentation coming soon
 var rapid = require('rapid-build')(config) // init to pass in config options
 
 // rapid returns a promise and has 1 optional param 'dev' or 'prod'
@@ -26,7 +26,7 @@ OR
 
 ```javascript
 // if you are running gulp there are 3 available tasks
-var config = {} // config documentation coming soon
+var config = {} // optional config, documentation coming soon
 require('rapid-build')(config)
 gulp 'rapid-build'
 gulp 'rapid-build:dev'
