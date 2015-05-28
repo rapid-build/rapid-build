@@ -1,14 +1,11 @@
 # rapid sequence
 # ==============
-module.exports = (options={}) ->
+module.exports = (gulp, options={}) ->
 	# try to load gulp from app's node_modules directory
-	# if it isn't there, load it from rapid-build's node_modules
-	# ==========================================================
-	try
-		gulp = require '../gulp'
-	catch e
-		gulp = require 'gulp'
+	# if gulp isn't supplied, load it from rapid-build's node_modules
+	# ===============================================================
 	rbDir     = __dirname
+	gulp      = require 'gulp' if not gulp
 	bootstrap = require("#{rbDir}/bootstrap")()
 	config    = require("#{rbDir}/config") rbDir, options
 	tasks     = require("#{config.req.init}/tasks") gulp, config
