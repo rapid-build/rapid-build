@@ -26,11 +26,13 @@ OR
 
 ```javascript
 // if you are running gulp there are 3 available tasks
+// first require rapid-build in your gulpfile.js
 var config = {} // optional config, documentation coming soon
 require('rapid-build')(config)
-gulp 'rapid-build'
-gulp 'rapid-build:dev'
-gulp 'rapid-build:prod'
+// then from the terminal type one of the 3:
+gulp rapid-build
+gulp rapid-build:dev
+gulp rapid-build:prod
 ```
 #### Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg)
