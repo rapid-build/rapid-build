@@ -17,7 +17,7 @@ This will get you started:
 var config = {} // config documentation coming soon
 var rapid = require('rapid-build')(config) // init to pass in config options
 
-// rapid returns a promise and has 2 available params 'dev' and 'prod'
+// rapid returns a promise and has 1 optional param 'dev' or 'prod'
 rapid().then(function() {
 	console.log('whatever you want')
 })
