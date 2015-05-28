@@ -25,11 +25,19 @@ rapid().then(function() {
 OR
 
 ```javascript
-// if you are running gulp there are 3 available tasks
-// first require rapid-build in your gulpfile.js
+/**
+ * if you are using gulp
+ * in your gulpfile.js (there are 3 available tasks)
+ * first require rapid-build and provide it gulp
+ */
+var gulp = require('gulp')
 var config = {} // optional config, documentation coming soon
-require('rapid-build')(config)
-// then from the terminal type one of the 3:
+require('rapid-build')(gulp, config)
+
+// as a gulp task dependency
+gulp.task('default', ['rapid-build'])
+
+// or from the terminal type one of the 3:
 gulp rapid-build
 gulp rapid-build:dev
 gulp rapid-build:prod
