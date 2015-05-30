@@ -29,4 +29,3 @@
 
 * **readme:** remove duplicate description ([c9b11f7c](https://github.com/jyounce/rapid-build/commit/c9b11f7c))
 
-
