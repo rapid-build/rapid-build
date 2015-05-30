@@ -1,4 +1,3 @@
-<a name"0.1.4"></a>
 ### 0.1.4 (2015-05-29)
 
 
@@ -7,7 +6,6 @@
 * **gulp:** make gulp a dep if app is using gulp ([4184bf41](git://github.com/jyounce/rapid-build.git/commit/4184bf41))
 
 
-<a name"0.1.3"></a>
 ### 0.1.3 (2015-05-29)
 
 
@@ -16,7 +14,6 @@
 * **gulp:** load gulp from app's node_modules if present ([91cd0adc](git://github.com/jyounce/rapid-build.git/commit/91cd0adc))
 
 
-<a name"0.1.2"></a>
 ### 0.1.2 (2015-05-29)
 
 
