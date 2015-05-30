@@ -10,7 +10,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/jyounce/rapid-build.git"
+		"url": "https://github.com/jyounce/rapid-build"
 	},
 	"bugs": {
 		"url": "https://github.com/jyounce/rapid-build/issues"

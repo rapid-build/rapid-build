@@ -17,8 +17,9 @@ runChangelog = ->
 		repository: pkg.repository.url
 		version:    pkg.version
 		file:       file.changelog
-		# from:       'de5328d16019e214208f280105cddc75726dc3c0'
+		# version:    '0.1.4'
 		# to:         '8fa1737ecb4d4bce2d4f6d09408aace851cab6fd'
+		# from:       'de5328d16019e214208f280105cddc75726dc3c0'
 	changelog opts, (e, log) ->
 		fs.writeFile file.changelog, log, (e) ->
 			console.log 'Here is your changelog!', log
