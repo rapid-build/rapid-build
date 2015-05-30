@@ -1,3 +1,11 @@
+## 0.2.0 (2015-05-29)
+
+
+#### Features
+
+* **changelog:** add it ([52058a02](https://github.com/jyounce/rapid-build/commit/52058a02))
+
+
 ### 0.1.4 (2015-05-28)
 
 
