@@ -1,22 +1,20 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
-	fs          = require 'fs'
-	path        = require 'path'
 	bower       = require 'bower'
 	bowerHelper = require("#{config.req.helpers}/bower") config
-	bowerPkgs   = bowerHelper.get.pkgs.to.install()
 
-	gulp.task "#{config.rb.prefix.task}bower", ->
-		defer = q.defer()
+	runTask = (appOrRb) ->
+		defer     = q.defer()
+		bowerPkgs = bowerHelper.get.pkgs.to.install appOrRb
 
-		return if not bowerPkgs.length
+		return if not bowerPkgs or not bowerPkgs.length
 			defer.resolve()
 			defer.promise
 
 		bower.commands.install bowerPkgs, force: true,
 			directory: ''
 			forceLatest: true
-			cwd: config.src.rb.client.libs.dir
+			cwd: config.src[appOrRb].client.libs.dir
 		.on 'log', (result) ->
 			console.log "bower: #{result.id.cyan} #{result.message.cyan}"
 		.on 'error', (e) ->
@@ -26,3 +24,14 @@ module.exports = (gulp, config) ->
 			defer.resolve()
 
 		defer.promise
+
+	runTasks = ->
+		defer = q.defer()
+		q.all([
+			runTask 'rb'
+			runTask 'app'
+		]).done -> defer.resolve()
+		defer.promise
+
+	gulp.task "#{config.rb.prefix.task}bower", ->
+		runTasks()

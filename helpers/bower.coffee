@@ -1,17 +1,19 @@
 # API
-# bowerHelper.has.installed.pkg 'angular'
-# bowerHelper.get.json.from.rb()
-# bowerHelper.get.json.from.pkg 'angular'
-# bowerHelper.get.pkgs.from.rb()
-# bowerHelper.get.pkgs.to.install()
-# bowerHelper.get.pkgs.to.install true
-# bowerHelper.get.installed.pkgs()
-# bowerHelper.get.installed.pkg 'angular'
-# bowerHelper.get.missing.pkgs()
+# bowerHelper.has.installed.pkg 'angular', appOrRb
+# bowerHelper.get.json.from.appOrRb appOrRb
+# bowerHelper.get.json.from.pkg 'angular', appOrRb
+# bowerHelper.get.pkgs.from.appOrRb appOrRb
+# bowerHelper.get.pkgs.to.install appOrRb
+# bowerHelper.get.pkgs.to.install appOrRb, true
+# bowerHelper.get.installed.pkgs appOrRb
+# bowerHelper.get.installed.pkg 'angular', appOrRb
+# bowerHelper.get.missing.pkgs appOrRb
+# bowerHelper.get.src.pkgs appOrRb
 # =======================================
 module.exports = (config) ->
 	fs   = require 'fs'
 	path = require 'path'
+	log  = require "#{config.req.helpers}/log"
 
 	# helpers
 	# =======
@@ -22,9 +24,9 @@ module.exports = (config) ->
 			catch e
 				false
 
-		getPath: (pkgName, file) ->
+		getPath: (pkgName, file, loc='rb') ->
 			path.join(
-				config.src.rb.client.libs.dir
+				config.src[loc].client.libs.dir
 				pkgName
 				file
 			)
@@ -39,20 +41,20 @@ module.exports = (config) ->
 			base = path.basename file, ext
 			"#{base}.min#{ext}"
 
-		getDevFileInfo: (pkgName, file) ->
+		getDevFileInfo: (pkgName, file, loc='rb') ->
 			file  = @getDevFile file
-			_path = @getPath pkgName, file
+			_path = @getPath pkgName, file, loc
 			{ file, path: _path }
 
-		getProdFileInfo: (pkgName, fileInfo) ->
+		getProdFileInfo: (pkgName, fileInfo, loc='rb') ->
 			file  = @getProdFile fileInfo.file
-			_path = @getPath pkgName, file
+			_path = @getPath pkgName, file, loc
 			return fileInfo if not @isFile _path
 			{ file, path: _path }
 
-		getPkg: (pkg) ->
-			devFileInfo  = @getDevFileInfo  pkg.name, pkg.main
-			prodFileInfo = @getProdFileInfo pkg.name, devFileInfo
+		getPkg: (pkg, loc='rb') ->
+			devFileInfo  = @getDevFileInfo  pkg.name, pkg.main, loc
+			prodFileInfo = @getProdFileInfo pkg.name, devFileInfo, loc
 			name:    pkg.name
 			version: pkg.version
 			dev:     devFileInfo
@@ -62,9 +64,9 @@ module.exports = (config) ->
 			fs.writeFileSync file, version
 			true
 
-		forceInstall: -> # technique for users to get bower updates
-			version = me.get.json.from.rb().version
-			file    = path.join config.src.rb.client.libs.dir, '.bower'
+		forceInstall: (loc='rb') -> # technique for users to get bower updates
+			version = me.get.json.from.appOrRb(loc).version
+			file    = path.join config.src[loc].client.libs.dir, '.bower'
 			if not @isFile file
 				@writeVersionFile file, version
 			else
@@ -74,14 +76,17 @@ module.exports = (config) ->
 
 	me =
 		has:
+			bower: (loc='rb') ->
+				helper.isFile config.bower[loc].path
+
 			installed:
-				pkg: (pkg) ->
+				pkg: (pkg, loc='rb') ->
 					try
 						fs.lstatSync(
 							path.join(
-								config.src.rb.client.libs.dir
+								config.src[loc].client.libs.dir
 								pkg
-								config.json.bower.file
+								config.bower[loc].file
 							)
 						).isFile()
 					catch e
@@ -89,32 +94,34 @@ module.exports = (config) ->
 		get:
 			json:
 				from:
-					rb: ->
-						require config.json.bower.path
-					pkg: (pkg) ->
-						return if not me.has.installed.pkg pkg
+					appOrRb: (loc='rb') ->
+						require config.bower[loc].path
+
+					pkg: (pkg, loc='rb') ->
+						return if not me.has.installed.pkg pkg, loc
+						# console.log pkg, loc
 						require(
 							path.join(
-								config.src.rb.client.libs.dir
+								config.src[loc].client.libs.dir
 								pkg
-								config.json.bower.file
+								config.bower[loc].file
 							)
 						)
-
 			pkgs:
 				from:
-					rb: ->
-						me.get.json.from.rb().dependencies
+					appOrRb: (loc='rb') ->
+						me.get.json.from.appOrRb(loc).dependencies
 				to:
-					install: (force = false) ->
-						force   = helper.forceInstall() if not force
+					install: (loc='rb', force=false) ->
+						return if not me.has.bower loc
+						force   = helper.forceInstall loc if not force
 						pkgs    = []
-						pkgsObj = me.get.pkgs.from.rb()
+						pkgsObj = me.get.pkgs.from.appOrRb loc
 						if force
 							for own pkg, version of pkgsObj
 								pkgs.push "#{pkg}##{version}"
 						else
-							missing = me.get.missing.pkgs()
+							missing = me.get.missing.pkgs loc
 							for own pkg, version of pkgsObj
 								_pkg = "#{pkg}##{version}"
 								continue if missing.indexOf(_pkg) is -1
@@ -122,35 +129,38 @@ module.exports = (config) ->
 						pkgs
 
 			installed:
-				pkg: (pkg) ->
-					pkg = me.get.json.from.pkg pkg
+				pkg: (pkg, loc='rb') ->
+					pkg = me.get.json.from.pkg pkg, loc
 					return if not pkg
-					helper.getPkg pkg
-				pkgs: ->
+					# log.json pkg
+					helper.getPkg pkg, loc
+
+				pkgs: (loc='rb') ->
 					pkgs    = []
-					pkgsObj = me.get.pkgs.from.rb()
+					pkgsObj = me.get.pkgs.from.appOrRb loc
 					for own pkg, version of pkgsObj
-						_pkg = @pkg pkg
+						_pkg = @pkg pkg, loc
 						pkgs.push _pkg if _pkg
 					pkgs
 
 			missing:
-				pkgs: ->
-					pkgs   = []
-					rbPkgs = me.get.pkgs.from.rb()
-					iPkgs  = me.get.installed.pkgs()
-					for own pkg, version of rbPkgs
+				pkgs: (loc='rb') ->
+					pkgs  = []
+					jPkgs = me.get.pkgs.from.appOrRb loc
+					iPkgs = me.get.installed.pkgs loc
+					for own pkg, version of jPkgs
 						missing = true
 						iPkgs.forEach (v) ->
 							missing = false if v.name is pkg
 						pkgs.push "#{pkg}##{version}" if missing
 					pkgs
 
-			src: (env) ->
+			src: (loc='rb', env) ->
+				return if not me.has.bower loc
 				env   = env or config.env.name
 				env   = 'dev' if ['dev','prod'].indexOf(env) is -1
 				paths = []
-				pkgs  = me.get.installed.pkgs()
+				pkgs  = me.get.installed.pkgs loc
 				pkgs.forEach (pkg) ->
 					paths.push pkg[env].path
 				paths

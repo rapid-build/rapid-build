@@ -6,16 +6,8 @@ module.exports = (config) ->
 	# init json
 	# =========
 	json = {}
-	json.bower  = {}
 	json.config = {}
 	json.files  = {}
-
-	# json bower
-	# ==========
-	json.bower = {}
-	json.bower.file = 'bower.json'
-	json.bower.dir  = config.rb.dir
-	json.bower.path = path.join json.bower.dir, json.bower.file
 
 	# json config
 	# ===========

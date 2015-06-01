@@ -11,6 +11,9 @@ module.exports = (gulp, config) ->
 
 	runTask = (src, dest) ->
 		defer = q.defer()
+		return if not src or not src.length
+			defer.resolve()
+			defer.promise
 		gulp.src src
 			.pipe removeMin()
 			.pipe gulp.dest dest
@@ -19,10 +22,23 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
+	runTasks = ->
+		defer = q.defer()
+		q.all([
+			runTask(
+				bowerHelper.get.src 'rb'
+				config.dist.rb.client.libs.dir
+			)
+			runTask(
+				bowerHelper.get.src 'app'
+				config.dist.app.client.libs.dir
+			)
+		]).done -> defer.resolve()
+		defer.promise
+
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}copy-libs", ->
-		bowerLibs = bowerHelper.get.src()
-		runTask bowerLibs, config.dist.rb.client.libs.dir
+		runTasks()
 
 
