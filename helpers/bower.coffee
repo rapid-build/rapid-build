@@ -11,9 +11,11 @@
 # bowerHelper.get.src.pkgs appOrRb
 # =======================================
 module.exports = (config) ->
-	fs   = require 'fs'
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
+	fs     = require 'fs'
+	path   = require 'path'
+	mkdirp = require 'mkdirp'
+	log    = require "#{config.req.helpers}/log"
+	isType = require "#{config.req.helpers}/isType"
 
 	# helpers
 	# =======
@@ -37,20 +39,32 @@ module.exports = (config) ->
 			file
 
 		getProdFile: (file) ->
-			ext  = path.extname file
-			base = path.basename file, ext
-			"#{base}.min#{ext}"
+			dir     = path.dirname file
+			dir     = '' if dir is '.'
+			ext     = path.extname file
+			base    = path.basename file, ext
+			minFile = path.join dir, "#{base}.min#{ext}"
+			minFile
 
-		getDevFileInfo: (pkgName, file, loc='rb') ->
-			file  = @getDevFile file
-			_path = @getPath pkgName, file, loc
-			{ file, path: _path }
+		getDevFileInfo: (pkgName, files, loc='rb') ->
+			_files = []
+			files  = [ files ] if isType.string files
+			files.forEach (file) =>
+				_file = @getDevFile file
+				_path = @getPath pkgName, _file, loc
+				_files.push file: _file, path: _path
+			_files
 
-		getProdFileInfo: (pkgName, fileInfo, loc='rb') ->
-			file  = @getProdFile fileInfo.file
-			_path = @getPath pkgName, file, loc
-			return fileInfo if not @isFile _path
-			{ file, path: _path }
+		getProdFileInfo: (pkgName, files, loc='rb') ->
+			_files = []
+			files.forEach (file) =>
+				_file = @getProdFile file.file
+				_path = @getPath pkgName, _file, loc
+				if not @isFile _path
+					_files.push file
+				else
+					_files.push file: _file, path: _path
+			_files
 
 		getPkg: (pkg, loc='rb') ->
 			devFileInfo  = @getDevFileInfo  pkg.name, pkg.main, loc
@@ -66,7 +80,9 @@ module.exports = (config) ->
 
 		forceInstall: (loc='rb') -> # technique for users to get bower updates
 			version = me.get.json.from.appOrRb(loc).version
-			file    = path.join config.src[loc].client.libs.dir, '.bower'
+			dir     = config.src[loc].client.libs.dir
+			mkdirp.sync dir
+			file    = path.join dir, '.bower'
 			if not @isFile file
 				@writeVersionFile file, version
 			else
@@ -148,6 +164,7 @@ module.exports = (config) ->
 					pkgs  = []
 					jPkgs = me.get.pkgs.from.appOrRb loc
 					iPkgs = me.get.installed.pkgs loc
+					# log.json iPkgs
 					for own pkg, version of jPkgs
 						missing = true
 						iPkgs.forEach (v) ->
@@ -157,12 +174,22 @@ module.exports = (config) ->
 
 			src: (loc='rb', env) ->
 				return if not me.has.bower loc
-				env   = env or config.env.name
-				env   = 'dev' if ['dev','prod'].indexOf(env) is -1
-				paths = []
-				pkgs  = me.get.installed.pkgs loc
+				env      = env or config.env.name
+				env      = 'dev' if ['dev','prod'].indexOf(env) is -1
+				absPaths = []
+				relPaths = {}
+				pkgs     = me.get.installed.pkgs loc
+				# log.json pkgs
 				pkgs.forEach (pkg) ->
-					paths.push pkg[env].path
-				paths
+					# absPaths.push pkg[env].path
+					name = if pkg[env].length > 1 then pkg.name else ''
+					pkg[env].forEach (file) ->
+						relPaths[file.path] = path.join name, file.file
+						absPaths.push file.path
+				paths:
+					absolute: absPaths # []
+					relative: relPaths # {}
+
+
 
 

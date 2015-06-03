@@ -1,5 +1,6 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
+	path        = require 'path'
 	es          = require 'event-stream'
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
@@ -9,12 +10,22 @@ module.exports = (gulp, config) ->
 			cb null, file
 		es.map transform
 
+	addDistBasePath = (relPaths) ->
+		transform = (file, cb) ->
+			relPath   = relPaths[file.path]
+			name      = path.basename relPath
+			dir       = path.dirname relPath
+			file.path = path.join file.base, dir, name
+			cb null, file
+		es.map transform
+
 	runTask = (src, dest) ->
 		defer = q.defer()
-		return if not src or not src.length
+		return if not src or not src.paths.absolute.length
 			defer.resolve()
 			defer.promise
-		gulp.src src
+		gulp.src src.paths.absolute
+			.pipe addDistBasePath src.paths.relative
 			.pipe removeMin()
 			.pipe gulp.dest dest
 			.on 'end', ->
