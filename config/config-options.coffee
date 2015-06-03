@@ -1,5 +1,18 @@
-# prep options
-# ============
+# API - Prep Options
+# dist.dir                                          = (string) defaults to 'dist'
+# dist.client.dir                                   = (string) defaults to 'client'
+# dist.client[images|libs|scripts|styles|views].dir = (string) defaults to property name
+# dist.client.spa.file                              = (string) defaults to 'spa.html'
+# dist.server.dir                                   = (string) defaults to 'server'
+# dist.server.file                                  = (string) defaults to 'routes.js'
+# src.dir                                           = (string) defaults to 'src'
+# src.client.dir                                    = (string) defaults to 'client'
+# src.client[images|libs|scripts|styles|views].dir  = (string) defaults to property name
+# src.server.dir                                    = (string) defaults to 'server'
+# ports.server                                      = (int)    defaults to 3000
+# ports.reload                                      = (int)    defaults to 3001
+# order[scripts|styles][first|last]                 = (array)  expects file paths
+# ======================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
