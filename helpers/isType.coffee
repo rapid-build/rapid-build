@@ -2,6 +2,9 @@ module.exports =
 	array: (v) ->
 		Array.isArray v
 
+	boolean: (v) ->
+		typeof v is 'boolean'
+
 	int: (v) ->
 		return false if not @number v
 		v % 1 is 0
