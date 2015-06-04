@@ -27,6 +27,7 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config}/config-dist-and-src") config, options
 	config  = require("#{config.req.config}/config-temp")         config
 	config  = require("#{config.req.config}/config-node_modules") config
+	config  = require("#{config.req.config}/config-angular")      config, options
 	config  = require("#{config.req.config}/config-order")        config, options
 	config  = require("#{config.req.config}/config-globs")        config
 	config  = require("#{config.req.config}/config-json")         config
