@@ -1,18 +1,21 @@
 # API - Prep Options
-# dist.dir                                          = (string) defaults to 'dist'
-# dist.client.dir                                   = (string) defaults to 'client'
-# dist.client[images|libs|scripts|styles|views].dir = (string) defaults to property name
-# dist.client.spa.file                              = (string) defaults to 'spa.html'
-# dist.server.dir                                   = (string) defaults to 'server'
-# dist.server.file                                  = (string) defaults to 'routes.js'
-# src.dir                                           = (string) defaults to 'src'
-# src.client.dir                                    = (string) defaults to 'client'
-# src.client[images|libs|scripts|styles|views].dir  = (string) defaults to property name
-# src.server.dir                                    = (string) defaults to 'server'
-# ports.server                                      = (int)    defaults to 3000
-# ports.reload                                      = (int)    defaults to 3001
-# order[scripts|styles][first|last]                 = (array)  expects file paths
-# ======================================================================================
+# dist.dir                                          = (string)  defaults to 'dist'
+# dist.client.dir                                   = (string)  defaults to 'client'
+# dist.client[images|libs|scripts|styles|views].dir = (string)  defaults to property name
+# dist.client.spa.file                              = (string)  defaults to 'spa.html'
+# dist.server.dir                                   = (string)  defaults to 'server'
+# dist.server.file                                  = (string)  defaults to 'routes.js'
+# src.dir                                           = (string)  defaults to 'src'
+# src.client.dir                                    = (string)  defaults to 'client'
+# src.client[images|libs|scripts|styles|views].dir  = (string)  defaults to property name
+# src.server.dir                                    = (string)  defaults to 'server'
+# ports.server                                      = (int)     defaults to 3000
+# ports.reload                                      = (int)     defaults to 3001
+# order[scripts|styles][first|last]                 = (array)   expects file paths
+# angular.modules                                   = (array)   additional angular modules
+# angular.version                                   = (string)  defaults to '1.4.x'
+# angular.dev.useTemplateCache                      = (boolean) defaults to false
+# ========================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
@@ -54,9 +57,17 @@ module.exports = (config, options) ->
 		options.order.styles.first  = null if not isType.array options.order.styles.first
 		options.order.styles.last   = null if not isType.array options.order.styles.last
 
+	formatAngularOptions = ->
+		options.angular = {} if not isType.object options.angular
+		options.angular.dev     = {} if not isType.object options.angular.dev
+		options.angular.modules = null if not isType.array options.angular.modules
+		options.angular.version = null if not isType.string options.angular.version
+		options.angular.dev.useTemplateCache = null if not isType.boolean options.angular.dev.useTemplateCache
+
 	formatOptions()
 	formatServerOptions()
 	formatPortOptions()
+	formatAngularOptions()
 	formatOrderOptions()
 
 	# logs
@@ -66,5 +77,4 @@ module.exports = (config, options) ->
 	# return
 	# ======
 	options
-
 
