@@ -3,7 +3,6 @@ module.exports = (gulp, config) ->
 	path          = require 'path'
 	es            = require 'event-stream'
 	gulpif        = require 'gulp-if'
-	minifyJs      = require 'gulp-uglify'
 	minifyHtml    = require 'gulp-minify-html'
 	templateCache = require 'gulp-angular-templatecache'
 
@@ -47,7 +46,6 @@ module.exports = (gulp, config) ->
 			.pipe addToDistPath()
 			.pipe gulpif isProd, minifyHtml()
 			.pipe templateCache file, opts
-			.pipe gulpif isProd, minifyJs()
 			.pipe gulp.dest dest
 			.on 'end', ->
 				console.log "created #{file}".yellow
@@ -59,9 +57,8 @@ module.exports = (gulp, config) ->
 	gulp.task "#{config.rb.prefix.task}template-cache", ->
 		isProd = config.env.name is 'prod'
 		file   = if isProd then 'min' else 'main'
-		dest   = if isProd then config.temp else config.dist.rb
 		file   = config.fileName.views[file]
-		dest   = dest.client.scripts.dir
+		dest   = config.dist.rb.client.scripts.dir
 		src    = [ glob.views.rb, glob.views.app ]
 		runTask src, dest, file, isProd
 

@@ -5,16 +5,9 @@ module.exports = (config) ->
 
 	# constants
 	# =========
-	tDir = '.temp'
-	types =
-		styles:
-			all: 'all.css'
-			min: 'styles.min.css'
-		scripts:
-			all: 'all.js'
-			min: 'scripts.min.js'
-		views:
-			min: 'views.min.js'
+	tDir  = '.temp'
+	types = ['scripts', 'styles']
+	files = ['all', 'min']
 
 	# init temp
 	# =========
@@ -25,12 +18,14 @@ module.exports = (config) ->
 	# add types
 	# =========
 	addTypes = ->
-		for own k1, v1 of types
+		for own k1, v1 of config.fileName
+			continue if types.indexOf(k1) is -1
 			temp.client[k1] = {}
 			temp.client[k1].dir =
 				path.join temp.client.dir,
 						  config.dist.app.client[k1].dirName
 			for own k2, v2 of v1
+				continue if files.indexOf(k2) is -1
 				temp.client[k1][k2] = {}
 				temp.client[k1][k2].file = v2
 				temp.client[k1][k2].path =

@@ -11,7 +11,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}build-config"
 			[
 				"#{config.rb.prefix.task}copy-css"
-				"#{config.rb.prefix.task}copy-html"
+				"#{config.rb.prefix.task}copy-views"
 				"#{config.rb.prefix.task}copy-images"
 				"#{config.rb.prefix.task}copy-js"
 				"#{config.rb.prefix.task}copy-libs"

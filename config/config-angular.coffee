@@ -21,7 +21,8 @@ module.exports = (config, options) ->
 	# template cache
 	# ==============
 	angular.templateCache = {}
-	angular.templateCache.devEnable        = options.angular.templateCache.devEnable or false
+	angular.templateCache.dev = {}
+	angular.templateCache.dev.enable       = options.angular.templateCache.dev.enable or false
 	angular.templateCache.useAbsolutePaths = options.angular.templateCache.useAbsolutePaths or false
 
 	# add angular to config

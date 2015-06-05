@@ -1,5 +1,6 @@
 module.exports = (gulp, config) ->
-	q   = require 'q'
+	q    = require 'q'
+	path = require 'path'
 
 	moveTask = (src, dest) ->
 		defer = q.defer()
@@ -13,9 +14,11 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-images", ->
-		rbImgDest = config.temp.client.dir   + '/' +
-					config.rb.prefix.distDir + '/' +
-					config.dist.rb.client.images.dirName
+		rbImgDest = path.join(
+						config.temp.client.dir
+						config.rb.prefix.distDir
+						config.dist.rb.client.images.dirName
+					)
 		moveTask(
 			"#{config.glob.dist.rb.client.images.all}/*"
 			rbImgDest

@@ -59,6 +59,8 @@ gulp rapid-build:prod
 # ports.server                                      = (int)    defaults to 3000
 # ports.reload                                      = (int)    defaults to 3001
 # order[scripts|styles][first|last]                 = (array of strings) file paths
+# angular.templateCache.dev.enable                  = (boolean) defaults to false
+# angular.templateCache.useAbsolutePaths            = (boolean) defaults to false
 # ======================================================================================
 ```
 

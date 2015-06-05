@@ -24,14 +24,12 @@ module.exports = (gulp, config) ->
 			->  delTask [
 					config.temp.client.styles.all.path
 					config.temp.client.scripts.all.path
-					config.temp.client.views.dir
 				]
 			->  delTask [
 					config.glob.dist.rb.client.all
 					config.glob.dist.app.client.libs.all
 					config.glob.dist.app.client.scripts.all
 					config.glob.dist.app.client.styles.all
-					config.glob.dist.app.client.views.all
 				]
 			->  moveTask(
 					"#{config.temp.client.dir}/**/*"

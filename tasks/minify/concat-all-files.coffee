@@ -12,16 +12,6 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	concatViews = (src, dest, file, viewsFile) ->
-		defer = q.defer()
-		gulp.src src
-			.pipe concat file
-			.pipe gulp.dest dest
-			.on 'end', ->
-				console.log "added #{viewsFile} to #{file}".yellow
-				defer.resolve()
-		defer.promise
-
 	runTasks = (loc, exclude) ->
 		defer  = q.defer()
 		client = require(config.json.files.path).client
@@ -48,14 +38,7 @@ module.exports = (gulp, config) ->
 				loc.scripts.min.file
 				'script'
 			)
-		]).done ->
-			# angular templatecache views
-			concatViews(
-				[loc.scripts.min.path, loc.views.min.path]
-				loc.scripts.dir
-				loc.scripts.min.file
-				loc.views.min.file
-			).done -> defer.resolve()
+		]).done -> defer.resolve()
 		defer.promise
 
 	# register task

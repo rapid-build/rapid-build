@@ -41,6 +41,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/copy/copy-libs")                gulp, config     # copy-libs
 	require("#{config.req.tasks}/copy/copy-server-config")       gulp, config     # copy-server-config
 	require("#{config.req.tasks}/copy/copy-server-node_modules") gulp, config     # copy-server-node_modules
+	require("#{config.req.tasks}/copy/copy-views")               gulp, config     # copy-views
 
 	# manage
 	# ======
@@ -52,7 +53,6 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/minify/concat-app-files")       gulp, config     # concat-app-files
 	require("#{config.req.tasks}/minify/minify-client")          gulp, config     # minify-client
 	require("#{config.req.tasks}/minify/minify-css")             gulp, config     # minify-css
-	require("#{config.req.tasks}/minify/minify-html")            gulp, config     # minify-html
 	require("#{config.req.tasks}/minify/minify-images")          gulp, config     # minify-images
 	require("#{config.req.tasks}/minify/minify-js")              gulp, config     # minify-js
 	require("#{config.req.tasks}/minify/minify-server")          gulp, config     # minify-server
