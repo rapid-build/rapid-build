@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
 	"homepage": "https://github.com/jyounce/rapid-build",
 	"author": {
