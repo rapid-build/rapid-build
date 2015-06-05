@@ -10,6 +10,7 @@ module.exports = (gulp, config) ->
 
 	# build
 	# =====
+	require("#{config.req.tasks}/build/build-angular-modules")   gulp, config     # build-angular-modules
 	require("#{config.req.tasks}/build/build-config")            gulp, config     # build-config
 	require("#{config.req.tasks}/build/build-files")             gulp, config     # build-files
 	require("#{config.req.tasks}/build/build-files-prod")        gulp, config     # build-files-prod

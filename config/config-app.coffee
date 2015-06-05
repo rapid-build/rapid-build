@@ -5,7 +5,7 @@ module.exports = (config, options) ->
 	# init app
 	# ========
 	app = {}
-	app.dir = process.cwd()
+	app.dir = config.req.app
 
 	# ports
 	# =====

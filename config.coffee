@@ -6,29 +6,20 @@ module.exports = (rbDir, options) ->
 	config = {}
 	config.env = {} # declare here so it will show up first
 
-	# require
-	# =======
-	req =
-		rb:      rbDir
-		config:  "#{rbDir}/config"
-		files:   "#{rbDir}/files"
-		helpers: "#{rbDir}/helpers"
-		init:    "#{rbDir}/init"
-		tasks:   "#{rbDir}/tasks"
-
-	config.req = req
-
 	# get config in order
 	# ===================
+	config  = require("#{rbDir}/config/config-req")               config, rbDir
 	options = require("#{config.req.config}/config-options")      config, options
 	config  = require("#{config.req.config}/config-env")          config
 	config  = require("#{config.req.config}/config-rb")           config, rbDir
 	config  = require("#{config.req.config}/config-app")          config, options
+	config  = require("#{config.req.config}/config-spa-file")     config, options
 	config  = require("#{config.req.config}/config-file-names")   config
+	config  = require("#{config.req.config}/config-angular")      config, options
 	config  = require("#{config.req.config}/config-dist-and-src") config, options
+	config  = require("#{config.req.config}/config-templates")    config
 	config  = require("#{config.req.config}/config-temp")         config
 	config  = require("#{config.req.config}/config-node_modules") config
-	config  = require("#{config.req.config}/config-angular")      config, options
 	config  = require("#{config.req.config}/config-order")        config, options
 	config  = require("#{config.req.config}/config-globs")        config
 	config  = require("#{config.req.config}/config-json")         config
@@ -36,6 +27,7 @@ module.exports = (rbDir, options) ->
 
 	# format
 	# ======
+	req = config.req
 	delete config.req # so req will show up last
 	config.req = req
 

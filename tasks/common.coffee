@@ -9,6 +9,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}bower"
 			"#{config.rb.prefix.task}clean-dist"
 			"#{config.rb.prefix.task}build-config"
+			"#{config.rb.prefix.task}build-angular-modules"
 			[
 				"#{config.rb.prefix.task}copy-css"
 				"#{config.rb.prefix.task}copy-views"

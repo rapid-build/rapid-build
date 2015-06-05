@@ -42,7 +42,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		defer = q.defer()
 		opts  = {}
 		opts.root   = '/' if config.angular.templateCache.useAbsolutePaths
-		opts.module = 'app'
+		opts.module = config.angular.moduleName
 		gulp.src src
 			.pipe addToDistPath()
 			.pipe gulpif isProd, minifyHtml()

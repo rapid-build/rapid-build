@@ -2,6 +2,10 @@ module.exports = (config, options) ->
 	log  = require "#{config.req.helpers}/log"
 	test = require("#{config.req.helpers}/test")()
 
+	# default modules
+	# ===============
+	modules = ['ngAnimate', 'ngResource', 'ngRoute', 'ngSanitize']
+
 	# init angular
 	# ============
 	angular = {}
@@ -9,6 +13,7 @@ module.exports = (config, options) ->
 	# modules
 	# =======
 	angular.modules = options.angular.modules or []
+	angular.modules = modules.concat angular.modules
 
 	# version
 	# =======

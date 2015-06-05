@@ -16,15 +16,30 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}build-spa", ->
+	# helpers
+	# =======
+	getFilesJson = ->
 		moduleHelp.cache.delete config.json.files.path
 		files = require(config.json.files.path).client
 		files = pathHelp.removeLocPartial files, config.dist.app.client.dir
+		files
+
+	getData = ->
+		files = getFilesJson()
+		data =
+			scripts:     files.scripts
+			styles:      files.styles
+			moduleName:  config.angular.moduleName
+			title:       config.spaFile.title
+			description: config.spaFile.description
+
+	# register task
+	# =============
+	gulp.task "#{config.rb.prefix.task}build-spa", ->
+		data = getData()
 		runTask(
 			config.src.rb.client.spa.path
 			config.dist.app.client.dir
-			files
+			data
 		)
 
