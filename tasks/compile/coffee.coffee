@@ -1,8 +1,8 @@
-module.exports = (gulp, config, file={}) ->
-	q       = require 'q'
-	coffee  = require 'gulp-coffee'
-	tasks   = require("#{config.req.helpers}/tasks")()
-	forFile = !!file.path
+module.exports = (gulp, config, watchFile={}) ->
+	q            = require 'q'
+	coffee       = require 'gulp-coffee'
+	tasks        = require("#{config.req.helpers}/tasks")()
+	forWatchFile = !!watchFile.path
 
 	runTask = (src, dest) ->
 		defer = q.defer()
@@ -15,7 +15,7 @@ module.exports = (gulp, config, file={}) ->
 		defer.promise
 
 	runSingle = ->
-		runTask file.path, file.rbDistDir
+		runTask watchFile.path, watchFile.rbDistDir
 
 	runMulti = ->
 		tasks.run.all(
@@ -24,5 +24,7 @@ module.exports = (gulp, config, file={}) ->
 			['client', 'server']
 		)
 
-	return runSingle() if forFile
+	# register task
+	# =============
+	return runSingle() if forWatchFile
 	gulp.task "#{config.rb.prefix.task}coffee", -> runMulti()

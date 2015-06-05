@@ -1,11 +1,11 @@
-module.exports = (gulp, config, file={}) ->
-	q       = require 'q'
-	del     = require 'del'
-	forFile = !!file.path
+module.exports = (gulp, config, watchFile={}) ->
+	q            = require 'q'
+	del          = require 'del'
+	forWatchFile = !!watchFile.path
 
 	runSingle = ->
 		defer = q.defer()
-		del file.rbDistPath, force:true, (e) ->
+		del watchFile.rbDistPath, force:true, (e) ->
 			defer.resolve()
 		defer.promise
 
@@ -15,5 +15,7 @@ module.exports = (gulp, config, file={}) ->
 			defer.resolve()
 		defer.promise
 
-	return runSingle() if forFile
+	# register task
+	# =============
+	return runSingle() if forWatchFile
 	gulp.task "#{config.rb.prefix.task}clean-dist", -> runMulti()
