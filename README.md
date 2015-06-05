@@ -60,7 +60,6 @@ gulp rapid-build:prod
 # ports.reload                                      = (int)     defaults to 3001
 # order[scripts|styles][first|last]                 = (array of strings) = file paths
 # angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngAnimate', 'ngResource', 'ngRoute', 'ngSanitize']
-# angular.version                                   = (string)  defaults to '1.x' = semver version required
 # angular.moduleName                                = (string)  defaults to 'app' = application module name, value for ng-app
 # angular.templateCache.dev.enable                  = (boolean) defaults to false = use template cache when running default and dev task
 # angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
