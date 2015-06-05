@@ -5,5 +5,6 @@ module.exports =
 		else
 			console.log JSON.stringify v, null, '\t'
 
-	watch: (taskName, file) ->
+	watch: (taskName, file, opts={}) ->
+		taskName = opts.logTaskName or taskName
 		console.log "#{taskName} #{file.event}: #{file.path}".yellow

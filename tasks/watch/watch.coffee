@@ -15,6 +15,7 @@ module.exports = (gulp, config, browserSync) ->
 		image:  require "#{config.req.tasks}/copy/copy-images"
 		js:     require "#{config.req.tasks}/copy/copy-js"
 		less:   require "#{config.req.tasks}/compile/less"
+		tCache: require "#{config.req.tasks}/minify/template-cache"
 		buildSpa: ->
 			gulp.start "#{config.rb.prefix.task}watch-build-spa"
 		browserSync: ->
@@ -87,21 +88,23 @@ module.exports = (gulp, config, browserSync) ->
 		tasks[taskName] gulp, config, file
 
 	addAndUnlinkTask = (taskName, file, opts) ->
+		return changeTask taskName, file if opts.taskOnly
 		tasks[taskName](gulp, config, file).then ->
 			return tasks.browserSync() if opts.bsReload
 			tasks.buildSpa()
 
 	events = (file, taskName, opts={}) -> # add, change, unlink
-		log.watch taskName, file
+		log.watch taskName, file, opts
 		return tasks.buildSpa() if taskName is 'spa.html'
 		return if not file
 		return if not file.event
 		return if not file.path
 		return if not taskName
 		file = addFileProps file, opts
+		unlinkTaskName = if opts.taskOnly then taskName else 'clean'
 		switch file.event
 			when 'change' then changeTask taskName, file
-			when 'unlink' then addAndUnlinkTask 'clean', file, opts
+			when 'unlink' then addAndUnlinkTask unlinkTaskName, file, opts
 			when 'add'    then addAndUnlinkTask taskName, file, opts
 
 	# watches
@@ -116,6 +119,15 @@ module.exports = (gulp, config, browserSync) ->
 			console.log "watching #{loc} #{opts.lang} #{msg}".yellow
 			defer.resolve()
 		defer.promise
+
+	# html watch (handle angular template cache)
+	# ==========================================
+	htmlWatch = ->
+		if config.angular.templateCache.dev.enable
+			createWatch glob.src.html, 'tCache',
+				lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
+		else
+			createWatch glob.src.html, 'html', lang:'html', srcType:'views', bsReload:true
 
 	# register task
 	# =============
@@ -135,7 +147,7 @@ module.exports = (gulp, config, browserSync) ->
 			createWatch glob.src.js[0],     'js',     lang:'js',     srcType:'scripts'
 			createWatch glob.src.js[1],     'js',     lang:'js',     srcType:'scripts', loc:'server'
 			# views
-			createWatch glob.src.html,      'html',   lang:'html',   srcType:'views',   bsReload:true
+			htmlWatch()
 			# spa
 			# createWatch config.src.rb.client.spa.path, 'spa.html', lang:'spa.html'
 		]).done -> defer.resolve()

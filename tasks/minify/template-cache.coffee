@@ -1,10 +1,11 @@
-module.exports = (gulp, config) ->
+module.exports = (gulp, config, watchFile={}) ->
 	q             = require 'q'
 	path          = require 'path'
 	es            = require 'event-stream'
 	gulpif        = require 'gulp-if'
 	minifyHtml    = require 'gulp-minify-html'
 	templateCache = require 'gulp-angular-templatecache'
+	forWatchFile  = !!watchFile.path
 
 	# globs
 	# =====
@@ -52,15 +53,24 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}template-cache", ->
+	run = ->
 		isProd = config.env.name is 'prod'
 		file   = if isProd then 'min' else 'main'
 		file   = config.fileName.views[file]
 		dest   = config.dist.rb.client.scripts.dir
 		src    = [ glob.views.rb, glob.views.app ]
 		runTask src, dest, file, isProd
+
+	runSingle = -> # todo: optimize for one file
+		run()
+
+	runMulti = ->
+		run()
+
+	# register task
+	# =============
+	return runSingle() if forWatchFile
+	gulp.task "#{config.rb.prefix.task}template-cache", -> runMulti()
 
 
 
