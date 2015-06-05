@@ -1,3 +1,13 @@
+## 0.3.0 (2015-06-05)
+
+
+#### Features
+
+* **angular:** add template cache options dev.enable and useAbsolutePaths to config ([dc48e5b2](https://github.com/jyounce/rapid-build/commit/dc48e5b2))
+* **bower:** start of app support for bower ([74825ef8](https://github.com/jyounce/rapid-build/commit/74825ef8))
+* **watch:** add support for watching the template cache ([b6237f21](https://github.com/jyounce/rapid-build/commit/b6237f21))
+
+
 ## 0.2.0 (2015-05-29)
 
 

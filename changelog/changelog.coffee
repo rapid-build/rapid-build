@@ -24,7 +24,8 @@ runChangelog = ->
 	changelog opts, (e, log) ->
 		log = log.replace /<a.*?<\/a>\n/g, '' # remove versionText anchor
 		fs.writeFile file.changelog, log, (e) ->
-			console.log 'Here is your changelog!', log
+			console.log 'Changelog updated!'
+			# console.log 'Here is your changelog!', log
 			defer.resolve()
 	defer.promise
 
