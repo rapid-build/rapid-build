@@ -1,14 +1,13 @@
 module.exports = (gulp, config) ->
 	gulpSequence = require('gulp-sequence').use gulp
 
-	# common
-	# ======
+	# register task
+	# =============
 	gulp.task "#{config.rb.prefix.task}common", (cb) ->
 		config.env.set gulp
 		gulpSequence(
 			"#{config.rb.prefix.task}bower"
 			"#{config.rb.prefix.task}clean-dist"
-			"#{config.rb.prefix.task}clean-config"
 			"#{config.rb.prefix.task}build-config"
 			[
 				"#{config.rb.prefix.task}copy-css"
@@ -22,7 +21,6 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}server-copy-config"
 				"#{config.rb.prefix.task}server-copy-node_modules"
 			]
-			"#{config.rb.prefix.task}clean-files"
 			"#{config.rb.prefix.task}build-files"
 			cb
 		)

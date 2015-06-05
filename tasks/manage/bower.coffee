@@ -33,5 +33,7 @@ module.exports = (gulp, config) ->
 		]).done -> defer.resolve()
 		defer.promise
 
+	# register task
+	# =============
 	gulp.task "#{config.rb.prefix.task}bower", ->
 		runTasks()

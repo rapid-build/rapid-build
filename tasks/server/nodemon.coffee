@@ -8,6 +8,8 @@ module.exports = (gulp, config, browserSync) ->
 		config.dist.rb.server.scripts.file
 	)
 
+	# register task
+	# =============
 	gulp.task "#{config.rb.prefix.task}server-nodemon", ->
 		defer = q.defer()
 		nodemon

@@ -81,9 +81,13 @@ module.exports = (gulp, config) ->
 			getAllFiles 'scripts', 'js'
 		]
 
+	# task deps
+	# =========
+	taskDeps = ["#{config.rb.prefix.task}clean-files"]
+
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}build-files", ->
+	gulp.task "#{config.rb.prefix.task}build-files", taskDeps, ->
 		defer = q.defer()
 		buildData().done ->
 			runTask(

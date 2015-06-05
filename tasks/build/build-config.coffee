@@ -14,7 +14,13 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	gulp.task "#{config.rb.prefix.task}build-config", ->
+	# task deps
+	# =========
+	taskDeps = ["#{config.rb.prefix.task}clean-config"]
+
+	# register task
+	# =============
+	gulp.task "#{config.rb.prefix.task}build-config", taskDeps, ->
 		runTask(
 			config.json.config.template
 			config.json.config.dir

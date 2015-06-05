@@ -10,6 +10,8 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
+	# register task
+	# =============
 	gulp.task "#{config.rb.prefix.task}minify-images", ->
 		rbImgDest = config.temp.client.dir   + '/' +
 					config.rb.prefix.distDir + '/' +

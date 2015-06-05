@@ -15,6 +15,8 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
+	# register task
+	# =============
 	gulp.task "#{config.rb.prefix.task}minify-js", ->
 		runTask(
 			config.temp.client.scripts.all.path
