@@ -2,6 +2,7 @@
 temp/
 bower_components/
 src/client/libs/
+src/client/scripts/app.coffee
 dist/
 public/
 node_modules/
