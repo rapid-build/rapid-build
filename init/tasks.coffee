@@ -6,7 +6,7 @@ module.exports = (gulp, config) ->
 	# browser
 	# =======
 	bs = require("#{config.req.tasks}/browser/browser-sync")     gulp, config     # browser-sync
-	require("#{config.req.tasks}/browser/open")                  gulp, config     # open
+	require("#{config.req.tasks}/browser/open-browser")          gulp, config     # open-browser
 
 	# build
 	# =====
@@ -39,8 +39,8 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/copy/copy-images")              gulp, config     # copy-images
 	require("#{config.req.tasks}/copy/copy-js")                  gulp, config     # copy-js
 	require("#{config.req.tasks}/copy/copy-libs")                gulp, config     # copy-libs
-	require("#{config.req.tasks}/copy/server/copy-config")       gulp, config     # server-copy-config
-	require("#{config.req.tasks}/copy/server/copy-node_modules") gulp, config     # server-copy-node_modules
+	require("#{config.req.tasks}/copy/copy-server-config")       gulp, config     # copy-server-config
+	require("#{config.req.tasks}/copy/copy-server-node_modules") gulp, config     # copy-server-node_modules
 
 	# manage
 	# ======
@@ -57,12 +57,12 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/minify/minify-js")              gulp, config     # minify-js
 	require("#{config.req.tasks}/minify/minify-server")          gulp, config     # minify-server
 	require("#{config.req.tasks}/minify/minify-spa")             gulp, config     # minify-spa
-	# require("#{config.req.tasks}/minify/template-cache")         gulp, config     # template-cache
+	require("#{config.req.tasks}/minify/template-cache")         gulp, config     # template-cache
 
 	# server
 	# ======
-	require("#{config.req.tasks}/server/server")                 gulp, config     # server
-	require("#{config.req.tasks}/server/nodemon")                gulp, config, bs # server-nodemon
+	require("#{config.req.tasks}/server/start-server")           gulp, config     # start-server
+	require("#{config.req.tasks}/server/nodemon")                gulp, config, bs # nodemon
 
 	# watch
 	# =====

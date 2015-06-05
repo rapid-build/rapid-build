@@ -18,8 +18,8 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}coffee"
 				"#{config.rb.prefix.task}es6"
 				"#{config.rb.prefix.task}less"
-				"#{config.rb.prefix.task}server-copy-config"
-				"#{config.rb.prefix.task}server-copy-node_modules"
+				"#{config.rb.prefix.task}copy-server-config"
+				"#{config.rb.prefix.task}copy-server-node_modules"
 			]
 			"#{config.rb.prefix.task}build-files"
 			cb
