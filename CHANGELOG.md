@@ -1,3 +1,11 @@
+## 0.4.0 (2015-06-05)
+
+
+#### Features
+
+* **config:** add angular option to change the module name and add additional modules ([aeaa8c1b](https://github.com/jyounce/rapid-build/commit/aeaa8c1b))
+
+
 ## 0.3.0 (2015-06-05)
 
 
