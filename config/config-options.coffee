@@ -14,7 +14,9 @@
 # order[scripts|styles][first|last]                 = (array)   expects file paths
 # angular.modules                                   = (array)   additional angular modules
 # angular.version                                   = (string)  defaults to '1.4.x'
-# angular.dev.useTemplateCache                      = (boolean) defaults to false
+# angular.moduleName                                = (string)  application module name
+# angular.templateCache.devEnable                   = (boolean) defaults to false
+# angular.templateCache.useAbsolutePaths            = (boolean) defaults to false
 # ========================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -59,10 +61,12 @@ module.exports = (config, options) ->
 
 	formatAngularOptions = ->
 		options.angular = {} if not isType.object options.angular
-		options.angular.dev     = {} if not isType.object options.angular.dev
-		options.angular.modules = null if not isType.array options.angular.modules
-		options.angular.version = null if not isType.string options.angular.version
-		options.angular.dev.useTemplateCache = null if not isType.boolean options.angular.dev.useTemplateCache
+		options.angular.modules       = null if not isType.array options.angular.modules
+		options.angular.version       = null if not isType.string options.angular.version
+		options.angular.moduleName    = null if not isType.string options.angular.moduleName
+		options.angular.templateCache = {}   if not isType.object options.angular.templateCache
+		options.angular.templateCache.devEnable        = null if not isType.boolean options.angular.templateCache.devEnable
+		options.angular.templateCache.useAbsolutePaths = null if not isType.boolean options.angular.templateCache.useAbsolutePaths
 
 	formatOptions()
 	formatServerOptions()

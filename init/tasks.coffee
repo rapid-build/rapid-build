@@ -57,6 +57,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/minify/minify-js")              gulp, config     # minify-js
 	require("#{config.req.tasks}/minify/minify-server")          gulp, config     # minify-server
 	require("#{config.req.tasks}/minify/minify-spa")             gulp, config     # minify-spa
+	# require("#{config.req.tasks}/minify/template-cache")         gulp, config     # template-cache
 
 	# server
 	# ======

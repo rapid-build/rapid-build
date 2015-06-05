@@ -14,10 +14,15 @@ module.exports = (config, options) ->
 	# =======
 	angular.version = options.angular.version or null
 
-	# dev
-	# ===
-	angular.dev = {}
-	angular.dev.useTemplateCache = options.angular.dev.useTemplateCache or false
+	# module name
+	# ===========
+	angular.moduleName = options.angular.moduleName or 'app'
+
+	# template cache
+	# ==============
+	angular.templateCache = {}
+	angular.templateCache.devEnable        = options.angular.templateCache.devEnable or false
+	angular.templateCache.useAbsolutePaths = options.angular.templateCache.useAbsolutePaths or false
 
 	# add angular to config
 	# =====================
