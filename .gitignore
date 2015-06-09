@@ -11,3 +11,4 @@ phantomjsdriver.log
 test-results.xml
 config/config.json
 files/files.json
+/bower.json
