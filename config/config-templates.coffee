@@ -9,12 +9,24 @@ module.exports = (config) ->
 	# ==============
 	templates = {}
 	templates.dir = path.join config.rb.dir, 'templates'
+
+	# angular modules
+	# ===============
 	templates.angularModules =
 		src:
 			path: path.join templates.dir, 'angular-modules.tpl'
 		dest:
 			file: 'app.coffee'
-			dir:  path.join config.src.rb.client.scripts.dir
+			dir:  config.src.rb.client.scripts.dir
+
+	# bower.json
+	# ==========
+	templates.bowerJson =
+		src:
+			path: path.join templates.dir, 'bower-json.tpl'
+		dest:
+			file: 'bower.json'
+			dir:  config.rb.dir
 
 	# add templates to config
 	# =======================

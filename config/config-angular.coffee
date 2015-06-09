@@ -4,7 +4,7 @@ module.exports = (config, options) ->
 
 	# default modules
 	# ===============
-	modules = ['ngAnimate', 'ngResource', 'ngRoute', 'ngSanitize']
+	modules = ['ngResource', 'ngRoute', 'ngSanitize']
 
 	# init angular
 	# ============
@@ -17,7 +17,7 @@ module.exports = (config, options) ->
 
 	# version
 	# =======
-	angular.version = options.angular.version or null
+	angular.version = options.angular.version or '1.x'
 
 	# module name
 	# ===========
@@ -29,6 +29,14 @@ module.exports = (config, options) ->
 	angular.templateCache.dev = {}
 	angular.templateCache.dev.enable       = options.angular.templateCache.dev.enable or false
 	angular.templateCache.useAbsolutePaths = options.angular.templateCache.useAbsolutePaths or false
+
+	# bower dependencies
+	# ==================
+	angular.bowerDeps =
+		'angular':          angular.version
+		'angular-resource': angular.version
+		'angular-route':    angular.version
+		'angular-sanitize': angular.version
 
 	# add angular to config
 	# =====================

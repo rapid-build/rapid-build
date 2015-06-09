@@ -46,26 +46,29 @@ gulp rapid-build:prod
 ##### Config Documentation - (better documentation coming soon)
 ```coffeescript
 # CONFIG API (optional): config is an object
-# dist.dir                                          = (string)  defaults to 'dist'
-# dist.client.dir                                   = (string)  defaults to 'client'
-# dist.client[images|libs|scripts|styles|views].dir = (string)  defaults to property name
-# dist.client.spa.file                              = (string)  defaults to 'spa.html'
-# dist.server.dir                                   = (string)  defaults to 'server'
-# dist.server.file                                  = (string)  defaults to 'routes.js'
-# src.dir                                           = (string)  defaults to 'src'
-# src.client.dir                                    = (string)  defaults to 'client'
-# src.client[images|libs|scripts|styles|views].dir  = (string)  defaults to property name
-# src.server.dir                                    = (string)  defaults to 'server'
-# ports.server                                      = (int)     defaults to 3000
-# ports.reload                                      = (int)     defaults to 3001
-# order[scripts|styles][first|last]                 = (array of strings) = file paths
-# angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngAnimate', 'ngResource', 'ngRoute', 'ngSanitize']
-# angular.moduleName                                = (string)  defaults to 'app' = application module name, value for ng-app
-# angular.templateCache.dev.enable                  = (boolean) defaults to false = use template cache when running default and dev task
-# angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
-# spaFile.title                                     = (string)  defaults to package.json name or 'Application'
-# spaFile.description                               = (string)  defaults to package.json description
-# =====================================================================================================================================================================================
+# dist.dir                                     = (string)  defaults to 'dist'
+# dist.client.dir                              = (string)  defaults to 'client'
+# dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
+# dist.client.libs.dir                         = (string)  defaults to 'libs' = bower components directory
+# dist.client.spa.file                         = (string)  defaults to 'spa.html'
+# dist.server.dir                              = (string)  defaults to 'server'
+# dist.server.file                             = (string)  defaults to 'routes.js'
+# src.dir                                      = (string)  defaults to 'src'
+# src.client.dir                               = (string)  defaults to 'client'
+# src.client[images|scripts|styles|views].dir  = (string)  defaults to property name
+# src.client.libs.dir                          = (string)  defaults to 'libs' = bower components directory
+# src.server.dir                               = (string)  defaults to 'server'
+# ports.server                                 = (int)     defaults to 3000
+# ports.reload                                 = (int)     defaults to 3001
+# order[scripts|styles][first|last]            = (array of strings) = file paths
+# angular.modules                              = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize']
+# angular.moduleName                           = (string)  defaults to 'app' = application module name, value for ng-app
+# angular.version                              = (string)  defaults to '1.x' = semver version required
+# angular.templateCache.dev.enable             = (boolean) defaults to false = use template cache when running default and dev task
+# angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
+# spaFile.title                                = (string)  defaults to package.json name or 'Application'
+# spaFile.description                          = (string)  defaults to package.json description
+# ===================================================================================================================================================================
 ```
 
 

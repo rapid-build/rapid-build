@@ -9,7 +9,7 @@ module.exports = (config, options) ->
 		src:     'src'
 		client:  'client'
 		images:  'images'
-		libs:    'libs' # things like bower_components
+		libs:    'libs' # bower_components
 		server:  'server'
 		scripts: 'scripts'
 		styles:  'styles'
@@ -126,17 +126,6 @@ module.exports = (config, options) ->
 	config.src.rb.client.spa =
 		file: file.spa
 		path: getSrcSpa()
-
-	# relative paths (old sauce)
-	# ==========================
-	addAppRelative = (loc, loc2, type) ->
-		a = options[loc].dir or dir[loc]
-		b = options[loc][loc2].dir or dir[loc2]
-		c = options[loc][loc2][type].dir or dir[type]
-		path.join a, b, c
-
-	# config.src.rb.client.libs.relative  = path.join dir.src, dir.client, dir.libs
-	# config.src.app.client.libs.relative = addAppRelative 'src', 'client', 'libs'
 
 	# server
 	# ======

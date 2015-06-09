@@ -35,5 +35,6 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}bower", ->
+	gulp.task "#{config.rb.prefix.task}bower",
+	["#{config.rb.prefix.task}build-bower-json"], ->
 		runTasks()

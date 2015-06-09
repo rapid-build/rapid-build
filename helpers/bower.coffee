@@ -13,20 +13,16 @@
 module.exports = (config) ->
 	fs       = require 'fs'
 	path     = require 'path'
+	del      = require 'del'
 	mkdirp   = require 'mkdirp'
 	log      = require "#{config.req.helpers}/log"
 	isType   = require "#{config.req.helpers}/isType"
 	pathHelp = require "#{config.req.helpers}/path"
+	fileHelp = require("#{config.req.helpers}/file")()
 
 	# helpers
 	# =======
 	helper =
-		isFile: (_path) ->
-			try
-				fs.lstatSync(_path).isFile()
-			catch e
-				false
-
 		getPath: (pkgName, file, loc='rb') ->
 			path.join(
 				config.src[loc].client.libs.dir
@@ -61,7 +57,7 @@ module.exports = (config) ->
 			files.forEach (file) =>
 				_file = @getProdFile file.file
 				_path = @getPath pkgName, _file, loc
-				if not @isFile _path
+				if not fileHelp.exists _path
 					_files.push file
 				else
 					_files.push file: _file, path: _path
@@ -108,39 +104,53 @@ module.exports = (config) ->
 				pkgs.push _pkg if _pkg
 			pkgs
 
-		writeVersionFile: (file, version) ->
-			fs.writeFileSync file, version
-			true
+		depsHaveChanged: (bowerJson, storedJson) ->
+			changed  = false
+			bDeps    = bowerJson.dependencies
+			sDeps    = storedJson.dependencies
+			bDepsTot = Object.keys(bDeps).length
+			sDepsTot = Object.keys(sDeps).length
+			return true if bDepsTot isnt sDepsTot
+			for own pkg, version of bDeps
+				if not sDeps[pkg] or sDeps[pkg] isnt version
+					changed = true; break
+			changed
 
 		forceInstall: (loc='rb') -> # technique for users to get bower updates
-			version = me.get.json.from.appOrRb(loc).version
-			dir     = config.src[loc].client.libs.dir
-			mkdirp.sync dir
-			file    = path.join dir, '.bower'
-			if not @isFile file
-				@writeVersionFile file, version
+			force     = false
+			bowerJson = me.get.json.from.appOrRb(loc)
+			dir       = config.src[loc].client.libs.dir
+			_path     = path.join dir, '.bower'
+
+			if not fileHelp.exists _path
+				force = true
 			else
-				storedVersion = fs.readFileSync(file).toString()
-				return false if storedVersion is version
-				@writeVersionFile file, version
+				storedJson = fileHelp.read.json _path
+				if bowerJson.version isnt storedJson.version
+					force = true
+				else if @depsHaveChanged bowerJson, storedJson
+					force = true
+				if force
+					del.sync dir, force:true
+					console.log "#{loc} libs directory cleaned".yellow
+
+			mkdirp.sync dir
+			fileHelp.write.json _path, bowerJson if force
+			force
 
 	me =
 		has:
 			bower: (loc='rb') ->
-				helper.isFile config.bower[loc].path
+				fileHelp.exists config.bower[loc].path
 
 			installed:
 				pkg: (pkg, loc='rb') ->
-					try
-						fs.lstatSync(
-							path.join(
+					_path = path.join(
 								config.src[loc].client.libs.dir
 								pkg
 								config.bower[loc].file
 							)
-						).isFile()
-					catch e
-						false
+					fileHelp.exists _path
 		get:
 			json:
 				from:

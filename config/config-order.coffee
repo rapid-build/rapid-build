@@ -36,7 +36,6 @@ module.exports = (config, options) ->
 	# ========
 	order.rb.scripts.first = [
 		"#{rb.libs}/angular"
-		"#{rb.libs}/angular-animate"
 		"#{rb.libs}/angular-resource"
 		"#{rb.libs}/angular-route"
 		"#{rb.libs}/angular-sanitize"
