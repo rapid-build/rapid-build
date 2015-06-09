@@ -11,11 +11,12 @@
 # bowerHelper.get.src.pkgs appOrRb
 # =======================================
 module.exports = (config) ->
-	fs     = require 'fs'
-	path   = require 'path'
-	mkdirp = require 'mkdirp'
-	log    = require "#{config.req.helpers}/log"
-	isType = require "#{config.req.helpers}/isType"
+	fs       = require 'fs'
+	path     = require 'path'
+	mkdirp   = require 'mkdirp'
+	log      = require "#{config.req.helpers}/log"
+	isType   = require "#{config.req.helpers}/isType"
+	pathHelp = require "#{config.req.helpers}/path"
 
 	# helpers
 	# =======
@@ -66,13 +67,46 @@ module.exports = (config) ->
 					_files.push file: _file, path: _path
 			_files
 
+		getPkgDeps: (deps) ->
+			return null if not deps
+			return null if not isType.object deps
+			return null if not Object.keys(deps).length
+			deps
+
 		getPkg: (pkg, loc='rb') ->
 			devFileInfo  = @getDevFileInfo  pkg.name, pkg.main, loc
 			prodFileInfo = @getProdFileInfo pkg.name, devFileInfo, loc
+			pkgDeps      = @getPkgDeps pkg.dependencies
+			# log.json pkgDeps
 			name:    pkg.name
 			version: pkg.version
 			dev:     devFileInfo
 			prod:    prodFileInfo
+			deps:    pkgDeps
+
+		getSubPkgs: (pkgs) ->
+			return null if not pkgs.length
+			# log.json pkgs
+			rbPkgs  = if me.has.bower 'rb'  then me.get.pkgs.from.appOrRb 'rb'  else {}
+			appPkgs = if me.has.bower 'app' then me.get.pkgs.from.appOrRb 'app' else {}
+			allPkgs = Object.keys(rbPkgs).concat Object.keys appPkgs
+			return null if not allPkgs.length
+			subPkgs = {}
+			for own i, pkg of pkgs
+				continue if not pkg.deps
+				for own name, version of pkg.deps
+					continue if allPkgs.indexOf(name) isnt -1
+					subPkgs[name] = version
+			return null if not Object.keys(subPkgs).length
+			# log.json subPkgs
+			subPkgs
+
+		getInstalledPkgs: (pkgsObj, loc) ->
+			pkgs = []
+			for own pkg, version of pkgsObj
+				_pkg = me.get.installed.pkg pkg, loc
+				pkgs.push _pkg if _pkg
+			pkgs
 
 		writeVersionFile: (file, version) ->
 			fs.writeFileSync file, version
@@ -126,7 +160,9 @@ module.exports = (config) ->
 			pkgs:
 				from:
 					appOrRb: (loc='rb') ->
-						me.get.json.from.appOrRb(loc).dependencies
+						mainDeps = me.get.json.from.appOrRb(loc).dependencies
+						# log.json mainDeps
+						mainDeps
 				to:
 					install: (loc='rb', force=false) ->
 						return if not me.has.bower loc
@@ -154,9 +190,14 @@ module.exports = (config) ->
 				pkgs: (loc='rb') ->
 					pkgs    = []
 					pkgsObj = me.get.pkgs.from.appOrRb loc
-					for own pkg, version of pkgsObj
-						_pkg = @pkg pkg, loc
-						pkgs.push _pkg if _pkg
+					pkgs    = helper.getInstalledPkgs pkgsObj, loc if pkgsObj
+					# log.json pkgs
+					if pkgs.length
+						subPkgs    = []
+						subPkgsObj = helper.getSubPkgs pkgs
+						subPkgs    = helper.getInstalledPkgs subPkgsObj, loc if subPkgsObj
+						pkgs       = pkgs.concat subPkgs if subPkgs.length
+					# log.json pkgs
 					pkgs
 
 			missing:
@@ -181,9 +222,9 @@ module.exports = (config) ->
 				pkgs     = me.get.installed.pkgs loc
 				# log.json pkgs
 				pkgs.forEach (pkg) ->
-					# absPaths.push pkg[env].path
-					name = if pkg[env].length > 1 then pkg.name else ''
 					pkg[env].forEach (file) ->
+						hasPath = pathHelp.format(file.file).indexOf('/') isnt -1
+						name    = if hasPath then pkg.name else ''
 						relPaths[file.path] = path.join name, file.file
 						absPaths.push file.path
 				paths:
