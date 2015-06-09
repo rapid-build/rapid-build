@@ -1,3 +1,12 @@
+## 0.5.0 (2015-06-09)
+
+
+#### Features
+
+* **bower:** add support for bower packages dependencies ([24f761da](https://github.com/jyounce/rapid-build/commit/24f761da))
+* **config:** add ability to change angular version via config ([2f6e2690](https://github.com/jyounce/rapid-build/commit/2f6e2690))
+
+
 ## 0.4.0 (2015-06-05)
 
 
