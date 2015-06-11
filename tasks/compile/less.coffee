@@ -1,12 +1,14 @@
 module.exports = (gulp, config, watchFile={}) ->
 	q            = require 'q'
 	less         = require 'gulp-less'
+	plumber      = require 'gulp-plumber'
 	tasks        = require("#{config.req.helpers}/tasks")()
 	forWatchFile = !!watchFile.path
 
 	runTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.pipe plumber()
 			.pipe less()
 			.pipe gulp.dest dest
 			.on 'end', ->
