@@ -1,3 +1,11 @@
+## 0.7.0 (2015-06-11)
+
+
+#### Features
+
+* **plumber:** add the plumber to the lang compilers so the watch doesn't break on an error ([722750df](https://github.com/jyounce/rapid-build/commit/722750df))
+
+
 ## 0.6.0 (2015-06-11)
 
 
