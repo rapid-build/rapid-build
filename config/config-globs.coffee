@@ -30,19 +30,21 @@ module.exports = (config) ->
 					if v2 isnt 'server'
 						glob[loc][v1][v2].all = "#{config[loc][v1][v2].dir}/**"
 
-	addGlob = (loc, type, langs, includeLibs) ->
+	addGlob = (loc, type, langs, includeBower, includeLibs) ->
 		for own k1, v1 of glob[loc]
 			for own k2, v2 of v1
 				continue if k2 is 'server' and type isnt 'scripts'
-				continue if k2 is 'server' and includeLibs
+				continue if k2 is 'server' and (includeBower or includeLibs)
 				v2[type] = {} if not isType.object v2[type]
 				langs.forEach (v3) ->
 					typeDir = pathHelp.format config[loc][k1][k2][type].dir
-					if includeLibs
-						libsDir = pathHelp.format config[loc][k1][k2]['libs'].dir
+					if includeBower or includeLibs
+						bowerDir = pathHelp.format config[loc][k1][k2]['bower'].dir
+						libsDir  = pathHelp.format config[loc][k1][k2]['libs'].dir
 						v2[type][v3] = [
-							path.join libsDir, lang[v3]
-							path.join typeDir, lang[v3]
+							path.join bowerDir, lang[v3]
+							path.join libsDir,  lang[v3]
+							path.join typeDir,  lang[v3]
 						]
 					else
 						v2[type][v3] = path.join typeDir, lang[v3]
@@ -55,6 +57,7 @@ module.exports = (config) ->
 	# src
 	# ===
 	addGlob 'src', 'images',  ['all']
+	addGlob 'src', 'libs',    ['all']
 	addGlob 'src', 'scripts', ['js']
 	addGlob 'src', 'scripts', ['coffee']
 	addGlob 'src', 'scripts', ['es6']
@@ -65,12 +68,13 @@ module.exports = (config) ->
 
 	# dist
 	# ====
+	addGlob 'dist', 'bower',   ['all']
 	addGlob 'dist', 'images',  ['all']
 	addGlob 'dist', 'libs',    ['all']
 	addGlob 'dist', 'scripts', ['all']
-	addGlob 'dist', 'scripts', ['js'],  true
+	addGlob 'dist', 'scripts', ['js' ], true, true
 	addGlob 'dist', 'styles',  ['all']
-	addGlob 'dist', 'styles',  ['css'], true
+	addGlob 'dist', 'styles',  ['css'], true, true
 	addGlob 'dist', 'views',   ['all']
 	addGlob 'dist', 'views',   ['html']
 

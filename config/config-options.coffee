@@ -1,25 +1,29 @@
 # API - Prep Options
-# dist.dir                                          = (string)  defaults to 'dist'
-# dist.client.dir                                   = (string)  defaults to 'client'
-# dist.client[images|libs|scripts|styles|views].dir = (string)  defaults to property name
-# dist.client.spa.file                              = (string)  defaults to 'spa.html'
-# dist.server.dir                                   = (string)  defaults to 'server'
-# dist.server.file                                  = (string)  defaults to 'routes.js'
-# src.dir                                           = (string)  defaults to 'src'
-# src.client.dir                                    = (string)  defaults to 'client'
-# src.client[images|libs|scripts|styles|views].dir  = (string)  defaults to property name
-# src.server.dir                                    = (string)  defaults to 'server'
-# ports.server                                      = (int)     defaults to 3000
-# ports.reload                                      = (int)     defaults to 3001
-# order[scripts|styles][first|last]                 = (array)   expects file paths
-# angular.modules                                   = (array)   additional angular modules
-# angular.version                                   = (string)  defaults to '1.x'
-# angular.moduleName                                = (string)  application module name
-# angular.templateCache.dev.enable                  = (boolean) defaults to false
-# angular.templateCache.useAbsolutePaths            = (boolean) defaults to false
-# spaFile.title                                     = (string)  defaults to package.json name
-# spaFile.description                               = (string)  defaults to package.json description
-# ==================================================================================================
+# dist.dir                                     = (string)  defaults to 'dist'
+# dist.client.dir                              = (string)  defaults to 'client'
+# dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
+# dist.client.bower.dir                        = (string)  defaults to 'bower_components'
+# dist.client.libs.dir                         = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# dist.client.spa.file                         = (string)  defaults to 'spa.html'
+# dist.server.dir                              = (string)  defaults to 'server'
+# dist.server.file                             = (string)  defaults to 'routes.js'
+# src.dir                                      = (string)  defaults to 'src'
+# src.client.dir                               = (string)  defaults to 'client'
+# src.client[images|scripts|styles|views].dir  = (string)  defaults to property name
+# src.client.bower.dir                         = (string)  defaults to 'bower_components'
+# src.client.libs.dir                          = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# src.server.dir                               = (string)  defaults to 'server'
+# ports.server                                 = (int)     defaults to 3000
+# ports.reload                                 = (int)     defaults to 3001
+# order[scripts|styles][first|last]            = (array)   expects file paths
+# angular.modules                              = (array)   additional angular modules
+# angular.version                              = (string)  defaults to '1.x'
+# angular.moduleName                           = (string)  application module name
+# angular.templateCache.dev.enable             = (boolean) defaults to false
+# angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
+# spaFile.title                                = (string)  defaults to package.json name
+# spaFile.description                          = (string)  defaults to package.json description
+# ===============================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
@@ -36,7 +40,7 @@ module.exports = (config, options) ->
 				options[v1][v2].dir = null if not isType.string options[v1][v2].dir
 				return if v2 is 'server'
 				# types dir
-				['images', 'libs', 'scripts', 'styles', 'views'].forEach (v3) ->
+				['bower', 'images', 'libs', 'scripts', 'styles', 'views'].forEach (v3) ->
 					options[v1][v2][v3] = {} if not isType.object options[v1][v2][v3]
 					options[v1][v2][v3].dir = null if not isType.string options[v1][v2][v3].dir
 				# spa dist file

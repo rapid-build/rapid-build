@@ -8,7 +8,10 @@ module.exports = (gulp, config) ->
 			.pipe concat file
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "prepended #{type} libs to #{file}".yellow
+				console.log "
+					prepended #{type} bower_components
+					and libs to #{file}
+				".yellow
 				defer.resolve()
 		defer.promise
 

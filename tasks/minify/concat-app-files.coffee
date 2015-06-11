@@ -38,6 +38,8 @@ module.exports = (gulp, config) ->
 	gulp.task "#{config.rb.prefix.task}concat-app-files", ->
 		runTasks(
 			config.temp.client
-			["!#{config.glob.dist.rb.client.libs.all}"
+			["!#{config.glob.dist.rb.client.bower.all}"
+			 "!#{config.glob.dist.app.client.bower.all}"
+			 "!#{config.glob.dist.rb.client.libs.all}"
 			 "!#{config.glob.dist.app.client.libs.all}"]
 		)

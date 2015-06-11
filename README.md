@@ -49,14 +49,16 @@ gulp rapid-build:prod
 # dist.dir                                     = (string)  defaults to 'dist'
 # dist.client.dir                              = (string)  defaults to 'client'
 # dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
-# dist.client.libs.dir                         = (string)  defaults to 'libs' = bower components directory
+# dist.client.bower.dir                        = (string)  defaults to 'bower_components'
+# dist.client.libs.dir                         = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
 # dist.client.spa.file                         = (string)  defaults to 'spa.html'
 # dist.server.dir                              = (string)  defaults to 'server'
 # dist.server.file                             = (string)  defaults to 'routes.js'
 # src.dir                                      = (string)  defaults to 'src'
 # src.client.dir                               = (string)  defaults to 'client'
 # src.client[images|scripts|styles|views].dir  = (string)  defaults to property name
-# src.client.libs.dir                          = (string)  defaults to 'libs' = bower components directory
+# src.client.bower.dir                         = (string)  defaults to 'bower_components'
+# src.client.libs.dir                          = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
 # src.server.dir                               = (string)  defaults to 'server'
 # ports.server                                 = (int)     defaults to 3000
 # ports.reload                                 = (int)     defaults to 3001

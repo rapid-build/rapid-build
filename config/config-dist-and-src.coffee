@@ -9,7 +9,8 @@ module.exports = (config, options) ->
 		src:     'src'
 		client:  'client'
 		images:  'images'
-		libs:    'libs' # bower_components
+		bower:   'bower_components'
+		libs:    'libs'
 		server:  'server'
 		scripts: 'scripts'
 		styles:  'styles'
@@ -28,6 +29,7 @@ module.exports = (config, options) ->
 			o.dir           = options[loc].dir
 		if isApp
 			o.clientDir     = options[loc].client.dir
+			o.clientBower   = options[loc].client.bower.dir
 			o.clientImages  = options[loc].client.images.dir
 			o.clientLibs    = options[loc].client.libs.dir
 			o.clientScripts = options[loc].client.scripts.dir
@@ -38,6 +40,8 @@ module.exports = (config, options) ->
 		dir: o.dir or dir[loc]
 		client:
 			dir: o.clientDir or dir.client
+			bower:
+				dir: o.clientBower or dir.bower
 			images:
 				dir: o.clientImages or dir.images
 			libs:

@@ -1,35 +1,12 @@
 module.exports = (gulp, config) ->
-	q           = require 'q'
-	path        = require 'path'
-	es          = require 'event-stream'
-	bowerHelper = require("#{config.req.helpers}/bower") config
+	q = require 'q'
 
-	removeMin = -> # for prod env, to avoid additional work elsewhere
-		transform = (file, cb) ->
-			file.path = file.path.replace '.min', ''
-			cb null, file
-		es.map transform
-
-	addDistBasePath = (relPaths) ->
-		transform = (file, cb) ->
-			relPath   = relPaths[file.path]
-			name      = path.basename relPath
-			dir       = path.dirname relPath
-			file.path = path.join file.base, dir, name
-			cb null, file
-		es.map transform
-
-	runTask = (src, dest) ->
+	runTask = (src, dest, appOrRb) ->
 		defer = q.defer()
-		return if not src or not src.paths.absolute.length
-			defer.resolve()
-			defer.promise
-		gulp.src src.paths.absolute
-			.pipe addDistBasePath src.paths.relative
-			.pipe removeMin()
+		gulp.src src
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log dest
+				# console.log "copied #{appOrRb} libs".yellow
 				defer.resolve()
 		defer.promise
 
@@ -37,12 +14,14 @@ module.exports = (gulp, config) ->
 		defer = q.defer()
 		q.all([
 			runTask(
-				bowerHelper.get.src 'rb'
+				config.glob.src.rb.client.libs.all
 				config.dist.rb.client.libs.dir
+				'rb'
 			)
 			runTask(
-				bowerHelper.get.src 'app'
+				config.glob.src.app.client.libs.all
 				config.dist.app.client.libs.dir
+				'app'
 			)
 		]).done -> defer.resolve()
 		defer.promise
@@ -51,5 +30,3 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}copy-libs", ->
 		runTasks()
-
-

@@ -14,6 +14,7 @@ module.exports = (config, options) ->
 	# defaults
 	# ========
 	rb =
+		bower:   config.dist.rb.client.bower.dirName
 		libs:    config.dist.rb.client.libs.dirName
 		scripts: getDirName 'rb', 'scripts'
 		styles:  getDirName 'rb', 'styles'
@@ -35,10 +36,10 @@ module.exports = (config, options) ->
 	# rb order
 	# ========
 	order.rb.scripts.first = [
-		"#{rb.libs}/angular"
-		"#{rb.libs}/angular-resource"
-		"#{rb.libs}/angular-route"
-		"#{rb.libs}/angular-sanitize"
+		"#{rb.bower}/angular"
+		"#{rb.bower}/angular-resource"
+		"#{rb.bower}/angular-route"
+		"#{rb.bower}/angular-sanitize"
 		"#{rb.scripts}/app"
 	]
 

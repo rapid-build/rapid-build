@@ -14,7 +14,7 @@ module.exports = (gulp, config) ->
 		bower.commands.install bowerPkgs, force: true,
 			directory: ''
 			forceLatest: true
-			cwd: config.src[appOrRb].client.libs.dir
+			cwd: config.src[appOrRb].client.bower.dir
 		.on 'log', (result) ->
 			console.log "bower: #{result.id.cyan} #{result.message.cyan}"
 		.on 'error', (e) ->
@@ -33,8 +33,11 @@ module.exports = (gulp, config) ->
 		]).done -> defer.resolve()
 		defer.promise
 
+	# task deps
+	# =========
+	taskDeps = ["#{config.rb.prefix.task}build-bower-json"]
+
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}bower",
-	["#{config.rb.prefix.task}build-bower-json"], ->
+	gulp.task "#{config.rb.prefix.task}bower", taskDeps, ->
 		runTasks()

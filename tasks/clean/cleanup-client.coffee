@@ -27,6 +27,7 @@ module.exports = (gulp, config) ->
 				]
 			->  delTask [
 					config.glob.dist.rb.client.all
+					config.glob.dist.app.client.bower.all
 					config.glob.dist.app.client.libs.all
 					config.glob.dist.app.client.scripts.all
 					config.glob.dist.app.client.styles.all

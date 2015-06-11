@@ -25,7 +25,7 @@ module.exports = (config) ->
 	helper =
 		getPath: (pkgName, file, loc='rb') ->
 			path.join(
-				config.src[loc].client.libs.dir
+				config.src[loc].client.bower.dir
 				pkgName
 				file
 			)
@@ -119,7 +119,7 @@ module.exports = (config) ->
 		forceInstall: (loc='rb') -> # technique for users to get bower updates
 			force     = false
 			bowerJson = me.get.json.from.appOrRb(loc)
-			dir       = config.src[loc].client.libs.dir
+			dir       = config.src[loc].client.bower.dir
 			_path     = path.join dir, '.bower'
 
 			if not fileHelp.exists _path
@@ -132,7 +132,7 @@ module.exports = (config) ->
 					force = true
 				if force
 					del.sync dir, force:true
-					console.log "#{loc} libs directory cleaned".yellow
+					console.log "#{loc} bower_components directory cleaned".yellow
 
 			mkdirp.sync dir
 			fileHelp.write.json _path, bowerJson if force
@@ -146,7 +146,7 @@ module.exports = (config) ->
 			installed:
 				pkg: (pkg, loc='rb') ->
 					_path = path.join(
-								config.src[loc].client.libs.dir
+								config.src[loc].client.bower.dir
 								pkg
 								config.bower[loc].file
 							)
@@ -162,7 +162,7 @@ module.exports = (config) ->
 						# console.log pkg, loc
 						require(
 							path.join(
-								config.src[loc].client.libs.dir
+								config.src[loc].client.bower.dir
 								pkg
 								config.bower[loc].file
 							)
