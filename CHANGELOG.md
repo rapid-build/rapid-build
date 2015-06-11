@@ -1,3 +1,11 @@
+## 0.6.0 (2015-06-11)
+
+
+#### Features
+
+* **libs:** add support for client 3rd party libs and move bower comps to bower_components ([41d671f4](https://github.com/jyounce/rapid-build/commit/41d671f4))
+
+
 ## 0.5.0 (2015-06-09)
 
 
