@@ -23,8 +23,8 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}build-config", taskDeps, ->
 		runTask(
-			config.json.config.template
-			config.json.config.dir
-			config.json.config.file
+			config.templates.config.src.path
+			config.templates.config.dest.dir
+			config.templates.config.dest.file
 			format.json config
 		)

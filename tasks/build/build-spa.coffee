@@ -19,8 +19,8 @@ module.exports = (gulp, config) ->
 	# helpers
 	# =======
 	getFilesJson = ->
-		moduleHelp.cache.delete config.json.files.path
-		files = require(config.json.files.path).client
+		moduleHelp.cache.delete config.templates.files.dest.path
+		files = require(config.templates.files.dest.path).client
 		files = pathHelp.removeLocPartial files, config.dist.app.client.dir
 		files
 

@@ -17,7 +17,7 @@ module.exports = (gulp, config) ->
 
 	runTasks = (loc, exclude) ->
 		defer  = q.defer()
-		client = require(config.json.files.path).client
+		client = require(config.templates.files.dest.path).client
 		q.all([
 			# styles
 			runTask(

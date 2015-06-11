@@ -12,6 +12,6 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}clean-files", ->
-		runTask config.json.files.path
+		runTask config.templates.files.dest.path
 
 

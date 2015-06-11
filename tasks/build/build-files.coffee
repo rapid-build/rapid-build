@@ -92,9 +92,9 @@ module.exports = (gulp, config) ->
 		defer = q.defer()
 		buildData().done ->
 			runTask(
-				config.json.files.template
-				config.json.files.dir
-				config.json.files.file
+				config.templates.files.src.path
+				config.templates.files.dest.dir
+				config.templates.files.dest.file
 				format.json data
 			).done -> defer.resolve()
 		defer.promise

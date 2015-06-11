@@ -14,6 +14,6 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}copy-server-config", ->
 		runTask(
-			config.json.config.path
+			config.templates.config.dest.path
 			config.dist.rb.server.scripts.dir
 		)

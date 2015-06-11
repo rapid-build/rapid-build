@@ -14,7 +14,7 @@ module.exports = (gulp, config) ->
 
 	runTasks = (loc, exclude) ->
 		defer  = q.defer()
-		client = require(config.json.files.path).client
+		client = require(config.templates.files.dest.path).client
 		stylesExclude  = if not client.styles.length  then '' else exclude
 		scriptsExclude = if not client.scripts.length then '' else exclude
 		q.all([
