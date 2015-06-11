@@ -2,6 +2,7 @@ module.exports = (gulp, config) ->
 	q        = require 'q'
 	rename   = require 'gulp-rename'
 	template = require 'gulp-template'
+	format   = require "#{config.req.helpers}/format"
 
 	runTask = (src, dest, file, data) ->
 		defer = q.defer()
@@ -25,5 +26,5 @@ module.exports = (gulp, config) ->
 			config.json.config.template
 			config.json.config.dir
 			config.json.config.file
-			JSON.stringify config, null, '\t'
+			format.json config
 		)

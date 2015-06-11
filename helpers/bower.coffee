@@ -18,7 +18,7 @@ module.exports = (config) ->
 	log      = require "#{config.req.helpers}/log"
 	isType   = require "#{config.req.helpers}/isType"
 	pathHelp = require "#{config.req.helpers}/path"
-	fileHelp = require("#{config.req.helpers}/file")()
+	fileHelp = require("#{config.req.helpers}/file") config
 
 	# helpers
 	# =======

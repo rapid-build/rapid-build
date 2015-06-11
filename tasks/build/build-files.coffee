@@ -4,6 +4,7 @@ module.exports = (gulp, config) ->
 	gs       = require 'glob-stream'
 	rename   = require 'gulp-rename'
 	template = require 'gulp-template'
+	format   = require "#{config.req.helpers}/format"
 	pathHelp = require "#{config.req.helpers}/path"
 	data     = client: styles:[], scripts:[]
 
@@ -94,7 +95,7 @@ module.exports = (gulp, config) ->
 				config.json.files.template
 				config.json.files.dir
 				config.json.files.file
-				JSON.stringify data, null, '\t'
+				format.json data
 			).done -> defer.resolve()
 		defer.promise
 

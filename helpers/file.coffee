@@ -1,5 +1,6 @@
-module.exports = ->
-	fs = require 'fs'
+module.exports = (config) ->
+	fs     = require 'fs'
+	format = require "#{config.req.helpers}/format"
 
 	exists: (_path) ->
 		try
@@ -14,10 +15,7 @@ module.exports = ->
 
 	write:
 		json: (_path, data, pretty=true) ->
-			if pretty
-				data = JSON.stringify data, null, '\t'
-			else
-				data = JSON.stringify data
+			data = format.json data
 			fs.writeFileSync _path, data
 
 
