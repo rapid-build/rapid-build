@@ -73,8 +73,10 @@ gulp rapid-build:prod
 # ===================================================================================================================================================================
 ```
 
+##### CHANGELOG
+Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).
 
-#### Develop Rapidly!
+### Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg)
 
 
