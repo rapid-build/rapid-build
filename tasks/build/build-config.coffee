@@ -2,7 +2,7 @@ module.exports = (gulp, config) ->
 	q        = require 'q'
 	rename   = require 'gulp-rename'
 	template = require 'gulp-template'
-	format   = require "#{config.req.helpers}/format"
+	format   = require("#{config.req.helpers}/format")()
 
 	runTask = (src, dest, file, data) ->
 		defer = q.defer()

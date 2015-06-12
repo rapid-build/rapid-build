@@ -3,6 +3,7 @@ module.exports = (gulp, config) ->
 	template   = require 'gulp-template'
 	pathHelp   = require "#{config.req.helpers}/path"
 	moduleHelp = require "#{config.req.helpers}/module"
+	format     = require("#{config.req.helpers}/format")()
 
 	# task
 	# ====
@@ -22,6 +23,8 @@ module.exports = (gulp, config) ->
 		moduleHelp.cache.delete config.templates.files.dest.path
 		files = require(config.templates.files.dest.path).client
 		files = pathHelp.removeLocPartial files, config.dist.app.client.dir
+		files.styles  = format.paths.to.html files.styles, 'styles', join: true, lineEnding: '\n\t'
+		files.scripts = format.paths.to.html files.scripts, 'scripts', join: true, lineEnding: '\n\t'
 		files
 
 	getData = ->

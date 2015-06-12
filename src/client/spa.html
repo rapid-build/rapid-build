@@ -12,15 +12,13 @@
 	<script>(function(w){if(w.top===w.self){var a=w.document.getElementById('antiClickjack');a.parentNode.removeChild(a);}else{w.top.location=w.self.location;}}(window));</script>
 	<!-- ClickJacking Defense end -->
 
-	<% _.forEach(styles, function(style) { %><link rel="stylesheet" href="<%= style %>" />
-	<% }); %>
+	<%= styles %>
 	<!-- When you load angular at the bottom, you need to create the "ng-cloak" rules yourself -->
 	<style>[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\:form{display:block;}</style>
 </head>
 <body ng-cloak class="ng-cloak">
 	<div ng-view></div>
 
-	<% _.forEach(scripts, function(script) { %><script src="<%= script %>"></script>
-	<% }); %>
+	<%= scripts %>
 </body>
 </html>

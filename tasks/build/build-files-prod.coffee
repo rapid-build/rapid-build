@@ -3,8 +3,8 @@ module.exports = (gulp, config) ->
 	gs       = require 'glob-stream'
 	rename   = require 'gulp-rename'
 	template = require 'gulp-template'
-	format   = require "#{config.req.helpers}/format"
 	pathHelp = require "#{config.req.helpers}/path"
+	format   = require("#{config.req.helpers}/format")()
 	data     = client: styles:[], scripts:[]
 
 	# task

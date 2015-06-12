@@ -1,6 +1,6 @@
 module.exports = (config) ->
 	fs     = require 'fs'
-	format = require "#{config.req.helpers}/format"
+	format = require("#{config.req.helpers}/format")()
 
 	exists: (_path) ->
 		try
