@@ -33,8 +33,8 @@ module.exports = (gulp, config) ->
 			scripts:     files.scripts
 			styles:      files.styles
 			moduleName:  config.angular.moduleName
-			title:       config.spaFile.title
-			description: config.spaFile.description
+			title:       config.spa.title
+			description: config.spa.description
 
 	# register task
 	# =============

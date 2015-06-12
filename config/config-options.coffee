@@ -21,8 +21,8 @@
 # angular.moduleName                           = (string)  application module name
 # angular.templateCache.dev.enable             = (boolean) defaults to false
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
-# spaFile.title                                = (string)  defaults to package.json name
-# spaFile.description                          = (string)  defaults to package.json description
+# spa.title                                    = (string)  defaults to package.json name
+# spa.description                              = (string)  defaults to package.json description
 # ===============================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -75,17 +75,17 @@ module.exports = (config, options) ->
 		options.angular.templateCache.dev = {} if not isType.object options.angular.templateCache.dev
 		options.angular.templateCache.dev.enable = null if not isType.boolean options.angular.templateCache.dev.enable
 
-	formatSpaFileOptions = ->
-		options.spaFile = {} if not isType.object options.spaFile
-		options.spaFile.title       = null if not isType.string options.spaFile.title
-		options.spaFile.description = null if not isType.string options.spaFile.description
+	formatSpaOptions = ->
+		options.spa = {} if not isType.object options.spa
+		options.spa.title       = null if not isType.string options.spa.title
+		options.spa.description = null if not isType.string options.spa.description
 
 	formatOptions()
 	formatServerOptions()
 	formatPortOptions()
 	formatOrderOptions()
 	formatAngularOptions()
-	formatSpaFileOptions()
+	formatSpaOptions()
 
 	# logs
 	# ====

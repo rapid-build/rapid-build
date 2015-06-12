@@ -68,8 +68,8 @@ gulp rapid-build:prod
 # angular.version                              = (string)  defaults to '1.x' = semver version required
 # angular.templateCache.dev.enable             = (boolean) defaults to false = use template cache when running default and dev task
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
-# spaFile.title                                = (string)  defaults to package.json name or 'Application'
-# spaFile.description                          = (string)  defaults to package.json description
+# spa.title                                    = (string)  defaults to package.json name or 'Application' = html title tag value
+# spa.description                              = (string)  defaults to package.json description = html meta description tag value
 # ===================================================================================================================================================================
 ```
 
