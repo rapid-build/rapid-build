@@ -1,14 +1,11 @@
 # rapid-build
-
 **Under Development (not for use yet)**
 
 ## Installation
+Note: rapid-build depends on [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0
 ```bash
 $ npm install rapid-build
 ```
-
-## Information
-rapid-build depends on [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0
 
 ## More documentation coming real soon!
 This will get you started:
