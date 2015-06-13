@@ -1,19 +1,36 @@
 module.exports = (gulp, config) ->
 	q          = require 'q'
+	gulpif     = require 'gulp-if'
+	rename     = require 'gulp-rename'
+	replace    = require 'gulp-replace'
 	template   = require 'gulp-template'
 	pathHelp   = require "#{config.req.helpers}/path"
 	moduleHelp = require "#{config.req.helpers}/module"
 	format     = require("#{config.req.helpers}/format")()
 
+	# helpers
+	# =======
+	runReplace = (type) ->
+		newKey  = "<%= #{type} %>"
+		key     = "<!--#include #{type}-->"
+		exclude = config.spa.exclude[type]
+		gulpif not exclude, replace key, newKey
+
 	# task
 	# ====
-	runTask = (src, dest, data={}) ->
+	runTask = (src, dest, file, data={}) ->
 		defer = q.defer()
 		gulp.src src
+			.pipe rename file
+			.pipe runReplace 'styles'
+			.pipe runReplace 'scripts'
+			.pipe runReplace 'moduleName'
+			.pipe runReplace 'title'
+			.pipe runReplace 'description'
 			.pipe template data
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log 'spa.html built'.yellow
+				# console.log "#{file} built".yellow
 				defer.resolve()
 		defer.promise
 
@@ -41,8 +58,9 @@ module.exports = (gulp, config) ->
 	gulp.task "#{config.rb.prefix.task}build-spa", ->
 		data = getData()
 		runTask(
-			config.src.rb.client.spa.path
+			config.spa.src.path
 			config.dist.app.client.dir
+			config.spa.dist.file
 			data
 		)
 

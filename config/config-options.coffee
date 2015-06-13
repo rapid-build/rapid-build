@@ -4,7 +4,6 @@
 # dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
 # dist.client.bower.dir                        = (string)  defaults to 'bower_components'
 # dist.client.libs.dir                         = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
-# dist.client.spa.file                         = (string)  defaults to 'spa.html'
 # dist.server.dir                              = (string)  defaults to 'server'
 # dist.server.file                             = (string)  defaults to 'routes.js'
 # src.dir                                      = (string)  defaults to 'src'
@@ -23,14 +22,19 @@
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
 # spa.title                                    = (string)  defaults to package.json name
 # spa.description                              = (string)  defaults to package.json description
+# spa.src.file                                 = (string)  defaults to 'spa.html'
+# spa.src.dir                                  = (string)  defaults to null
+# spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
+# spa.exclude.styles                           = (boolean) defaults to false
+# spa.exclude.scripts                          = (boolean) defaults to false
 # ===============================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
 
-	# options
-	# =======
-	formatOptions = ->
+	# format options
+	# ==============
+	distAndSrcOptions = ->
 		['dist', 'src'].forEach (v1) ->
 			options[v1] = {} if not isType.object options[v1]
 			options[v1].dir = null if not isType.string options[v1].dir
@@ -43,20 +47,16 @@ module.exports = (config, options) ->
 				['bower', 'images', 'libs', 'scripts', 'styles', 'views'].forEach (v3) ->
 					options[v1][v2][v3] = {} if not isType.object options[v1][v2][v3]
 					options[v1][v2][v3].dir = null if not isType.string options[v1][v2][v3].dir
-				# spa dist file
-				if v1 is 'dist'
-					options[v1][v2].spa = {} if not isType.object options[v1][v2].spa
-					options[v1][v2].spa.file = null if not isType.string options[v1][v2].spa.file
 
-	formatServerOptions	= -> # app server dist entry file
+	serverOptions = -> # app server dist entry file
 		options.dist.server.file = null if not isType.string options.dist.server.file
 
-	formatPortOptions = -> # server ports
+	portOptions = -> # server ports
 		options.ports = {} if not isType.object options.ports
 		options.ports.server = null if not isType.number options.ports.server
 		options.ports.reload = null if not isType.number options.ports.reload
 
-	formatOrderOptions = ->
+	orderOptions = ->
 		options.order = {} if not isType.object options.order
 		options.order.scripts = {} if not isType.object options.order.scripts
 		options.order.styles  = {} if not isType.object options.order.styles
@@ -65,7 +65,7 @@ module.exports = (config, options) ->
 		options.order.styles.first  = null if not isType.array options.order.styles.first
 		options.order.styles.last   = null if not isType.array options.order.styles.last
 
-	formatAngularOptions = ->
+	angularOptions = ->
 		options.angular = {} if not isType.object options.angular
 		options.angular.modules       = null if not isType.array options.angular.modules
 		options.angular.version       = null if not isType.string options.angular.version
@@ -75,17 +75,25 @@ module.exports = (config, options) ->
 		options.angular.templateCache.dev = {} if not isType.object options.angular.templateCache.dev
 		options.angular.templateCache.dev.enable = null if not isType.boolean options.angular.templateCache.dev.enable
 
-	formatSpaOptions = ->
+	spaOptions = ->
 		options.spa = {} if not isType.object options.spa
 		options.spa.title       = null if not isType.string options.spa.title
 		options.spa.description = null if not isType.string options.spa.description
+		options.spa.src         = {}   if not isType.object options.spa.src
+		options.spa.dist        = {}   if not isType.object options.spa.dist
+		options.spa.exclude     = {}   if not isType.object options.spa.exclude
+		options.spa.src.dir     = null if not isType.string options.spa.src.dir
+		options.spa.src.file    = null if not isType.string options.spa.src.file
+		options.spa.dist.file   = null if not isType.string options.spa.dist.file
+		options.spa.exclude.styles  = null if not isType.boolean options.spa.exclude.styles
+		options.spa.exclude.scripts = null if not isType.boolean options.spa.exclude.scripts
 
-	formatOptions()
-	formatServerOptions()
-	formatPortOptions()
-	formatOrderOptions()
-	formatAngularOptions()
-	formatSpaOptions()
+	distAndSrcOptions()
+	serverOptions()
+	portOptions()
+	orderOptions()
+	angularOptions()
+	spaOptions()
 
 	# logs
 	# ====

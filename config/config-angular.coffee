@@ -30,8 +30,8 @@ module.exports = (config, options) ->
 	angular.templateCache.dev.enable       = options.angular.templateCache.dev.enable or false
 	angular.templateCache.useAbsolutePaths = options.angular.templateCache.useAbsolutePaths or false
 
-	# bower dependencies
-	# ==================
+	# rb bower dependencies
+	# =====================
 	angular.bowerDeps =
 		'angular':          angular.version
 		'angular-resource': angular.version

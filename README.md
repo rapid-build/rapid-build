@@ -48,7 +48,6 @@ gulp rapid-build:prod
 # dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
 # dist.client.bower.dir                        = (string)  defaults to 'bower_components'
 # dist.client.libs.dir                         = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
-# dist.client.spa.file                         = (string)  defaults to 'spa.html'
 # dist.server.dir                              = (string)  defaults to 'server'
 # dist.server.file                             = (string)  defaults to 'routes.js'
 # src.dir                                      = (string)  defaults to 'src'
@@ -67,7 +66,12 @@ gulp rapid-build:prod
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
 # spa.title                                    = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                              = (string)  defaults to package.json description = html meta description tag value
-# ===================================================================================================================================================================
+# spa.src.file                                 = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
+# spa.src.dir                                  = (string)  defaults to null = set if you are using your own spa file and that file is located in a directory in your client src directory
+# spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
+# spa.exclude.styles                           = (boolean) defaults to false = set to true to exclude styles from the spa file
+# spa.exclude.scripts                          = (boolean) defaults to false = set to true to exclude scripts from the spa file
+# ==============================================================================================================================================================================================================
 ```
 
 ##### CHANGELOG

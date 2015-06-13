@@ -95,7 +95,7 @@ module.exports = (gulp, config, browserSync) ->
 
 	events = (file, taskName, opts={}) -> # add, change, unlink
 		log.watch taskName, file, opts
-		return tasks.buildSpa() if taskName is 'spa.html'
+		return tasks.buildSpa() if taskName is 'build spa'
 		return if not file
 		return if not file.event
 		return if not file.path
@@ -129,6 +129,15 @@ module.exports = (gulp, config, browserSync) ->
 		else
 			createWatch glob.src.html, 'html', lang:'html', srcType:'views', bsReload:true
 
+	# spa watch (if custom spa file then watch it)
+	# ============================================
+	spaWatch = ->
+		if config.spa.custom
+			return createWatch config.spa.src.path, 'build spa', lang:config.spa.dist.file
+		defer = q.defer()
+		defer.resolve()
+		defer.promise
+
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}watch", ->
@@ -149,7 +158,7 @@ module.exports = (gulp, config, browserSync) ->
 			# views
 			htmlWatch()
 			# spa
-			# createWatch config.src.rb.client.spa.path, 'spa.html', lang:'spa.html'
+			spaWatch()
 		]).done -> defer.resolve()
 		defer.promise
 

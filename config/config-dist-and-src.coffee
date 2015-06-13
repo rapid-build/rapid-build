@@ -17,7 +17,6 @@ module.exports = (config, options) ->
 		views:   'views'
 
 	file =
-		spa:       'spa.html'
 		appServer: 'routes' # app server dist entry file
 		rbServer:  'server' # rb server dist bootstrap file
 
@@ -113,23 +112,6 @@ module.exports = (config, options) ->
 					else
 						v3.dirName = dir[k3]
 	addDirName 'dist'
-
-	# add spa
-	# =======
-	getDistSpa = ->
-		spaFile = options.dist.client.spa.file or file.spa
-		path.join config.dist.app.client.dir, spaFile
-
-	getSrcSpa = ->
-		path.join config.src.rb.client.dir, file.spa
-
-	config.dist.app.client.spa =
-		file: options.dist.client.spa.file or file.spa
-		path: getDistSpa()
-
-	config.src.rb.client.spa =
-		file: file.spa
-		path: getSrcSpa()
 
 	# server
 	# ======

@@ -45,7 +45,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		opts.module = config.angular.moduleName
 		gulp.src src
 			.pipe addToDistPath()
-			.pipe gulpif isProd, minifyHtml()
+			.pipe gulpif isProd, minifyHtml empty:true, conditionals:true, ssi:true
 			.pipe templateCache file, opts
 			.pipe gulp.dest dest
 			.on 'end', ->

@@ -1,10 +1,10 @@
 <!doctype html>
-<html xmlns:ng="http://angularjs.org" xmlns:app="ignored" ng-app="<%= moduleName %>">
+<html xmlns:ng="http://angularjs.org" xmlns:app="ignored" ng-app="<!--#include moduleName-->">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title><%= title %></title>
-	<meta name="description" content="<%= description %>" />
+	<title><!--#include title--></title>
+	<meta name="description" content="<!--#include description-->" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<!-- ClickJacking Defense begin (https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet) -->
@@ -12,13 +12,13 @@
 	<script>(function(w){if(w.top===w.self){var a=w.document.getElementById('antiClickjack');a.parentNode.removeChild(a);}else{w.top.location=w.self.location;}}(window));</script>
 	<!-- ClickJacking Defense end -->
 
-	<%= styles %>
+	<!--#include styles-->
 	<!-- When you load angular at the bottom, you need to create the "ng-cloak" rules yourself -->
 	<style>[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\:form{display:block;}</style>
 </head>
 <body ng-cloak class="ng-cloak">
 	<div ng-view></div>
 
-	<%= scripts %>
+	<!--#include scripts-->
 </body>
 </html>
