@@ -92,6 +92,7 @@ gulp rapid-build:prod
 
 ### Build Modes
 **Common Tasks (all 3 builds do the following tasks first):**
+
 1. install bower components (if they aren't installed)
 2. copy the following files to the dist directory
 	* css - (client)
