@@ -91,8 +91,7 @@ gulp rapid-build:prod
 ```
 
 ### Build Modes
-**Common Tasks (all 3 builds do the following tasks first):**
-
+#####Common Tasks (all 3 builds do the following tasks first):
 1. install bower components (if they aren't installed)
 2. copy the following files to the dist directory
 	* css - (client)
@@ -106,20 +105,20 @@ gulp rapid-build:prod
 		* es6 -> js - (client and server)
 		* less -> css - (client)
 
-**Default Build:**
+#####Default Build:
 1. run common tasks (see above)
 2. build the spa.html file then copy to dist/client/
 3. start the server
 4. open the browser
 
-**Dev Build:**
+#####Dev Build:
 1. run common tasks (see above)
 2. build the spa.html file then copy to dist/client/
 3. start the server
 4. open the browser
 5. fireup the file watchers (on saving a file, the browser will refresh)
 
-**Prod Build:**
+#####Prod Build:
 1. run common tasks (see above)
 2. concatenate application files
 	* css
