@@ -1,37 +1,51 @@
 # rapid-build
-**Under Development (not for use yet)**
+**Developing**, not for use yet.  
+**Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0
+
+*More and better documentation coming real soon!*
 
 ## Installation
-Note: rapid-build depends on [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0
 ```bash
 $ npm install rapid-build
 ```
 
-## More documentation coming real soon!
-This will get you started:
-
-```javascript
-var config = {} // optional config
-var rapid = require('rapid-build')(config) // init to pass in config options
-
-// rapid returns a promise and has 1 optional param 'dev' or 'prod'
-rapid().then(function() {
-	console.log('whatever you want')
-})
-```
-OR
+## How To Use
+**As a function:**
 
 ```javascript
 /**
- * if you are using gulp
- * in your gulpfile.js (there are 3 available tasks)
- * first require rapid-build and provide it gulp
- */
-var gulp = require('gulp')
-var config = {} // optional config
-require('rapid-build')(gulp, config)
+ * Init rapid-build.
+ * Rapid uses smart defaults.
+ * Pass in options if you need customization.
+ * *******************************************/
+var options = {}
+var rapid = require('rapid-build')(options) // init rapid, pass in options here
 
-// as a gulp task dependency
+/**
+ * After initializing rapid, execute it to kick off the build.
+ * 1 optional param (the build mode), values are: nothing, 'dev' or 'prod'.
+ * Rapid has 3 build modes: default, dev and prod (see build modes).
+ */
+rapid().then(function() {
+	console.log('whatever you want') // probably won't need to do anything
+})
+```
+
+**Or as a gulp task:** ([gulp required](http://gulpjs.com/))
+
+```javascript
+/**
+ * Steps if you are using gulp.
+ * In your gulpfile.js init rapid-build and
+ * pass in gulp (pass in options too if you need customization).
+ * 3 build tasks become available after initializing rapid (see build modes).
+ * Build tasks are: 'rapid-build', 'rapid-build:dev' and 'rapid-build:prod'
+ * ***************************************************************************/
+var gulp = require('gulp')
+var options = {}
+require('rapid-build')(gulp, options)
+
+// execute rapid via a gulp task dependency
 gulp.task('default', ['rapid-build'])
 
 // or from the terminal type one of the 3:
@@ -40,9 +54,11 @@ gulp rapid-build:dev
 gulp rapid-build:prod
 ```
 
-##### Config Documentation - (better documentation coming soon)
+### Options API
 ```coffeescript
-# CONFIG API (optional): config is an object
+# Example: options.ports.server = 5000
+# Options is an object, you can set the following properties:
+# -----------------------------------------------------------
 # dist.dir                                     = (string)  defaults to 'dist'
 # dist.client.dir                              = (string)  defaults to 'client'
 # dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
@@ -74,10 +90,66 @@ gulp rapid-build:prod
 # ==============================================================================================================================================================================================================
 ```
 
-##### CHANGELOG
+### Build Modes
+**Common Tasks (all 3 builds do the following tasks first):**
+1. install bower components (if they aren't installed)
+2. copy the following files to the dist directory
+	* css - (client)
+	* images - (client)
+	* js - (client and server)
+	* html - (client)
+	* libs - (client) (everything in the libs directory)
+	* bower components - (client) (files in every bower.json's main prop)
+	* compile then copy to dist
+		* coffee -> js - (client and server)
+		* es6 -> js - (client and server)
+		* less -> css - (client)
+
+**Default Build:**
+1. run common tasks (see above)
+2. build the spa.html file then copy to dist/client/
+3. start the server
+4. open the browser
+
+**Dev Build:**
+1. run common tasks (see above)
+2. build the spa.html file then copy to dist/client/
+3. start the server
+4. open the browser
+5. fireup the file watchers (on saving a file, the browser will refresh)
+
+**Prod Build:**
+1. run common tasks (see above)
+2. concatenate application files
+	* css
+	* js
+3. minify the application files
+	* css
+	* js
+4. prepend libs to the application file
+	* css
+	* js
+5. prepend bower components to the application file
+	* css (styles.min.css created)
+	* js (scripts.min.css created)
+6. build the spa.html file
+7. minify the spa.html file
+8. minify server js files
+9. start the server
+
+#### CHANGELOG
 Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).
 
-### Develop Rapidly!
+## Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg)
+
+
+
+
+
+
+
+
+
 
 
