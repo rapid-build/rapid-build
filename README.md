@@ -121,17 +121,17 @@ gulp rapid-build:prod
 **Prod Build:**
 1. run common tasks (see above)
 2. concatenate application files
-..* css
-..* js
+	* css
+	* js
 3. minify the application files
-..* css
-..* js
+	* css
+	* js
 4. prepend libs to the application file
-..* css
-..* js
+	* css
+	* js
 5. prepend bower components to the application file
-..* css (styles.min.css created)
-..* js (scripts.min.css created)
+	* css (styles.min.css created)
+	* js (scripts.min.css created)
 6. build the spa.html file
 7. minify the spa.html file
 8. minify server js files
