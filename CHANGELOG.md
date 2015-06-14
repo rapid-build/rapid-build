@@ -1,3 +1,16 @@
+## 0.8.0 (2015-06-14)
+
+
+#### Bug Fixes
+
+* **config:** change config option name spaFile to spa ([0dbd5dca](https://github.com/jyounce/rapid-build/commit/0dbd5dca))
+
+
+#### Features
+
+* **options:** add option to use a custom spa file and not the build system's ([763322ca](https://github.com/jyounce/rapid-build/commit/763322ca))
+
+
 ## 0.7.0 (2015-06-11)
 
 
