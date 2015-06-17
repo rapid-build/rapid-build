@@ -1,3 +1,11 @@
+## 0.9.0 (2015-06-16)
+
+
+#### Features
+
+* **options:** add ability to exclude angular files from the build ([7d06c14c](https://github.com/jyounce/rapid-build/commit/7d06c14c))
+
+
 ## 0.8.0 (2015-06-14)
 
 
