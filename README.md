@@ -80,6 +80,7 @@ gulp rapid-build:prod
 # angular.version                              = (string)  defaults to '1.x' = semver version required
 # angular.templateCache.dev.enable             = (boolean) defaults to false = use template cache when running default and dev task
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
+# angular.exclude.files                        = (boolean) defaults to false = set to true to exclude angular files (lib and modules)
 # spa.title                                    = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                              = (string)  defaults to package.json description = html meta description tag value
 # spa.src.file                                 = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)

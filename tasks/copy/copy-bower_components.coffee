@@ -33,17 +33,21 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
+	getComponents = (appOrRb, exclude) ->
+		return if exclude
+			defer = q.defer()
+			defer.resolve()
+			defer.promise
+		runTask(
+			bowerHelper.get.src appOrRb
+			config.dist[appOrRb].client.bower.dir
+		)
+
 	runTasks = ->
 		defer = q.defer()
 		q.all([
-			runTask(
-				bowerHelper.get.src 'rb'
-				config.dist.rb.client.bower.dir
-			)
-			runTask(
-				bowerHelper.get.src 'app'
-				config.dist.app.client.bower.dir
-			)
+			getComponents 'rb', config.angular.exclude.files
+			getComponents 'app'
 		]).done -> defer.resolve()
 		defer.promise
 

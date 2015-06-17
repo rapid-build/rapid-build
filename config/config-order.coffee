@@ -18,6 +18,15 @@ module.exports = (config, options) ->
 		libs:    config.dist.rb.client.libs.dirName
 		scripts: getDirName 'rb', 'scripts'
 		styles:  getDirName 'rb', 'styles'
+	
+	rb.files =
+		rb: ["#{rb.scripts}/app"]
+		angular: [
+			"#{rb.bower}/angular"
+			"#{rb.bower}/angular-resource"
+			"#{rb.bower}/angular-route"
+			"#{rb.bower}/angular-sanitize"
+		]
 
 	# init order
 	# =========
@@ -35,13 +44,9 @@ module.exports = (config, options) ->
 
 	# rb order
 	# ========
-	order.rb.scripts.first = [
-		"#{rb.bower}/angular"
-		"#{rb.bower}/angular-resource"
-		"#{rb.bower}/angular-route"
-		"#{rb.bower}/angular-sanitize"
-		"#{rb.scripts}/app"
-	]
+	files = []
+	files = files.concat rb.files.angular if not options.angular.exclude.files
+	order.rb.scripts.first = files.concat rb.files.rb
 
 	# process order
 	# =============

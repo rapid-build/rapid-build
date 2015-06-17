@@ -20,6 +20,7 @@
 # angular.moduleName                           = (string)  application module name
 # angular.templateCache.dev.enable             = (boolean) defaults to false
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
+# angular.exclude.files                        = (boolean) defaults to false
 # spa.title                                    = (string)  defaults to package.json name
 # spa.description                              = (string)  defaults to package.json description
 # spa.src.file                                 = (string)  defaults to 'spa.html'
@@ -27,6 +28,9 @@
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
 # spa.exclude.styles                           = (boolean) defaults to false
 # spa.exclude.scripts                          = (boolean) defaults to false
+# spa.exclude.title                            = (boolean) defaults to false
+# spa.exclude.moduleName                       = (boolean) defaults to false
+# spa.exclude.description                      = (boolean) defaults to false
 # ===============================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -70,6 +74,8 @@ module.exports = (config, options) ->
 		options.angular.modules       = null if not isType.array options.angular.modules
 		options.angular.version       = null if not isType.string options.angular.version
 		options.angular.moduleName    = null if not isType.string options.angular.moduleName
+		options.angular.exclude       = {}   if not isType.object options.angular.exclude
+		options.angular.exclude.files = null if not isType.boolean options.angular.exclude.files
 		options.angular.templateCache = {}   if not isType.object options.angular.templateCache
 		options.angular.templateCache.useAbsolutePaths = null if not isType.boolean options.angular.templateCache.useAbsolutePaths
 		options.angular.templateCache.dev = {} if not isType.object options.angular.templateCache.dev
@@ -85,8 +91,11 @@ module.exports = (config, options) ->
 		options.spa.src.dir     = null if not isType.string options.spa.src.dir
 		options.spa.src.file    = null if not isType.string options.spa.src.file
 		options.spa.dist.file   = null if not isType.string options.spa.dist.file
-		options.spa.exclude.styles  = null if not isType.boolean options.spa.exclude.styles
-		options.spa.exclude.scripts = null if not isType.boolean options.spa.exclude.scripts
+		options.spa.exclude.styles      = null if not isType.boolean options.spa.exclude.styles
+		options.spa.exclude.scripts     = null if not isType.boolean options.spa.exclude.scripts
+		options.spa.exclude.title       = null if not isType.boolean options.spa.exclude.title
+		options.spa.exclude.moduleName  = null if not isType.boolean options.spa.exclude.moduleName
+		options.spa.exclude.description = null if not isType.boolean options.spa.exclude.description
 
 	distAndSrcOptions()
 	serverOptions()
