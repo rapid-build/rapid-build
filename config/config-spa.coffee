@@ -46,12 +46,7 @@ module.exports = (config, options) ->
 
 	# exclude
 	# =======
-	spa.exclude =
-		styles:      options.spa.exclude.styles or false
-		scripts:     options.spa.exclude.scripts or false
-		title:       options.spa.exclude.title or false
-		moduleName:  options.spa.exclude.moduleName or false
-		description: options.spa.exclude.description or false
+	spa.exclude = options.spa.exclude or []
 
 	# add spa to config
 	# =================

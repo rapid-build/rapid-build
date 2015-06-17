@@ -11,10 +11,15 @@ module.exports = (gulp, config) ->
 	# helpers
 	# =======
 	runReplace = (type) ->
-		newKey  = "<%= #{type} %>"
-		key     = "<!--#include #{type}-->"
-		exclude = config.spa.exclude[type]
-		gulpif not exclude, replace key, newKey
+		newKey    = "<%= #{type} %>"
+		key       = "<!--#include #{type}-->"
+		exclude   = config.spa.exclude
+		replacePH = true # PH = placeholder
+		if exclude.indexOf('all') isnt -1
+			replacePH = false
+		else if exclude.indexOf(type) isnt -1
+			replacePH = false
+		gulpif replacePH, replace key, newKey
 
 	# task
 	# ====
@@ -22,11 +27,11 @@ module.exports = (gulp, config) ->
 		defer = q.defer()
 		gulp.src src
 			.pipe rename file
-			.pipe runReplace 'styles'
-			.pipe runReplace 'scripts'
-			.pipe runReplace 'moduleName'
-			.pipe runReplace 'title'
 			.pipe runReplace 'description'
+			.pipe runReplace 'moduleName'
+			.pipe runReplace 'scripts'
+			.pipe runReplace 'styles'
+			.pipe runReplace 'title'
 			.pipe template data
 			.pipe gulp.dest dest
 			.on 'end', ->

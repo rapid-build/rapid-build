@@ -26,12 +26,8 @@
 # spa.src.file                                 = (string)  defaults to 'spa.html'
 # spa.src.dir                                  = (string)  defaults to null
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
-# spa.exclude.styles                           = (boolean) defaults to false
-# spa.exclude.scripts                          = (boolean) defaults to false
-# spa.exclude.title                            = (boolean) defaults to false
-# spa.exclude.moduleName                       = (boolean) defaults to false
-# spa.exclude.description                      = (boolean) defaults to false
-# ===============================================================================================================================
+# spa.exclude                                  = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# =====================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
@@ -87,15 +83,10 @@ module.exports = (config, options) ->
 		options.spa.description = null if not isType.string options.spa.description
 		options.spa.src         = {}   if not isType.object options.spa.src
 		options.spa.dist        = {}   if not isType.object options.spa.dist
-		options.spa.exclude     = {}   if not isType.object options.spa.exclude
+		options.spa.exclude     = null if not isType.array  options.spa.exclude
 		options.spa.src.dir     = null if not isType.string options.spa.src.dir
 		options.spa.src.file    = null if not isType.string options.spa.src.file
 		options.spa.dist.file   = null if not isType.string options.spa.dist.file
-		options.spa.exclude.styles      = null if not isType.boolean options.spa.exclude.styles
-		options.spa.exclude.scripts     = null if not isType.boolean options.spa.exclude.scripts
-		options.spa.exclude.title       = null if not isType.boolean options.spa.exclude.title
-		options.spa.exclude.moduleName  = null if not isType.boolean options.spa.exclude.moduleName
-		options.spa.exclude.description = null if not isType.boolean options.spa.exclude.description
 
 	distAndSrcOptions()
 	serverOptions()
