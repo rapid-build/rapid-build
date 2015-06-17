@@ -1,24 +1,26 @@
 module.exports = (gulp, config) ->
 	q         = require 'q'
-	rename    = require 'gulp-rename'
 	minifyCss = require 'gulp-minify-css'
 
-	runTask = (src, dest, file) ->
+	runTask = (appOrRb) ->
 		defer = q.defer()
-		gulp.src src
-			.pipe rename file
+		gulp.src config.glob.dist[appOrRb].client.styles.all
 			.pipe minifyCss()
-			.pipe gulp.dest dest
+			.pipe gulp.dest config.dist[appOrRb].client.styles.dir
 			.on 'end', ->
-				console.log "created #{file}".yellow
+				console.log "minified #{appOrRb} dist styles".yellow
 				defer.resolve()
+		defer.promise
+
+	runTasks = ->
+		defer = q.defer()
+		q.all([
+			runTask 'rb'
+			runTask 'app'
+		]).done -> defer.resolve()
 		defer.promise
 
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-css", ->
-		runTask(
-			config.temp.client.styles.all.path
-			config.temp.client.styles.dir
-			config.temp.client.styles.min.file
-		)
+		runTasks()

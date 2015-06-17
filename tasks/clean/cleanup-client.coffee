@@ -22,8 +22,10 @@ module.exports = (gulp, config) ->
 		defer = q.defer()
 		tasks = [
 			->  delTask [
-					config.temp.client.styles.all.path
-					config.temp.client.scripts.all.path
+					config.temp.client.scripts.glob
+					config.temp.client.styles.glob
+					"!#{config.temp.client.scripts.min.path}"
+					"!#{config.temp.client.styles.min.path}"
 				]
 			->  delTask [
 					config.glob.dist.rb.client.all
@@ -33,7 +35,7 @@ module.exports = (gulp, config) ->
 					config.glob.dist.app.client.styles.all
 				]
 			->  moveTask(
-					"#{config.temp.client.dir}/**/*"
+					config.temp.client.glob
 					config.dist.app.client.dir
 				)
 			->  delTask config.temp.client.dir

@@ -68,9 +68,9 @@ module.exports = (config) ->
 
 	# dist
 	# ====
-	addGlob 'dist', 'bower',   ['all']
+	addGlob 'dist', 'bower',   ['all', 'css', 'js']
 	addGlob 'dist', 'images',  ['all']
-	addGlob 'dist', 'libs',    ['all']
+	addGlob 'dist', 'libs',    ['all', 'css', 'js']
 	addGlob 'dist', 'scripts', ['all']
 	addGlob 'dist', 'scripts', ['js' ], true, true
 	addGlob 'dist', 'styles',  ['all']

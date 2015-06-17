@@ -121,22 +121,16 @@ gulp rapid-build:prod
 
 #### Prod Build:
 1. run common tasks (see above)
-2. concatenate application files
+2. minify the application files
 	* css
 	* js
-3. minify the application files
-	* css
-	* js
-4. prepend libs to the application file
-	* css
-	* js
-5. prepend bower components to the application file
+3. concatenate files
 	* css (styles.min.css created)
 	* js (scripts.min.css created)
-6. build the spa.html file
-7. minify the spa.html file
-8. minify server js files
-9. start the server
+4. build the spa.html file
+5. minify the spa.html file
+6. minify server js files
+7. start the server
 
 ## Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg)

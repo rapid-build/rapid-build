@@ -18,7 +18,7 @@ module.exports = (config, options) ->
 		libs:    config.dist.rb.client.libs.dirName
 		scripts: getDirName 'rb', 'scripts'
 		styles:  getDirName 'rb', 'styles'
-	
+
 	rb.files =
 		rb: ["#{rb.scripts}/app"]
 		angular: [
