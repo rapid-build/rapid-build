@@ -1,3 +1,17 @@
+## 0.10.0 (2015-06-17)
+
+
+#### Bug Fixes
+
+* **options:** fix options dist.client.dir and dist.server.dir ([99564c24](https://github.com/jyounce/rapid-build/commit/99564c24))
+* **prod build:** fix the loading order of scripts and styles ([6aad6b90](https://github.com/jyounce/rapid-build/commit/6aad6b90))
+
+
+#### Features
+
+* **options:** change option spa.exclude value to be an array of strings ([171426ff](https://github.com/jyounce/rapid-build/commit/171426ff))
+
+
 ## 0.9.0 (2015-06-16)
 
 
