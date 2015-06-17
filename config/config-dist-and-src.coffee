@@ -24,17 +24,22 @@ module.exports = (config, options) ->
 	# ====
 	getDirs = (loc, isApp) ->
 		o = {}
-		if loc is 'dist' or isApp
-			o.dir           = options[loc].dir
+
+		switch loc
+			when 'dist'
+				o.dir       = options[loc].dir
+				o.clientDir = options[loc].client.dir
+				o.serverDir = options[loc].server.dir
+			when 'src'
+				o.clientDir = options[loc].client.dir if isApp
+
 		if isApp
-			o.clientDir     = options[loc].client.dir
 			o.clientBower   = options[loc].client.bower.dir
 			o.clientImages  = options[loc].client.images.dir
 			o.clientLibs    = options[loc].client.libs.dir
 			o.clientScripts = options[loc].client.scripts.dir
 			o.clientStyles  = options[loc].client.styles.dir
 			o.clientViews   = options[loc].client.views.dir
-			o.serverDir     = options[loc].server.dir
 
 		dir: o.dir or dir[loc]
 		client:
