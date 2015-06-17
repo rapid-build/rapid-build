@@ -1,8 +1,9 @@
 # rapid-build
 **Developing**, not for use yet.  
-**Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0
+**Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0  
 
-*More and better documentation coming real soon!*
+Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
+More and better documentation *coming real soon*!
 
 ## Installation
 ```bash
@@ -10,7 +11,7 @@ $ npm install rapid-build
 ```
 
 ## How To Use
-**As a function:**
+##### As a function:
 
 ```javascript
 /**
@@ -31,7 +32,7 @@ rapid().then(function() {
 })
 ```
 
-**Or as a gulp task:** ([gulp required](http://gulpjs.com/))
+##### Or as a gulp task: ([gulp required](http://gulpjs.com/))
 
 ```javascript
 /**
@@ -54,7 +55,7 @@ gulp rapid-build:dev
 gulp rapid-build:prod
 ```
 
-### Options API
+## Options API
 ```coffeescript
 # Example: options.ports.server = 5000
 # Options is an object, you can set the following properties:
@@ -91,8 +92,8 @@ gulp rapid-build:prod
 # ==============================================================================================================================================================================================================
 ```
 
-### Build Modes
-#####Common Tasks (all 3 builds do the following tasks first):
+## Build Modes
+#### Common Tasks (all 3 builds do the following tasks first):
 1. install bower components (if they aren't installed)
 2. copy the following files to the dist directory
 	* css - (client)
@@ -106,20 +107,20 @@ gulp rapid-build:prod
 		* es6 -> js - (client and server)
 		* less -> css - (client)
 
-#####Default Build:
+#### Default Build:
 1. run common tasks (see above)
 2. build the spa.html file then copy to dist/client/
 3. start the server
 4. open the browser
 
-#####Dev Build:
+#### Dev Build:
 1. run common tasks (see above)
 2. build the spa.html file then copy to dist/client/
 3. start the server
 4. open the browser
 5. fireup the file watchers (on saving a file, the browser will refresh)
 
-#####Prod Build:
+#### Prod Build:
 1. run common tasks (see above)
 2. concatenate application files
 	* css
@@ -137,9 +138,6 @@ gulp rapid-build:prod
 7. minify the spa.html file
 8. minify server js files
 9. start the server
-
-#### CHANGELOG
-Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).
 
 ## Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg)
