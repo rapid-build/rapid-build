@@ -10,6 +10,40 @@ More and better documentation *coming real soon*!
 $ npm install rapid-build
 ```
 
+## Description
+*Rapidly* develop distributable client and server side packages/folders.
+rapid-build currently supports following technologies:
+* languages
+	* [css](https://developer.mozilla.org/en-US/docs/Web/CSS) and [less](http://lesscss.org/) (client)
+	* [html](https://developer.mozilla.org/en-US/docs/Web/HTML) (client)
+	* [js](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [es6](https://babeljs.io/) and [coffeescript](http://coffeescript.org/) (client and server)
+* frameworks
+	* [angular](https://angularjs.org/) (client)
+	* [express](http://expressjs.com/) (server)
+* package managers
+	* [bower](http://bower.io/) (client)
+
+##### Key concepts:
+* src
+	* this is where you develop, place your working files here
+	* these files should be under a [version control system](http://guides.beanstalkapp.com/version-control/intro-to-version-control.html)
+	  ([ex](https://github.com/, 'Example: GitHub that uses Git'))
+* dist
+	* this is where your distributable packages/folders will be built
+	* once built you can ship them off to places like a webserver
+	* these packages should not be under version control
+		* instead use a [ci system](http://www.thoughtworks.com/continuous-integration 'Continuous Integration System')
+		  ([ex](https://travis-ci.org/, 'Example: Travis CI')) to build and deploy your packages
+* client
+	* directory for all your
+	  [client side](http://programmers.stackexchange.com/questions/171203/what-are-the-differences-between-server-side-and-client-side-programming)
+	  code
+* server
+	* directory for all your
+	  [server side](http://programmers.stackexchange.com/questions/171203/what-are-the-differences-between-server-side-and-client-side-programming)
+	  code
+
+
 ## How To Use
 ##### As a function:
 
