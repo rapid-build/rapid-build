@@ -1,3 +1,11 @@
+### 0.11.1 (2015-06-24)
+
+
+#### Bug Fixes
+
+* **less:** npm update required, do not send less imports to the dist folder ([d3742e6f](https://github.com/jyounce/rapid-build/commit/d3742e6f))
+
+
 ## 0.11.0 (2015-06-23)
 
 
