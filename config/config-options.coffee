@@ -27,13 +27,18 @@
 # spa.src.dir                                  = (string)  defaults to null
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
 # spa.exclude                                  = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# minify.css.styles                            = (boolean) defaults to true
+# minify.html.views                            = (boolean) defaults to true
+# minify.html.templateCache                    = (boolean) defaults to true
+# minify.js.scripts                            = (boolean) defaults to true
+# minify.js.mangle                             = (boolean) defaults to true
 # =====================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
 
-	# format options
-	# ==============
+	# format options helpers
+	# ======================
 	distAndSrcOptions = ->
 		['dist', 'src'].forEach (v1) ->
 			options[v1] = {} if not isType.object options[v1]
@@ -88,12 +93,26 @@ module.exports = (config, options) ->
 		options.spa.src.file    = null if not isType.string options.spa.src.file
 		options.spa.dist.file   = null if not isType.string options.spa.dist.file
 
-	distAndSrcOptions()
+	minifyOptions = ->
+		options.minify = {} if not isType.object options.minify
+		options.minify.css  = {} if not isType.object options.minify.css
+		options.minify.html = {} if not isType.object options.minify.html
+		options.minify.js   = {} if not isType.object options.minify.js
+		options.minify.css.styles         = null if not isType.boolean options.minify.css.styles
+		options.minify.html.views         = null if not isType.boolean options.minify.html.views
+		options.minify.html.templateCache = null if not isType.boolean options.minify.html.templateCache
+		options.minify.js.scripts         = null if not isType.boolean options.minify.js.scripts
+		options.minify.js.mangle          = null if not isType.boolean options.minify.js.mangle
+
+	# init
+	# ====
+	distAndSrcOptions() # must be first
 	serverOptions()
 	portOptions()
 	orderOptions()
 	angularOptions()
 	spaOptions()
+	minifyOptions()
 
 	# logs
 	# ====

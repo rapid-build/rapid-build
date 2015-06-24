@@ -2,7 +2,7 @@ module.exports = (gulp, config) ->
 	q    = require 'q'
 	path = require 'path'
 
-	moveTask = (src, dest) ->
+	moveTask = (src, dest) -> # move to rb .temp folder
 		defer = q.defer()
 		gulp.src src
 			.pipe gulp.dest dest

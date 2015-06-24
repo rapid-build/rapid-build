@@ -5,9 +5,10 @@ module.exports = (gulp, config) ->
 	# tasks
 	# =====
 	runTask = (src, dest, file) ->
-		defer = q.defer()
+		defer   = q.defer()
+		minOpts = config.minify.html.options
 		gulp.src src
-			.pipe minifyHtml empty:true, conditionals:true, ssi:true
+			.pipe minifyHtml minOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
 				console.log "minified #{file}".yellow

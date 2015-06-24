@@ -7,6 +7,7 @@ module.exports = (gulp, config) ->
 		gulpSequence(
 			[
 				"#{config.rb.prefix.task}minify-css"
+				"#{config.rb.prefix.task}minify-html"
 				"#{config.rb.prefix.task}minify-images"
 				"#{config.rb.prefix.task}minify-js"
 			]

@@ -15,6 +15,7 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config}/config-app")          config, options
 	config  = require("#{config.req.config}/config-file-names")   config
 	config  = require("#{config.req.config}/config-angular")      config, options
+	config  = require("#{config.req.config}/config-minify")       config, options
 	config  = require("#{config.req.config}/config-dist-and-src") config, options
 	config  = require("#{config.req.config}/config-spa")          config, options
 	config  = require("#{config.req.config}/config-templates")    config

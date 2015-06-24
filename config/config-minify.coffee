@@ -5,17 +5,24 @@ module.exports = (config, options) ->
 
 	# helpers
 	# =======
-	getOption = (opt) ->
-		opt = options.minify[opt]
+	getOption = (type, opt) ->
+		opt = options.minify[type][opt]
 		return true if isType.null opt
 		opt
 
 	# init minify
 	# ===========
 	minify =
-		css:  getOption 'css'
-		html: getOption 'html'
-		js:   getOption 'js'
+		css:
+			styles: getOption 'css', 'styles'
+		js:
+			scripts: getOption 'js', 'scripts'
+			mangle: getOption 'js', 'mangle'
+		html:
+			views: getOption 'html', 'views'
+			templateCache: getOption 'html', 'templateCache'
+			options: # not configurable
+				conditionals:true, empty:true, ssi:true
 
 	# add minify to config
 	# ====================

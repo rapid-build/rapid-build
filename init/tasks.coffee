@@ -55,6 +55,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/minify/concat-scripts-and-styles") gulp, config     # concat-scripts-and-styles
 	require("#{config.req.tasks}/minify/minify-client")             gulp, config     # minify-client
 	require("#{config.req.tasks}/minify/minify-css")                gulp, config     # minify-css
+	require("#{config.req.tasks}/minify/minify-html")               gulp, config     # minify-html
 	require("#{config.req.tasks}/minify/minify-images")             gulp, config     # minify-images
 	require("#{config.req.tasks}/minify/minify-js")                 gulp, config     # minify-js
 	require("#{config.req.tasks}/minify/minify-server")             gulp, config     # minify-server

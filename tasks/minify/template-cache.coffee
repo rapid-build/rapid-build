@@ -39,13 +39,15 @@ module.exports = (gulp, config, watchFile={}) ->
 	# tasks
 	# =====
 	runTask = (src, dest, file, isProd) ->
-		defer = q.defer()
-		opts  = {}
+		defer   = q.defer()
+		minify  = isProd and config.minify.html.views
+		minOpts = config.minify.html.options
+		opts    = {}
 		opts.root   = '/' if config.angular.templateCache.useAbsolutePaths
 		opts.module = config.angular.moduleName
 		gulp.src src
 			.pipe addToDistPath()
-			.pipe gulpif isProd, minifyHtml empty:true, conditionals:true, ssi:true
+			.pipe gulpif minify, minifyHtml minOpts
 			.pipe templateCache file, opts
 			.pipe gulp.dest dest
 			.on 'end', ->

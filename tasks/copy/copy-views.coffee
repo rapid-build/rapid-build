@@ -5,7 +5,10 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}copy-views", (cb) ->
 		if config.env.name is 'prod'
-			task = 'template-cache'
+			if config.minify.html.templateCache
+				task = 'template-cache'
+			else
+				task = 'copy-html'
 		else if config.angular.templateCache.dev.enable
 			task = 'template-cache'
 		else

@@ -1,11 +1,13 @@
 module.exports = (gulp, config) ->
 	q         = require 'q'
+	gulpif    = require 'gulp-if'
 	minifyCss = require 'gulp-minify-css'
 
 	runTask = (appOrRb) ->
-		defer = q.defer()
+		defer  = q.defer()
+		minify = config.minify.css.styles
 		gulp.src config.glob.dist[appOrRb].client.styles.all
-			.pipe minifyCss()
+			.pipe gulpif minify, minifyCss()
 			.pipe gulp.dest config.dist[appOrRb].client.styles.dir
 			.on 'end', ->
 				console.log "minified #{appOrRb} dist styles".yellow

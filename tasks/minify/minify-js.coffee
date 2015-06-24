@@ -1,12 +1,14 @@
 module.exports = (gulp, config) ->
 	q        = require 'q'
+	gulpif   = require 'gulp-if'
 	minifyJs = require 'gulp-uglify'
 
 	runTask = (appOrRb) ->
-		defer = q.defer()
+		defer   = q.defer()
+		minify  = config.minify.js.scripts
+		minOpts = mangle: config.minify.js.mangle
 		gulp.src config.glob.dist[appOrRb].client.scripts.all
-			# .pipe minifyJs mangle:false
-			.pipe minifyJs()
+			.pipe gulpif minify, minifyJs minOpts
 			.pipe gulp.dest config.dist[appOrRb].client.scripts.dir
 			.on 'end', ->
 				console.log "minified #{appOrRb} dist scripts".yellow
