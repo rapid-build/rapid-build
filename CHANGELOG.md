@@ -1,3 +1,11 @@
+## 0.11.0 (2015-06-23)
+
+
+#### Features
+
+* **options:** add minification options via the minify object ([bc288dc6](https://github.com/jyounce/rapid-build/commit/bc288dc6))
+
+
 ## 0.10.0 (2015-06-17)
 
 
