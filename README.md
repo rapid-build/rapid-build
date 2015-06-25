@@ -27,7 +27,7 @@ rapid-build currently supports following technologies:
 * src
 	* this is where you develop, place your working files here
 	* these files should be under a [version control system](http://guides.beanstalkapp.com/version-control/intro-to-version-control.html)
-	  ([ex](https://github.com/, 'Example: GitHub that uses Git'))
+	  ([ex](https://github.com/ 'Example: GitHub that uses Git'))
 * dist
 	* this is where your distributable packages/folders will be built
 	* once built you can ship them off to places like a webserver
