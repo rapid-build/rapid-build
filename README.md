@@ -33,7 +33,7 @@ rapid-build currently supports following technologies:
 	* once built you can ship them off to places like a webserver
 	* these packages should not be under version control
 		* instead use a [ci system](http://www.thoughtworks.com/continuous-integration 'Continuous Integration System')
-		  ([ex](https://travis-ci.org/, 'Example: Travis CI')) to build and deploy your packages
+		  ([ex](https://travis-ci.org/ 'Example: Travis CI')) to build and deploy your packages
 * client
 	* directory for all your
 	  [client side](http://programmers.stackexchange.com/questions/171203/what-are-the-differences-between-server-side-and-client-side-programming)
