@@ -1,3 +1,11 @@
+## 0.12.0 (2015-06-26)
+
+
+#### Features
+
+* **angular:** add option angular.httpBackend to enable angular mocks ([4688281f](https://github.com/jyounce/rapid-build/commit/4688281f))
+
+
 ### 0.11.1 (2015-06-24)
 
 
