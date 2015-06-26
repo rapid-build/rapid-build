@@ -1,8 +1,9 @@
 module.exports = (gulp, config, browserSync) ->
-	q      = require 'q'
-	path   = require 'path'
-	gWatch = require 'gulp-watch'
-	log    = require "#{config.req.helpers}/log"
+	q           = require 'q'
+	path        = require 'path'
+	gWatch      = require 'gulp-watch'
+	log         = require "#{config.req.helpers}/log"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# tasks
 	# =====
@@ -134,9 +135,7 @@ module.exports = (gulp, config, browserSync) ->
 	spaWatch = ->
 		if config.spa.custom
 			return createWatch config.spa.src.path, 'build spa', lang:config.spa.dist.file
-		defer = q.defer()
-		defer.resolve()
-		defer.promise
+		promiseHelp.get()
 
 	# register task
 	# =============

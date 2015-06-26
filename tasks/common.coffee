@@ -4,12 +4,12 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}common", (cb) ->
-		config.env.set gulp
 		gulpSequence(
+			"#{config.rb.prefix.task}update-config" # must be first and only called here
 			"#{config.rb.prefix.task}bower"
 			"#{config.rb.prefix.task}clean-dist"
-			"#{config.rb.prefix.task}build-config"
 			"#{config.rb.prefix.task}build-angular-modules"
+			"#{config.rb.prefix.task}build-config"
 			[
 				"#{config.rb.prefix.task}copy-bower_components"
 				"#{config.rb.prefix.task}copy-css"

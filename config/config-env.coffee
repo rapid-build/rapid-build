@@ -2,14 +2,45 @@ module.exports = (config) ->
 	log  = require "#{config.req.helpers}/log"
 	test = require("#{config.req.helpers}/test")()
 
+	# helpers
+	# =======
+	resetIsEnv = ->
+		for own k, v of env.is
+			env.is[k] = false
+
+	setIsEnv = ->
+		resetIsEnv()
+		name = config.env.name
+		switch name
+			when 'default'
+				env.is.default = true
+				env.is.defaultOrDev = true
+			when 'dev'
+				env.is.dev = true
+				env.is.defaultOrDev = true
+			when 'prod'
+				env.is.prod = true
+
 	# init env
 	# ========
 	env = {}
 	env.name = 'default'
-	env.set = (gulp) -> # called in "#{config.rb.prefix.task}common"
-		switch gulp.seq[1]
+
+	# is
+	# ==
+	env.is =
+		default: true
+		defaultOrDev: true
+		dev: false
+		prod: false
+
+	# methods
+	# =======
+	env.set = (gulp) ->
+		switch gulp.seq[2] # called in 'rb-update-config' which is called first in 'rb-common'
 			when config.rb.tasks.dev  then config.env.name = 'dev'
 			when config.rb.tasks.prod then config.env.name = 'prod'
+		setIsEnv()
 
 	# add env to config
 	# =================

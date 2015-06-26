@@ -1,15 +1,13 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
 	bower       = require 'bower'
+	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
 	runTask = (appOrRb) ->
 		defer     = q.defer()
 		bowerPkgs = bowerHelper.get.pkgs.to.install appOrRb
-
-		return if not bowerPkgs or not bowerPkgs.length
-			defer.resolve()
-			defer.promise
+		return promiseHelp.get defer if not bowerPkgs or not bowerPkgs.length
 
 		bower.commands.install bowerPkgs, force: true,
 			directory: ''

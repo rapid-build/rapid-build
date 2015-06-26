@@ -1,14 +1,25 @@
 module.exports = (config, options) ->
+	path = require 'path'
 	log  = require "#{config.req.helpers}/log"
 	test = require("#{config.req.helpers}/test")()
 
 	# default modules
-	# ===============
-	modules = ['ngResource', 'ngRoute', 'ngSanitize']
+	# order matters because of 'ngMockE2E'
+	# ====================================
+	modules = ['ngMockE2E', 'ngResource', 'ngRoute', 'ngSanitize']
 
 	# init angular
 	# ============
 	angular = {}
+
+	# httpBackend
+	# ===========
+	httpBackendDir = options.angular.httpBackend.dir or 'mocks'
+	httpBackendDir = path.join config.src.app.client.scripts.dir, httpBackendDir
+	angular.httpBackend = {}
+	angular.httpBackend.dev  = options.angular.httpBackend.dev or false
+	angular.httpBackend.prod = options.angular.httpBackend.prod or false
+	angular.httpBackend.dir  = httpBackendDir
 
 	# modules
 	# =======
@@ -39,9 +50,21 @@ module.exports = (config, options) ->
 	# =====================
 	angular.bowerDeps =
 		'angular':          angular.version
+		'angular-mocks':    angular.version
 		'angular-resource': angular.version
 		'angular-route':    angular.version
 		'angular-sanitize': angular.version
+
+	# methods
+	# =======
+	removeRbMocksModule = -> # helper
+		angular.modules.splice 0, 1
+
+	angular.removeRbMocksModule = ->
+		if config.env.is.prod
+			removeRbMocksModule() if not angular.httpBackend.prod
+		else if not angular.httpBackend.dev
+			removeRbMocksModule()
 
 	# add angular to config
 	# =====================

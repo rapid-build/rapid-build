@@ -1,4 +1,5 @@
 # API
+# bowerHelper.has.bower appOrRb
 # bowerHelper.has.installed.pkg 'angular', appOrRb
 # bowerHelper.get.json.from.appOrRb appOrRb
 # bowerHelper.get.json.from.pkg 'angular', appOrRb
@@ -8,8 +9,8 @@
 # bowerHelper.get.installed.pkgs appOrRb
 # bowerHelper.get.installed.pkg 'angular', appOrRb
 # bowerHelper.get.missing.pkgs appOrRb
-# bowerHelper.get.src.pkgs appOrRb
-# =======================================
+# bowerHelper.get.src appOrRb
+# ================================================
 module.exports = (config) ->
 	fs       = require 'fs'
 	path     = require 'path'
@@ -138,6 +139,26 @@ module.exports = (config) ->
 			fileHelp.write.json _path, bowerJson if force
 			force
 
+		_removeRbAngularMocks: (paths) ->
+			key = 'angular-mocks'
+			if paths.absolute.length
+				index = null
+				paths.absolute.forEach (_path, i) ->
+					return index = i if _path.indexOf(key) isnt -1
+				return if index is null
+				paths.absolute.splice index, 1   # remove from absolutes
+				for own k, v of paths.relative
+					if v.indexOf(key) isnt -1
+						delete paths.relative[k] # remove from relatives
+						break
+
+		removeRbAngularMocks: (loc, paths) ->
+			return if loc isnt 'rb'
+			if config.env.is.prod
+				@_removeRbAngularMocks paths if not config.angular.httpBackend.prod
+			else if not config.angular.httpBackend.dev
+				@_removeRbAngularMocks paths
+
 	me =
 		has:
 			bower: (loc='rb') ->
@@ -237,9 +258,13 @@ module.exports = (config) ->
 						name    = if hasPath then pkg.name else ''
 						relPaths[file.path] = path.join name, file.file
 						absPaths.push file.path
-				paths:
-					absolute: absPaths # []
-					relative: relPaths # {}
+				paths =
+					paths:
+						absolute: absPaths # []
+						relative: relPaths # {}
+				helper.removeRbAngularMocks loc, paths.paths # conditionally
+				# log.json paths
+				paths
 
 
 

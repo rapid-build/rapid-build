@@ -56,7 +56,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		defer.promise
 
 	run = ->
-		isProd = config.env.name is 'prod'
+		isProd = config.env.is.prod
 		file   = if isProd then 'min' else 'main'
 		file   = config.fileName.views[file]
 		dest   = config.dist.rb.client.scripts.dir

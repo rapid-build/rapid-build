@@ -110,9 +110,12 @@ gulp rapid-build:prod
 # ports.server                                 = (int)     defaults to 3000
 # ports.reload                                 = (int)     defaults to 3001
 # order[scripts|styles][first|last]            = (array of strings) = file paths
-# angular.modules                              = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize']
+# angular.modules                              = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
 # angular.moduleName                           = (string)  defaults to 'app' = application module name, value for ng-app
 # angular.version                              = (string)  defaults to '1.x' = semver version required
+# angular.httpBackend.dev                      = (boolean) defaults to false = set to true to enable httpBackend for dev and default build
+# angular.httpBackend.prod                     = (boolean) defaults to false = set to true to enable httpBackend for prod build
+# angular.httpBackend.dir                      = (string)  defaults to 'mocks' = directory inside your client scripts directory
 # angular.templateCache.dev.enable             = (boolean) defaults to false = use template cache when running default and dev task
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
 # angular.exclude.files                        = (boolean) defaults to false = set to true to exclude angular files (lib and modules)
@@ -127,7 +130,7 @@ gulp rapid-build:prod
 # minify.html.templateCache                    = (boolean) defaults to true = for prod build, use the template cache
 # minify.js.scripts                            = (boolean) defaults to true = for prod build, minify the js
 # minify.js.mangle                             = (boolean) defaults to true = for prod build, mangle the names in the js
-# ==========================================================================================================================================================================================================
+# ========================================================================================================================================================================================================================
 ```
 
 ## Build Modes

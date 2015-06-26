@@ -2,6 +2,7 @@ module.exports = (gulp, config) ->
 	q           = require 'q'
 	path        = require 'path'
 	es          = require 'event-stream'
+	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
 	removeMin = -> # for prod env, to avoid additional work elsewhere
@@ -21,9 +22,7 @@ module.exports = (gulp, config) ->
 
 	runTask = (src, dest) ->
 		defer = q.defer()
-		return if not src or not src.paths.absolute.length
-			defer.resolve()
-			defer.promise
+		return promiseHelp.get defer if not src or not src.paths.absolute.length
 		gulp.src src.paths.absolute
 			.pipe addDistBasePath src.paths.relative
 			.pipe removeMin()
@@ -34,10 +33,7 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	getComponents = (appOrRb, exclude) ->
-		return if exclude
-			defer = q.defer()
-			defer.resolve()
-			defer.promise
+		return promiseHelp.get() if exclude
 		runTask(
 			bowerHelper.get.src appOrRb
 			config.dist[appOrRb].client.bower.dir

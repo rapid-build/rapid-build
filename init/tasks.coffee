@@ -25,7 +25,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/clean/cleanup-client")             gulp, config     # cleanup-client
 
 	# common
-	# =======
+	# ======
 	require("#{config.req.tasks}/common")                           gulp, config     # common
 
 	# compile
@@ -33,6 +33,10 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/compile/coffee")                   gulp, config     # coffee
 	require("#{config.req.tasks}/compile/es6")                      gulp, config     # es6
 	require("#{config.req.tasks}/compile/less")                     gulp, config     # less
+
+	# config
+	# ======
+	require("#{config.req.tasks}/config/update-config")             gulp, config     # update-config
 
 	# copy
 	# ====

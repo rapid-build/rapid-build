@@ -68,9 +68,9 @@ module.exports = (config) ->
 
 	# dist
 	# ====
-	addGlob 'dist', 'bower',   ['all', 'css', 'js']
+	addGlob 'dist', 'bower',   ['all', 'css', 'js'] # css and js are for concat-scripts-and-styles task
 	addGlob 'dist', 'images',  ['all']
-	addGlob 'dist', 'libs',    ['all', 'css', 'js']
+	addGlob 'dist', 'libs',    ['all', 'css', 'js'] # css and js are for concat-scripts-and-styles task
 	addGlob 'dist', 'scripts', ['all']
 	addGlob 'dist', 'scripts', ['js' ], true, true
 	addGlob 'dist', 'styles',  ['all']
@@ -78,6 +78,23 @@ module.exports = (config) ->
 	addGlob 'dist', 'views',   ['all']
 	addGlob 'dist', 'views',   ['html']
 
+	# methods
+	# =======
+	removeAppAngularMocksDir = ->
+		srcScripts  = glob.src.app.client.scripts
+		noMocksGlob = "!#{config.angular.httpBackend.dir}#{lang.all}"
+		for own k, v of srcScripts
+			srcScripts[k] = [v, noMocksGlob]
+
+	removeRbAngularMocks = -> # helper
+		glob.dist.rb.client.scripts.js.splice 1, 1
+		removeAppAngularMocksDir()
+
+	glob.removeRbAngularMocks = ->
+		if config.env.is.prod
+			removeRbAngularMocks() if not config.angular.httpBackend.prod
+		else if not config.angular.httpBackend.dev
+			removeRbAngularMocks()
 
 	# loading order for scripts and styles
 	# ====================================

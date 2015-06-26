@@ -4,12 +4,28 @@ module.exports = (config, options) ->
 	pathHelp = require "#{config.req.helpers}/path"
 	test     = require("#{config.req.helpers}/test")()
 
+	# rb angular files in order
+	# =========================
+	angularFiles = [
+		'angular.js'
+		'angular-mocks.js'
+		'angular-resource.js'
+		'angular-route.js'
+		'angular-sanitize.js'
+	]
+
 	# helpers
 	# =======
 	getDirName = (appOrRb, type) ->
 		dir = pathHelp.format config.dist[appOrRb].client[type].dir
 		i   = dir.lastIndexOf('/') + 1
 		dir.substr i
+
+	getAngularFiles = ->
+		_paths = []
+		angularFiles.forEach (file, i) ->
+			_paths.push "#{rb.bower}/#{file}"
+		_paths
 
 	# defaults
 	# ========
@@ -20,13 +36,8 @@ module.exports = (config, options) ->
 		styles:  getDirName 'rb', 'styles'
 
 	rb.files =
-		rb: ["#{rb.scripts}/app"]
-		angular: [
-			"#{rb.bower}/angular"
-			"#{rb.bower}/angular-resource"
-			"#{rb.bower}/angular-route"
-			"#{rb.bower}/angular-sanitize"
-		]
+		rb: ["#{rb.scripts}/app.js"]
+		angular: getAngularFiles()
 
 	# init order
 	# =========
@@ -47,6 +58,17 @@ module.exports = (config, options) ->
 	files = []
 	files = files.concat rb.files.angular if not options.angular.exclude.files
 	order.rb.scripts.first = files.concat rb.files.rb
+
+	# methods
+	# =======
+	removeRbAngularMocks = -> # helper
+		order.rb.scripts.first.splice 1, 1
+
+	order.removeRbAngularMocks = ->
+		if config.env.is.prod
+			removeRbAngularMocks() if not config.angular.httpBackend.prod
+		else if not config.angular.httpBackend.dev
+			removeRbAngularMocks()
 
 	# process order
 	# =============
