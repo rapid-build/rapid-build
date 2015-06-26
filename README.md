@@ -12,7 +12,7 @@ $ npm install rapid-build
 
 ## Description
 *Rapidly* develop distributable client and server side packages/folders.
-rapid-build currently supports following technologies:
+rapid-build currently supports the following technologies:
 * languages
 	* [css](https://developer.mozilla.org/en-US/docs/Web/CSS) and [less](http://lesscss.org/) (client)
 	* [html](https://developer.mozilla.org/en-US/docs/Web/HTML) (client)
