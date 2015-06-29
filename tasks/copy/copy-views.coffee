@@ -9,7 +9,7 @@ module.exports = (gulp, config) ->
 				task = 'template-cache'
 			else
 				task = 'copy-html'
-		else if config.angular.templateCache.dev.enable
+		else if config.angular.templateCache.dev
 			task = 'template-cache'
 		else
 			task = 'copy-html'

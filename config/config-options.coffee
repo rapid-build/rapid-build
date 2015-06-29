@@ -21,7 +21,7 @@
 # angular.httpBackend.dev                      = (boolean) defaults to false
 # angular.httpBackend.prod                     = (boolean) defaults to false
 # angular.httpBackend.dir                      = (string)  defaults to 'mocks'
-# angular.templateCache.dev.enable             = (boolean) defaults to false
+# angular.templateCache.dev                    = (boolean) defaults to false
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
 # angular.exclude.files                        = (boolean) defaults to false
 # spa.title                                    = (string)  defaults to package.json name
@@ -85,9 +85,8 @@ module.exports = (config, options) ->
 		options.angular.httpBackend.prod = null if not isType.boolean options.angular.httpBackend.prod
 		options.angular.httpBackend.dir  = null if not isType.string options.angular.httpBackend.dir
 		options.angular.templateCache = {}   if not isType.object options.angular.templateCache
+		options.angular.templateCache.dev              = null if not isType.boolean options.angular.templateCache.dev
 		options.angular.templateCache.useAbsolutePaths = null if not isType.boolean options.angular.templateCache.useAbsolutePaths
-		options.angular.templateCache.dev = {} if not isType.object options.angular.templateCache.dev
-		options.angular.templateCache.dev.enable = null if not isType.boolean options.angular.templateCache.dev.enable
 
 	spaOptions = ->
 		options.spa = {} if not isType.object options.spa

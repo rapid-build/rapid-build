@@ -124,7 +124,7 @@ module.exports = (gulp, config, browserSync) ->
 	# html watch (handle angular template cache)
 	# ==========================================
 	htmlWatch = ->
-		if config.angular.templateCache.dev.enable
+		if config.angular.templateCache.dev
 			createWatch glob.src.html, 'tCache',
 				lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
 		else
