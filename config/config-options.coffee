@@ -29,7 +29,7 @@
 # spa.src.file                                 = (string)  defaults to 'spa.html'
 # spa.src.dir                                  = (string)  defaults to null
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
-# spa.exclude                                  = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# spa.placeholders                             = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
 # minify.css.styles                            = (boolean) defaults to true
 # minify.html.views                            = (boolean) defaults to true
 # minify.html.templateCache                    = (boolean) defaults to true
@@ -90,14 +90,14 @@ module.exports = (config, options) ->
 
 	spaOptions = ->
 		options.spa = {} if not isType.object options.spa
-		options.spa.title       = null if not isType.string options.spa.title
-		options.spa.description = null if not isType.string options.spa.description
-		options.spa.src         = {}   if not isType.object options.spa.src
-		options.spa.dist        = {}   if not isType.object options.spa.dist
-		options.spa.exclude     = null if not isType.array  options.spa.exclude
-		options.spa.src.dir     = null if not isType.string options.spa.src.dir
-		options.spa.src.file    = null if not isType.string options.spa.src.file
-		options.spa.dist.file   = null if not isType.string options.spa.dist.file
+		options.spa.title        = null if not isType.string options.spa.title
+		options.spa.description  = null if not isType.string options.spa.description
+		options.spa.src          = {}   if not isType.object options.spa.src
+		options.spa.dist         = {}   if not isType.object options.spa.dist
+		options.spa.placeholders = null if not isType.array  options.spa.placeholders
+		options.spa.src.dir      = null if not isType.string options.spa.src.dir
+		options.spa.src.file     = null if not isType.string options.spa.src.file
+		options.spa.dist.file    = null if not isType.string options.spa.dist.file
 
 	minifyOptions = ->
 		options.minify = {} if not isType.object options.minify

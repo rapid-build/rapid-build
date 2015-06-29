@@ -44,9 +44,9 @@ module.exports = (config, options) ->
 		file: srcFile
 		path: path.join srcDir, srcFile
 
-	# exclude
-	# =======
-	spa.exclude = options.spa.exclude or []
+	# placeholders
+	# ============
+	spa.placeholders = options.spa.placeholders or []
 
 	# add spa to config
 	# =================

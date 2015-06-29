@@ -11,13 +11,13 @@ module.exports = (gulp, config) ->
 	# helpers
 	# =======
 	runReplace = (type) ->
-		newKey    = "<%= #{type} %>"
-		key       = "<!--#include #{type}-->"
-		exclude   = config.spa.exclude
-		replacePH = true # PH = placeholder
-		if exclude.indexOf('all') isnt -1
+		newKey       = "<%= #{type} %>"
+		key          = "<!--#include #{type}-->"
+		placeholders = config.spa.placeholders
+		replacePH    = true # PH = placeholder
+		if placeholders.indexOf('all') isnt -1
 			replacePH = false
-		else if exclude.indexOf(type) isnt -1
+		else if placeholders.indexOf(type) isnt -1
 			replacePH = false
 		gulpif replacePH, replace key, newKey
 

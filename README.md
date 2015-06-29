@@ -124,7 +124,7 @@ gulp rapid-build:prod
 # spa.src.file                                 = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
 # spa.src.dir                                  = (string)  defaults to null = set if you are using your own spa file and that file is located in a directory in your client src directory
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
-# spa.exclude                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# spa.placeholders                             = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
 # minify.css.styles                            = (boolean) defaults to true = for prod build, minify the css
 # minify.html.views                            = (boolean) defaults to true = for prod build, minify the html
 # minify.html.templateCache                    = (boolean) defaults to true = for prod build, use the template cache
