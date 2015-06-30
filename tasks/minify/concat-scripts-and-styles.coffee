@@ -2,6 +2,7 @@ module.exports = (gulp, config) ->
 	q      = require 'q'
 	path   = require 'path'
 	concat = require 'gulp-concat'
+	log    = require "#{config.req.helpers}/log"
 
 	# order helpers
 	# =============
@@ -10,11 +11,12 @@ module.exports = (gulp, config) ->
 			when 'scripts' then lang = 'js'
 			when 'styles'  then lang = 'css'
 		globs =
-			app:   config.glob.dist[appOrRb].client[type].all
-			bower: config.glob.dist[appOrRb].client.bower[lang]
-			libs:  config.glob.dist[appOrRb].client.libs[lang]
-			first: config.order[appOrRb][type].first
-			last:  config.order[appOrRb][type].last
+			app:     config.glob.dist[appOrRb].client[type].all
+			bower:   config.glob.dist[appOrRb].client.bower[lang]
+			libs:    config.glob.dist[appOrRb].client.libs[lang]
+			first:   config.order[appOrRb][type].first
+			last:    config.order[appOrRb][type].last
+			exclude: config.spa.exclude[appOrRb][type] # spa exclude option
 		globs[glob]
 
 	getGlobs = (appOrRb, type, _globs) ->
@@ -31,7 +33,7 @@ module.exports = (gulp, config) ->
 		globs = getGlobs appOrRb, type, globs
 		return globs if not globs.length
 		globs.forEach (glob, i) ->
-			globs[i] = "!#{glob}"
+			globs[i] = "!#{glob}" if glob[0] isnt '!' # spa exclude already has '!'
 		globs
 
 	concatGlobs = (appOrRb, type, includes, excludes) ->
@@ -41,9 +43,9 @@ module.exports = (gulp, config) ->
 	getSrc = (appOrRb, type) ->
 		src =
 			first:  concatGlobs appOrRb, type, ['first']
-			second: concatGlobs appOrRb, type, ['bower'], ['first', 'last']
-			third:  concatGlobs appOrRb, type, ['libs'],  ['first', 'last']
-			middle: concatGlobs appOrRb, type, ['app'],   ['first', 'last']
+			second: concatGlobs appOrRb, type, ['bower'], ['first', 'last', 'exclude']
+			third:  concatGlobs appOrRb, type, ['libs'],  ['first', 'last', 'exclude']
+			middle: concatGlobs appOrRb, type, ['app'],   ['first', 'last', 'exclude']
 			last:   concatGlobs appOrRb, type, ['last']
 
 	# load order tasks

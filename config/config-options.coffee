@@ -30,12 +30,14 @@
 # spa.src.dir                                  = (string)  defaults to null
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
 # spa.placeholders                             = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# spa.exclude.scripts                          = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and scripts.min.js file
+# spa.exclude.styles                           = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and styles.min.css file
 # minify.css.styles                            = (boolean) defaults to true
 # minify.html.views                            = (boolean) defaults to true
 # minify.html.templateCache                    = (boolean) defaults to true
 # minify.js.scripts                            = (boolean) defaults to true
 # minify.js.mangle                             = (boolean) defaults to true
-# =====================================================================================================================================================
+# =========================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
@@ -93,11 +95,14 @@ module.exports = (config, options) ->
 		options.spa.title        = null if not isType.string options.spa.title
 		options.spa.description  = null if not isType.string options.spa.description
 		options.spa.src          = {}   if not isType.object options.spa.src
-		options.spa.dist         = {}   if not isType.object options.spa.dist
-		options.spa.placeholders = null if not isType.array  options.spa.placeholders
 		options.spa.src.dir      = null if not isType.string options.spa.src.dir
 		options.spa.src.file     = null if not isType.string options.spa.src.file
+		options.spa.dist         = {}   if not isType.object options.spa.dist
 		options.spa.dist.file    = null if not isType.string options.spa.dist.file
+		options.spa.placeholders = null if not isType.array  options.spa.placeholders
+		options.spa.exclude      = {}   if not isType.object options.spa.exclude
+		options.spa.exclude.scripts = null if not isType.array options.spa.exclude.scripts
+		options.spa.exclude.styles  = null if not isType.array options.spa.exclude.styles
 
 	minifyOptions = ->
 		options.minify = {} if not isType.object options.minify

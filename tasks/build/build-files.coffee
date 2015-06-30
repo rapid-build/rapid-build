@@ -1,3 +1,8 @@
+# BUILD CLIENT FILES
+# client:
+#	styles:  []
+#	scripts: []
+# ===================
 module.exports = (gulp, config) ->
 	q        = require 'q'
 	path     = require 'path'
@@ -5,8 +10,10 @@ module.exports = (gulp, config) ->
 	rename   = require 'gulp-rename'
 	template = require 'gulp-template'
 	pathHelp = require "#{config.req.helpers}/path"
+	log      = require "#{config.req.helpers}/log"
 	format   = require("#{config.req.helpers}/format")()
 	data     = client: styles:[], scripts:[]
+	globs    = null
 
 	# task
 	# ====
@@ -30,23 +37,32 @@ module.exports = (gulp, config) ->
 
 	# globs
 	# =====
-	getGlob = (loc, type, lang) ->
-		config.glob.dist[loc].client[type][lang]
+	getExcludes = (appOrRb, type, glob) ->
+		return glob if not config.spa.exclude[appOrRb][type].length
+		glob = glob.concat config.spa.exclude[appOrRb][type]
+		# log.json glob, "#{appOrRb} #{type}"
+		glob
 
-	globs =
-		css:
-			rb:  getGlob 'rb',  'styles', 'css'
-			app: getGlob 'app', 'styles', 'css'
-		js:
-			rb:  getGlob 'rb',  'scripts', 'js'
-			app: getGlob 'app', 'scripts', 'js'
+	getGlob = (appOrRb, type, lang) ->
+		glob = config.glob.dist[appOrRb].client[type][lang]
+		glob = getExcludes appOrRb, type, glob
+		glob
+
+	setGlobs = ->
+		globs =
+			css:
+				rb:  getGlob 'rb',  'styles', 'css'
+				app: getGlob 'app', 'styles', 'css'
+			js:
+				rb:  getGlob 'rb',  'scripts', 'js'
+				app: getGlob 'app', 'scripts', 'js'
 
 	# helpers
 	# =======
 	processFiles = (files) ->
-		locDir = pathHelp.format(config.app.dir) + '/'
+		appDir = pathHelp.format(config.app.dir) + '/'
 		files.forEach (v, i) ->
-			files[i] = pathHelp.format(files[i]).replace locDir, ''
+			files[i] = pathHelp.format(files[i]).replace appDir, ''
 		files
 
 	addData = (type, files) ->
@@ -65,18 +81,19 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	getAllFiles = (type, lang) -> # sync
-		tasks = []
-		defer = q.defer()
-		locs  = Object.keys globs[lang]
+		tasks    = []
+		defer    = q.defer()
+		appAndRb = Object.keys globs[lang]
 
-		locs.forEach (loc) ->
+		appAndRb.forEach (appOrRb) ->
 			tasks.push ->
-				getFiles type, globs[lang][loc]
+				getFiles type, globs[lang][appOrRb]
 
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
 	buildData = -> # async
+		setGlobs()
 		q.all [
 			getAllFiles 'styles', 'css'
 			getAllFiles 'scripts', 'js'

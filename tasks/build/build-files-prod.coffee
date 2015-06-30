@@ -22,16 +22,28 @@ module.exports = (gulp, config) ->
 
 	# globs
 	# =====
+	getExcludes = (appOrRb, type, glob) ->
+		return glob if not config.spa.exclude[appOrRb][type].length
+		glob = glob.concat config.spa.exclude[appOrRb][type]
+		glob
+
 	getGlob = (type, lang) ->
-		glob = pathHelp.format config.dist.app.client[type].dir
-		glob += "/**/*#{lang}"
+		glob = [
+			pathHelp.format config.dist.rb.client[type].dir
+			pathHelp.format config.dist.app.client[type].dir
+		]
+		for g, i in glob
+			glob[i] += "/**/*.#{lang}"
+		glob = getExcludes 'rb',  type, glob
+		glob = getExcludes 'app', type, glob
+		glob
 
 	# helpers
 	# =======
 	processFiles = (files) ->
-		locDir = pathHelp.format(config.app.dir) + '/'
+		appDir = pathHelp.format(config.app.dir) + '/'
 		files.forEach (v, i) ->
-			files[i] = pathHelp.format(files[i]).replace locDir, ''
+			files[i] = pathHelp.format(files[i]).replace appDir, ''
 		files
 
 	addData = (type, files) ->
