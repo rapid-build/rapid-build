@@ -33,6 +33,7 @@
 # spa.exclude.scripts                          = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and scripts.min.js file
 # spa.exclude.styles                           = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and styles.min.css file
 # minify.css.styles                            = (boolean) defaults to true
+# minify.css.splitMinFile                      = (boolean) defaults to true
 # minify.html.views                            = (boolean) defaults to true
 # minify.html.templateCache                    = (boolean) defaults to true
 # minify.js.scripts                            = (boolean) defaults to true
@@ -110,6 +111,7 @@ module.exports = (config, options) ->
 		options.minify.html = {} if not isType.object options.minify.html
 		options.minify.js   = {} if not isType.object options.minify.js
 		options.minify.css.styles         = null if not isType.boolean options.minify.css.styles
+		options.minify.css.splitMinFile   = null if not isType.boolean options.minify.css.splitMinFile
 		options.minify.html.views         = null if not isType.boolean options.minify.html.views
 		options.minify.html.templateCache = null if not isType.boolean options.minify.html.templateCache
 		options.minify.js.scripts         = null if not isType.boolean options.minify.js.scripts

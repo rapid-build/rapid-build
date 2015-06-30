@@ -128,6 +128,7 @@ gulp rapid-build:prod
 # spa.exclude.scripts                          = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and scripts.min.js file
 # spa.exclude.styles                           = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and styles.min.css file
 # minify.css.styles                            = (boolean) defaults to true = for prod build, minify the css
+# minify.css.splitMinFile                      = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
 # minify.html.views                            = (boolean) defaults to true = for prod build, minify the html
 # minify.html.templateCache                    = (boolean) defaults to true = for prod build, use the template cache
 # minify.js.scripts                            = (boolean) defaults to true = for prod build, minify the js

@@ -4,10 +4,11 @@
 # If you don't care about those piece of shit browsers, then disable this option.
 # ===============================================================================
 module.exports = (gulp, config) ->
-	q     = require 'q'
-	fs    = require 'fs'
-	path  = require 'path'
-	bless = require 'gulp-bless'
+	q           = require 'q'
+	fs          = require 'fs'
+	path        = require 'path'
+	bless       = require 'gulp-bless'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# tasks
 	# =====
@@ -34,6 +35,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}css-file-split", ->
+		return promiseHelp.get() if not config.minify.css.splitMinFile
 		stylesDir = config.dist.app.client.styles.dir
 		minFile   = config.fileName.styles.min
 		minPath   = path.join stylesDir, minFile

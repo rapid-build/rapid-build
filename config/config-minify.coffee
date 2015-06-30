@@ -15,6 +15,7 @@ module.exports = (config, options) ->
 	minify =
 		css:
 			styles: getOption 'css', 'styles'
+			splitMinFile: getOption 'css', 'splitMinFile'
 		js:
 			scripts: getOption 'js', 'scripts'
 			mangle: getOption 'js', 'mangle'
