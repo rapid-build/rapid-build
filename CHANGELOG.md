@@ -1,3 +1,18 @@
+## 0.13.0 (2015-06-30)
+
+
+#### Bug Fixes
+
+* **option:**
+  * change option spa.exclude to spa.placeholders, makes more sense ([395cd37b](https://github.com/jyounce/rapid-build/commit/395cd37b))
+  * change option angular.templateCache.dev.enable to angular.templateCache.dev ([dd7a7f8a](https://github.com/jyounce/rapid-build/commit/dd7a7f8a))
+
+
+#### Features
+
+* **options:** add options spa.exclude.scripts and styles, exclude from spa.html file and min files ([5273bb60](https://github.com/jyounce/rapid-build/commit/5273bb60))
+
+
 ## 0.12.0 (2015-06-26)
 
 
