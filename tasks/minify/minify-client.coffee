@@ -13,6 +13,7 @@ module.exports = (gulp, config) ->
 			]
 			"#{config.rb.prefix.task}concat-scripts-and-styles"
 			"#{config.rb.prefix.task}cleanup-client"
+			"#{config.rb.prefix.task}css-file-split"
 			"#{config.rb.prefix.task}build-files-prod"
 			"#{config.rb.prefix.task}build-spa"
 			"#{config.rb.prefix.task}minify-spa"
