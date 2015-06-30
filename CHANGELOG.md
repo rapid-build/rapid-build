@@ -1,3 +1,12 @@
+## 0.14.0 (2015-06-30)
+
+
+#### Features
+
+* **minify:** add task css-file-split for lte ie9, split styles.min.css into multiple files if selector count > 4,095 ([9a40c94f](https://github.com/jyounce/rapid-build/commit/9a40c94f))
+* **option:** add option minify.css.splitMinFile to disable the splitting of the styles.min.css ([686b3fd4](https://github.com/jyounce/rapid-build/commit/686b3fd4))
+
+
 ## 0.13.0 (2015-06-30)
 
 
