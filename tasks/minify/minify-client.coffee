@@ -17,6 +17,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}build-files-prod"
 			"#{config.rb.prefix.task}build-spa"
 			"#{config.rb.prefix.task}minify-spa"
+			"#{config.rb.prefix.task}cache-bust"
 			cb
 		)
 

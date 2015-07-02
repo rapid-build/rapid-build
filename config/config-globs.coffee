@@ -8,15 +8,17 @@ module.exports = (config) ->
 	# defaults
 	# ========
 	lang =
-		all:    '/**'
-		coffee: '/**/*.coffee'
-		css:    '/**/*.css'
-		es6:    '/**/*.es6'
-		html:   '/**/*.html'
-		images: '/**/*.*{gif,jpg,jpeg,png}'
-		js:     '/**/*.js'
-		less:   '/**/*.less'
-		sass:   '/**/*.sass'
+		all:       '/**'
+		coffee:    '/**/*.coffee'
+		css:       '/**/*.css'
+		es6:       '/**/*.es6'
+		html:      '/**/*.html'
+		images:    '/**/*.{gif,jpg,jpeg,png}'
+		js:        '/**/*.js'
+		less:      '/**/*.less'
+		sass:      '/**/*.sass'
+		bustFiles: '/**/*.{css,js,gif,jpg,jpeg,png}'
+		bustRefs:  '/**/*.{html,css,js}'
 
 	# helpers
 	# =======
@@ -77,6 +79,16 @@ module.exports = (config) ->
 	addGlob 'dist', 'styles',  ['css'], true, true
 	addGlob 'dist', 'views',   ['all']
 	addGlob 'dist', 'views',   ['html']
+
+	# cache bust
+	# ==========
+	addCacheBust = (type, lang) ->
+		_glob = path.join config.dist.app.client.dir, lang
+		glob.dist.app.client.cacheBust[type] = _glob
+
+	glob.dist.app.client.cacheBust = {}
+	addCacheBust 'files',      lang.bustFiles
+	addCacheBust 'references', lang.bustRefs
 
 	# methods
 	# =======

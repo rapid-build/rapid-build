@@ -56,6 +56,7 @@ module.exports = (gulp, config) ->
 
 	# minify
 	# ======
+	require("#{config.req.tasks}/minify/cache-bust")                gulp, config     # cache-bust
 	require("#{config.req.tasks}/minify/concat-scripts-and-styles") gulp, config     # concat-scripts-and-styles
 	require("#{config.req.tasks}/minify/css-file-split")            gulp, config     # css-file-split
 	require("#{config.req.tasks}/minify/minify-client")             gulp, config     # minify-client

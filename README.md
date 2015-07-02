@@ -27,13 +27,13 @@ rapid-build currently supports the following technologies:
 * src
 	* this is where you develop, place your working files here
 	* these files should be under a [version control system](http://guides.beanstalkapp.com/version-control/intro-to-version-control.html)
-	  ([ex](https://github.com/ 'Example: GitHub that uses Git'))
+	  ([ex](https://github.com/ "Example: GitHub that uses Git"))
 * dist
 	* this is where your distributable packages/folders will be built
 	* once built you can ship them off to places like a webserver
 	* these packages should not be under version control
-		* instead use a [ci system](http://www.thoughtworks.com/continuous-integration 'Continuous Integration System')
-		  ([ex](https://travis-ci.org/ 'Example: Travis CI')) to build and deploy your packages
+		* instead use a [ci system](http://www.thoughtworks.com/continuous-integration "Continuous Integration System")
+		  ([ex](https://travis-ci.org/ "Example: Travis CI")) to build and deploy your packages
 * client
 	* directory for all your
 	  [client side](http://programmers.stackexchange.com/questions/171203/what-are-the-differences-between-server-side-and-client-side-programming)
@@ -175,11 +175,12 @@ gulp rapid-build:prod
 	* js (scripts.min.css created)
 4. build the spa.html file
 5. minify the spa.html file
-6. minify server js files
-7. start the server
+6. cache bust the files (client)
+7. minify server js files
+8. start the server
 
 ## Develop Rapidly!
-![Shake and Bake!](docs/shake-and-bake.jpg)
+![Shake and Bake!](docs/shake-and-bake.jpg "Shake n' Bake!")
 
 
 
