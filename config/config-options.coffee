@@ -38,6 +38,7 @@
 # minify.html.templateCache                    = (boolean) defaults to true
 # minify.js.scripts                            = (boolean) defaults to true
 # minify.js.mangle                             = (boolean) defaults to true
+# minify.cacheBust                             = (boolean) defaults to true
 # =========================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -107,9 +108,10 @@ module.exports = (config, options) ->
 
 	minifyOptions = ->
 		options.minify = {} if not isType.object options.minify
-		options.minify.css  = {} if not isType.object options.minify.css
-		options.minify.html = {} if not isType.object options.minify.html
-		options.minify.js   = {} if not isType.object options.minify.js
+		options.minify.css       = {} if not isType.object options.minify.css
+		options.minify.html      = {} if not isType.object options.minify.html
+		options.minify.js        = {} if not isType.object options.minify.js
+		options.minify.cacheBust = null if not isType.boolean options.minify.cacheBust
 		options.minify.css.styles         = null if not isType.boolean options.minify.css.styles
 		options.minify.css.splitMinFile   = null if not isType.boolean options.minify.css.splitMinFile
 		options.minify.html.views         = null if not isType.boolean options.minify.html.views

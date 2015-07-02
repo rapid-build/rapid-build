@@ -25,6 +25,12 @@ module.exports = (config, options) ->
 			options: # not configurable
 				conditionals:true, empty:true, ssi:true
 
+	# cache bust
+	# ==========
+	cacheBustOpt = options.minify.cacheBust
+	minify.cacheBust =
+		if isType.null cacheBustOpt then true else cacheBustOpt
+
 	# add minify to config
 	# ====================
 	config.minify = minify

@@ -67,6 +67,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}cache-bust", ->
+		return promiseHelp.get() if not config.minify.cacheBust
 		runCacheBustTask()
 
 
