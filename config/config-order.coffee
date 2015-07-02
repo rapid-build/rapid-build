@@ -56,7 +56,7 @@ module.exports = (config, options) ->
 	# rb order
 	# ========
 	files = []
-	files = files.concat rb.files.angular if not options.angular.exclude.files
+	files = files.concat rb.files.angular if not config.exclude.angular.files
 	order.rb.scripts.first = files.concat rb.files.rb
 
 	# methods

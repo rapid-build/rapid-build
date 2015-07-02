@@ -42,7 +42,7 @@ module.exports = (gulp, config) ->
 	runTasks = ->
 		defer = q.defer()
 		q.all([
-			getComponents 'rb', config.angular.exclude.files
+			getComponents 'rb', config.exclude.angular.files
 			getComponents 'app'
 		]).done -> defer.resolve()
 		defer.promise

@@ -32,3 +32,9 @@ module.exports =
 			v.forEach (path, i) ->
 				paths[k].push v[i].replace partial, ''
 		paths
+
+	makeRelative: (path) ->
+		return path if path[0] isnt '/'
+		path.substr 1
+
+

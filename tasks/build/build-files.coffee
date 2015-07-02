@@ -38,8 +38,9 @@ module.exports = (gulp, config) ->
 	# globs
 	# =====
 	getExcludes = (appOrRb, type, glob) ->
-		return glob if not config.spa.exclude[appOrRb][type].length
-		glob = glob.concat config.spa.exclude[appOrRb][type]
+		spaExcludes = config.exclude[appOrRb][type].from.spaFile
+		return glob if not spaExcludes.length
+		glob = glob.concat spaExcludes
 		# log.json glob, "#{appOrRb} #{type}"
 		glob
 

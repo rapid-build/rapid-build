@@ -16,7 +16,7 @@ module.exports = (gulp, config) ->
 			libs:    config.glob.dist[appOrRb].client.libs[lang]
 			first:   config.order[appOrRb][type].first
 			last:    config.order[appOrRb][type].last
-			exclude: config.spa.exclude[appOrRb][type] # spa exclude option
+			exclude: config.exclude[appOrRb][type].from.spaFile
 		globs[glob]
 
 	getGlobs = (appOrRb, type, _globs) ->

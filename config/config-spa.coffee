@@ -48,26 +48,6 @@ module.exports = (config, options) ->
 	# ============
 	spa.placeholders = options.spa.placeholders or []
 
-	# exclude
-	# =======
-	spa.exclude =
-		rb:
-			scripts: []
-			styles:  []
-		app:
-			scripts: options.spa.exclude.scripts or []
-			styles:  options.spa.exclude.styles  or []
-
-	formatExcludes = ->
-		for own k1, v1 of spa.exclude
-			for own k2, v2 of v1
-				continue if not v2.length
-				v2.forEach (v3, i) ->
-					v2[i] = path.join config.dist[k1].client.dir, v3
-					v2[i] = "!#{v2[i]}"
-
-	formatExcludes()
-
 	# add spa to config
 	# =================
 	config.spa = spa

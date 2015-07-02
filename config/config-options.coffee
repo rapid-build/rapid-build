@@ -23,15 +23,12 @@
 # angular.httpBackend.dir                      = (string)  defaults to 'mocks'
 # angular.templateCache.dev                    = (boolean) defaults to false
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
-# angular.exclude.files                        = (boolean) defaults to false
 # spa.title                                    = (string)  defaults to package.json name
 # spa.description                              = (string)  defaults to package.json description
 # spa.src.file                                 = (string)  defaults to 'spa.html'
 # spa.src.dir                                  = (string)  defaults to null
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
 # spa.placeholders                             = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
-# spa.exclude.scripts                          = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and scripts.min.js file
-# spa.exclude.styles                           = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and styles.min.css file
 # minify.css.styles                            = (boolean) defaults to true
 # minify.css.splitMinFile                      = (boolean) defaults to true
 # minify.html.views                            = (boolean) defaults to true
@@ -40,7 +37,10 @@
 # minify.js.mangle                             = (boolean) defaults to true
 # minify.spa.file                              = (boolean) defaults to true
 # minify.cacheBust                             = (boolean) defaults to true
-# =========================================================================================================================================================================
+# exclude.angular.files                        = (boolean) defaults to false
+# exclude[scripts|styles].from.spaFile         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
+# exclude[scripts|styles].from.minFile         = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
+# =============================================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
 	isType = require "#{config.req.helpers}/isType"
@@ -83,8 +83,6 @@ module.exports = (config, options) ->
 		options.angular.modules       = null if not isType.array options.angular.modules
 		options.angular.version       = null if not isType.string options.angular.version
 		options.angular.moduleName    = null if not isType.string options.angular.moduleName
-		options.angular.exclude       = {}   if not isType.object options.angular.exclude
-		options.angular.exclude.files = null if not isType.boolean options.angular.exclude.files
 		options.angular.httpBackend   = {}   if not isType.object options.angular.httpBackend
 		options.angular.httpBackend.dev  = null if not isType.boolean options.angular.httpBackend.dev
 		options.angular.httpBackend.prod = null if not isType.boolean options.angular.httpBackend.prod
@@ -103,9 +101,6 @@ module.exports = (config, options) ->
 		options.spa.dist         = {}   if not isType.object options.spa.dist
 		options.spa.dist.file    = null if not isType.string options.spa.dist.file
 		options.spa.placeholders = null if not isType.array  options.spa.placeholders
-		options.spa.exclude      = {}   if not isType.object options.spa.exclude
-		options.spa.exclude.scripts = null if not isType.array options.spa.exclude.scripts
-		options.spa.exclude.styles  = null if not isType.array options.spa.exclude.styles
 
 	minifyOptions = ->
 		options.minify = {} if not isType.object options.minify
@@ -122,6 +117,19 @@ module.exports = (config, options) ->
 		options.minify.js.mangle          = null if not isType.boolean options.minify.js.mangle
 		options.minify.spa.file           = null if not isType.boolean options.minify.spa.file
 
+	excludeOptions = ->
+		options.exclude = {} if not isType.object options.exclude
+		options.exclude.angular = {} if not isType.object options.exclude.angular
+		options.exclude.scripts = {} if not isType.object options.exclude.scripts
+		options.exclude.styles  = {} if not isType.object options.exclude.styles
+		options.exclude.scripts.from  = {} if not isType.object options.exclude.scripts.from
+		options.exclude.styles.from   = {} if not isType.object options.exclude.styles.from
+		options.exclude.angular.files = null if not isType.boolean options.exclude.angular.files
+		options.exclude.scripts.from.minFile = null if not isType.array options.exclude.scripts.from.minFile
+		options.exclude.scripts.from.spaFile = null if not isType.array options.exclude.scripts.from.spaFile
+		options.exclude.styles.from.minFile  = null if not isType.array options.exclude.styles.from.minFile
+		options.exclude.styles.from.spaFile  = null if not isType.array options.exclude.styles.from.spaFile
+
 	# init
 	# ====
 	distAndSrcOptions() # must be first
@@ -131,6 +139,7 @@ module.exports = (config, options) ->
 	angularOptions()
 	spaOptions()
 	minifyOptions()
+	excludeOptions()
 
 	# logs
 	# ====

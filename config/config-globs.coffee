@@ -5,20 +5,43 @@ module.exports = (config) ->
 	pathHelp = require "#{config.req.helpers}/path"
 	test     = require("#{config.req.helpers}/test")()
 
-	# defaults
-	# ========
+	# exts
+	# ====
+	exts =
+		coffee: 'coffee'
+		css:    'css'
+		es6:    'es6'
+		fonts:  'eot,svg,ttf,woff,woff2' # not used
+		html:   'html'
+		images: 'gif,jpg,jpeg,png'
+		js:     'js'
+		less:   'less'
+		sass:   'sass' # not used yet
+
+	getExts = (_exts) -> # _exts = string array
+		_exts = _exts.split ','
+		_exts = (ext.trim() for ext in _exts)
+		combined = ''
+		total    = _exts.length - 1
+		for ext, i in _exts
+			combined += exts[ext]
+			combined += ',' if i isnt total
+		combined
+
+	# langs
+	# =====
 	lang =
 		all:       '/**'
-		coffee:    '/**/*.coffee'
-		css:       '/**/*.css'
-		es6:       '/**/*.es6'
-		html:      '/**/*.html'
-		images:    '/**/*.{gif,jpg,jpeg,png}'
-		js:        '/**/*.js'
-		less:      '/**/*.less'
-		sass:      '/**/*.sass'
-		bustFiles: '/**/*.{css,js,gif,jpg,jpeg,png}'
-		bustRefs:  '/**/*.{html,css,js}'
+		coffee:    "/**/*.#{exts.coffee}"
+		css:       "/**/*.#{exts.css}"
+		es6:       "/**/*.#{exts.es6}"
+		html:      "/**/*.#{exts.html}"
+		images:    "/**/*.{#{exts.images}}"
+		js:        "/**/*.#{exts.js}"
+		less:      "/**/*.#{exts.less}"
+		sass:      "/**/*.#{exts.sass}"
+		bustFiles: "/**/*.{#{getExts 'css,js,images'}}"
+		bustRefs:  "/**/*.{#{getExts 'html,css,js'}}"
 
 	# helpers
 	# =======

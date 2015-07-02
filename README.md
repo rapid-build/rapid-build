@@ -118,15 +118,12 @@ gulp rapid-build:prod
 # angular.httpBackend.dir                      = (string)  defaults to 'mocks' = directory inside your client scripts directory
 # angular.templateCache.dev                    = (boolean) defaults to false = use template cache when running default and dev task
 # angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
-# angular.exclude.files                        = (boolean) defaults to false = set to true to exclude angular files (lib and modules)
 # spa.title                                    = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                              = (string)  defaults to package.json description = html meta description tag value
 # spa.src.file                                 = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
 # spa.src.dir                                  = (string)  defaults to null = set if you are using your own spa file and that file is located in a directory in your client src directory
 # spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
 # spa.placeholders                             = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
-# spa.exclude.scripts                          = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and scripts.min.js file
-# spa.exclude.styles                           = (array of strings) = file paths: exclude files from automatically being generated in the spa.html and styles.min.css file
 # minify.css.styles                            = (boolean) defaults to true = for prod build, minify the css
 # minify.css.splitMinFile                      = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
 # minify.html.views                            = (boolean) defaults to true = for prod build, minify the html
@@ -135,6 +132,8 @@ gulp rapid-build:prod
 # minify.js.mangle                             = (boolean) defaults to true = for prod build, mangle the names in the js
 # minify.spa.file                              = (boolean) defaults to true = for prod build, minify the spa.html file
 # minify.cacheBust                             = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension
+# exclude.angular.files                        = (boolean) defaults to false = set to true to exclude the angular files that come with rapid-build from dist (lib and modules)
+# exclude[scripts|styles].from.spaFile         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # ========================================================================================================================================================================================================================
 ```
 

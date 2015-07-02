@@ -34,11 +34,6 @@ module.exports = (config, options) ->
 	# ===========
 	angular.moduleName = options.angular.moduleName or 'app'
 
-	# exclude
-	# =======
-	angular.exclude = {}
-	angular.exclude.files = options.angular.exclude.files or false
-
 	# template cache
 	# ==============
 	angular.templateCache = {}
