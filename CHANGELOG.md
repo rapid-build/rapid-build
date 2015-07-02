@@ -1,3 +1,11 @@
+## 0.16.0 (2015-07-01)
+
+
+#### Features
+
+* **option:** add option minify.spa.file ([4b0e6128](https://github.com/jyounce/rapid-build/commit/4b0e6128))
+
+
 ## 0.15.0 (2015-07-01)
 
 
