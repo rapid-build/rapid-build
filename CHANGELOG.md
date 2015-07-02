@@ -1,3 +1,12 @@
+## 0.15.0 (2015-07-01)
+
+
+#### Features
+
+* **cache busting:** add cache busting to the prod build for the client ([7f66d19d](https://github.com/jyounce/rapid-build/commit/7f66d19d))
+* **option:** add option to disable cache busting via option.minify.cacheBust ([6d445c7c](https://github.com/jyounce/rapid-build/commit/6d445c7c))
+
+
 ## 0.14.0 (2015-06-30)
 
 
