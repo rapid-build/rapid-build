@@ -24,6 +24,8 @@ module.exports = (config, options) ->
 			templateCache: getOption 'html', 'templateCache'
 			options: # not configurable
 				conditionals:true, empty:true, ssi:true
+		spa:
+			file: getOption 'spa', 'file'
 
 	# cache bust
 	# ==========

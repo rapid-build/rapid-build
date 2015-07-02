@@ -38,6 +38,7 @@
 # minify.html.templateCache                    = (boolean) defaults to true
 # minify.js.scripts                            = (boolean) defaults to true
 # minify.js.mangle                             = (boolean) defaults to true
+# minify.spa.file                              = (boolean) defaults to true
 # minify.cacheBust                             = (boolean) defaults to true
 # =========================================================================================================================================================================
 module.exports = (config, options) ->
@@ -111,6 +112,7 @@ module.exports = (config, options) ->
 		options.minify.css       = {} if not isType.object options.minify.css
 		options.minify.html      = {} if not isType.object options.minify.html
 		options.minify.js        = {} if not isType.object options.minify.js
+		options.minify.spa       = {} if not isType.object options.minify.spa
 		options.minify.cacheBust = null if not isType.boolean options.minify.cacheBust
 		options.minify.css.styles         = null if not isType.boolean options.minify.css.styles
 		options.minify.css.splitMinFile   = null if not isType.boolean options.minify.css.splitMinFile
@@ -118,6 +120,7 @@ module.exports = (config, options) ->
 		options.minify.html.templateCache = null if not isType.boolean options.minify.html.templateCache
 		options.minify.js.scripts         = null if not isType.boolean options.minify.js.scripts
 		options.minify.js.mangle          = null if not isType.boolean options.minify.js.mangle
+		options.minify.spa.file           = null if not isType.boolean options.minify.spa.file
 
 	# init
 	# ====

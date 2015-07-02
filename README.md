@@ -133,6 +133,7 @@ gulp rapid-build:prod
 # minify.html.templateCache                    = (boolean) defaults to true = for prod build, use the template cache
 # minify.js.scripts                            = (boolean) defaults to true = for prod build, minify the js
 # minify.js.mangle                             = (boolean) defaults to true = for prod build, mangle the names in the js
+# minify.spa.file                              = (boolean) defaults to true = for prod build, minify the spa.html file
 # minify.cacheBust                             = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension
 # ========================================================================================================================================================================================================================
 ```

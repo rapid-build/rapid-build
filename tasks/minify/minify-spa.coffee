@@ -1,6 +1,7 @@
 module.exports = (gulp, config) ->
-	q          = require 'q'
-	minifyHtml = require 'gulp-minify-html'
+	q           = require 'q'
+	minifyHtml  = require 'gulp-minify-html'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# tasks
 	# =====
@@ -18,6 +19,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-spa", ->
+		return promiseHelp.get() if not config.minify.spa.file
 		runTask(
 			config.spa.dist.path
 			config.dist.app.client.dir
