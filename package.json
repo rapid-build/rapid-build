@@ -37,7 +37,7 @@
 		"gulp-angular-templatecache": "~1.7.0",
 		"gulp-babel": "~5.1.0",
 		"gulp-bless": "~3.0.1",
-		"gulp-cachebust": "~0.0.5",
+		"gulp-cachebust": "https://github.com/Josiah/gulp-cachebust/tarball/cbf1ca62e0d90dfbcc1f08f34e1321191d69e423",
 		"gulp-coffee": "~2.3.1",
 		"gulp-concat": "~2.6.0",
 		"gulp-if": "~1.2.5",
