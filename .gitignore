@@ -1,5 +1,6 @@
 .orig
 .DS_Store
+Thumbs.db
 temp/
 bower_components/
 src/client/scripts/app.coffee
