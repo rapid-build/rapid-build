@@ -4,7 +4,7 @@
 #### Bug Fixes
 
 * **option:** remove options angular.exclude.files and spa.exclude, replace with the exclude option ([4904685d](https://github.com/jyounce/rapid-build/commit/4904685d))
-* **options:** change option exclude[scripts|styles].from.spaFile to exclude.from.spaFile[scripts|styles] ([136c042a](https://github.com/jyounce/rapid-build/commit/136c042a))
+* **options:** change option exclude[scripts|styles].from.spaFile to exclude.from.spaFile\[scripts|styles\] ([136c042a](https://github.com/jyounce/rapid-build/commit/136c042a))
 * **windows:** cache busting for prod ([fa45be6f](https://github.com/jyounce/rapid-build/commit/fa45be6f))
 
 
