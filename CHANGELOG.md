@@ -1,3 +1,18 @@
+## 0.17.0 (2015-07-10)
+
+
+#### Bug Fixes
+
+* **option:** remove options angular.exclude.files and spa.exclude, replace with the exclude option ([4904685d](https://github.com/jyounce/rapid-build/commit/4904685d))
+* **options:** change option exclude[scripts|styles].from.spaFile to exclude.from.spaFile[scripts|styles] ([136c042a](https://github.com/jyounce/rapid-build/commit/136c042a))
+* **windows:** cache busting for prod ([fa45be6f](https://github.com/jyounce/rapid-build/commit/fa45be6f))
+
+
+#### Features
+
+* **exclude:** add option exclude.from.cacheBust ([03d18e11](https://github.com/jyounce/rapid-build/commit/03d18e11))
+
+
 ## 0.16.0 (2015-07-01)
 
 
