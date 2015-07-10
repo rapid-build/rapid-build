@@ -13,8 +13,8 @@ module.exports = (config, options) ->
 				opt = options.exclude[type][opt]
 				return defaultVal if isType.null opt
 				opt
-			deep3: (type, opt, defaultVal) ->
-				opt = options.exclude[type].from[opt]
+			deep3: (opt, type, defaultVal) ->
+				opt = options.exclude.from[opt][type]
 				return defaultVal if isType.null opt
 				opt
 
@@ -24,40 +24,38 @@ module.exports = (config, options) ->
 		angular:
 			files: get.opt.deep2 'angular', 'files', false
 		rb:
-			scripts:
-				from:
-					minFile: []
-					spaFile: []
-			styles:
-				from:
-					minFile: []
-					spaFile: []
+			from:
+				minFile:
+					scripts: []
+					styles:  []
+				spaFile:
+					scripts: []
+					styles:  []
 		app:
-			scripts:
-				from:
-					minFile: get.opt.deep3 'scripts', 'minFile', []
-					spaFile: get.opt.deep3 'scripts', 'spaFile', []
-			styles:
-				from:
-					minFile: get.opt.deep3 'styles', 'minFile', []
-					spaFile: get.opt.deep3 'styles', 'spaFile', []
+			from:
+				minFile:
+					scripts: get.opt.deep3 'minFile', 'scripts', []
+					styles:  get.opt.deep3 'minFile', 'styles',  []
+				spaFile:
+					scripts: get.opt.deep3 'spaFile', 'scripts', []
+					styles:  get.opt.deep3 'spaFile', 'styles',  []
 
 	# format options
 	# ==============
-	formatFilesFrom = (type, opt) -> # prepend dist path to values then prepend '!'
+	formatFilesFrom = (opt, type) -> # prepend dist path to values then prepend '!'
 		for appOrRb in ['app','rb']
-			_paths = exclude[appOrRb][type].from[opt]
+			_paths = exclude[appOrRb].from[opt][type]
 			continue if not _paths.length
 			_paths = (pathHelp.makeRelative _path for _path in _paths)
 			_paths = (path.join config.dist[appOrRb].client.dir, _path for _path in _paths)
 			_paths = ("!#{_path}" for _path in _paths)
 			# log.json _paths
-			exclude[appOrRb][type].from[opt] = _paths
+			exclude[appOrRb].from[opt][type] = _paths
 
-	formatFilesFrom 'scripts', 'minFile'
-	formatFilesFrom 'scripts', 'spaFile'
-	formatFilesFrom 'styles',  'minFile'
-	formatFilesFrom 'styles',  'spaFile'
+	formatFilesFrom 'minFile', 'scripts'
+	formatFilesFrom 'minFile', 'styles'
+	formatFilesFrom 'spaFile', 'scripts'
+	formatFilesFrom 'spaFile', 'styles'
 
 	# add exclude to config
 	# =====================

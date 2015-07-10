@@ -31,10 +31,10 @@ module.exports = (gulp, config) ->
 	# =======
 	getExcludes = ->
 		[].concat(
-			config.exclude.rb.scripts.from.spaFile
-			config.exclude.rb.styles.from.spaFile
-			config.exclude.app.scripts.from.spaFile
-			config.exclude.app.styles.from.spaFile
+			config.exclude.rb.from.spaFile.scripts
+			config.exclude.rb.from.spaFile.styles
+			config.exclude.app.from.spaFile.scripts
+			config.exclude.app.from.spaFile.styles
 		)
 
 	getFilesDelSrc = ->

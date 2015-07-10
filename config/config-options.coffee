@@ -38,8 +38,9 @@
 # minify.spa.file                              = (boolean) defaults to true
 # minify.cacheBust                             = (boolean) defaults to true
 # exclude.angular.files                        = (boolean) defaults to false
-# exclude[scripts|styles].from.spaFile         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
-# exclude[scripts|styles].from.minFile         = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
+# exclude.from.cacheBust                       = (array of strings) = file paths: exclude files from the cache bust
+# exclude.from.spaFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
+# exclude.from.minFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # =============================================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -120,15 +121,15 @@ module.exports = (config, options) ->
 	excludeOptions = ->
 		options.exclude = {} if not isType.object options.exclude
 		options.exclude.angular = {} if not isType.object options.exclude.angular
-		options.exclude.scripts = {} if not isType.object options.exclude.scripts
-		options.exclude.styles  = {} if not isType.object options.exclude.styles
-		options.exclude.scripts.from  = {} if not isType.object options.exclude.scripts.from
-		options.exclude.styles.from   = {} if not isType.object options.exclude.styles.from
-		options.exclude.angular.files = null if not isType.boolean options.exclude.angular.files
-		options.exclude.scripts.from.minFile = null if not isType.array options.exclude.scripts.from.minFile
-		options.exclude.scripts.from.spaFile = null if not isType.array options.exclude.scripts.from.spaFile
-		options.exclude.styles.from.minFile  = null if not isType.array options.exclude.styles.from.minFile
-		options.exclude.styles.from.spaFile  = null if not isType.array options.exclude.styles.from.spaFile
+		options.exclude.from    = {} if not isType.object options.exclude.from
+		options.exclude.angular.files  = null if not isType.boolean options.exclude.angular.files
+		options.exclude.from.cacheBust = null if not isType.array options.exclude.from.cacheBust
+		options.exclude.from.minFile   = {} if not isType.object options.exclude.from.minFile
+		options.exclude.from.spaFile   = {} if not isType.object options.exclude.from.spaFile
+		options.exclude.from.minFile.scripts = null if not isType.array options.exclude.from.minFile.scripts
+		options.exclude.from.minFile.styles  = null if not isType.array options.exclude.from.minFile.styles
+		options.exclude.from.spaFile.scripts = null if not isType.array options.exclude.from.spaFile.scripts
+		options.exclude.from.spaFile.styles  = null if not isType.array options.exclude.from.spaFile.styles
 
 	# init
 	# ====
