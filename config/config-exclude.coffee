@@ -25,6 +25,7 @@ module.exports = (config, options) ->
 			files: get.opt.deep2 'angular', 'files', false
 		rb:
 			from:
+				cacheBust: []
 				minFile:
 					scripts: []
 					styles:  []
@@ -33,6 +34,7 @@ module.exports = (config, options) ->
 					styles:  []
 		app:
 			from:
+				cacheBust: get.opt.deep2 'from', 'cacheBust', []
 				minFile:
 					scripts: get.opt.deep3 'minFile', 'scripts', []
 					styles:  get.opt.deep3 'minFile', 'styles',  []
@@ -44,14 +46,20 @@ module.exports = (config, options) ->
 	# ==============
 	formatFilesFrom = (opt, type) -> # prepend dist path to values then prepend '!'
 		for appOrRb in ['app','rb']
-			_paths = exclude[appOrRb].from[opt][type]
-			continue if not _paths.length
+			_paths  = exclude[appOrRb].from[opt][type]
+			forType = !!_paths
+			_paths  = exclude[appOrRb].from[opt] unless forType
+			continue unless _paths.length
 			_paths = (pathHelp.makeRelative _path for _path in _paths)
 			_paths = (path.join config.dist[appOrRb].client.dir, _path for _path in _paths)
 			_paths = ("!#{_path}" for _path in _paths)
 			# log.json _paths
-			exclude[appOrRb].from[opt][type] = _paths
+			if forType
+				exclude[appOrRb].from[opt][type] = _paths
+			else
+				exclude[appOrRb].from[opt] = _paths
 
+	formatFilesFrom 'cacheBust'
 	formatFilesFrom 'minFile', 'scripts'
 	formatFilesFrom 'minFile', 'styles'
 	formatFilesFrom 'spaFile', 'scripts'

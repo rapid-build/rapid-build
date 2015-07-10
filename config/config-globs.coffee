@@ -107,11 +107,20 @@ module.exports = (config) ->
 	# ==========
 	addCacheBust = (type, lang) ->
 		_glob = path.join config.dist.app.client.dir, lang
-		glob.dist.app.client.cacheBust[type] = _glob
+		glob.dist.app.client.cacheBust[type] = [ _glob ]
+
+	addCacheBustExcludes = ->
+		glob.dist.app.client.cacheBust.files =
+			[].concat(
+				glob.dist.app.client.cacheBust.files
+				config.exclude.rb.from.cacheBust
+				config.exclude.app.from.cacheBust
+			)
 
 	glob.dist.app.client.cacheBust = {}
 	addCacheBust 'files',      lang.bustFiles
 	addCacheBust 'references', lang.bustRefs
+	addCacheBustExcludes()
 
 	# methods
 	# =======
