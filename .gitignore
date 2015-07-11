@@ -14,6 +14,13 @@ Thumbs.db
 config/config.json
 files/files.json
 src/client/scripts/app.coffee
+
+# test
+# ====
+test/css/selectors.css
+
+# docs
+# ====
 src/client/images/wolverine.png
 src/client/views/docs
 src/client/views/rapid-build.html
