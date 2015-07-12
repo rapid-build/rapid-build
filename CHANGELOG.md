@@ -1,3 +1,13 @@
+### 0.17.1 (2015-07-12)
+
+
+#### Bug Fixes
+
+* **minify:**
+  * ability for css file split to handle multiple css min files ([d18a02f1](https://github.com/jyounce/rapid-build/commit/d18a02f1))
+  * ensure css doesn't break the build on really large files ([fdd3cee6](https://github.com/jyounce/rapid-build/commit/fdd3cee6))
+
+
 ## 0.17.0 (2015-07-10)
 
 
