@@ -12,23 +12,32 @@ module.exports = (gulp, config) ->
 
 	# tasks
 	# =====
-	runTask = (src, dest, file, basename, ext) ->
+	runTask = (src, dest, ext) ->
 		defer    = q.defer()
 		opts     = imports:false, force:true
-		cnt      = 1
-		didSplit = false
+		files    = []
 		gulp.src src
+			.on 'data', (file) ->
+				basename = path.basename file.path
+				files.push name: basename, cnt: 0
 			.pipe bless opts
-			.on 'data', (_file) -> # change the name so the glob order will be correct
-				isBlessedFile = _file.basename.indexOf('blessed') isnt -1
-				didSplit      = isBlessedFile or cnt > 1
+			.on 'data', (file) -> # change the name so the glob order will be correct
+				total         = files.length
+				basename      = file.basename
+				return unless total
+				return unless basename
+				_file         = files[total-1]
+				isBlessedFile = basename.indexOf('blessed') isnt -1
+				didSplit      = isBlessedFile or _file.cnt
 				return unless didSplit
-				fs.unlinkSync _file.path unless isBlessedFile # remove styles.min.css
-				_file.basename = "#{basename}.#{cnt}.#{ext}"
-				cnt++ if isBlessedFile
+				fs.unlinkSync file.path unless isBlessedFile # remove styles.min.css
+				_file.cnt++
+				basename      = path.basename _file.name, ext
+				file.basename = "#{basename}.#{_file.cnt}#{ext}"
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "#{file} split into #{cnt} files".yellow if didSplit
+				for file in files
+					console.log "#{file.name} split into #{file.cnt} files".yellow if file.cnt
 				defer.resolve()
 		defer.promise
 
@@ -36,11 +45,9 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}css-file-split", ->
 		return promiseHelp.get() if not config.minify.css.splitMinFile
-		stylesDir = config.dist.app.client.styles.dir
-		minFile   = config.fileName.styles.min
-		minPath   = path.join stylesDir, minFile
-		ext       = 'css'
-		basename  = path.basename minFile, ".#{ext}"
-		runTask minPath, stylesDir, minFile, basename, ext
+		ext  = '.css'
+		dest = config.dist.app.client.styles.dir
+		src  = path.join dest, "{styles.min#{ext},styles.min.*#{ext}}"
+		runTask src, dest, ext
 
 

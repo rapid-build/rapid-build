@@ -42,4 +42,5 @@ class Colors
 		string
 
 selectors = new Colors('blue','gray').setSelectors().getSelectors()
+# selectors = new Colors('blue','gray','green','red').setSelectors().getSelectors()
 fs.writeFile 'selectors.css', selectors
