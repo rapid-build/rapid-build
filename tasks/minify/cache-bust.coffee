@@ -58,8 +58,8 @@ module.exports = (gulp, config) ->
 		dest     = config.dist.app.client.dir
 		tasks = [
 			-> runStampFiles srcFiles, dest, bust
-			-> runDelUnstampedPaths()
 			-> runStampRefs srcRefs, dest, bust
+			-> runDelUnstampedPaths()
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
