@@ -88,7 +88,7 @@ module.exports = (gulp, config) ->
 				config.spa.dist.file
 				data
 			)
-			-> delCustomSpaTask()
+			# -> delCustomSpaTask()
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
