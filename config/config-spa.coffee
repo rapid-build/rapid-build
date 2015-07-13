@@ -25,9 +25,10 @@ module.exports = (config, options) ->
 	distFile = options.spa.dist.file or srcFile
 	srcDir   = getSrcDir custom, options.spa.src.dir
 	if custom
+		distDir = options.spa.src.dir or ''
 		customDistDir = path.join(
 			config.dist.app.client.dir
-			options.spa.src.dir
+			distDir
 		)
 		customDistPath = path.join customDistDir, srcFile
 
