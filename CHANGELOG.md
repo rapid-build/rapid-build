@@ -1,3 +1,11 @@
+## 0.18.0 (2015-07-13)
+
+
+#### Features
+
+* **option:** add option exclude.from.minFile[scripts|styles] while maintaining order option ([60634c97](https://github.com/jyounce/rapid-build/commit/60634c97))
+
+
 ### 0.17.1 (2015-07-12)
 
 
