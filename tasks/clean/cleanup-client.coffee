@@ -5,46 +5,52 @@ module.exports = (gulp, config) ->
 	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	dirHelper   = require("#{config.req.helpers}/dir") config
-	emptyDirs   = [] # set in delFilesTask()
 
-	# globs
-	# =====
-	globs =
-		del:
-			temp:
-				dir: config.temp.client.dir
-				paths: [
-					config.temp.client.scripts.glob
-					config.temp.client.styles.glob
-					"!#{config.temp.client.scripts.min.path}"
-					"!#{config.temp.client.styles.min.path}"
-				]
-			dist:
-				paths: [
-					"#{config.glob.dist.rb.client.all}/*.*"
-					"#{config.glob.dist.app.client.bower.all}/*.*"
-					"#{config.glob.dist.app.client.libs.all}/*.*"
-					"#{config.glob.dist.app.client.scripts.all}/*.*"
-					"#{config.glob.dist.app.client.styles.all}/*.*"
-				]
-	# helpers
-	# =======
-	getExcludes = ->
-		[].concat(
-			config.exclude.rb.from.spaFile.scripts
-			config.exclude.rb.from.spaFile.styles
-			config.exclude.app.from.spaFile.scripts
-			config.exclude.app.from.spaFile.styles
-		)
+	# Global Objects
+	# ==============
+	Blueprint = {}
 
-	getFilesDelSrc = ->
-		src      = globs.del.dist.paths
-		excludes = getExcludes()
-		src      = src.concat excludes
-		src
+	# Concat Task
+	# ===========
+	cleanTask = (type) ->
+		defer1 = q.defer()
+		tasks  = []
+		for file, i in Blueprint[type]
+			continue if file.type is 'exclude'
+			do (file) ->
+				tasks.push ->
+					delTask file.files
+		tasks.reduce(q.when, q()).done -> defer1.resolve()
+		defer1.promise
 
-	# tasks
-	# =====
+	# Multi Tasks
+	# ===========
+	setBlueprint = ->
+		file      = path.join config.templates.files.dest.dir, 'prod-files-blueprint.json'
+		Blueprint = require file
+		promiseHelp.get()
+
+	multiCleanTask = (msg) ->
+		defer = q.defer()
+		q.all([
+			cleanTask 'scripts'
+			cleanTask 'styles'
+		]).done ->
+			console.log msg.yellow if msg
+			defer.resolve()
+		defer.promise
+
+	moveTempTask = (msg) ->
+		defer = q.defer()
+		src   = config.temp.client.glob
+		dest  = config.dist.app.client.dir
+		gulp.src src
+			.pipe gulp.dest dest
+			.on 'end', ->
+				console.log msg.yellow if msg
+				defer.resolve()
+		defer.promise
+
 	delTask = (src, msg) ->
 		defer = q.defer()
 		del src, force:true, ->
@@ -53,39 +59,23 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	delEmptyDirsTask = (msg) ->
+		emptyDirs = dirHelper.get.emptyDirs(
+						config.dist.app.client.dir
+						[], 'reverse'
+					)
 		return promiseHelp.get() if not emptyDirs.length
 		delTask emptyDirs, msg
 
-	delFilesTask = (msg) ->
-		defer = q.defer()
-		src   = getFilesDelSrc()
-		del src, force:true, ->
-			emptyDirs = dirHelper.get.emptyDirs(
-							config.dist.app.client.dir
-							[ config.temp.client.dir ]
-							'reverse'
-						)
-			console.log msg.yellow if msg
-			defer.resolve()
-		defer.promise
-
-	moveTask = (src, dest, msg) ->
-		defer = q.defer()
-		gulp.src src
-			.pipe gulp.dest dest
-			.on 'end', ->
-				console.log msg.yellow if msg
-				defer.resolve()
-		defer.promise
-
-	runTasks = -> # synchronously
+	# Main Task
+	# =========
+	runTask = -> # synchronously
 		defer = q.defer()
 		tasks = [
-			-> delTask globs.del.temp.paths, 'deleted files in .temp directory'
-			-> delFilesTask 'deleted files in client root'
+			-> setBlueprint()
+			-> multiCleanTask 'cleaned client min files'
+			-> moveTempTask 'moved .temp files to client root'
+			-> delTask config.temp.client.dir, 'deleted .temp directory'
 			-> delEmptyDirsTask 'deleted empty directories'
-			-> moveTask config.temp.client.glob, config.dist.app.client.dir, 'moved .temp files to client root'
-			-> delTask globs.del.temp.dir, 'deleted .temp directory'
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
@@ -93,6 +83,8 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}cleanup-client", ->
-		runTasks()
+		runTask()
+
+
 
 

@@ -39,8 +39,8 @@
 # minify.cacheBust                             = (boolean) defaults to true
 # exclude.angular.files                        = (boolean) defaults to false
 # exclude.from.cacheBust                       = (array of strings) = file paths: exclude files from the cache bust
-# exclude.from.spaFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # exclude.from.minFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
+# exclude.from.spaFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # =============================================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"

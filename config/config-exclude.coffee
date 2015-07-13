@@ -52,7 +52,8 @@ module.exports = (config, options) ->
 			continue unless _paths.length
 			_paths = (pathHelp.makeRelative _path for _path in _paths)
 			_paths = (path.join config.dist[appOrRb].client.dir, _path for _path in _paths)
-			_paths = ("!#{_path}" for _path in _paths)
+			negate = if opt is 'minFile' then '' else '!'
+			_paths = ("#{negate}#{_path}" for _path in _paths)
 			# log.json _paths
 			if forType
 				exclude[appOrRb].from[opt][type] = _paths

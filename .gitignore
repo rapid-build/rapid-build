@@ -11,7 +11,12 @@ phantomjsdriver.log
 test-results.xml
 Thumbs.db
 /bower.json
+
+# templates
+# =========
 config/config.json
+files/prod-files-blueprint.json
+files/prod-files.json
 files/files.json
 src/client/scripts/app.coffee
 

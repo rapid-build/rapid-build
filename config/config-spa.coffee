@@ -24,6 +24,12 @@ module.exports = (config, options) ->
 	srcFile  = options.spa.src.file or 'spa.html'
 	distFile = options.spa.dist.file or srcFile
 	srcDir   = getSrcDir custom, options.spa.src.dir
+	if custom
+		customDistDir = path.join(
+			config.dist.app.client.dir
+			options.spa.src.dir
+		)
+		customDistPath = path.join customDistDir, srcFile
 
 	# init spa
 	# ========
@@ -37,6 +43,9 @@ module.exports = (config, options) ->
 	spa.dist =
 		file: distFile
 		path: path.join config.dist.app.client.dir, distFile
+		custom:
+			dir:  customDistDir  or null
+			path: customDistPath or null
 
 	# src
 	# ===
