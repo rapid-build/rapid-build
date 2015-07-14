@@ -1,3 +1,13 @@
+### 0.18.1 (2015-07-14)
+
+
+#### Bug Fixes
+
+* **cache busting:** prevent prod build crash on windows by running runDelUnstampedPaths last ([89e7aa27](https://github.com/jyounce/rapid-build/commit/89e7aa27))
+* **option:** custom spa.html file when no spa.src.dir is supplied ([54eae806](https://github.com/jyounce/rapid-build/commit/54eae806))
+* **task:** build spa by temporarily removing delCustomSpaTask() ([3dde07c6](https://github.com/jyounce/rapid-build/commit/3dde07c6))
+
+
 ## 0.18.0 (2015-07-13)
 
 
