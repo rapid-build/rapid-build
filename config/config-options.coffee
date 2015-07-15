@@ -1,46 +1,46 @@
 # API - Prep Options
-# dist.dir                                     = (string)  defaults to 'dist'
-# dist.client.dir                              = (string)  defaults to 'client'
-# dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
-# dist.client.bower.dir                        = (string)  defaults to 'bower_components'
-# dist.client.libs.dir                         = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
-# dist.server.dir                              = (string)  defaults to 'server'
-# dist.server.file                             = (string)  defaults to 'routes.js'
-# src.dir                                      = (string)  defaults to 'src'
-# src.client.dir                               = (string)  defaults to 'client'
-# src.client[images|scripts|styles|views].dir  = (string)  defaults to property name
-# src.client.bower.dir                         = (string)  defaults to 'bower_components'
-# src.client.libs.dir                          = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
-# src.server.dir                               = (string)  defaults to 'server'
-# ports.server                                 = (int)     defaults to 3000
-# ports.reload                                 = (int)     defaults to 3001
-# order[scripts|styles][first|last]            = (array)   expects file paths
-# angular.modules                              = (array)   additional angular modules
-# angular.version                              = (string)  defaults to '1.x'
-# angular.moduleName                           = (string)  application module name
-# angular.httpBackend.dev                      = (boolean) defaults to false
-# angular.httpBackend.prod                     = (boolean) defaults to false
-# angular.httpBackend.dir                      = (string)  defaults to 'mocks'
-# angular.templateCache.dev                    = (boolean) defaults to false
-# angular.templateCache.useAbsolutePaths       = (boolean) defaults to false
-# spa.title                                    = (string)  defaults to package.json name
-# spa.description                              = (string)  defaults to package.json description
-# spa.src.file                                 = (string)  defaults to 'spa.html'
-# spa.src.dir                                  = (string)  defaults to null
-# spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html'
-# spa.placeholders                             = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
-# minify.css.styles                            = (boolean) defaults to true
-# minify.css.splitMinFile                      = (boolean) defaults to true
-# minify.html.views                            = (boolean) defaults to true
-# minify.html.templateCache                    = (boolean) defaults to true
-# minify.js.scripts                            = (boolean) defaults to true
-# minify.js.mangle                             = (boolean) defaults to true
-# minify.spa.file                              = (boolean) defaults to true
-# minify.cacheBust                             = (boolean) defaults to true
-# exclude.angular.files                        = (boolean) defaults to false
-# exclude.from.cacheBust                       = (array of strings) = file paths: exclude files from the cache bust
-# exclude.from.minFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
-# exclude.from.spaFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
+# dist.dir                                          = (string)  defaults to 'dist'
+# dist.client.dir                                   = (string)  defaults to 'client'
+# dist.client[images|scripts|styles|test|views].dir = (string)  defaults to property name
+# dist.client.bower.dir                             = (string)  defaults to 'bower_components'
+# dist.client.libs.dir                              = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# dist.server.dir                                   = (string)  defaults to 'server'
+# dist.server.file                                  = (string)  defaults to 'routes.js'
+# src.dir                                           = (string)  defaults to 'src'
+# src.client.dir                                    = (string)  defaults to 'client'
+# src.client[images|scripts|styles|test|views].dir  = (string)  defaults to property name
+# src.client.bower.dir                              = (string)  defaults to 'bower_components'
+# src.client.libs.dir                               = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# src.server.dir                                    = (string)  defaults to 'server'
+# ports.server                                      = (int)     defaults to 3000
+# ports.reload                                      = (int)     defaults to 3001
+# order[scripts|styles][first|last]                 = (array)   expects file paths
+# angular.modules                                   = (array)   additional angular modules
+# angular.version                                   = (string)  defaults to '1.x'
+# angular.moduleName                                = (string)  application module name
+# angular.httpBackend.dev                           = (boolean) defaults to false
+# angular.httpBackend.prod                          = (boolean) defaults to false
+# angular.httpBackend.dir                           = (string)  defaults to 'mocks'
+# angular.templateCache.dev                         = (boolean) defaults to false
+# angular.templateCache.useAbsolutePaths            = (boolean) defaults to false
+# spa.title                                         = (string)  defaults to package.json name
+# spa.description                                   = (string)  defaults to package.json description
+# spa.src.file                                      = (string)  defaults to 'spa.html'
+# spa.src.dir                                       = (string)  defaults to null
+# spa.dist.file                                     = (string)  defaults to spa.src.file or 'spa.html'
+# spa.placeholders                                  = (array of strings) = optionals: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# minify.css.styles                                 = (boolean) defaults to true
+# minify.css.splitMinFile                           = (boolean) defaults to true
+# minify.html.views                                 = (boolean) defaults to true
+# minify.html.templateCache                         = (boolean) defaults to true
+# minify.js.scripts                                 = (boolean) defaults to true
+# minify.js.mangle                                  = (boolean) defaults to true
+# minify.spa.file                                   = (boolean) defaults to true
+# minify.cacheBust                                  = (boolean) defaults to true
+# exclude.angular.files                             = (boolean) defaults to false
+# exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust
+# exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
+# exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # =============================================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -58,7 +58,7 @@ module.exports = (config, options) ->
 				options[v1][v2].dir = null if not isType.string options[v1][v2].dir
 				return if v2 is 'server'
 				# types dir
-				['bower', 'images', 'libs', 'scripts', 'styles', 'views'].forEach (v3) ->
+				['bower', 'images', 'libs', 'scripts', 'styles', 'test', 'views'].forEach (v3) ->
 					options[v1][v2][v3] = {} if not isType.object options[v1][v2][v3]
 					options[v1][v2][v3].dir = null if not isType.string options[v1][v2][v3].dir
 

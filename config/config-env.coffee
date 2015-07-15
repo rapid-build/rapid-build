@@ -20,6 +20,8 @@ module.exports = (config) ->
 				env.is.defaultOrDev = true
 			when 'prod'
 				env.is.prod = true
+			when 'test'
+				env.is.test = true
 
 	# init env
 	# ========
@@ -33,6 +35,7 @@ module.exports = (config) ->
 		defaultOrDev: true
 		dev: false
 		prod: false
+		test: false
 
 	# methods
 	# =======
@@ -40,6 +43,7 @@ module.exports = (config) ->
 		switch gulp.seq[2] # called in 'rb-update-config' which is called first in 'rb-common'
 			when config.rb.tasks.dev  then config.env.name = 'dev'
 			when config.rb.tasks.prod then config.env.name = 'prod'
+			when config.rb.tasks.test then config.env.name = 'test'
 		setIsEnv()
 
 	# add env to config

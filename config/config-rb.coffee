@@ -15,6 +15,7 @@ module.exports = (config, rbDir) ->
 	rb.tasks = {}
 	rb.tasks.default = 'rapid-build'
 	rb.tasks.dev     = "#{rb.tasks.default}:dev"
+	rb.tasks.test    = "#{rb.tasks.default}:test"
 	rb.tasks.prod    = "#{rb.tasks.default}:prod"
 
 	# prefixes

@@ -58,8 +58,8 @@ var rapid = require('rapid-build')(options) // init rapid, pass in options here
 
 /**
  * After initializing rapid, execute it to kick off the build.
- * 1 optional param (the build mode), values are: nothing, 'dev' or 'prod'.
- * Rapid has 3 build modes: default, dev and prod (see build modes).
+ * 1 optional param (the build mode), values are: nothing, 'dev', 'test' or 'prod'.
+ * Rapid has 4 build modes: default, dev, test and prod (see build modes).
  */
 rapid().then(function() {
 	console.log('whatever you want') // probably won't need to do anything
@@ -74,8 +74,8 @@ rapid().then(function() {
  * In your gulpfile.js init rapid-build and
  * pass in gulp (pass in options too if you need customization).
  * 3 build tasks become available after initializing rapid (see build modes).
- * Build tasks are: 'rapid-build', 'rapid-build:dev' and 'rapid-build:prod'
- * ***************************************************************************/
+ * Build tasks are: 'rapid-build', 'rapid-build:dev', 'rapid-build:test' and 'rapid-build:prod'
+ * *********************************************************************************************/
 var gulp = require('gulp')
 var options = {}
 require('rapid-build')(gulp, options)
@@ -86,6 +86,7 @@ gulp.task('default', ['rapid-build'])
 // or from the terminal type one of the 3:
 gulp rapid-build
 gulp rapid-build:dev
+gulp rapid-build:test
 gulp rapid-build:prod
 ```
 
@@ -94,53 +95,53 @@ gulp rapid-build:prod
 # Example: options.ports.server = 5000
 # Options is an object, you can set the following properties:
 # -----------------------------------------------------------
-# dist.dir                                     = (string)  defaults to 'dist'
-# dist.client.dir                              = (string)  defaults to 'client'
-# dist.client[images|scripts|styles|views].dir = (string)  defaults to property name
-# dist.client.bower.dir                        = (string)  defaults to 'bower_components'
-# dist.client.libs.dir                         = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
-# dist.server.dir                              = (string)  defaults to 'server'
-# dist.server.file                             = (string)  defaults to 'routes.js'
-# src.dir                                      = (string)  defaults to 'src'
-# src.client.dir                               = (string)  defaults to 'client'
-# src.client[images|scripts|styles|views].dir  = (string)  defaults to property name
-# src.client.bower.dir                         = (string)  defaults to 'bower_components'
-# src.client.libs.dir                          = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
-# src.server.dir                               = (string)  defaults to 'server'
-# ports.server                                 = (int)     defaults to 3000
-# ports.reload                                 = (int)     defaults to 3001
-# order[scripts|styles][first|last]            = (array of strings) = file paths
-# angular.modules                              = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
-# angular.moduleName                           = (string)  defaults to 'app' = application module name, value for ng-app
-# angular.version                              = (string)  defaults to '1.x' = semver version required
-# angular.httpBackend.dev                      = (boolean) defaults to false = set to true to enable httpBackend for dev and default build
-# angular.httpBackend.prod                     = (boolean) defaults to false = set to true to enable httpBackend for prod build
-# angular.httpBackend.dir                      = (string)  defaults to 'mocks' = directory inside your client scripts directory
-# angular.templateCache.dev                    = (boolean) defaults to false = use template cache when running default and dev task
-# angular.templateCache.useAbsolutePaths       = (boolean) defaults to false = prefix template urls with a '/'
-# spa.title                                    = (string)  defaults to package.json name or 'Application' = html title tag value
-# spa.description                              = (string)  defaults to package.json description = html meta description tag value
-# spa.src.file                                 = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
-# spa.src.dir                                  = (string)  defaults to null = set if you are using your own spa file and that file is located in a directory in your client src directory
-# spa.dist.file                                = (string)  defaults to spa.src.file or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
-# spa.placeholders                             = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
-# minify.css.styles                            = (boolean) defaults to true = for prod build, minify the css
-# minify.css.splitMinFile                      = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
-# minify.html.views                            = (boolean) defaults to true = for prod build, minify the html
-# minify.html.templateCache                    = (boolean) defaults to true = for prod build, use the template cache
-# minify.js.scripts                            = (boolean) defaults to true = for prod build, minify the js
-# minify.js.mangle                             = (boolean) defaults to true = for prod build, mangle the names in the js
-# minify.spa.file                              = (boolean) defaults to true = for prod build, minify the spa.html file
-# minify.cacheBust                             = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension
-# exclude.angular.files                        = (boolean) defaults to false = set to true to exclude the angular files that come with rapid-build from dist (lib and modules)
-# exclude.from.cacheBust                       = (array of strings) = file paths: exclude files from the cache bust
-# exclude.from.minFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
-# exclude.from.spaFile[scripts|styles]         = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
-# ========================================================================================================================================================================================================================
+# dist.dir                                          = (string)  defaults to 'dist'
+# dist.client.dir                                   = (string)  defaults to 'client'
+# dist.client[images|scripts|styles|test|views].dir = (string)  defaults to property name
+# dist.client.bower.dir                             = (string)  defaults to 'bower_components'
+# dist.client.libs.dir                              = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# dist.server.dir                                   = (string)  defaults to 'server'
+# dist.server.file                                  = (string)  defaults to 'routes.js'
+# src.dir                                           = (string)  defaults to 'src'
+# src.client.dir                                    = (string)  defaults to 'client'
+# src.client[images|scripts|styles|test|views].dir  = (string)  defaults to property name
+# src.client.bower.dir                              = (string)  defaults to 'bower_components'
+# src.client.libs.dir                               = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# src.server.dir                                    = (string)  defaults to 'server'
+# ports.server                                      = (int)     defaults to 3000
+# ports.reload                                      = (int)     defaults to 3001
+# order[scripts|styles][first|last]                 = (array of strings) = file paths
+# angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
+# angular.moduleName                                = (string)  defaults to 'app' = application module name, value for ng-app
+# angular.version                                   = (string)  defaults to '1.x' = semver version required
+# angular.httpBackend.dev                           = (boolean) defaults to false = set to true to enable httpBackend for dev and default build
+# angular.httpBackend.prod                          = (boolean) defaults to false = set to true to enable httpBackend for prod build
+# angular.httpBackend.dir                           = (string)  defaults to 'mocks' = directory inside your client scripts directory
+# angular.templateCache.dev                         = (boolean) defaults to false = use template cache when running default and dev task
+# angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
+# spa.title                                         = (string)  defaults to package.json name or 'Application' = html title tag value
+# spa.description                                   = (string)  defaults to package.json description = html meta description tag value
+# spa.src.file                                      = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
+# spa.src.dir                                       = (string)  defaults to null = set if you are using your own spa file and that file is located in a directory in your client src directory
+# spa.dist.file                                     = (string)  defaults to spa.src.file or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
+# spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# minify.css.styles                                 = (boolean) defaults to true = for prod build, minify the css
+# minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
+# minify.html.views                                 = (boolean) defaults to true = for prod build, minify the html
+# minify.html.templateCache                         = (boolean) defaults to true = for prod build, use the template cache
+# minify.js.scripts                                 = (boolean) defaults to true = for prod build, minify the js
+# minify.js.mangle                                  = (boolean) defaults to true = for prod build, mangle the names in the js
+# minify.spa.file                                   = (boolean) defaults to true = for prod build, minify the spa.html file
+# minify.cacheBust                                  = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension
+# exclude.angular.files                             = (boolean) defaults to false = set to true to exclude the angular files that come with rapid-build from dist (lib and modules)
+# exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust
+# exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
+# exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
+# =============================================================================================================================================================================================================================
 ```
 
 ## Build Modes
-#### Common Tasks (all 3 builds do the following tasks first):
+#### Common Tasks (all 4 builds do the following tasks first):
 1. install bower components (if they aren't installed)
 2. copy the following files to the dist directory
 	* css - (client)
@@ -166,6 +167,11 @@ gulp rapid-build:prod
 3. start the server
 4. open the browser
 5. fireup the file watchers (on saving a file, the browser will refresh)
+
+#### Test Build:
+1. run common tasks (see above)
+2. copy test scripts to dist/client/
+3. run tests in [PhantomJS](http://phantomjs.org/)
 
 #### Prod Build:
 1. run common tasks (see above)

@@ -55,6 +55,7 @@ module.exports = (config, options) ->
 		angular.modules.splice 0, 1
 
 	angular.removeRbMocksModule = ->
+		return if config.env.is.test
 		if config.env.is.prod
 			removeRbMocksModule() if not angular.httpBackend.prod
 		else if not angular.httpBackend.dev

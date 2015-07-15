@@ -14,6 +14,7 @@ module.exports = (config, options) ->
 		server:  'server'
 		scripts: 'scripts'
 		styles:  'styles'
+		test:    'test'
 		views:   'views'
 
 	file =
@@ -39,6 +40,7 @@ module.exports = (config, options) ->
 			o.clientLibs    = options[loc].client.libs.dir
 			o.clientScripts = options[loc].client.scripts.dir
 			o.clientStyles  = options[loc].client.styles.dir
+			o.clientTest    = options[loc].client.test.dir
 			o.clientViews   = options[loc].client.views.dir
 
 		dir: o.dir or dir[loc]
@@ -54,6 +56,8 @@ module.exports = (config, options) ->
 				dir: o.clientScripts or dir.scripts
 			styles:
 				dir: o.clientStyles or dir.styles
+			test:
+				dir: o.clientTest or dir.test
 			views:
 				dir: o.clientViews or dir.views
 		server:

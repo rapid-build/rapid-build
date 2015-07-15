@@ -89,6 +89,9 @@ module.exports = (config) ->
 	addGlob 'src', 'styles',  ['css']
 	addGlob 'src', 'styles',  ['less']
 	# addGlob 'src', 'styles',  ['sass']
+	addGlob 'src', 'test',    ['js']
+	addGlob 'src', 'test',    ['coffee']
+	addGlob 'src', 'test',    ['es6']
 	addGlob 'src', 'views',   ['html']
 
 	# dist
@@ -100,6 +103,7 @@ module.exports = (config) ->
 	addGlob 'dist', 'scripts', ['js' ], true, true
 	addGlob 'dist', 'styles',  ['all']
 	addGlob 'dist', 'styles',  ['css'], true, true
+	addGlob 'dist', 'test',    ['js']
 	addGlob 'dist', 'views',   ['all']
 	addGlob 'dist', 'views',   ['html']
 
@@ -135,6 +139,7 @@ module.exports = (config) ->
 		removeAppAngularMocksDir()
 
 	glob.removeRbAngularMocks = ->
+		return if config.env.is.test
 		if config.env.is.prod
 			removeRbAngularMocks() if not config.angular.httpBackend.prod
 		else if not config.angular.httpBackend.dev

@@ -26,6 +26,15 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
+	# rapid-build:test
+	# ================
+	gulp.task config.rb.tasks.test, ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}copy-tests"
+			"#{config.rb.prefix.task}run-tests"
+			cb
+		) -> defer.resolve()
+
 	# rapid-build:prod
 	# ================
 	gulp.task config.rb.tasks.prod, ["#{config.rb.prefix.task}common"], (cb) ->

@@ -154,6 +154,7 @@ module.exports = (config) ->
 
 		removeRbAngularMocks: (loc, paths) ->
 			return if loc isnt 'rb'
+			return if config.env.is.test
 			if config.env.is.prod
 				@_removeRbAngularMocks paths if not config.angular.httpBackend.prod
 			else if not config.angular.httpBackend.dev
