@@ -11,7 +11,7 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}run-tests", ->
 		defer = q.defer()
-		karma.start opts, (exitCode, x) ->
+		karma.start opts, (exitCode) ->
 			console.log "Karma has exited with #{exitCode}."
 			defer.resolve()
 			process.exit exitCode

@@ -13,7 +13,6 @@ module.exports = (config) ->
 			rbConfig.glob.dist.rb.client.test.js
 			rbConfig.glob.dist.app.client.test.js
 		)
-		# console.log scripts
 		scripts
 
 	# return
@@ -23,5 +22,5 @@ module.exports = (config) ->
 		basePath: rbConfig.app.dir
 		files: getScripts 'files.json'
 		frameworks: ['jasmine']
-		browsers: ['PhantomJS']
+		browsers: ['PhantomJS'] # 'Chrome', 'Firefox', 'IE', 'Safari'
 		singleRun: true
