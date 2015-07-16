@@ -18,9 +18,10 @@ module.exports = (config) ->
 	# return
 	# ======
 	config.set
-		autoWatch: false
-		basePath: rbConfig.app.dir
-		files: getScripts 'files.json'
+		autoWatch:  false
+		basePath:   rbConfig.app.dir
+		browsers:   rbConfig.test.browsers # see config-test.coffee
+		files:      getScripts 'files.json'
 		frameworks: ['jasmine']
-		browsers: rbConfig.test.browsers # see config-test.coffee
-		singleRun: true
+		reporters:  ['dots']
+		singleRun:  true

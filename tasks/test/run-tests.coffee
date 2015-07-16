@@ -1,6 +1,6 @@
 module.exports = (gulp, config) ->
-	q     = require 'q'
-	karma = require('karma').server
+	q      = require 'q'
+	Server = require('karma').Server
 
 	# karma options
 	# =============
@@ -10,11 +10,12 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}run-tests", ->
-		defer = q.defer()
-		karma.start opts, (exitCode) ->
+		defer  = q.defer()
+		server = new Server opts, (exitCode) ->
 			console.log "Karma has exited with #{exitCode}."
 			defer.resolve()
 			process.exit exitCode
+		server.start()
 		defer.promise
 
 
