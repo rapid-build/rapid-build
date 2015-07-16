@@ -5,8 +5,8 @@ module.exports = (gulp, config) ->
 
 	bsConfig    =
 		files: config.glob.browserSync
-		proxy: "http://localhost:#{config.app.ports.server}/"
-		port: config.app.ports.reload
+		proxy: "http://localhost:#{config.ports.server}/"
+		port: config.ports.reload
 		browser: 'google chrome'
 		# open: false
 

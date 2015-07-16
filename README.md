@@ -110,8 +110,9 @@ gulp rapid-build:prod
 # src.client.bower.dir                              = (string)  defaults to 'bower_components'
 # src.client.libs.dir                               = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
 # src.server.dir                                    = (string)  defaults to 'server'
-# ports.server                                      = (int)     defaults to 3000
-# ports.reload                                      = (int)     defaults to 3001
+# ports.server                                      = (int)     defaults to 3000, web server port
+# ports.reload                                      = (int)     defaults to 3001, browsersync server port 
+# ports.test                                        = (int)     defaults to 9876, karma server port
 # order[scripts|styles][first|last]                 = (array of strings) = file paths
 # angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
 # angular.moduleName                                = (string)  defaults to 'app' = application module name, value for ng-app

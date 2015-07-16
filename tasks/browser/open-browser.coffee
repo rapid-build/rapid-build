@@ -9,4 +9,4 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	gulp.task "#{config.rb.prefix.task}open-browser", ->
-		runTask config.app.ports.server
+		runTask config.ports.server

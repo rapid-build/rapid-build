@@ -7,12 +7,6 @@ module.exports = (config, options) ->
 	app = {}
 	app.dir = config.req.app
 
-	# ports
-	# =====
-	app.ports = {}
-	app.ports.server = options.ports.server or 3000
-	app.ports.reload = options.ports.reload or 3001
-
 	# add app to config
 	# =================
 	config.app = app

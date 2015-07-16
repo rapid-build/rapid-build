@@ -20,5 +20,6 @@ module.exports = (config) ->
 		browsers:   rbConfig.test.browsers # see config-test.coffee
 		files:      getScripts 'test-files.json'
 		frameworks: ['jasmine']
+		port:       rbConfig.ports.test
 		reporters:  ['dots']
 		singleRun:  true
