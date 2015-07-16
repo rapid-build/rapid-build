@@ -19,6 +19,8 @@ rapid-build currently supports the following technologies:
 	* [js](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [es6](https://babeljs.io/) and [coffeescript](http://coffeescript.org/) (client and server)
 * frameworks
 	* [angular](https://angularjs.org/) (client)
+	* [karma](http://karma-runner.github.io/) (client testing)
+	* [jasmine](http://jasmine.github.io/) (client testing)
 	* [express](http://expressjs.com/) (server)
 * package managers
 	* [bower](http://bower.io/) (client)
