@@ -11,7 +11,11 @@ module.exports = (gulp, config) ->
 	# Global Objects
 	# ==============
 	DevFiles  = {}
-	TestFiles = client: scripts: [], styles: []
+	TestFiles = client:
+		scriptsTestCount: 0
+		stylesTestCount:  0
+		scripts: []
+		styles: []
 
 	# Build Task
 	# ==========
@@ -42,6 +46,7 @@ module.exports = (gulp, config) ->
 		gulp.src src, buffer: false
 			.on 'data', (file) ->
 				_path = pathHelp.format(file.path).replace "#{appDir}/", ''
+				TestFiles.client["#{type}TestCount"]++
 				TestFiles.client[type].push _path
 			.on 'end', ->
 				defer.resolve()
