@@ -19,7 +19,7 @@ module.exports = (config) ->
 		basePath:   rbConfig.app.dir
 		browsers:   rbConfig.test.browsers # see config-test.coffee
 		files:      getScripts 'test-files.json'
-		frameworks: ['jasmine']
+		frameworks: ['jasmine', 'jasmine-matchers']
 		port:       rbConfig.ports.test
 		reporters:  ['dots']
 		singleRun:  true
