@@ -190,7 +190,6 @@ gulp rapid-build:prod
 5. minify the spa.html file
 6. cache bust the files (client)
 7. minify server js files
-8. start the server
 
 ## Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg "Shake n' Bake!")

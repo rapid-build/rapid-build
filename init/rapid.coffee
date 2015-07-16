@@ -5,8 +5,8 @@ module.exports = (gulp, config) ->
 	gulpSequence = require('gulp-sequence').use gulp
 	defer        = q.defer()
 
-	# rapid-build (default)
-	# =====================
+	# DEFAULT: rapid-build
+	# ====================
 	gulp.task config.rb.tasks.default, ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}build-spa"
@@ -15,8 +15,8 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
-	# rapid-build:dev
-	# ===============
+	# DEV: rapid-build:dev
+	# ====================
 	gulp.task config.rb.tasks.dev, ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}build-spa"
@@ -26,8 +26,8 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
-	# rapid-build:test
-	# ================
+	# TEST: rapid-build:test
+	# ======================
 	gulp.task config.rb.tasks.test, ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}copy-tests"
@@ -36,17 +36,24 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
-	# rapid-build:prod
-	# ================
+	# PROD: rapid-build:prod
+	# ======================
 	gulp.task config.rb.tasks.prod, ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			[
 				"#{config.rb.prefix.task}minify-client"
 				"#{config.rb.prefix.task}minify-server"
 			]
-			"#{config.rb.prefix.task}start-server"
 			cb
 		) -> defer.resolve()
+
+	# PROD SERVER: rapid-build:prod:server
+	# ====================================
+	# gulp.task config.rb.tasks.prodServer, [config.rb.tasks.prod], (cb) ->
+	# 	gulpSequence(
+	# 		"#{config.rb.prefix.task}start-server"
+	# 		cb
+	# 	) -> defer.resolve()
 
 	# return
 	# ======

@@ -10,13 +10,14 @@ module.exports = (config, rbDir) ->
 	rb.version = pkg.version
 	rb.dir     = rbDir
 
-	# tasks
-	# =====
+	# api tasks
+	# =========
 	rb.tasks = {}
-	rb.tasks.default = 'rapid-build'
-	rb.tasks.dev     = "#{rb.tasks.default}:dev"
-	rb.tasks.test    = "#{rb.tasks.default}:test"
-	rb.tasks.prod    = "#{rb.tasks.default}:prod"
+	rb.tasks.default    = 'rapid-build'
+	rb.tasks.dev        = "#{rb.tasks.default}:dev"
+	rb.tasks.test       = "#{rb.tasks.default}:test"
+	rb.tasks.prod       = "#{rb.tasks.default}:prod"
+	# rb.tasks.prodServer = "#{rb.tasks.default}:prod:server"
 
 	# prefixes
 	# ========
