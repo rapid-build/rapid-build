@@ -1,3 +1,18 @@
+## 0.20.0 (2015-07-16)
+
+
+#### Bug Fixes
+
+* **testing:** do not run tests if there are no test scripts ([227ec956](https://github.com/jyounce/rapid-build/commit/227ec956))
+
+
+#### Features
+
+* **testing:**
+  * add karma-jasmine-matchers for additional test cases ([805e5987](https://github.com/jyounce/rapid-build/commit/805e5987))
+  * add port option for the karma server ([692e62f8](https://github.com/jyounce/rapid-build/commit/692e62f8))
+
+
 ## 0.19.0 (2015-07-15)
 
 
