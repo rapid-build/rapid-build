@@ -31,6 +31,7 @@ module.exports = (gulp, config) ->
 	gulp.task config.rb.tasks.test, ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}copy-tests"
+			"#{config.rb.prefix.task}build-test-files"
 			"#{config.rb.prefix.task}run-tests"
 			cb
 		) -> defer.resolve()

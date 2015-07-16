@@ -15,9 +15,10 @@ Thumbs.db
 # templates
 # =========
 config/config.json
-files/prod-files-blueprint.json
-files/prod-files.json
 files/files.json
+files/prod-files.json
+files/prod-files-blueprint.json
+files/test-files.json
 src/client/scripts/app.coffee
 
 # test

@@ -16,6 +16,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/build/build-files")                 gulp, config     # build-files
 	require("#{config.req.tasks}/build/build-prod-files")            gulp, config     # build-prod-files
 	require("#{config.req.tasks}/build/build-prod-files-blueprint")  gulp, config     # build-prod-files-blueprint
+	require("#{config.req.tasks}/build/build-test-files")            gulp, config     # build-test-files
 	require("#{config.req.tasks}/build/build-spa")                   gulp, config     # build-spa
 
 	# clean

@@ -9,10 +9,7 @@ module.exports = (config) ->
 		jsonEnvFile = path.join rbConfig.templates.files.dest.dir, jsonEnvFile
 		moduleHelp.cache.delete jsonEnvFile
 		scripts = require(jsonEnvFile).client.scripts
-		scripts.push(
-			rbConfig.glob.dist.rb.client.test.js
-			rbConfig.glob.dist.app.client.test.js
-		)
+		# console.log scripts
 		scripts
 
 	# return
@@ -21,7 +18,7 @@ module.exports = (config) ->
 		autoWatch:  false
 		basePath:   rbConfig.app.dir
 		browsers:   rbConfig.test.browsers # see config-test.coffee
-		files:      getScripts 'files.json'
+		files:      getScripts 'test-files.json'
 		frameworks: ['jasmine']
 		reporters:  ['dots']
 		singleRun:  true

@@ -28,6 +28,19 @@ module.exports = (config, options) ->
 
 	test.browsers = getBrowsers()
 
+	# test files
+	# ==========
+	getTestFiles = (loc) ->
+		structure = {}
+		for appOrRb in ['rb', 'app']
+			structure[appOrRb] =
+				client:
+					scripts: [ config.glob[loc][appOrRb].client.test.js  ]
+					styles:  [ config.glob[loc][appOrRb].client.test.css ]
+		structure
+
+	test.dist = getTestFiles 'dist'
+
 	# add test to config
 	# ==================
 	config.test = test
