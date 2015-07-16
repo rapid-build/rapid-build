@@ -3,7 +3,7 @@
 
 #### Features
 
-* **api task:** create and expose test task via rapid-build:test ([725b9607](https://github.com/jyounce/rapid-build/commit/725b9607))
+* **api task:** create and expose test build via rapid-build:test ([725b9607](https://github.com/jyounce/rapid-build/commit/725b9607))
 * **testing:**
   * add option test.browsers to run tests in additional browsers ([5d6864de](https://github.com/jyounce/rapid-build/commit/5d6864de))
   * add karm browser launchers for chrome, firefox, ie and safari ([f9dcc903](https://github.com/jyounce/rapid-build/commit/f9dcc903))
