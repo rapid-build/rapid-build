@@ -22,5 +22,5 @@ module.exports = (config) ->
 		basePath: rbConfig.app.dir
 		files: getScripts 'files.json'
 		frameworks: ['jasmine']
-		browsers: ['PhantomJS'] # 'Chrome', 'Firefox', 'IE', 'Safari'
+		browsers: rbConfig.test.browsers # see config-test.coffee
 		singleRun: true

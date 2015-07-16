@@ -41,6 +41,7 @@
 # exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
+# test.browsers                                     = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari']
 # =============================================================================================================================================================================================
 module.exports = (config, options) ->
 	log    = require "#{config.req.helpers}/log"
@@ -131,6 +132,10 @@ module.exports = (config, options) ->
 		options.exclude.from.spaFile.scripts = null if not isType.array options.exclude.from.spaFile.scripts
 		options.exclude.from.spaFile.styles  = null if not isType.array options.exclude.from.spaFile.styles
 
+	testOptions = ->
+		options.test = {} if not isType.object options.test
+		options.test.browsers = null if not isType.array options.test.browsers
+
 	# init
 	# ====
 	distAndSrcOptions() # must be first
@@ -141,6 +146,7 @@ module.exports = (config, options) ->
 	spaOptions()
 	minifyOptions()
 	excludeOptions()
+	testOptions()
 
 	# logs
 	# ====

@@ -25,6 +25,7 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config}/config-order")        config, options
 	config  = require("#{config.req.config}/config-globs")        config
 	config  = require("#{config.req.config}/config-bower")        config, options
+	config  = require("#{config.req.config}/config-test")         config, options
 
 	# format
 	# ======
