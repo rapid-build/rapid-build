@@ -49,11 +49,12 @@ module.exports = (gulp, config) ->
 
 	# PROD SERVER: rapid-build:prod:server
 	# ====================================
-	# gulp.task config.rb.tasks.prodServer, [config.rb.tasks.prod], (cb) ->
-	# 	gulpSequence(
-	# 		"#{config.rb.prefix.task}start-server"
-	# 		cb
-	# 	) -> defer.resolve()
+	gulp.task config.rb.tasks.prodServer, [config.rb.tasks.prod], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}start-server"
+			"#{config.rb.prefix.task}open-browser"
+			cb
+		) -> defer.resolve()
 
 	# return
 	# ======

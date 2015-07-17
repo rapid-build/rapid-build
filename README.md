@@ -75,7 +75,7 @@ rapid().then(function() {
  * Steps if you are using gulp.
  * In your gulpfile.js init rapid-build and
  * pass in gulp (pass in options too if you need customization).
- * 3 build tasks become available after initializing rapid (see build modes).
+ * 4 build tasks become available after initializing rapid (see build modes).
  * Build tasks are: 'rapid-build', 'rapid-build:dev', 'rapid-build:test' and 'rapid-build:prod'
  * *********************************************************************************************/
 var gulp = require('gulp')
@@ -85,11 +85,12 @@ require('rapid-build')(gulp, options)
 // execute rapid via a gulp task dependency
 gulp.task('default', ['rapid-build'])
 
-// or from the terminal type one of the 3:
+// or from the terminal type one of the 5:
 gulp rapid-build
 gulp rapid-build:dev
 gulp rapid-build:test
 gulp rapid-build:prod
+gulp rapid-build:prod:server
 ```
 
 ## Options API
