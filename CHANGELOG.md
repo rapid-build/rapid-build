@@ -1,3 +1,16 @@
+## 0.21.0 (2015-07-17)
+
+
+#### Bug Fixes
+
+* **prod build:** do not start the server ([4acd8d33](https://github.com/jyounce/rapid-build/commit/4acd8d33))
+
+
+#### Features
+
+* **build:** create and expose prod build that starts the server via rapid-build:prod:server ([b3d593c8](https://github.com/jyounce/rapid-build/commit/b3d593c8))
+
+
 ## 0.20.0 (2015-07-16)
 
 
