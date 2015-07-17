@@ -13,11 +13,11 @@ module.exports = (config, rbDir) ->
 	# api tasks
 	# =========
 	rb.tasks = {}
-	rb.tasks.default    = 'rapid-build'
-	rb.tasks.dev        = "#{rb.tasks.default}:dev"
-	rb.tasks.test       = "#{rb.tasks.default}:test"
-	rb.tasks.prod       = "#{rb.tasks.default}:prod"
-	rb.tasks.prodServer = "#{rb.tasks.default}:prod:server"
+	rb.tasks.default        = 'rapid-build'
+	rb.tasks.dev            = "#{rb.tasks.default}:dev"
+	rb.tasks.test           = "#{rb.tasks.default}:test"
+	rb.tasks.prod           = "#{rb.tasks.default}:prod"
+	rb.tasks['prod:server'] = "#{rb.tasks.default}:prod:server"
 
 	# prefixes
 	# ========

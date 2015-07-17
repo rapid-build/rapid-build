@@ -45,11 +45,14 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}minify-server"
 			]
 			cb
-		) -> defer.resolve()
+		) ->
+			prodServer           = config.rb.tasks['prod:server']
+			calledFromProdServer = gulp.seq.indexOf(prodServer) isnt -1
+			defer.resolve() unless calledFromProdServer
 
 	# PROD SERVER: rapid-build:prod:server
 	# ====================================
-	gulp.task config.rb.tasks.prodServer, [config.rb.tasks.prod], (cb) ->
+	gulp.task config.rb.tasks['prod:server'], [config.rb.tasks.prod], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}start-server"
 			"#{config.rb.prefix.task}open-browser"
