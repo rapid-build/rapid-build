@@ -33,7 +33,7 @@ module.exports = (config) ->
 	env.is =
 		default: true
 		defaultOrDev: true
-		dev: false
+		dev:  false
 		prod: false
 		test: false
 

@@ -26,16 +26,6 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
-	# TEST: rapid-build:test
-	# ======================
-	gulp.task config.rb.tasks.test, ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			"#{config.rb.prefix.task}copy-tests"
-			"#{config.rb.prefix.task}build-test-files"
-			"#{config.rb.prefix.task}run-tests"
-			cb
-		) -> defer.resolve()
-
 	# PROD: rapid-build:prod
 	# ======================
 	gulp.task config.rb.tasks.prod, ["#{config.rb.prefix.task}common"], (cb) ->
@@ -46,9 +36,12 @@ module.exports = (gulp, config) ->
 			]
 			cb
 		) ->
-			prodServer           = config.rb.tasks['prod:server']
-			calledFromProdServer = gulp.seq.indexOf(prodServer) isnt -1
-			defer.resolve() unless calledFromProdServer
+			prodServer    = config.rb.tasks['prod:server']
+			testProd      = config.rb.tasks['test:prod']
+			calledFromApi = gulp.seq.indexOf(prodServer) isnt -1
+			calledFromApi = gulp.seq.indexOf(testProd) isnt -1 unless calledFromApi
+			# console.log "call from api: #{calledFromApi}".cyan
+			defer.resolve() unless calledFromApi
 
 	# PROD SERVER: rapid-build:prod:server
 	# ====================================
@@ -59,8 +52,29 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
+	# TEST: rapid-build:test
+	# ======================
+	gulp.task config.rb.tasks.test, ["#{config.rb.prefix.task}common"], (cb) ->
+		return defer.resolve() if config.exclude.angular.files
+		gulpSequence(
+			"#{config.rb.prefix.task}common-test"
+			cb
+		) -> defer.resolve()
+
+	# TEST PROD: rapid-build:test:prod
+	# ================================
+	gulp.task config.rb.tasks['test:prod'], [config.rb.tasks.prod], (cb) ->
+		return defer.resolve() if config.exclude.angular.files
+		gulpSequence(
+			"#{config.rb.prefix.task}common-test"
+			"#{config.rb.prefix.task}clean-test-dist"
+			cb
+		) -> defer.resolve()
+
 	# return
 	# ======
 	defer.promise
+
+
 
 

@@ -12,15 +12,16 @@ module.exports = (gulp, config) ->
 
 		# angular
 		# =======
-		config.angular.removeRbMocksModule() # conditionally
+		config.angular.removeRbMocksModule()
+		config.angular.updateHttpBackendStatus()
 
 		# order
 		# =====
-		config.order.removeRbAngularMocks() # conditionally
+		config.order.removeRbAngularMocks()
 
 		# globs
 		# =====
-		config.glob.removeRbAngularMocks() # conditionally
+		config.glob.removeRbAngularMocks()
 
 		# return
 		# ======

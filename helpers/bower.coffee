@@ -9,7 +9,7 @@
 # bowerHelper.get.installed.pkgs appOrRb
 # bowerHelper.get.installed.pkg 'angular', appOrRb
 # bowerHelper.get.missing.pkgs appOrRb
-# bowerHelper.get.src appOrRb
+# bowerHelper.get.src appOrRb, opts
 # ================================================
 module.exports = (config) ->
 	fs       = require 'fs'
@@ -154,7 +154,6 @@ module.exports = (config) ->
 
 		removeRbAngularMocks: (loc, paths) ->
 			return if loc isnt 'rb'
-			return if config.env.is.test
 			if config.env.is.prod
 				@_removeRbAngularMocks paths if not config.angular.httpBackend.prod
 			else if not config.angular.httpBackend.dev
@@ -245,13 +244,16 @@ module.exports = (config) ->
 						pkgs.push "#{pkg}##{version}" if missing
 					pkgs
 
-			src: (loc='rb', env) ->
+			src: (loc='rb', opts={}) ->
 				return if not me.has.bower loc
-				env      = env or config.env.name
+				env      = opts.env or config.env.name
 				env      = 'dev' if ['dev','prod'].indexOf(env) is -1
 				absPaths = []
 				relPaths = {}
-				pkgs     = me.get.installed.pkgs loc
+				if opts.pkg
+					pkgs = [ me.get.installed.pkg opts.pkg, loc ]
+				else
+					pkgs = me.get.installed.pkgs loc
 				# log.json pkgs
 				pkgs.forEach (pkg) ->
 					pkg[env].forEach (file) ->
@@ -260,13 +262,10 @@ module.exports = (config) ->
 						relPaths[file.path] = path.join name, file.file
 						absPaths.push file.path
 				paths =
-					paths:
-						absolute: absPaths # []
-						relative: relPaths # {}
-				helper.removeRbAngularMocks loc, paths.paths # conditionally
-				# log.json paths
-				paths
-
+					absolute: absPaths # []
+					relative: relPaths # {}
+				helper.removeRbAngularMocks loc, paths unless opts.test
+				{ paths }
 
 
 

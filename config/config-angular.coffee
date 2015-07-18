@@ -17,9 +17,10 @@ module.exports = (config, options) ->
 	httpBackendDir = options.angular.httpBackend.dir or 'mocks'
 	httpBackendDir = path.join config.src.app.client.scripts.dir, httpBackendDir
 	angular.httpBackend = {}
-	angular.httpBackend.dev  = options.angular.httpBackend.dev or false
-	angular.httpBackend.prod = options.angular.httpBackend.prod or false
-	angular.httpBackend.dir  = httpBackendDir
+	angular.httpBackend.dev     = options.angular.httpBackend.dev or false
+	angular.httpBackend.prod    = options.angular.httpBackend.prod or false
+	angular.httpBackend.enabled = false # see updateHttpBackendStatus()
+	angular.httpBackend.dir     = httpBackendDir
 
 	# modules
 	# =======
@@ -55,11 +56,17 @@ module.exports = (config, options) ->
 		angular.modules.splice 0, 1
 
 	angular.removeRbMocksModule = ->
-		return if config.env.is.test
 		if config.env.is.prod
 			removeRbMocksModule() if not angular.httpBackend.prod
 		else if not angular.httpBackend.dev
 			removeRbMocksModule()
+
+	angular.updateHttpBackendStatus = ->
+		if config.env.is.test and angular.httpBackend.dev
+			httpBackendEnabled = true
+		else if config.env.is.prod and angular.httpBackend.prod
+			httpBackendEnabled = true
+		config.angular.httpBackend.enabled = !!httpBackendEnabled
 
 	# add angular to config
 	# =====================

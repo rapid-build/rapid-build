@@ -20,6 +20,8 @@ files/prod-files.json
 files/prod-files-blueprint.json
 files/test-files.json
 src/client/scripts/app.coffee
+src/client/test/angular-mocks.js
+src/client/test/inject-angular-mocks.coffee
 
 # test
 # ====

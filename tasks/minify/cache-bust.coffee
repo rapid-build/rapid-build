@@ -51,14 +51,17 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	runCacheBustTask = -> # synchronously
-		defer    = q.defer()
-		bust     = new Bust bustOpts
-		srcFiles = config.glob.dist.app.client.cacheBust.files
-		srcRefs  = config.glob.dist.app.client.cacheBust.references
-		dest     = config.dist.app.client.dir
+		defer         = q.defer()
+		bust          = new Bust bustOpts
+		srcFiles      = config.glob.dist.app.client.cacheBust.files
+		srcRefs       = config.glob.dist.app.client.cacheBust.references
+		dest          = config.dist.app.client.dir
+		prodFilesSrc  = path.join config.templates.files.dest.dir, 'prod-files.json'
+		prodFilesDest = config.templates.files.dest.dir
 		tasks = [
 			-> runStampFiles srcFiles, dest, bust
 			-> runStampRefs srcRefs, dest, bust
+			-> runStampRefs prodFilesSrc, prodFilesDest, bust
 			-> runDelUnstampedPaths()
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()

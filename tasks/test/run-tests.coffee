@@ -1,12 +1,15 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
+	fs          = require 'fs'
+	del         = require 'del'
 	path        = require 'path'
 	Server      = require('karma').Server
 	moduleHelp  = require "#{config.req.helpers}/module"
 	promiseHelp = require "#{config.req.helpers}/promise"
+	format      = require("#{config.req.helpers}/format")()
 
-	# karma options
-	# =============
+	# Global
+	# ======
 	karmaConfig =
 		autoWatch:  false
 		basePath:   config.app.dir
@@ -16,34 +19,65 @@ module.exports = (gulp, config) ->
 		reporters:  ['dots']
 		singleRun:  true
 
+	TestResults = status: null, exitCode: null
+
 	# helpers
 	# =======
-	getTests = (jsonEnvFile) ->
-		jsonEnvFile = path.join config.templates.files.dest.dir, jsonEnvFile
-		moduleHelp.cache.delete jsonEnvFile
-		tests = require(jsonEnvFile).client
+	getTestsFile = ->
+		tests = path.join config.templates.files.dest.dir, 'test-files.json'
+		moduleHelp.cache.delete tests
+		tests = require(tests).client
 		tests
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}run-tests", ->
+	# tasks
+	# =====
+	cleanResultsFile = (src, file) ->
 		defer = q.defer()
-		tests = getTests 'test-files.json'
+		del src, force:true, (e) ->
+			# console.log "removed #{file}".yellow
+			defer.resolve()
+		defer.promise
 
-		# No Test Scripts
+	runTests = ->
+		defer = q.defer()
+		tests = getTestsFile()
+
 		if not tests.scriptsTestCount
 			console.log 'no test scripts to run'.yellow
 			return promiseHelp.get defer
 		else
 			karmaConfig.files = tests.scripts
 
-		# Rus Tests
-		server = new Server(karmaConfig, (exitCode) ->
+		server = new Server karmaConfig, (exitCode) ->
 			console.log "karma has exited with #{exitCode}".yellow
+			TestResults.status   = if not exitCode then 'passed' else 'failed'
+			TestResults.exitCode = exitCode
 			defer.resolve()
-			process.exit exitCode
-		)
+
 		server.start()
 		defer.promise
+
+	writeResultsFile = (file) ->
+		return promiseHelp.get() unless TestResults.status is 'failed'
+		fs.writeFileSync file, format.json TestResults
+		promiseHelp.get()
+
+	runTask = -> # synchronously
+		defer = q.defer()
+		resultsFileName = 'test-results.json'
+		resultsFilePath = path.join config.dist.app.client.dir, resultsFileName
+		tasks = [
+			-> cleanResultsFile resultsFilePath, resultsFileName
+			-> runTests()
+			-> writeResultsFile resultsFilePath
+		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
+
+	# register task
+	# =============
+	gulp.task "#{config.rb.prefix.task}run-tests", ->
+		runTask()
+
 
 

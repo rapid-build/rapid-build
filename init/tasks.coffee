@@ -16,7 +16,6 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/build/build-files")                 gulp, config     # build-files
 	require("#{config.req.tasks}/build/build-prod-files")            gulp, config     # build-prod-files
 	require("#{config.req.tasks}/build/build-prod-files-blueprint")  gulp, config     # build-prod-files-blueprint
-	require("#{config.req.tasks}/build/build-test-files")            gulp, config     # build-test-files
 	require("#{config.req.tasks}/build/build-spa")                   gulp, config     # build-spa
 
 	# clean
@@ -77,6 +76,12 @@ module.exports = (gulp, config) ->
 
 	# test
 	# ====
+	require("#{config.req.tasks}/test/build-inject-angular-mocks")   gulp, config     # build-inject-angular-mocks
+	require("#{config.req.tasks}/test/build-test-files")             gulp, config     # build-test-files
+	require("#{config.req.tasks}/test/clean-rb-test-src")            gulp, config     # clean-rb-test-src
+	require("#{config.req.tasks}/test/clean-test-dist")              gulp, config     # clean-test-dist
+	require("#{config.req.tasks}/test/common-test")                  gulp, config     # common-test
+	require("#{config.req.tasks}/test/copy-angular-mocks")           gulp, config     # copy-angular-mocks
 	require("#{config.req.tasks}/test/copy-tests")                   gulp, config     # copy-tests
 	require("#{config.req.tasks}/test/run-tests")                    gulp, config     # run-tests
 

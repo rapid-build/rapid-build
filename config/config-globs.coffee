@@ -139,7 +139,6 @@ module.exports = (config) ->
 		removeAppAngularMocksDir()
 
 	glob.removeRbAngularMocks = ->
-		return if config.env.is.test
 		if config.env.is.prod
 			removeRbAngularMocks() if not config.angular.httpBackend.prod
 		else if not config.angular.httpBackend.dev

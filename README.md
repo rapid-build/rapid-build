@@ -60,8 +60,8 @@ var rapid = require('rapid-build')(options) // init rapid, pass in options here
 
 /**
  * After initializing rapid, execute it to kick off the build.
- * 1 optional param (the build mode), values are: nothing, 'dev', 'test' or 'prod'.
- * Rapid has 4 build modes: default, dev, test and prod (see build modes).
+ * 1 optional param (the build mode), values are: nothing, 'dev', 'prod' or 'test'.
+ * Rapid has 4 build modes: default, dev, prod and test (see build modes).
  */
 rapid().then(function() {
 	console.log('whatever you want') // probably won't need to do anything
@@ -76,7 +76,7 @@ rapid().then(function() {
  * In your gulpfile.js init rapid-build and
  * pass in gulp (pass in options too if you need customization).
  * 4 build tasks become available after initializing rapid (see build modes).
- * Build tasks are: 'rapid-build', 'rapid-build:dev', 'rapid-build:test' and 'rapid-build:prod'
+ * Build tasks are: 'rapid-build', 'rapid-build:dev', 'rapid-build:prod' and 'rapid-build:test'
  * *********************************************************************************************/
 var gulp = require('gulp')
 var options = {}
@@ -85,12 +85,13 @@ require('rapid-build')(gulp, options)
 // execute rapid via a gulp task dependency
 gulp.task('default', ['rapid-build'])
 
-// or from the terminal type one of the 5:
+// or from the terminal type one of the 6:
 gulp rapid-build
 gulp rapid-build:dev
-gulp rapid-build:test
 gulp rapid-build:prod
 gulp rapid-build:prod:server
+gulp rapid-build:test
+gulp rapid-build:test:prod
 ```
 
 ## Options API
@@ -173,11 +174,6 @@ gulp rapid-build:prod:server
 4. open the browser
 5. fireup the file watchers (on saving a file, the browser will refresh)
 
-#### Test Build:
-1. run common tasks (see above)
-2. copy test scripts to dist/client/
-3. run tests in [PhantomJS](http://phantomjs.org/)
-
 #### Prod Build:
 1. run common tasks (see above)
 2. minify the application files
@@ -191,6 +187,11 @@ gulp rapid-build:prod:server
 5. minify the spa.html file
 6. cache bust the files (client)
 7. minify server js files
+
+#### Test Build:
+1. run common tasks (see above)
+2. copy test scripts to dist/client/
+3. run tests in [PhantomJS](http://phantomjs.org/)
 
 ## Develop Rapidly!
 ![Shake and Bake!](docs/shake-and-bake.jpg "Shake n' Bake!")

@@ -5,12 +5,13 @@ module.exports = (gulp, config) ->
 	template        = require 'gulp-template'
 	log             = require "#{config.req.helpers}/log"
 	pathHelp        = require "#{config.req.helpers}/path"
+	moduleHelp      = require "#{config.req.helpers}/module"
 	promiseHelp     = require "#{config.req.helpers}/promise"
 	format          = require("#{config.req.helpers}/format")()
 
 	# Global Objects
 	# ==============
-	DevFiles  = {}
+	Files     = {}
 	TestFiles = client:
 		scriptsTestCount: 0
 		stylesTestCount:  0
@@ -36,66 +37,69 @@ module.exports = (gulp, config) ->
 
 	# Single Tasks
 	# ============
-	setTestFiles = (type) ->
+	setTestFiles = (appOrRb, type) ->
 		defer  = q.defer()
 		appDir = pathHelp.format config.app.dir
-		src    = [].concat(
-			config.test.dist.rb.client[type]
-			config.test.dist.app.client[type]
-		)
+		src    = config.test.dist[appOrRb].client[type]
 		gulp.src src, buffer: false
 			.on 'data', (file) ->
 				_path = pathHelp.format(file.path).replace "#{appDir}/", ''
-				TestFiles.client["#{type}TestCount"]++
+				TestFiles.client["#{type}TestCount"]++ if appOrRb is 'app'
 				TestFiles.client[type].push _path
 			.on 'end', ->
 				defer.resolve()
 		defer.promise
 
-	addDevFilesToTestFiles = (type) ->
+	addFilesToTestFiles = (type) ->
 		TestFiles.client[type] = [].concat(
-			DevFiles[type]
+			Files[type]
 			TestFiles.client[type]
 		)
 		promiseHelp.get()
 
 	# Multi Tasks
 	# ===========
-	setDevFiles = ->
-		files    = require config.templates.files.dest.path
-		DevFiles =
+	setFiles = (jsonEnvFile) ->
+		jsonEnvFile = path.join config.templates.files.dest.dir, jsonEnvFile
+		moduleHelp.cache.delete jsonEnvFile
+		files = require jsonEnvFile
+		Files =
 			scripts: files.client.scripts
 			styles:  files.client.styles
 		promiseHelp.get()
 
-	setMultiTestFiles = ->
+	setMultiTestFiles = -> # synchronously
 		defer = q.defer()
-		q.all([
-			setTestFiles 'scripts'
-			setTestFiles 'styles'
-		]).done -> defer.resolve()
+		tasks = [
+			-> setTestFiles 'rb',  'scripts'
+			-> setTestFiles 'rb',  'styles'
+			-> setTestFiles 'app', 'scripts'
+			-> setTestFiles 'app', 'styles'
+		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
-	addMultiDevFilesToTestFiles = ->
+	addMultiFilesToTestFiles = ->
 		defer = q.defer()
 		q.all([
-			addDevFilesToTestFiles 'scripts'
-			addDevFilesToTestFiles 'styles'
+			addFilesToTestFiles 'scripts'
+			addFilesToTestFiles 'styles'
 		]).done -> defer.resolve()
 		defer.promise
 
 	# Main Task
 	# =========
 	runTask = -> # synchronously
-		defer = q.defer()
+		defer       = q.defer()
+		jsonEnvFile = if config.env.is.prod then 'prod-files.json' else 'files.json'
 		tasks = [
-			-> setDevFiles()
+			-> setFiles jsonEnvFile
 			-> setMultiTestFiles()
-			-> addMultiDevFilesToTestFiles()
+			-> addMultiFilesToTestFiles()
 			-> buildTask()
 		]
 		tasks.reduce(q.when, q()).done ->
-			# log.json DevFiles, 'dev files ='
+			# log.json Files, 'Files ='
 			# log.json TestFiles, 'test files ='
 			defer.resolve()
 		defer.promise
@@ -104,7 +108,6 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}build-test-files", ->
 		runTask()
-
 
 
 
