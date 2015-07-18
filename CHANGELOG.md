@@ -1,3 +1,11 @@
+## 0.22.0 (2015-07-18)
+
+
+#### Features
+
+* **add build:** create and expose build rapid-build:test:prod for testing prod builds ([f54d1142](https://github.com/jyounce/rapid-build/commit/f54d1142))
+
+
 ## 0.21.0 (2015-07-17)
 
 
