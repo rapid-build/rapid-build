@@ -126,9 +126,8 @@ gulp rapid-build:test:prod
 # angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
 # spa.title                                         = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                                   = (string)  defaults to package.json description = html meta description tag value
-# spa.src.file                                      = (string)  defaults to 'spa.html' = set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
-# spa.src.dir                                       = (string)  defaults to null = set if you are using your own spa file and that file is located in a directory in your client src directory
-# spa.dist.file                                     = (string)  defaults to spa.src.file or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
+# spa.src.filePath                                  = (string)  set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
+# spa.dist.fileName                                 = (string)  defaults to file name of spa.src.filePath or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
 # spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
 # minify.css.styles                                 = (boolean) defaults to true = for prod build, minify the css
 # minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095

@@ -134,7 +134,7 @@ module.exports = (gulp, config, browserSync) ->
 	# ============================================
 	spaWatch = ->
 		if config.spa.custom
-			return createWatch config.spa.src.path, 'build spa', lang:config.spa.dist.file
+			return createWatch config.spa.src.path, 'build spa', lang: config.spa.dist.file
 		promiseHelp.get()
 
 	# register task

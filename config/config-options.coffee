@@ -53,14 +53,13 @@ module.exports = (config, options) ->
 
 	spaOptions = ->
 		options.spa = {} if not isType.object options.spa
-		options.spa.title        = null if not isType.string options.spa.title
-		options.spa.description  = null if not isType.string options.spa.description
-		options.spa.src          = {}   if not isType.object options.spa.src
-		options.spa.src.dir      = null if not isType.string options.spa.src.dir
-		options.spa.src.file     = null if not isType.string options.spa.src.file
-		options.spa.dist         = {}   if not isType.object options.spa.dist
-		options.spa.dist.file    = null if not isType.string options.spa.dist.file
-		options.spa.placeholders = null if not isType.array  options.spa.placeholders
+		options.spa.title         = null if not isType.string options.spa.title
+		options.spa.description   = null if not isType.string options.spa.description
+		options.spa.src           = {}   if not isType.object options.spa.src
+		options.spa.src.filePath  = null if not isType.string options.spa.src.filePath
+		options.spa.dist          = {}   if not isType.object options.spa.dist
+		options.spa.dist.fileName = null if not isType.string options.spa.dist.fileName
+		options.spa.placeholders  = null if not isType.array  options.spa.placeholders
 
 	minifyOptions = ->
 		options.minify = {} if not isType.object options.minify

@@ -43,20 +43,6 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	delCustomSpaTask = ->
-		return promiseHelp.get() unless config.spa.custom
-		defer = q.defer()
-		src   = config.spa.dist.custom.path
-		del src, force:true, (e) ->
-			emptyDirs = dirHelper.get.emptyDirs(
-							config.dist.app.client.dir
-							[], 'reverse'
-						)
-			return defer.resolve() unless emptyDirs.length
-			del emptyDirs, force:true, (e) ->
-				defer.resolve()
-		defer.promise
-
 	# helpers
 	# =======
 	getFilesJson = (jsonEnvFile) ->
@@ -88,7 +74,6 @@ module.exports = (gulp, config) ->
 				config.spa.dist.file
 				data
 			)
-			# -> delCustomSpaTask()
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise

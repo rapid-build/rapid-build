@@ -1,41 +1,38 @@
 module.exports = (config, options) ->
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
-	test = require("#{config.req.helpers}/test")()
-	pkg  = require "#{config.req.app}/package.json"
+	path     = require 'path'
+	log      = require "#{config.req.helpers}/log"
+	pkg      = require "#{config.req.app}/package.json"
+	pathHelp = require "#{config.req.helpers}/path"
+	test     = require("#{config.req.helpers}/test")()
 
 	# helpers
 	# =======
-	getSrcDir = (_custom, dir) ->
+	getSrcFilePath = (_isCustom, _path) ->
 		rbDir  = config.src.rb.client.dir
 		appDir = config.src.app.client.dir
-		return rbDir if not _custom
-		return appDir if not dir
-		# to keep windows happy
-		dir = dir.split path.sep
-		for own k, v of dir
-			continue if not v
-			appDir = path.join appDir, v
-		appDir
+		return path.join rbDir, 'spa.html' if not _isCustom
+		_path  = pathHelp.format _path
+		_path  = "/#{_path}" if _path[0] isnt '/'
+		_path  = path.join appDir, _path
+		_path
 
 	# defaults
 	# ========
-	custom   = !!options.spa.src.file
-	srcFile  = options.spa.src.file or 'spa.html'
-	distFile = options.spa.dist.file or srcFile
-	srcDir   = getSrcDir custom, options.spa.src.dir
-	if custom
-		distDir = options.spa.src.dir or ''
-		customDistDir = path.join(
-			config.dist.app.client.dir
-			distDir
-		)
-		customDistPath = path.join customDistDir, srcFile
+	customSrcPath = options.spa.src.filePath
+	isCustom      = !!customSrcPath
+	srcFilePath   = getSrcFilePath isCustom, customSrcPath
+	srcFile       = path.basename srcFilePath
+	srcDir        = path.dirname srcFilePath
+	distFile      = options.spa.dist.fileName or srcFile
+	distFilePath  = path.join config.dist.app.client.dir, distFile
 
 	# init spa
 	# ========
 	spa = {}
-	spa.custom      = custom
+	spa.custom = isCustom
+
+	# placeholders
+	# ============
 	spa.title       = options.spa.title or pkg.name or 'Application'
 	spa.description = options.spa.description or pkg.description or null
 
@@ -43,16 +40,14 @@ module.exports = (config, options) ->
 	# ====
 	spa.dist =
 		file: distFile
-		path: path.join config.dist.app.client.dir, distFile
-		custom:
-			dir:  customDistDir  or null
-			path: customDistPath or null
+		path: distFilePath
 
 	# src
 	# ===
 	spa.src =
 		file: srcFile
-		path: path.join srcDir, srcFile
+		dir:  srcDir
+		path: srcFilePath
 
 	# placeholders
 	# ============
