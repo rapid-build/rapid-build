@@ -1,7 +1,6 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
 	path        = require 'path'
-	del         = require 'del'
 	gulpif      = require 'gulp-if'
 	rename      = require 'gulp-rename'
 	replace     = require 'gulp-replace'
@@ -10,7 +9,6 @@ module.exports = (gulp, config) ->
 	moduleHelp  = require "#{config.req.helpers}/module"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	format      = require("#{config.req.helpers}/format")()
-	dirHelper   = require("#{config.req.helpers}/dir") config
 
 	# helpers
 	# =======

@@ -28,8 +28,12 @@ module.exports = (gulp, config, browserSync) ->
 		globs = []
 		['app'].forEach (v1) ->
 			['client', 'server'].forEach (v2) ->
-				return if v2 is 'server' and type isnt 'scripts'
-				globs.push config.glob[loc][v1][v2][type][lang]
+			for v2 in ['client', 'server']
+				break if v2 is 'server' and type isnt 'scripts'
+				_glob = config.glob[loc][v1][v2][type][lang]
+				continue unless _glob.length
+				for v3 in _glob
+					globs.push v3
 		globs
 	glob =
 		src:

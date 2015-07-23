@@ -35,8 +35,8 @@ module.exports = (config, options) ->
 		for appOrRb in ['rb', 'app']
 			structure[appOrRb] =
 				client:
-					scripts: [ config.glob[loc][appOrRb].client.test.js  ]
-					styles:  [ config.glob[loc][appOrRb].client.test.css ]
+					scripts: config.glob[loc][appOrRb].client.test.js
+					styles:  config.glob[loc][appOrRb].client.test.css
 		structure
 
 	test.dist = getTestFiles 'dist'

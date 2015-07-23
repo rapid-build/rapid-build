@@ -60,7 +60,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		file   = if isProd then 'min' else 'main'
 		file   = config.fileName.views[file]
 		dest   = config.dist.rb.client.scripts.dir
-		src    = [ glob.views.rb, glob.views.app ]
+		src    = [].concat glob.views.rb, glob.views.app
 		runTask src, dest, file, isProd
 
 	runSingle = -> # todo: optimize for one file

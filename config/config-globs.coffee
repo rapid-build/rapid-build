@@ -72,7 +72,7 @@ module.exports = (config) ->
 							path.join typeDir,  lang[v3]
 						]
 					else
-						v2[type][v3] = path.join typeDir, lang[v3]
+						v2[type][v3] = [ path.join typeDir, lang[v3] ]
 
 	# init glob
 	# =========
@@ -132,7 +132,7 @@ module.exports = (config) ->
 		srcScripts  = glob.src.app.client.scripts
 		noMocksGlob = "!#{config.angular.httpBackend.dir}#{lang.all}"
 		for own k, v of srcScripts
-			srcScripts[k] = [v, noMocksGlob]
+			srcScripts[k].push noMocksGlob
 
 	removeRbAngularMocks = -> # helper
 		glob.dist.rb.client.scripts.js.splice 1, 1
