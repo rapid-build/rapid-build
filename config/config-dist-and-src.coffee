@@ -132,7 +132,7 @@ module.exports = (config, options) ->
 
 	addToServerAppDist = ->
 		config.dist.app.server.scripts.file = # app server dist entry file
-			options.dist.server.file or file.appServer
+			options.dist.server.fileName or file.appServer
 
 		config.dist.app.server.scripts.path = # absolute path
 			path.join config.app.dir, config.dist.app.server.scripts.dir

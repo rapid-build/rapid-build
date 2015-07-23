@@ -21,7 +21,7 @@ module.exports = (config, options) ->
 					options[v1][v2][v3].dir = null if not isType.string options[v1][v2][v3].dir
 
 	serverOptions = -> # app server dist entry file
-		options.dist.server.file = null if not isType.string options.dist.server.file
+		options.dist.server.fileName = null if not isType.string options.dist.server.fileName
 
 	portOptions = -> # server ports
 		options.ports = {} if not isType.object options.ports
