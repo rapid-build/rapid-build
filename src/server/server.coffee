@@ -16,9 +16,16 @@ app.listen port, ->
 app.get '/', (req, res) ->
 	res.sendFile spa, root:client
 
+# options to pass
+# ===============
+opts =
+	dir:
+		relative: config.dist.app.server.scripts.dir
+		absolute: config.dist.app.server.scripts.path
+
 # load optional app server dist entry script
 # ==========================================
-try require(appFilePath) app
+try require(appFilePath) app, opts
 catch e
 	if e.code and
 		e.code.toLowerCase() is 'module_not_found' and
