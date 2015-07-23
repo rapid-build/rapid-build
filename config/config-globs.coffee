@@ -186,15 +186,15 @@ module.exports = (config) ->
 
 	# node_modules
 	# ============
-	addNodeModule = (loc, module) ->
-		glob.node_modules[loc][module] =
-			path.join pathHelp.format(config.node_modules.src.modules[module]), lang.all
+	addNodeModules = (loc) ->
+		for module in config.node_modules.modules
+			glob.node_modules[loc][module] =
+				path.join pathHelp.format(config.node_modules.src.modules[module]), lang.all
 
 	glob.node_modules = {}
 	glob.node_modules.dist = {}
 	glob.node_modules.src  = {}
-	addNodeModule 'src', 'express'
-	addNodeModule 'src', 'q'
+	addNodeModules 'src'
 
 	# browser sync
 	# ============

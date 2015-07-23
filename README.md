@@ -105,7 +105,7 @@ gulp rapid-build:test:prod
 # dist.client.bower.dir                             = (string)  defaults to 'bower_components'
 # dist.client.libs.dir                              = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
 # dist.server.dir                                   = (string)  defaults to 'server'
-# dist.server.fileName                              = (string)  defaults to 'routes.js'
+# dist.server.fileName                              = (string)  defaults to 'routes.js': this is the server's entry script
 # src.dir                                           = (string)  defaults to 'src'
 # src.client.dir                                    = (string)  defaults to 'client'
 # src.client[images|scripts|styles|test|views].dir  = (string)  defaults to property name
