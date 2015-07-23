@@ -1,3 +1,11 @@
+## 0.24.0 (2015-07-23)
+
+
+#### Features
+
+* **config:** add config.server.node_modules option to copy node_modules to server dist ([a25a3f5d](https://github.com/jyounce/rapid-build/commit/a25a3f5d))
+
+
 ## 0.23.0 (2015-07-23)
 
 
