@@ -1,3 +1,18 @@
+## 0.23.0 (2015-07-23)
+
+
+#### Bug Fixes
+
+* **server options:** replace dist.server.file with dist.server.fileName for consistency ([f1bb3f9d](https://github.com/jyounce/rapid-build/commit/f1bb3f9d))
+* **spa options:** replace spa.src.file and dir with filePath and change spa.dist.file to fileName ([40cfee2d](https://github.com/jyounce/rapid-build/commit/40cfee2d))
+* **spa.html:** ensure only src spa.html get's moved to client dist root ([856395e7](https://github.com/jyounce/rapid-build/commit/856395e7))
+
+
+#### Features
+
+* **server:** pass options that contain dir info to the server entry script ([aa68acdc](https://github.com/jyounce/rapid-build/commit/aa68acdc))
+
+
 ## 0.22.0 (2015-07-18)
 
 
