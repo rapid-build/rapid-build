@@ -3,10 +3,17 @@ module.exports = (gulp, config, browserSync) ->
 	path    = require 'path'
 	nodemon = require 'gulp-nodemon'
 
+	# globals
+	# =======
 	rbServerFile = path.join(
 		config.dist.rb.server.scripts.dir,
 		config.dist.rb.server.scripts.file
 	)
+	watchDir   = config.dist.app.server.scripts.dir
+	ignoreDirs = [
+		config.node_modules.rb.dist.dir
+		config.node_modules.app.dist.dir
+	]
 
 	# register task
 	# =============
@@ -14,10 +21,9 @@ module.exports = (gulp, config, browserSync) ->
 		defer = q.defer()
 		nodemon
 			script: rbServerFile
-			ext: 'js json'
-			# todo: watch isn't restarting on file deletion
-			watch: config.dist.app.server.scripts.dir
-			ignore: config.node_modules.dist.dir
+			ext:    'js json'
+			watch:  watchDir # todo: watch isn't restarting on file deletion
+			ignore: ignoreDirs
 
 		.on 'start', ->
 			browserSync.emitter._events.serverRestart() if browserSync

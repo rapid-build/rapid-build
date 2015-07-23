@@ -20,9 +20,6 @@ module.exports = (config, options) ->
 					options[v1][v2][v3] = {} if not isType.object options[v1][v2][v3]
 					options[v1][v2][v3].dir = null if not isType.string options[v1][v2][v3].dir
 
-	serverOptions = -> # app server dist entry file
-		options.dist.server.fileName = null if not isType.string options.dist.server.fileName
-
 	portOptions = -> # server ports
 		options.ports = {} if not isType.object options.ports
 		options.ports.server = null if not isType.number options.ports.server
@@ -93,10 +90,16 @@ module.exports = (config, options) ->
 		options.test = {} if not isType.object options.test
 		options.test.browsers = null if not isType.array options.test.browsers
 
+	serverDistOptions = -> # app server dist entry file
+		options.dist.server.fileName = null if not isType.string options.dist.server.fileName
+
+	serverOptions = ->
+		options.server = {} if not isType.object options.server
+		options.server.node_modules = null if not isType.array options.server.node_modules
+
 	# init
 	# ====
 	distAndSrcOptions() # must be first
-	serverOptions()
 	portOptions()
 	orderOptions()
 	angularOptions()
@@ -104,6 +107,8 @@ module.exports = (config, options) ->
 	minifyOptions()
 	excludeOptions()
 	testOptions()
+	serverDistOptions()
+	serverOptions()
 
 	# logs
 	# ====

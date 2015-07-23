@@ -142,6 +142,7 @@ gulp rapid-build:test:prod
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # test.browsers                                     = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
+# server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
 # =============================================================================================================================================================================================================================
 ```
 
