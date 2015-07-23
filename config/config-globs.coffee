@@ -107,6 +107,14 @@ module.exports = (config) ->
 	addGlob 'dist', 'views',   ['all']
 	addGlob 'dist', 'views',   ['html']
 
+	# exclude spa.html
+	# ================
+	excludeSpaSrc = (type, lang) ->
+		glob.src.app.client[type][lang].push "!#{config.spa.src.path}"
+
+	excludeSpaSrc 'libs',  'all'
+	excludeSpaSrc 'views', 'html'
+
 	# cache bust
 	# ==========
 	addCacheBust = (type, lang) ->
