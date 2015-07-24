@@ -123,6 +123,7 @@ gulp rapid-build:test:prod
 # angular.httpBackend.prod                          = (boolean) defaults to false = set to true to enable httpBackend for prod build
 # angular.httpBackend.dir                           = (string)  defaults to 'mocks' = directory inside your client scripts directory
 # angular.templateCache.dev                         = (boolean) defaults to false = use template cache when running default and dev task
+# angular.templateCache.urlPrefix                   = (string)  prefix for template urls
 # angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
 # spa.title                                         = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                                   = (string)  defaults to package.json description = html meta description tag value

@@ -46,6 +46,7 @@ module.exports = (config, options) ->
 		options.angular.httpBackend.dir  = null if not isType.string options.angular.httpBackend.dir
 		options.angular.templateCache = {}   if not isType.object options.angular.templateCache
 		options.angular.templateCache.dev              = null if not isType.boolean options.angular.templateCache.dev
+		options.angular.templateCache.urlPrefix        = null if not isType.string options.angular.templateCache.urlPrefix
 		options.angular.templateCache.useAbsolutePaths = null if not isType.boolean options.angular.templateCache.useAbsolutePaths
 
 	spaOptions = ->

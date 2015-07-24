@@ -23,6 +23,12 @@ module.exports = (gulp, config, watchFile={}) ->
 		return 'rb' if base.indexOf(config[loc].rb.client[type].dir) isnt -1
 		'app'
 
+	getRoot = ->
+		useAbsolutePaths = config.angular.templateCache.useAbsolutePaths
+		prefix           = config.angular.templateCache.urlPrefix
+		prefix           = "/#{prefix}" if useAbsolutePaths and prefix[0] isnt '/'
+		prefix
+
 	# streams
 	# =======
 	addToDistPath = -> # add 'views/' for app and 'rapid-build/views/' for rb
@@ -43,7 +49,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		minify  = isProd and config.minify.html.views
 		minOpts = config.minify.html.options
 		opts    = {}
-		opts.root   = '/' if config.angular.templateCache.useAbsolutePaths
+		opts.root   = getRoot()
 		opts.module = config.angular.moduleName
 		gulp.src src
 			.pipe addToDistPath()

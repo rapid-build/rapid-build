@@ -39,6 +39,7 @@ module.exports = (config, options) ->
 	# ==============
 	angular.templateCache = {}
 	angular.templateCache.dev              = options.angular.templateCache.dev or false
+	angular.templateCache.urlPrefix        = options.angular.templateCache.urlPrefix or ''
 	angular.templateCache.useAbsolutePaths = options.angular.templateCache.useAbsolutePaths or false
 
 	# rb bower dependencies
