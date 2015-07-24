@@ -1,3 +1,11 @@
+## 0.25.0 (2015-07-23)
+
+
+#### Features
+
+* **option:** add angular.templateCache.urlPrefix option ([db7ca9bc](https://github.com/jyounce/rapid-build/commit/db7ca9bc))
+
+
 ## 0.24.0 (2015-07-23)
 
 
