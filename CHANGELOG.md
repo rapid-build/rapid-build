@@ -1,3 +1,11 @@
+### 0.26.1 (2015-07-28)
+
+
+#### Bug Fixes
+
+* **cache busting:** by changing libs and bower_components css urls to absolute for the prod build ([dcd845a5](https://github.com/jyounce/rapid-build/commit/dcd845a5))
+
+
 ## 0.26.0 (2015-07-27)
 
 
