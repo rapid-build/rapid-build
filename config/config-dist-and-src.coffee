@@ -18,8 +18,8 @@ module.exports = (config, options) ->
 		views:   'views'
 
 	file =
-		appServer: 'routes' # app server dist entry file
-		rbServer:  'server' # rb server dist bootstrap file
+		appServer: 'routes.js' # app server dist entry file
+		rbServer:  'server.js' # rb server dist bootstrap file
 
 	# dirs
 	# ====
@@ -140,6 +140,10 @@ module.exports = (config, options) ->
 	removeServerDir()    # server dir is server.scripts.dir
 	addToServerAppDist() # add file and path
 	config.dist.rb.server.scripts.file = file.rbServer # rb server dist bootstrap file
+	config.dist.rb.server.scripts.path = path.join(
+		config.dist.rb.server.scripts.dir
+		config.dist.rb.server.scripts.file
+	)
 
 	# final touch-ups
 	# ===============

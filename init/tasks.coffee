@@ -72,6 +72,7 @@ module.exports = (gulp, config) ->
 	# server
 	# ======
 	require("#{config.req.tasks}/server/start-server")               gulp, config     # start-server
+	require("#{config.req.tasks}/server/spawn-server")               gulp, config     # spawn-server
 	require("#{config.req.tasks}/server/nodemon")                    gulp, config, bs # nodemon
 
 	# test

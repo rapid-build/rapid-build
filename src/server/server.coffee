@@ -11,7 +11,7 @@ appFilePath = path.join appPath, appFile # app server dist entry script
 
 app.use express.static client
 app.listen port, ->
-	console.log "Server Started on #{config.ports.server}"
+	console.log config.server.msg.start
 
 app.get '/', (req, res) ->
 	res.sendFile spa, root:client
@@ -30,6 +30,6 @@ catch e
 	if e.code and
 		e.code.toLowerCase() is 'module_not_found' and
 		e.message.indexOf(appFilePath) isnt -1
-			console.log 'no app server scripts to load'
+			console.log config.server.msg.noScripts
 	else
 		console.log e # log e if there is an actual error

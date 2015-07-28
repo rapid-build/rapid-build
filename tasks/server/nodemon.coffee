@@ -5,11 +5,8 @@ module.exports = (gulp, config, browserSync) ->
 
 	# globals
 	# =======
-	rbServerFile = path.join(
-		config.dist.rb.server.scripts.dir,
-		config.dist.rb.server.scripts.file
-	)
-	watchDir   = config.dist.app.server.scripts.dir
+	rbServerFile = config.dist.rb.server.scripts.path
+	watchDir     = config.dist.app.server.scripts.dir
 	ignoreDirs = [
 		config.node_modules.rb.dist.dir
 		config.node_modules.app.dist.dir

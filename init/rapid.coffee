@@ -20,7 +20,7 @@ module.exports = (gulp, config) ->
 	gulp.task config.rb.tasks.dev, ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}build-spa"
-			"#{config.rb.prefix.task}start-server"
+			"#{config.rb.prefix.task}start-server:dev"
 			"#{config.rb.prefix.task}browser-sync"
 			"#{config.rb.prefix.task}watch"
 			cb
