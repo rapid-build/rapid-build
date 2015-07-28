@@ -5,6 +5,7 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-client", (cb) ->
 		gulpSequence(
+			"#{config.rb.prefix.task}relative-to-absolute-css-urls"
 			[
 				"#{config.rb.prefix.task}minify-css"
 				"#{config.rb.prefix.task}minify-html"
