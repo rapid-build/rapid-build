@@ -1,3 +1,11 @@
+## 0.26.0 (2015-07-27)
+
+
+#### Features
+
+* **server:** add quick server startup with spawn server and use nodemon for dev build ([cd289bf9](https://github.com/jyounce/rapid-build/commit/cd289bf9))
+
+
 ## 0.25.0 (2015-07-23)
 
 
