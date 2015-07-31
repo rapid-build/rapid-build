@@ -1,27 +1,27 @@
-path        = require 'path'
-express     = require 'express'
-config      = require './config.json'
-app         = express()
-port        = config.ports.server
-spa         = config.spa.dist.file
-client      = config.dist.app.client.dir
-appPath     = config.dist.app.server.scripts.path
-appFile     = config.dist.app.server.scripts.file
-appFilePath = path.join appPath, appFile # app server dist entry script
+dir           = __dirname # all paths are relative to this file
+path          = require 'path'
+express       = require 'express'
+config        = require path.join dir, 'config.json'
+app           = express()
+port          = process.env.PORT or config.ports.server
+spa           = config.spa.dist.file # ex: spa.html
+clientDirPath = path.resolve dir, '..', '..', config.dist.app.client.dirName # creates absolute path to the client folder
+appFilePath   = path.resolve dir, '..', config.dist.app.server.scripts.file
+serverDirPath = path.resolve dir, '..', '..', config.dist.app.server.dirName
 
-app.use express.static client
+app.use express.static clientDirPath
 app.listen port, ->
 	console.log config.server.msg.start
 
 app.get '/', (req, res) ->
-	res.sendFile spa, root:client
+	res.sendFile spa, root: clientDirPath
 
 # options to pass
 # ===============
 opts =
-	dir:
-		relative: config.dist.app.server.scripts.dir
-		absolute: config.dist.app.server.scripts.path
+	path:
+		client: clientDirPath
+		server: serverDirPath
 
 # load optional app server dist entry script
 # ==========================================

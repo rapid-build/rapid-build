@@ -43,27 +43,41 @@ module.exports = (config, options) ->
 			o.clientTest    = options[loc].client.test.dir
 			o.clientViews   = options[loc].client.views.dir
 
-		dir: o.dir or dir[loc]
-		client:
-			dir: o.clientDir or dir.client
-			bower:
-				dir: o.clientBower or dir.bower
-			images:
-				dir: o.clientImages or dir.images
-			libs:
-				dir: o.clientLibs or dir.libs
-			scripts:
-				dir: o.clientScripts or dir.scripts
-			styles:
-				dir: o.clientStyles or dir.styles
-			test:
-				dir: o.clientTest or dir.test
-			views:
-				dir: o.clientViews or dir.views
-		server:
-			dir: o.serverDir or dir.server # gets deleted, see removeServerDir
-			scripts:
-				dir: o.serverDir or dir.scripts
+		clientDirName = if loc is 'dist' then o.clientDir or dir.client else null
+		serverDirName = if loc is 'dist' then o.serverDir or dir.server else null
+
+		info =
+			dir: o.dir or dir[loc]
+			client:
+				dir: o.clientDir or dir.client
+				dirName: clientDirName
+				bower:
+					dir: o.clientBower or dir.bower
+				images:
+					dir: o.clientImages or dir.images
+				libs:
+					dir: o.clientLibs or dir.libs
+				scripts:
+					dir: o.clientScripts or dir.scripts
+				styles:
+					dir: o.clientStyles or dir.styles
+				test:
+					dir: o.clientTest or dir.test
+				views:
+					dir: o.clientViews or dir.views
+			server:
+				dir: o.serverDir or dir.server
+				dirName: serverDirName
+				scripts:
+					dir: o.serverDir or dir.scripts
+		if loc is 'dist'
+			unless isApp
+				info.client.dirName = config.rb.prefix.distDir
+				info.server.dirName = config.rb.prefix.distDir
+		else # delete from src
+			delete info.client.dirName
+			delete info.server.dirName
+		info
 
 	# dist
 	# ====
@@ -93,6 +107,7 @@ module.exports = (config, options) ->
 				loc.dir = path.join cwd, v1
 				continue
 			for own k2, v2 of v1
+				continue if k2 is 'dirName'
 				if k2 is 'dir'
 					if isDist and src is 'rb'
 						v1.dir = path.join loc.dir, v2, config.rb.prefix.distDir
@@ -115,6 +130,7 @@ module.exports = (config, options) ->
 				continue if k2 is 'dir'
 				continue if k2 is 'server'
 				for own k3, v3 of v2
+					continue if k3 is 'dirName'
 					continue if k3 is 'dir'
 					if k1 is 'app'
 						v3.dirName = options[loc].client[k3].dir or dir[k3]
@@ -124,11 +140,10 @@ module.exports = (config, options) ->
 
 	# server
 	# ======
-	removeServerDir = ->
+	updateServerScriptsDir = -> # server dir is server.scripts.dir
 		['dist', 'src'].forEach (v1) ->
 			['app', 'rb'].forEach (v2) ->
 				config[v1][v2].server.scripts.dir = config[v1][v2].server.dir
-				delete config[v1][v2].server.dir
 
 	addToServerAppDist = ->
 		config.dist.app.server.scripts.file = # app server dist entry file
@@ -137,8 +152,8 @@ module.exports = (config, options) ->
 		config.dist.app.server.scripts.path = # absolute path
 			path.join config.app.dir, config.dist.app.server.scripts.dir
 
-	removeServerDir()    # server dir is server.scripts.dir
-	addToServerAppDist() # add file and path
+	updateServerScriptsDir() # server dir is server.scripts.dir
+	addToServerAppDist()     # add file and path
 	config.dist.rb.server.scripts.file = file.rbServer # rb server dist bootstrap file
 	config.dist.rb.server.scripts.path = path.join(
 		config.dist.rb.server.scripts.dir
