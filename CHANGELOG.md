@@ -1,3 +1,11 @@
+### 0.26.2 (2015-08-01)
+
+
+#### Bug Fixes
+
+* **server:** add ability for server file to work with other servers via process.env.PORT ([5283beac](https://github.com/jyounce/rapid-build/commit/5283beac))
+
+
 ### 0.26.1 (2015-07-28)
 
 
