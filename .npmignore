@@ -4,3 +4,9 @@ config/config.json
 docs/
 changelog/
 test/
+
+# testing
+# =======
+src/client/images/wolverine.png
+src/client/views/docs
+src/client/views/rapid-build.html
