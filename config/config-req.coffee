@@ -6,6 +6,7 @@ module.exports = (config, rbDir) ->
 		app:     process.cwd()
 		config:  "#{rbDir}/config"
 		files:   "#{rbDir}/files"
+		plugins: "#{rbDir}/plugins"
 		helpers: "#{rbDir}/helpers"
 		init:    "#{rbDir}/init"
 		tasks:   "#{rbDir}/tasks"

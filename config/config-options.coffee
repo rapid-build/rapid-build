@@ -40,6 +40,7 @@ module.exports = (config, options) ->
 		options.angular.modules       = null if not isType.array options.angular.modules
 		options.angular.version       = null if not isType.string options.angular.version
 		options.angular.moduleName    = null if not isType.string options.angular.moduleName
+		options.angular.ngFormify     = null if not isType.boolean options.angular.ngFormify
 		options.angular.httpBackend   = {}   if not isType.object options.angular.httpBackend
 		options.angular.httpBackend.dev  = null if not isType.boolean options.angular.httpBackend.dev
 		options.angular.httpBackend.prod = null if not isType.boolean options.angular.httpBackend.prod

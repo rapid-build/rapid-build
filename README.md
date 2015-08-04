@@ -125,6 +125,7 @@ gulp rapid-build:test:prod
 # angular.templateCache.dev                         = (boolean) defaults to false = use template cache when running default and dev task
 # angular.templateCache.urlPrefix                   = (string)  prefix for template urls
 # angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
+# angular.ngFormify                                 = (boolean) defaults to false = set to true to replace all html form tags with ng:form in client dist, useful if your application is going to be wrapped in a global form
 # spa.title                                         = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                                   = (string)  defaults to package.json description = html meta description tag value
 # spa.src.filePath                                  = (string)  set if you want to use your own spa file and not the build system's (file must be located in your client src directory)

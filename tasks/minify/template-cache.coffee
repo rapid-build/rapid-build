@@ -5,6 +5,8 @@ module.exports = (gulp, config, watchFile={}) ->
 	gulpif        = require 'gulp-if'
 	minifyHtml    = require 'gulp-minify-html'
 	templateCache = require 'gulp-angular-templatecache'
+	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
+	runNgFormify  = config.angular.ngFormify
 	forWatchFile  = !!watchFile.path
 
 	# globs
@@ -54,6 +56,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		gulp.src src
 			.pipe addToDistPath()
 			.pipe gulpif minify, minifyHtml minOpts
+			.pipe gulpif runNgFormify, ngFormify()
 			.pipe templateCache file, opts
 			.pipe gulp.dest dest
 			.on 'end', ->

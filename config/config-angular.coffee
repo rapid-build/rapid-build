@@ -12,6 +12,10 @@ module.exports = (config, options) ->
 	# ============
 	angular = {}
 
+	# ng-formify
+	# ==========
+	angular.ngFormify = options.angular.ngFormify or false
+
 	# httpBackend
 	# ===========
 	httpBackendDir = options.angular.httpBackend.dir or 'mocks'
