@@ -8,6 +8,7 @@ spa           = config.spa.dist.file # ex: spa.html
 clientDirPath = path.resolve dir, '..', '..', config.dist.app.client.dirName # creates absolute path to the client folder
 appFilePath   = path.resolve dir, '..', config.dist.app.server.scripts.file
 serverDirPath = path.resolve dir, '..', '..', config.dist.app.server.dirName
+proxyFilePath = path.join dir, 'http-proxy.js'
 
 app.use express.static clientDirPath
 app.listen port, ->
@@ -22,6 +23,10 @@ opts =
 	path:
 		client: clientDirPath
 		server: serverDirPath
+
+# load optional http proxy
+# ========================
+require(proxyFilePath) app, config, opts if config.httpProxy.length
 
 # load optional app server dist entry script
 # ==========================================

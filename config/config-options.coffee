@@ -100,6 +100,9 @@ module.exports = (config, options) ->
 		options.server = {} if not isType.object options.server
 		options.server.node_modules = null if not isType.array options.server.node_modules
 
+	proxyOptions = ->
+		options.httpProxy = null if not isType.array options.httpProxy
+
 	# init
 	# ====
 	distAndSrcOptions() # must be first
@@ -112,6 +115,7 @@ module.exports = (config, options) ->
 	testOptions()
 	serverDistOptions()
 	serverOptions()
+	proxyOptions()
 
 	# logs
 	# ====
