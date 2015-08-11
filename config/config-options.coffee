@@ -22,9 +22,10 @@ module.exports = (config, options) ->
 
 	portOptions = -> # server ports
 		options.ports = {} if not isType.object options.ports
-		options.ports.server = null if not isType.number options.ports.server
-		options.ports.reload = null if not isType.number options.ports.reload
-		options.ports.test   = null if not isType.number options.ports.test
+		options.ports.server   = null if not isType.number options.ports.server
+		options.ports.reload   = null if not isType.number options.ports.reload
+		options.ports.reloadUI = null if not isType.number options.ports.reloadUI
+		options.ports.test     = null if not isType.number options.ports.test
 
 	orderOptions = ->
 		options.order = {} if not isType.object options.order

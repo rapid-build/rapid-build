@@ -5,9 +5,10 @@ module.exports = (config, options) ->
 	# init ports
 	# ==========
 	ports = {}
-	ports.server = options.ports.server or 3000
-	ports.reload = options.ports.reload or 3001
-	ports.test   = options.ports.test   or 9876
+	ports.server   = options.ports.server   or 3000
+	ports.reload   = options.ports.reload   or 3001
+	ports.reloadUI = options.ports.reloadUI or 3002
+	ports.test     = options.ports.test     or 9876
 
 	# add ports to config
 	# ===================

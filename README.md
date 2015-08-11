@@ -114,6 +114,7 @@ gulp rapid-build:test:prod
 # src.server.dir                                    = (string)  defaults to 'server'
 # ports.server                                      = (int)     defaults to 3000, web server port
 # ports.reload                                      = (int)     defaults to 3001, browsersync server port 
+# ports.reloadUI                                    = (int)     defaults to 3002, browsersync's user-interface server port 
 # ports.test                                        = (int)     defaults to 9876, karma server port
 # order[scripts|styles][first|last]                 = (array of strings) = file paths
 # angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
