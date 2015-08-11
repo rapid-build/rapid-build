@@ -1,3 +1,11 @@
+## 0.29.0 (2015-08-11)
+
+
+#### Features
+
+* **option:** add httpProxy option, useful when you want to test external api(s) ([b30b2ae6](https://github.com/jyounce/rapid-build/commit/b30b2ae6))
+
+
 ## 0.28.0 (2015-08-11)
 
 
