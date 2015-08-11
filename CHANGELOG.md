@@ -1,3 +1,11 @@
+## 0.27.0 (2015-08-10)
+
+
+#### Features
+
+* **option:** add angular.ngFormify option ([876df596](https://github.com/jyounce/rapid-build/commit/876df596))
+
+
 ### 0.26.2 (2015-08-01)
 
 
