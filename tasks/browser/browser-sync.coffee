@@ -3,7 +3,9 @@ module.exports = (gulp, config) ->
 	browserSync = require 'browser-sync'
 	bs          = browserSync.create()
 
-	bsConfig    =
+	# helpers
+	# =======
+	getBsConfig = ->
 		files:   config.glob.browserSync
 		proxy:   "http://localhost:#{config.ports.server}/"
 		port:    config.ports.reload
@@ -11,14 +13,19 @@ module.exports = (gulp, config) ->
 		browser: 'google chrome'
 		# open: false
 
+	# events
+	# ======
 	bs.emitter.on 'serverRestart', ->
 		return if not bs.active
 		setTimeout ->
 			bs.reload stream:false
 		, 1000
 
+	# register task
+	# =============
 	gulp.task "#{config.rb.prefix.task}browser-sync", ->
-		defer = q.defer()
+		defer    = q.defer()
+		bsConfig = getBsConfig()
 		bs.init bsConfig, ->
 			defer.resolve()
 		defer.promise

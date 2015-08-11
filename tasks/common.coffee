@@ -10,6 +10,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}clean-dist"
 			"#{config.rb.prefix.task}build-angular-modules"
 			"#{config.rb.prefix.task}build-config"
+			"#{config.rb.prefix.task}find-open-port" # updates config.ports if a port is in use
 			[
 				"#{config.rb.prefix.task}copy-bower_components"
 				"#{config.rb.prefix.task}copy-css"

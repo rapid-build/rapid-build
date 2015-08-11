@@ -9,7 +9,7 @@ module.exports = (config) ->
 	# messages
 	# ========
 	server.msg =
-		start: "Server started on #{config.ports.server}"
+		start: 'Server started on'
 		noScripts: 'No application server scripts to load.'
 
 	# add server to config

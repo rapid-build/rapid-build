@@ -10,15 +10,6 @@ module.exports = (gulp, config) ->
 
 	# Global
 	# ======
-	karmaConfig =
-		autoWatch:  false
-		basePath:   config.app.dir
-		browsers:   config.test.browsers # see config-test.coffee
-		frameworks: ['jasmine', 'jasmine-matchers']
-		port:       config.ports.test
-		reporters:  ['dots']
-		singleRun:  true
-
 	TestResults = status: null, exitCode: null
 
 	# helpers
@@ -28,6 +19,15 @@ module.exports = (gulp, config) ->
 		moduleHelp.cache.delete tests
 		tests = require(tests).client
 		tests
+
+	getKarmaConfig = ->
+		autoWatch:  false
+		basePath:   config.app.dir
+		browsers:   config.test.browsers # see config-test.coffee
+		frameworks: ['jasmine', 'jasmine-matchers']
+		port:       config.ports.test
+		reporters:  ['dots']
+		singleRun:  true
 
 	# tasks
 	# =====
@@ -39,8 +39,9 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	runTests = ->
-		defer = q.defer()
-		tests = getTestsFile()
+		defer       = q.defer()
+		tests       = getTestsFile()
+		karmaConfig = getKarmaConfig()
 
 		if not tests.scriptsTestCount
 			console.log 'no test scripts to run'.yellow

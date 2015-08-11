@@ -11,7 +11,7 @@ serverDirPath = path.resolve dir, '..', '..', config.dist.app.server.dirName
 
 app.use express.static clientDirPath
 app.listen port, ->
-	console.log config.server.msg.start
+	console.log "#{config.server.msg.start} #{config.ports.server}"
 
 app.get '/', (req, res) ->
 	res.sendFile spa, root: clientDirPath
