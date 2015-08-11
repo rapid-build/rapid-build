@@ -1,3 +1,12 @@
+## 0.28.0 (2015-08-11)
+
+
+#### Features
+
+* **option:** add ports.reloadUI option to set browsersync's user-interface server port ([1290b4e9](https://github.com/jyounce/rapid-build/commit/1290b4e9))
+* **servers:** find an open server port and use it if a port is already in use ([5d1b34d8](https://github.com/jyounce/rapid-build/commit/5d1b34d8))
+
+
 ## 0.27.0 (2015-08-10)
 
 
