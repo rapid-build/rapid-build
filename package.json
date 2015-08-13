@@ -24,6 +24,7 @@
 		"conventional-changelog": "~0.0.17"
 	},
 	"dependencies": {
+		"body-parser": "~1.13.3",
 		"bower": "~1.4.1",
 		"browser-sync": "~2.8.2",
 		"coffee-script": "~1.9.3",

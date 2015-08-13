@@ -1,6 +1,7 @@
 dir           = __dirname # all paths are relative to this file
 path          = require 'path'
 express       = require 'express'
+bodyParser    = require 'body-parser'
 config        = require path.join dir, 'config.json'
 app           = express()
 port          = process.env.PORT or config.ports.server
@@ -10,7 +11,11 @@ appFilePath   = path.resolve dir, '..', config.dist.app.server.scripts.file
 serverDirPath = path.resolve dir, '..', '..', config.dist.app.server.dirName
 proxyFilePath = path.join dir, 'http-proxy.js'
 
+# configure
+# =========
 app.use express.static clientDirPath
+app.use bodyParser.json() # parse application/json
+
 app.listen port, ->
 	console.log "#{config.server.msg.start} #{config.ports.server}"
 
