@@ -1,3 +1,11 @@
+## 0.30.0 (2015-08-15)
+
+
+#### Features
+
+* **express:** use middleware body-parser to parse application/json ([2e635da6](https://github.com/jyounce/rapid-build/commit/2e635da6))
+
+
 ## 0.29.0 (2015-08-11)
 
 
