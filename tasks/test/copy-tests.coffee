@@ -33,9 +33,9 @@ module.exports = (gulp, config) ->
 	runMulti = ->
 		defer = q.defer()
 		q.all([
-			tasks.run.all config, coffeeTask, 'test', 'coffee', ['client']
-			tasks.run.all config, es6Task,    'test', 'es6',    ['client']
-			tasks.run.all config, jsTask,     'test', 'js',     ['client'], true
+			tasks.run.sync config, coffeeTask, 'test', 'coffee', ['client']
+			tasks.run.sync config, es6Task,    'test', 'es6',    ['client']
+			tasks.run.sync config, jsTask,     'test', 'js',     ['client']
 		]).done -> defer.resolve()
 		defer.promise
 

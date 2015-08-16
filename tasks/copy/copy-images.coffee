@@ -16,7 +16,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		runTask watchFile.path, watchFile.rbDistDir
 
 	runMulti = ->
-		tasks.run.all(
+		tasks.run.sync(
 			config, runTask,
 			'images', 'all',
 			['client'], true

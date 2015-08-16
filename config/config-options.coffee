@@ -84,10 +84,13 @@ module.exports = (config, options) ->
 		options.exclude.from.cacheBust = null if not isType.array options.exclude.from.cacheBust
 		options.exclude.from.minFile   = {} if not isType.object options.exclude.from.minFile
 		options.exclude.from.spaFile   = {} if not isType.object options.exclude.from.spaFile
+		options.exclude.from.dist      = {} if not isType.object options.exclude.from.dist
 		options.exclude.from.minFile.scripts = null if not isType.array options.exclude.from.minFile.scripts
 		options.exclude.from.minFile.styles  = null if not isType.array options.exclude.from.minFile.styles
 		options.exclude.from.spaFile.scripts = null if not isType.array options.exclude.from.spaFile.scripts
 		options.exclude.from.spaFile.styles  = null if not isType.array options.exclude.from.spaFile.styles
+		options.exclude.from.dist.client     = null if not isType.array options.exclude.from.dist.client
+		options.exclude.from.dist.server     = null if not isType.array options.exclude.from.dist.server
 
 	testOptions = ->
 		options.test = {} if not isType.object options.test

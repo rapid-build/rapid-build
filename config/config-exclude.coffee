@@ -32,6 +32,9 @@ module.exports = (config, options) ->
 				spaFile:
 					scripts: []
 					styles:  []
+				dist:
+					client: []
+					server: []
 		app:
 			from:
 				cacheBust: get.opt.deep2 'from', 'cacheBust', []
@@ -41,6 +44,9 @@ module.exports = (config, options) ->
 				spaFile:
 					scripts: get.opt.deep3 'spaFile', 'scripts', []
 					styles:  get.opt.deep3 'spaFile', 'styles',  []
+				dist:
+					client: get.opt.deep3 'dist', 'client', []
+					server: get.opt.deep3 'dist', 'server', []
 
 	# format options
 	# ==============
@@ -65,6 +71,8 @@ module.exports = (config, options) ->
 	formatFilesFrom 'minFile', 'styles'
 	formatFilesFrom 'spaFile', 'scripts'
 	formatFilesFrom 'spaFile', 'styles'
+	formatFilesFrom 'dist', 'client'
+	formatFilesFrom 'dist', 'server'
 
 	# add exclude to config
 	# =====================
