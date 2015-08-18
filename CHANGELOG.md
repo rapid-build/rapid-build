@@ -1,3 +1,11 @@
+## 0.31.0 (2015-08-18)
+
+
+#### Features
+
+* **option:** add option exclude.from.dist[client|server] ([14130291](https://github.com/jyounce/rapid-build/commit/14130291))
+
+
 ## 0.30.0 (2015-08-15)
 
 
