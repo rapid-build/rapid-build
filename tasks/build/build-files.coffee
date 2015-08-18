@@ -17,7 +17,7 @@ module.exports = (gulp, config) ->
 
 	# task
 	# ====
-	runTask = (src, dest, file, files) ->
+	buildFile = (src, dest, file, files) ->
 		defer = q.defer()
 		gulp.src src
 			.pipe rename file
@@ -72,13 +72,11 @@ module.exports = (gulp, config) ->
 			data.client[type].push v
 
 	getFiles = (type, glob) ->
-		files = []
-		defer = q.defer()
-		# opts  = read: false, buffer: false
-		# gulp.src glob, opts
-		# 	.on 'data', (file) ->
-		# 		files.push pathHelp.format file.path
-		gs.create(glob).on 'data', (file) ->
+		files  = []
+		defer  = q.defer()
+		opts   = allowEmpty: true
+		stream = gs.create glob, opts
+		stream.on 'data', (file) ->
 			files.push pathHelp.format file.path
 		.on 'end', ->
 			addData type, files
@@ -98,11 +96,29 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	buildData = -> # async
+		defer = q.defer()
 		setGlobs()
-		q.all [
+		q.all([
 			getAllFiles 'styles', 'css'
 			getAllFiles 'scripts', 'js'
+		]).done -> defer.resolve()
+		defer.promise
+
+	# main task
+	# =========
+	runTask = -> # sync
+		defer = q.defer()
+		tasks = [
+			-> buildData()
+			-> buildFile(
+				config.templates.files.src.path
+				config.templates.files.dest.dir
+				config.templates.files.dest.file
+				format.json data
+			)
 		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
 
 	# task deps
 	# =========
@@ -111,14 +127,6 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}build-files", taskDeps, ->
-		defer = q.defer()
-		buildData().done ->
-			runTask(
-				config.templates.files.src.path
-				config.templates.files.dest.dir
-				config.templates.files.dest.file
-				format.json data
-			).done -> defer.resolve()
-		defer.promise
+		runTask()
 
 

@@ -91,7 +91,7 @@ module.exports = (config, options) ->
 			index = _path.indexOf(v1.dir)
 			if index is 0
 				ext  = path.extname _path
-				lang = if ext and ext.indexOf('*') is -1 then ext.substr 1 else null
+				lang = if ext and ext.indexOf('*') is -1 then ext.substr 1 else 'all'
 				lang = 'all' if allTypes.indexOf(k1) isnt -1
 				type = { type: k1, lang, path: "!#{_path}" }
 				break

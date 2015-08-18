@@ -195,7 +195,8 @@ module.exports = (config) ->
 				for own k2, v2 of v1
 					continue if not v2.length
 					continue if not excludes[k1]
-					ePaths = excludes[k1][k2]
+					ePaths = excludes[k1]['all']
+					ePaths = if ePaths then ePaths else excludes[k1][k2]
 					continue if not ePaths
 					continue if not ePaths.length
 					glob.src[appOrRb][loc][k1][k2] = v2.concat ePaths
