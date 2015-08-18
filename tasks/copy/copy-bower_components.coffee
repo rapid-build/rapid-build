@@ -20,10 +20,19 @@ module.exports = (gulp, config) ->
 			cb null, file
 		es.map transform
 
-	runTask = (src, dest) ->
+	getExcludeFromDist = (appOrRb) ->
+		excludes = config.exclude[appOrRb].from.dist.client
+		return [] if not Object.keys(excludes).length
+		return [] if not excludes.bower
+		excludes.bower.all
+
+	runTask = (src, dest, appOrRb) ->
 		defer = q.defer()
 		return promiseHelp.get defer if not src or not src.paths.absolute.length
-		gulp.src src.paths.absolute
+		absSrc   = src.paths.absolute
+		excludes = getExcludeFromDist appOrRb
+		absSrc   = absSrc.concat excludes
+		gulp.src absSrc
 			.pipe addDistBasePath src.paths.relative
 			.pipe removeMin()
 			.pipe gulp.dest dest
@@ -37,6 +46,7 @@ module.exports = (gulp, config) ->
 		runTask(
 			bowerHelper.get.src appOrRb
 			config.dist[appOrRb].client.bower.dir
+			appOrRb
 		)
 
 	runTasks = ->

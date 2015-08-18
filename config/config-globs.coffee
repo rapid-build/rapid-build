@@ -184,6 +184,25 @@ module.exports = (config) ->
 
 	order()
 
+	# exclude from dist
+	# =================
+	addExcludeFromDist = (loc) ->
+		for appOrRb in ['app','rb']
+			excludes = config.exclude[appOrRb].from.dist[loc]
+			continue if not Object.keys(excludes).length
+			for own k1, v1 of glob.src[appOrRb][loc]
+				continue if k1 is 'all'
+				for own k2, v2 of v1
+					continue if not v2.length
+					continue if not excludes[k1]
+					ePaths = excludes[k1][k2]
+					continue if not ePaths
+					continue if not ePaths.length
+					glob.src[appOrRb][loc][k1][k2] = v2.concat ePaths
+
+	addExcludeFromDist 'client'
+	addExcludeFromDist 'server'
+
 	# node_modules
 	# ============
 	addNodeModulesDistAndSrc = ->

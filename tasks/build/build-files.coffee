@@ -74,6 +74,10 @@ module.exports = (gulp, config) ->
 	getFiles = (type, glob) ->
 		files = []
 		defer = q.defer()
+		# opts  = read: false, buffer: false
+		# gulp.src glob, opts
+		# 	.on 'data', (file) ->
+		# 		files.push pathHelp.format file.path
 		gs.create(glob).on 'data', (file) ->
 			files.push pathHelp.format file.path
 		.on 'end', ->

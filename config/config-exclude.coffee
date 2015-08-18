@@ -52,27 +52,73 @@ module.exports = (config, options) ->
 	# ==============
 	formatFilesFrom = (opt, type) -> # prepend dist path to values then prepend '!'
 		for appOrRb in ['app','rb']
-			_paths  = exclude[appOrRb].from[opt][type]
-			forType = !!_paths
-			_paths  = exclude[appOrRb].from[opt] unless forType
-			continue unless _paths.length
-			_paths = (pathHelp.makeRelative _path for _path in _paths)
-			_paths = (path.join config.dist[appOrRb].client.dir, _path for _path in _paths)
+			paths   = exclude[appOrRb].from[opt][type]
+			forType = !!paths
+			paths   = exclude[appOrRb].from[opt] unless forType
+			continue unless paths.length
+			paths  = (pathHelp.makeRelative _path for _path in paths)
+			paths  = (path.join config.dist[appOrRb].client.dir, _path for _path in paths)
 			negate = if opt is 'minFile' then '' else '!'
-			_paths = ("#{negate}#{_path}" for _path in _paths)
-			# log.json _paths
+			paths  = ("#{negate}#{_path}" for _path in paths)
+			# log.json paths
 			if forType
-				exclude[appOrRb].from[opt][type] = _paths
+				exclude[appOrRb].from[opt][type] = paths
 			else
-				exclude[appOrRb].from[opt] = _paths
+				exclude[appOrRb].from[opt] = paths
 
 	formatFilesFrom 'cacheBust'
 	formatFilesFrom 'minFile', 'scripts'
 	formatFilesFrom 'minFile', 'styles'
 	formatFilesFrom 'spaFile', 'scripts'
 	formatFilesFrom 'spaFile', 'styles'
-	formatFilesFrom 'dist', 'client'
-	formatFilesFrom 'dist', 'server'
+
+	# format exclude from dist
+	# ========================
+	getExcludeFromDirTypes = (appOrRb, loc) ->
+		types = {}
+		types[appOrRb] = {}
+		types[appOrRb][loc] = {}
+		for own k1, v1 of config.src[appOrRb][loc]
+			continue if k1 is 'dir'
+			types[appOrRb][loc][k1] = {}
+			types[appOrRb][loc][k1].dir = v1.dir
+		types
+
+	getExcludeFromDistType = (types, appOrRb, loc, _path) ->
+		type     = null
+		allTypes = ['bower', 'images', 'libs']
+		for own k1, v1 of types[appOrRb][loc]
+			index = _path.indexOf(v1.dir)
+			if index is 0
+				ext  = path.extname _path
+				lang = if ext and ext.indexOf('*') is -1 then ext.substr 1 else null
+				lang = 'all' if allTypes.indexOf(k1) isnt -1
+				type = { type: k1, lang, path: "!#{_path}" }
+				break
+		type
+
+	getExcludeFromDist = (appOrRb, loc) -> # prepend src path to values then prepend '!'
+		paths = exclude[appOrRb].from.dist[loc]
+		return [] if not paths.length
+		types   = getExcludeFromDirTypes appOrRb, loc
+		srcPath = config.src[appOrRb][loc].dir
+		paths   = (path.join srcPath, _path for _path in paths)
+		eTypes  = {}
+		for _path in paths
+			type = getExcludeFromDistType types, appOrRb, loc, _path
+			continue if not type
+			eTypes[type.type] = {} if not eTypes[type.type]
+			eTypes[type.type][type.lang] = [] if not eTypes[type.type][type.lang]
+			eTypes[type.type][type.lang].push type.path
+		return [] if not Object.keys(eTypes).length
+		eTypes
+
+	exclude.rb.from.dist.client  = getExcludeFromDist 'rb', 'client'
+	exclude.rb.from.dist.server  = getExcludeFromDist 'rb', 'server'
+	exclude.app.from.dist.client = getExcludeFromDist 'app', 'client'
+	exclude.app.from.dist.server = getExcludeFromDist 'app', 'server'
+	# log.json exclude.rb.from.dist,  'rb dist exclude ='
+	# log.json exclude.app.from.dist, 'app dist exclude ='
 
 	# add exclude to config
 	# =====================
