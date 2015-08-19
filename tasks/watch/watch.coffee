@@ -22,29 +22,6 @@ module.exports = (gulp, config, browserSync) ->
 		browserSync: ->
 			browserSync.reload stream:false
 
-	# globs
-	# =====
-	getGlob = (loc, type, lang) ->
-		globs = []
-		['app'].forEach (v1) ->
-			['client', 'server'].forEach (v2) ->
-			for v2 in ['client', 'server']
-				break if v2 is 'server' and type isnt 'scripts'
-				_glob = config.glob[loc][v1][v2][type][lang]
-				continue unless _glob.length
-				for v3 in _glob
-					globs.push v3
-		globs
-	glob =
-		src:
-			coffee: getGlob 'src', 'scripts', 'coffee'
-			css:    getGlob 'src', 'styles',  'css'
-			es6:    getGlob 'src', 'scripts', 'es6'
-			js:     getGlob 'src', 'scripts', 'js'
-			less:   getGlob 'src', 'styles',  'less'
-			html:   getGlob 'src', 'views',   'html'
-			images: getGlob 'src', 'images',  'all'
-
 	# helpers
 	# =======
 	getAppOrRb = (file) ->
@@ -127,19 +104,16 @@ module.exports = (gulp, config, browserSync) ->
 
 	# html watch (handle angular template cache)
 	# ==========================================
-	htmlWatch = ->
-		if config.angular.templateCache.dev
-			createWatch glob.src.html, 'tCache',
-				lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
-		else
-			createWatch glob.src.html, 'html', lang:'html', srcType:'views', bsReload:true
+	htmlWatch = (views) ->
+		return if config.angular.templateCache.dev
+			createWatch views, 'tCache', lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
+		createWatch views, 'html', lang:'html', srcType:'views', bsReload:true
 
 	# spa watch (if custom spa file then watch it)
 	# ============================================
-	spaWatch = ->
-		if config.spa.custom
-			return createWatch config.spa.src.path, 'build spa', lang: config.spa.dist.file
-		promiseHelp.get()
+	spaWatch = (spaFilePath) ->
+		return promiseHelp.get() unless config.spa.custom
+		createWatch spaFilePath, 'build spa', lang: config.spa.dist.file
 
 	# register task
 	# =============
@@ -147,21 +121,22 @@ module.exports = (gulp, config, browserSync) ->
 		defer = q.defer()
 		q.all([
 			# images
-			createWatch glob.src.images,    'image',  lang:'image',  srcType:'images',  bsReload:true
+			createWatch config.glob.src.app.client.images.all,     'image',  lang:'image',  srcType:'images',  bsReload:true
 			# styles
-			createWatch glob.src.css,       'css',    lang:'css',    srcType:'styles'
-			createWatch glob.src.less,      'less',   lang:'less',   srcType:'styles',  extDist:'css'
-			# scripts
-			createWatch glob.src.coffee[0], 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
-			createWatch glob.src.coffee[1], 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server'
-			createWatch glob.src.es6[0],    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'
-			createWatch glob.src.es6[1],    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server'
-			createWatch glob.src.js[0],     'js',     lang:'js',     srcType:'scripts'
-			createWatch glob.src.js[1],     'js',     lang:'js',     srcType:'scripts', loc:'server'
+			createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles'
+			createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css'
+			# client scripts
+			createWatch config.glob.src.app.client.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
+			createWatch config.glob.src.app.client.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'
+			createWatch config.glob.src.app.client.scripts.js,     'js',     lang:'js',     srcType:'scripts'
+			# server scripts
+			createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server'
+			createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server'
+			createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server'
 			# views
-			htmlWatch()
+			htmlWatch config.glob.src.app.client.views.html
 			# spa
-			spaWatch()
+			spaWatch config.spa.src.path
 		]).done -> defer.resolve()
 		defer.promise
 
