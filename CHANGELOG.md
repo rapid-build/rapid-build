@@ -1,3 +1,12 @@
+## [0.31.3](https://github.com/jyounce/rapid-build/compare/v0.31.2...v0.31.3) (2015-08-19)
+
+
+### Bug Fixes
+
+* **readme:** shake n bake! pic ([62a9db6](https://github.com/jyounce/rapid-build/commit/62a9db6))
+
+
+
 ## [0.31.2](https://github.com/jyounce/rapid-build/compare/v0.31.1...v0.31.2) (2015-08-19)
 
 
