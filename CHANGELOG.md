@@ -1,3 +1,12 @@
+## [0.31.2](https://github.com/jyounce/rapid-build/compare/v0.31.1...v0.31.2) (2015-08-19)
+
+
+### Performance Improvements
+
+* **tasks:** change copy and compile tasks to run async instead of sync ([b1b73d9](https://github.com/jyounce/rapid-build/commit/b1b73d9))
+
+
+
 ## [0.31.1](https://github.com/jyounce/rapid-build/compare/v0.31.0...v0.31.1) (2015-08-19)
 
 
