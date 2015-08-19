@@ -16,10 +16,10 @@ module.exports = (gulp, config, watchFile={}) ->
 		runTask watchFile.path, watchFile.rbDistDir
 
 	runMulti = ->
-		tasks.run.sync(
+		tasks.run.async(
 			config, runTask,
 			'styles', 'css',
-			['client'], true
+			['client']
 		)
 
 	# register task
