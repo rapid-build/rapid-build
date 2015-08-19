@@ -1,384 +1,415 @@
-### 0.31.1 (2015-08-18)
+## [0.31.1](https://github.com/jyounce/rapid-build/compare/v0.31.0...v0.31.1) (2015-08-19)
 
 
-#### Bug Fixes
+### Bug Fixes
 
-* **watch:** do not watch src files that are excluded from dist ([d4ae8e10](https://github.com/jyounce/rapid-build/commit/d4ae8e10))
+* **watch:** do not watch src files that are excluded from dist ([d4ae8e1](https://github.com/jyounce/rapid-build/commit/d4ae8e1))
 
 
-## 0.31.0 (2015-08-18)
 
+# [0.31.0](https://github.com/jyounce/rapid-build/compare/v0.30.0...v0.31.0) (2015-08-18)
 
-#### Features
 
-* **option:** add option exclude.from.dist.client and/or server ([14130291](https://github.com/jyounce/rapid-build/commit/14130291))
+### Features
 
+* **option:** add option exclude.from.dist\[client|server\] ([1413029](https://github.com/jyounce/rapid-build/commit/1413029))
 
-## 0.30.0 (2015-08-15)
 
 
-#### Features
+# [0.30.0](https://github.com/jyounce/rapid-build/compare/v0.29.0...v0.30.0) (2015-08-15)
 
-* **express:** use middleware body-parser to parse application/json ([2e635da6](https://github.com/jyounce/rapid-build/commit/2e635da6))
 
+### Features
 
-## 0.29.0 (2015-08-11)
+* **express:** use middleware body-parser to parse application/json ([2e635da](https://github.com/jyounce/rapid-build/commit/2e635da))
 
 
-#### Features
 
-* **option:** add httpProxy option, useful when you want to test external api(s) ([b30b2ae6](https://github.com/jyounce/rapid-build/commit/b30b2ae6))
+# [0.29.0](https://github.com/jyounce/rapid-build/compare/v0.28.0...v0.29.0) (2015-08-11)
 
 
-## 0.28.0 (2015-08-11)
+### Features
 
+* **option:** add httpProxy option, useful when you want to test external api(s) ([b30b2ae](https://github.com/jyounce/rapid-build/commit/b30b2ae))
 
-#### Features
 
-* **option:** add ports.reloadUI option to set browsersync's user-interface server port ([1290b4e9](https://github.com/jyounce/rapid-build/commit/1290b4e9))
-* **servers:** find an open server port and use it if a port is already in use ([5d1b34d8](https://github.com/jyounce/rapid-build/commit/5d1b34d8))
 
+# [0.28.0](https://github.com/jyounce/rapid-build/compare/v0.27.0...v0.28.0) (2015-08-11)
 
-## 0.27.0 (2015-08-10)
 
+### Features
 
-#### Features
+* **option:** add ports.reloadUI option to set browsersync's user-interface server port ([1290b4e](https://github.com/jyounce/rapid-build/commit/1290b4e))
+* **servers:** find an open server port and use it if a port is already in use ([5d1b34d](https://github.com/jyounce/rapid-build/commit/5d1b34d))
 
-* **option:** add angular.ngFormify option ([876df596](https://github.com/jyounce/rapid-build/commit/876df596))
 
 
-### 0.26.2 (2015-08-01)
+# [0.27.0](https://github.com/jyounce/rapid-build/compare/v0.26.2...v0.27.0) (2015-08-11)
 
 
-#### Bug Fixes
+### Features
 
-* **server:** add ability for server file to work with other servers via process.env.PORT ([5283beac](https://github.com/jyounce/rapid-build/commit/5283beac))
+* **option:** add angular.ngFormify option ([876df59](https://github.com/jyounce/rapid-build/commit/876df59))
 
 
-### 0.26.1 (2015-07-28)
 
+## [0.26.2](https://github.com/jyounce/rapid-build/compare/v0.26.1...v0.26.2) (2015-08-01)
 
-#### Bug Fixes
 
-* **cache busting:** by changing libs and bower_components css urls to absolute for the prod build ([dcd845a5](https://github.com/jyounce/rapid-build/commit/dcd845a5))
+### Bug Fixes
 
+* **server:** add ability for server file to work with other servers via process.env.PORT ([5283bea](https://github.com/jyounce/rapid-build/commit/5283bea))
 
-## 0.26.0 (2015-07-27)
 
 
-#### Features
+## [0.26.1](https://github.com/jyounce/rapid-build/compare/0.26.0...v0.26.1) (2015-07-28)
 
-* **server:** add quick server startup with spawn server and use nodemon for dev build ([cd289bf9](https://github.com/jyounce/rapid-build/commit/cd289bf9))
 
+### Bug Fixes
 
-## 0.25.0 (2015-07-23)
+* **cache busting:** by changing libs and bower_components css urls to absolute for the prod build ([dcd845a](https://github.com/jyounce/rapid-build/commit/dcd845a))
 
 
-#### Features
 
-* **option:** add angular.templateCache.urlPrefix option ([db7ca9bc](https://github.com/jyounce/rapid-build/commit/db7ca9bc))
+# [0.26.0](https://github.com/jyounce/rapid-build/compare/v0.25.0...0.26.0) (2015-07-28)
 
 
-## 0.24.0 (2015-07-23)
+### Features
 
+* **server:** add quick server startup with spawn server and use nodemon for dev build ([cd289bf](https://github.com/jyounce/rapid-build/commit/cd289bf))
 
-#### Features
 
-* **config:** add config.server.node_modules option to copy node_modules to server dist ([a25a3f5d](https://github.com/jyounce/rapid-build/commit/a25a3f5d))
 
+# [0.25.0](https://github.com/jyounce/rapid-build/compare/v0.24.0...v0.25.0) (2015-07-24)
 
-## 0.23.0 (2015-07-23)
 
+### Features
 
-#### Bug Fixes
+* **option:** add angular.templateCache.urlPrefix option ([db7ca9b](https://github.com/jyounce/rapid-build/commit/db7ca9b))
 
-* **server options:** replace dist.server.file with dist.server.fileName for consistency ([f1bb3f9d](https://github.com/jyounce/rapid-build/commit/f1bb3f9d))
-* **spa options:** replace spa.src.file and dir with filePath and change spa.dist.file to fileName ([40cfee2d](https://github.com/jyounce/rapid-build/commit/40cfee2d))
-* **spa.html:** ensure only src spa.html get's moved to client dist root ([856395e7](https://github.com/jyounce/rapid-build/commit/856395e7))
 
 
-#### Features
+# [0.24.0](https://github.com/jyounce/rapid-build/compare/v0.23.0...v0.24.0) (2015-07-23)
 
-* **server:** pass options that contain dir info to the server entry script ([aa68acdc](https://github.com/jyounce/rapid-build/commit/aa68acdc))
 
+### Features
 
-## 0.22.0 (2015-07-18)
+* **config:** add config.server.node_modules option to copy node_modules to server dist ([a25a3f5](https://github.com/jyounce/rapid-build/commit/a25a3f5))
 
 
-#### Features
 
-* **add build:** create and expose build rapid-build:test:prod for testing prod builds ([f54d1142](https://github.com/jyounce/rapid-build/commit/f54d1142))
+# [0.23.0](https://github.com/jyounce/rapid-build/compare/v0.22.0...v0.23.0) (2015-07-23)
 
 
-## 0.21.0 (2015-07-17)
+### Bug Fixes
 
+* **server options:** replace dist.server.file with dist.server.fileName for consistency ([f1bb3f9](https://github.com/jyounce/rapid-build/commit/f1bb3f9))
+* **spa options:** replace spa.src.file and dir with filePath and change spa.dist.file to fileName ([40cfee2](https://github.com/jyounce/rapid-build/commit/40cfee2))
+* **spa.html:** ensure only src spa.html get's moved to client dist root ([856395e](https://github.com/jyounce/rapid-build/commit/856395e))
 
-#### Bug Fixes
+### Features
 
-* **prod build:** do not start the server ([4acd8d33](https://github.com/jyounce/rapid-build/commit/4acd8d33))
+* **server:** pass options that contain dir info to the server entry script ([aa68acd](https://github.com/jyounce/rapid-build/commit/aa68acd))
 
 
-#### Features
 
-* **build:** create and expose prod build that starts the server via rapid-build:prod:server ([b3d593c8](https://github.com/jyounce/rapid-build/commit/b3d593c8))
+# [0.22.0](https://github.com/jyounce/rapid-build/compare/v0.21.0...v0.22.0) (2015-07-18)
 
 
-## 0.20.0 (2015-07-16)
+### Features
 
+* **add build:** create and expose build rapid-build:test:prod for testing prod builds ([f54d114](https://github.com/jyounce/rapid-build/commit/f54d114))
 
-#### Bug Fixes
 
-* **testing:** do not run tests if there are no test scripts ([227ec956](https://github.com/jyounce/rapid-build/commit/227ec956))
 
+# [0.21.0](https://github.com/jyounce/rapid-build/compare/v0.20.0...v0.21.0) (2015-07-17)
 
-#### Features
 
-* **testing:**
-  * add karma-jasmine-matchers for additional test cases ([805e5987](https://github.com/jyounce/rapid-build/commit/805e5987))
-  * add port option for the karma server ([692e62f8](https://github.com/jyounce/rapid-build/commit/692e62f8))
+### Bug Fixes
 
+* **prod build:** do not start the server ([4acd8d3](https://github.com/jyounce/rapid-build/commit/4acd8d3))
 
-## 0.19.0 (2015-07-15)
+### Features
 
+* **build:** create and expose prod build that starts the server via rapid-build:prod:server ([b3d593c](https://github.com/jyounce/rapid-build/commit/b3d593c))
 
-#### Features
 
-* **api task:** create and expose test build via rapid-build:test ([725b9607](https://github.com/jyounce/rapid-build/commit/725b9607))
-* **testing:**
-  * add option test.browsers to run tests in additional browsers ([5d6864de](https://github.com/jyounce/rapid-build/commit/5d6864de))
-  * add karm browser launchers for chrome, firefox, ie and safari ([f9dcc903](https://github.com/jyounce/rapid-build/commit/f9dcc903))
 
+# [0.20.0](https://github.com/jyounce/rapid-build/compare/v0.19.0...v0.20.0) (2015-07-16)
 
-### 0.18.1 (2015-07-14)
 
+### Bug Fixes
 
-#### Bug Fixes
+* **testing:** do not run tests if there are no test scripts ([227ec95](https://github.com/jyounce/rapid-build/commit/227ec95))
 
-* **cache busting:** prevent prod build crash on windows by running runDelUnstampedPaths last ([89e7aa27](https://github.com/jyounce/rapid-build/commit/89e7aa27))
-* **option:** custom spa.html file when no spa.src.dir is supplied ([54eae806](https://github.com/jyounce/rapid-build/commit/54eae806))
-* **task:** build spa by temporarily removing delCustomSpaTask() ([3dde07c6](https://github.com/jyounce/rapid-build/commit/3dde07c6))
+### Features
 
+* **testing:** add karma-jasmine-matchers for additional test cases ([805e598](https://github.com/jyounce/rapid-build/commit/805e598))
+* **testing:** add port option for the karma server ([692e62f](https://github.com/jyounce/rapid-build/commit/692e62f))
 
-## 0.18.0 (2015-07-13)
 
 
-#### Features
+# [0.19.0](https://github.com/jyounce/rapid-build/compare/v0.18.1...v0.19.0) (2015-07-16)
 
-* **option:** add option exclude.from.minFile[scripts|styles] while maintaining order option ([60634c97](https://github.com/jyounce/rapid-build/commit/60634c97))
 
+### Features
 
-### 0.17.1 (2015-07-12)
+* **api task:** create and expose test task via rapid-build:test ([725b960](https://github.com/jyounce/rapid-build/commit/725b960))
+* **testing:** add karm browser launchers for chrome, firefox, ie and safari ([f9dcc90](https://github.com/jyounce/rapid-build/commit/f9dcc90))
+* **testing:** add option test.browsers to run tests in additional browsers ([5d6864d](https://github.com/jyounce/rapid-build/commit/5d6864d))
 
 
-#### Bug Fixes
 
-* **minify:**
-  * ability for css file split to handle multiple css min files ([d18a02f1](https://github.com/jyounce/rapid-build/commit/d18a02f1))
-  * ensure css doesn't break the build on really large files ([fdd3cee6](https://github.com/jyounce/rapid-build/commit/fdd3cee6))
+## [0.18.1](https://github.com/jyounce/rapid-build/compare/v0.18.0...v0.18.1) (2015-07-14)
 
 
-## 0.17.0 (2015-07-10)
+### Bug Fixes
 
+* **cache busting:** prevent prod build crash on windows by running runDelUnstampedPaths last ([89e7aa2](https://github.com/jyounce/rapid-build/commit/89e7aa2))
+* **option:** custom spa.html file when no spa.src.dir is supplied ([54eae80](https://github.com/jyounce/rapid-build/commit/54eae80))
+* **task:** build spa by temporarily removing delCustomSpaTask() ([3dde07c](https://github.com/jyounce/rapid-build/commit/3dde07c))
 
-#### Bug Fixes
 
-* **option:** remove options angular.exclude.files and spa.exclude, replace with the exclude option ([4904685d](https://github.com/jyounce/rapid-build/commit/4904685d))
-* **options:** change option exclude[scripts|styles].from.spaFile to exclude.from.spaFile\[scripts|styles\] ([136c042a](https://github.com/jyounce/rapid-build/commit/136c042a))
-* **windows:** cache busting for prod ([fa45be6f](https://github.com/jyounce/rapid-build/commit/fa45be6f))
 
+# [0.18.0](https://github.com/jyounce/rapid-build/compare/v0.17.1...v0.18.0) (2015-07-13)
 
-#### Features
 
-* **exclude:** add option exclude.from.cacheBust ([03d18e11](https://github.com/jyounce/rapid-build/commit/03d18e11))
+### Features
 
+* **option:** add option exclude.from.minFile\[scripts|styles\] while maintaining order option ([60634c9](https://github.com/jyounce/rapid-build/commit/60634c9))
 
-## 0.16.0 (2015-07-01)
 
 
-#### Features
+## [0.17.1](https://github.com/jyounce/rapid-build/compare/v0.17.0...v0.17.1) (2015-07-12)
 
-* **option:** add option minify.spa.file ([4b0e6128](https://github.com/jyounce/rapid-build/commit/4b0e6128))
 
+### Bug Fixes
 
-## 0.15.0 (2015-07-01)
+* **minify:** ability for css file split to handle multiple css min files ([d18a02f](https://github.com/jyounce/rapid-build/commit/d18a02f))
+* **minify:** ensure css doesn't break the build on really large files ([fdd3cee](https://github.com/jyounce/rapid-build/commit/fdd3cee))
 
 
-#### Features
 
-* **cache busting:** add cache busting to the prod build for the client ([7f66d19d](https://github.com/jyounce/rapid-build/commit/7f66d19d))
-* **option:** add option to disable cache busting via option.minify.cacheBust ([6d445c7c](https://github.com/jyounce/rapid-build/commit/6d445c7c))
+# [0.17.0](https://github.com/jyounce/rapid-build/compare/v0.16.0...v0.17.0) (2015-07-10)
 
 
-## 0.14.0 (2015-06-30)
+### Bug Fixes
 
+* **option:** remove options angular.exclude.files and spa.exclude, replace with the exclude option ([4904685](https://github.com/jyounce/rapid-build/commit/4904685))
+* **options:** change option exclude\[scripts|styles\].from.spaFile to exclude.from.spaFile\[scripts|styles\] ([136c042](https://github.com/jyounce/rapid-build/commit/136c042))
+* **windows:** cache busting for prod ([fa45be6](https://github.com/jyounce/rapid-build/commit/fa45be6))
 
-#### Features
+### Features
 
-* **minify:** add task css-file-split for lte ie9, split styles.min.css into multiple files if selector count > 4,095 ([9a40c94f](https://github.com/jyounce/rapid-build/commit/9a40c94f))
-* **option:** add option minify.css.splitMinFile to disable the splitting of the styles.min.css ([686b3fd4](https://github.com/jyounce/rapid-build/commit/686b3fd4))
+* **exclude:** add option exclude.from.cacheBust ([03d18e1](https://github.com/jyounce/rapid-build/commit/03d18e1))
 
 
-## 0.13.0 (2015-06-30)
 
+# [0.16.0](https://github.com/jyounce/rapid-build/compare/v0.15.0...v0.16.0) (2015-07-02)
 
-#### Bug Fixes
 
-* **option:**
-  * change option spa.exclude to spa.placeholders, makes more sense ([395cd37b](https://github.com/jyounce/rapid-build/commit/395cd37b))
-  * change option angular.templateCache.dev.enable to angular.templateCache.dev ([dd7a7f8a](https://github.com/jyounce/rapid-build/commit/dd7a7f8a))
+### Features
 
+* **option:** add option minify.spa.file ([4b0e612](https://github.com/jyounce/rapid-build/commit/4b0e612))
 
-#### Features
 
-* **options:** add options spa.exclude.scripts and styles, exclude from spa.html file and min files ([5273bb60](https://github.com/jyounce/rapid-build/commit/5273bb60))
 
+# [0.15.0](https://github.com/jyounce/rapid-build/compare/v0.14.0...v0.15.0) (2015-07-02)
 
-## 0.12.0 (2015-06-26)
 
+### Features
 
-#### Features
+* **cache busting:** add cache busting to the prod build for the client ([7f66d19](https://github.com/jyounce/rapid-build/commit/7f66d19))
+* **option:** add option to disable cache busting via option.minify.cacheBust ([6d445c7](https://github.com/jyounce/rapid-build/commit/6d445c7))
 
-* **angular:** add option angular.httpBackend to enable angular mocks ([4688281f](https://github.com/jyounce/rapid-build/commit/4688281f))
 
 
-### 0.11.1 (2015-06-24)
+# [0.14.0](https://github.com/jyounce/rapid-build/compare/v0.13.0...v0.14.0) (2015-06-30)
 
 
-#### Bug Fixes
+### Features
 
-* **less:** npm update required, do not send less imports to the dist folder ([d3742e6f](https://github.com/jyounce/rapid-build/commit/d3742e6f))
+* **minify:** add task css-file-split for lte ie9, split styles.min.css into multiple files if selector count > 4,095 ([9a40c94](https://github.com/jyounce/rapid-build/commit/9a40c94))
+* **option:** add option minify.css.splitMinFile to disable the splitting of styles.min.css ([686b3fd](https://github.com/jyounce/rapid-build/commit/686b3fd))
 
 
-## 0.11.0 (2015-06-23)
 
+# [0.13.0](https://github.com/jyounce/rapid-build/compare/v0.12.0...v0.13.0) (2015-06-30)
 
-#### Features
 
-* **options:** add minification options via the minify object ([bc288dc6](https://github.com/jyounce/rapid-build/commit/bc288dc6))
+### Bug Fixes
 
+* **option:** change option angular.templateCache.dev.enable to angular.templateCache.dev ([dd7a7f8](https://github.com/jyounce/rapid-build/commit/dd7a7f8))
+* **option:** change option spa.exclude to spa.placeholders, makes more sense ([395cd37](https://github.com/jyounce/rapid-build/commit/395cd37))
 
-## 0.10.0 (2015-06-17)
+### Features
 
+* **options:** add options spa.exclude.scripts and styles, exclude from spa.html file and min files ([5273bb6](https://github.com/jyounce/rapid-build/commit/5273bb6))
 
-#### Bug Fixes
 
-* **options:** fix options dist.client.dir and dist.server.dir ([99564c24](https://github.com/jyounce/rapid-build/commit/99564c24))
-* **prod build:** fix the loading order of scripts and styles ([6aad6b90](https://github.com/jyounce/rapid-build/commit/6aad6b90))
 
+# [0.12.0](https://github.com/jyounce/rapid-build/compare/v0.11.1...v0.12.0) (2015-06-26)
 
-#### Features
 
-* **options:** change option spa.exclude value to be an array of strings ([171426ff](https://github.com/jyounce/rapid-build/commit/171426ff))
+### Features
 
+* **angular:** add option angular.httpBackend to enable angular mocks ([4688281](https://github.com/jyounce/rapid-build/commit/4688281))
 
-## 0.9.0 (2015-06-16)
 
 
-#### Features
+## [0.11.1](https://github.com/jyounce/rapid-build/compare/v0.11.0...v0.11.1) (2015-06-24)
 
-* **options:** add ability to exclude angular files from the build ([7d06c14c](https://github.com/jyounce/rapid-build/commit/7d06c14c))
 
+### Bug Fixes
 
-## 0.8.0 (2015-06-14)
+* **less:** npm update required, do not send less imports to the dist folder ([d3742e6](https://github.com/jyounce/rapid-build/commit/d3742e6))
 
 
-#### Bug Fixes
 
-* **config:** change config option name spaFile to spa ([0dbd5dca](https://github.com/jyounce/rapid-build/commit/0dbd5dca))
+# [0.11.0](https://github.com/jyounce/rapid-build/compare/v0.10.0...v0.11.0) (2015-06-24)
 
 
-#### Features
+### Features
 
-* **options:** add option to use a custom spa file and not the build system's ([763322ca](https://github.com/jyounce/rapid-build/commit/763322ca))
+* **options:** add minification options via the minify object ([bc288dc](https://github.com/jyounce/rapid-build/commit/bc288dc))
 
 
-## 0.7.0 (2015-06-11)
 
+# [0.10.0](https://github.com/jyounce/rapid-build/compare/v0.9.0...v0.10.0) (2015-06-17)
 
-#### Features
 
-* **plumber:** add the plumber to the lang compilers so the watch doesn't break on an error ([722750df](https://github.com/jyounce/rapid-build/commit/722750df))
+### Bug Fixes
 
+* **options:** fix options dist.client.dir and dist.server.dir ([99564c2](https://github.com/jyounce/rapid-build/commit/99564c2))
+* **prod build:** fix the loading order of scripts and styles ([6aad6b9](https://github.com/jyounce/rapid-build/commit/6aad6b9))
 
-## 0.6.0 (2015-06-11)
+### Features
 
+* **options:** change option spa.exclude value to be an array of strings ([171426f](https://github.com/jyounce/rapid-build/commit/171426f))
 
-#### Features
 
-* **libs:** add support for client 3rd party libs and move bower comps to bower_components ([41d671f4](https://github.com/jyounce/rapid-build/commit/41d671f4))
 
+# [0.9.0](https://github.com/jyounce/rapid-build/compare/v0.8.0...v0.9.0) (2015-06-17)
 
-## 0.5.0 (2015-06-09)
 
+### Features
 
-#### Features
+* **options:** add ability to exclude angular files from the build ([7d06c14](https://github.com/jyounce/rapid-build/commit/7d06c14))
 
-* **bower:** add support for bower packages dependencies ([24f761da](https://github.com/jyounce/rapid-build/commit/24f761da))
-* **config:** add ability to change angular version via config ([2f6e2690](https://github.com/jyounce/rapid-build/commit/2f6e2690))
 
 
-## 0.4.0 (2015-06-05)
+# [0.8.0](https://github.com/jyounce/rapid-build/compare/v0.7.0...v0.8.0) (2015-06-14)
 
 
-#### Features
+### Bug Fixes
 
-* **config:** add angular option to change the module name and add additional modules ([aeaa8c1b](https://github.com/jyounce/rapid-build/commit/aeaa8c1b))
+* **config:** change config option name spaFile to spa ([0dbd5dc](https://github.com/jyounce/rapid-build/commit/0dbd5dc))
 
+### Features
 
-## 0.3.0 (2015-06-05)
+* **options:** add option to use a custom spa file and not the build system's ([763322c](https://github.com/jyounce/rapid-build/commit/763322c))
 
 
-#### Features
 
-* **angular:** add template cache options dev.enable and useAbsolutePaths to config ([dc48e5b2](https://github.com/jyounce/rapid-build/commit/dc48e5b2))
-* **bower:** start of app support for bower ([74825ef8](https://github.com/jyounce/rapid-build/commit/74825ef8))
-* **watch:** add support for watching the template cache ([b6237f21](https://github.com/jyounce/rapid-build/commit/b6237f21))
+# [0.7.0](https://github.com/jyounce/rapid-build/compare/v0.6.0...v0.7.0) (2015-06-11)
 
 
-## 0.2.0 (2015-05-29)
+### Features
 
+* **plumber:** add the plumber to the lang compilers so the watch doesn't break on an error ([722750d](https://github.com/jyounce/rapid-build/commit/722750d))
 
-#### Features
 
-* **changelog:** add it ([52058a02](https://github.com/jyounce/rapid-build/commit/52058a02))
 
+# [0.6.0](https://github.com/jyounce/rapid-build/compare/v0.5.0...v0.6.0) (2015-06-11)
 
-### 0.1.4 (2015-05-28)
 
+### Features
 
-#### Bug Fixes
+* **libs:** add support for client 3rd party libs and move bower comps to bower_components ([41d671f](https://github.com/jyounce/rapid-build/commit/41d671f))
 
-* **gulp:** make gulp a dep if app is using gulp ([4184bf41](https://github.com/jyounce/rapid-build/commit/4184bf41))
 
 
-### 0.1.3 (2015-05-27)
+# [0.5.0](https://github.com/jyounce/rapid-build/compare/v0.4.0...v0.5.0) (2015-06-09)
 
 
-#### Bug Fixes
+### Features
 
-* **gulp:** load gulp from app's node_modules if present ([91cd0adc](https://github.com/jyounce/rapid-build/commit/91cd0adc))
+* **bower:** add support for bower packages dependencies ([24f761d](https://github.com/jyounce/rapid-build/commit/24f761d))
+* **config:** add ability to change angular version via config ([2f6e269](https://github.com/jyounce/rapid-build/commit/2f6e269))
 
 
-### 0.1.2 (2015-05-27)
 
+# [0.4.0](https://github.com/jyounce/rapid-build/compare/v0.3.0...v0.4.0) (2015-06-05)
 
-#### Bug Fixes
 
-* **windows:** paths in spa html file ([e41d7a76](https://github.com/jyounce/rapid-build/commit/e41d7a76))
+### Features
 
+* **config:** add angular option to change the module name and add additional modules ([aeaa8c1](https://github.com/jyounce/rapid-build/commit/aeaa8c1))
 
-### 0.1.1 (2015-05-26)
 
 
-#### README Update
+# [0.3.0](https://github.com/jyounce/rapid-build/compare/v0.2.0...v0.3.0) (2015-06-05)
+
+
+### Features
+
+* **angular:** add template cache options dev.enable and useAbsolutePaths to config ([dc48e5b](https://github.com/jyounce/rapid-build/commit/dc48e5b))
+* **bower:** start of app support for bower ([74825ef](https://github.com/jyounce/rapid-build/commit/74825ef))
+* **watch:** add support for watching the template cache ([b6237f2](https://github.com/jyounce/rapid-build/commit/b6237f2))
+
+
+
+# [0.2.0](https://github.com/jyounce/rapid-build/compare/v0.1.4...v0.2.0) (2015-05-30)
+
+
+### Features
+
+* **changelog:** add it ([52058a0](https://github.com/jyounce/rapid-build/commit/52058a0))
+
+
+
+## [0.1.4](https://github.com/jyounce/rapid-build/compare/v0.1.3...v0.1.4) (2015-05-28)
+
+
+### Bug Fixes
+
+* **gulp:** make gulp a dep if app is using gulp ([4184bf4](https://github.com/jyounce/rapid-build/commit/4184bf4))
+
+
+
+## [0.1.3](https://github.com/jyounce/rapid-build/compare/v0.1.2...v0.1.3) (2015-05-28)
+
+
+### Bug Fixes
+
+* **gulp:** load gulp from app's node_modules if present ([91cd0ad](https://github.com/jyounce/rapid-build/commit/91cd0ad))
+
+
+
+## [0.1.2](https://github.com/jyounce/rapid-build/compare/v0.1.1...v0.1.2) (2015-05-27)
+
+
+### Bug Fixes
+
+* **windows:** paths in spa html file ([e41d7a7](https://github.com/jyounce/rapid-build/commit/e41d7a7))
+
+
+
+## [0.1.1](https://github.com/jyounce/rapid-build/compare/v0.1.0...v0.1.1) (2015-05-27)
+
+
+### README Update
 
 * **readme:** remove duplicate description ([c9b11f7c](https://github.com/jyounce/rapid-build/commit/c9b11f7c))
 
 
-## 0.1.0 (2015-05-26)
+
+# 0.1.0 (2015-05-27)
 
 
-#### Initial Release
+### Initial Release
 
 * **init:** rapid-build ([31a96692](https://github.com/jyounce/rapid-build/commit/31a96692))
+
+
 
