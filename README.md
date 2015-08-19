@@ -199,7 +199,7 @@ gulp rapid-build:test:prod
 3. run tests in [PhantomJS](http://phantomjs.org/)
 
 ## Develop Rapidly!
-![Shake and Bake!](docs/shake-and-bake.jpg "Shake n' Bake!")
+![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/shake-and-bake.jpg "Shake n' Bake!")
 
 
 
