@@ -1,3 +1,11 @@
+### 0.31.1 (2015-08-18)
+
+
+#### Bug Fixes
+
+* **watch:** do not watch src files that are excluded from dist ([d4ae8e10](https://github.com/jyounce/rapid-build/commit/d4ae8e10))
+
+
 ## 0.31.0 (2015-08-18)
 
 
