@@ -68,7 +68,6 @@
 		"karma-phantomjs-launcher": "~0.2.1",
 		"karma-safari-launcher": "~0.1.1",
 		"less-imports": "~1.1.0",
-		"mkdirp": "~0.5.1",
 		"open": "~0.0.5",
 		"q": "~1.4.1",
 		"through2": "~2.0.0"

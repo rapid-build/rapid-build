@@ -13,9 +13,9 @@
 # ================================================
 module.exports = (config) ->
 	fs       = require 'fs'
+	fse      = require 'fs-extra'
 	path     = require 'path'
 	del      = require 'del'
-	mkdirp   = require 'mkdirp'
 	log      = require "#{config.req.helpers}/log"
 	isType   = require "#{config.req.helpers}/isType"
 	pathHelp = require "#{config.req.helpers}/path"
@@ -135,7 +135,7 @@ module.exports = (config) ->
 					del.sync dir, force:true
 					console.log "#{loc} bower_components directory cleaned".yellow
 
-			mkdirp.sync dir
+			fse.mkdirsSync dir
 			fileHelp.write.json _path, bowerJson if force
 			force
 
