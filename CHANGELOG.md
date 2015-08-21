@@ -1,3 +1,12 @@
+## [0.31.4](https://github.com/jyounce/rapid-build/compare/v0.31.3...v0.31.4) (2015-08-21)
+
+
+### Bug Fixes
+
+* **templateCache:** fix the build from crashing when running templateCache with no views ([e588220](https://github.com/jyounce/rapid-build/commit/e588220))
+
+
+
 ## [0.31.3](https://github.com/jyounce/rapid-build/compare/v0.31.2...v0.31.3) (2015-08-19)
 
 
