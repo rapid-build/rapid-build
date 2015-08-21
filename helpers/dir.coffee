@@ -1,4 +1,5 @@
-module.exports = (config) ->
+module.exports = (config, gulp) ->
+	q    = require 'q'
 	fs   = require 'fs'
 	path = require 'path'
 	log  = require "#{config.req.helpers}/log"
@@ -63,6 +64,20 @@ module.exports = (config) ->
 				_dirs.push _path if not flag
 
 			_dirs
+			
+	# returns promise with hasFiles boolean value
+	hasFiles: (src) ->
+		defer    = q.defer()
+		opts     = buffer:false, read:false
+		hasFiles = false
+		gulp.src src, opts
+			.on 'data', (file) ->
+				return unless file
+				hasFiles = true
+				@.end()
+			.on 'end', ->
+				defer.resolve hasFiles
+		defer.promise
 
 
 

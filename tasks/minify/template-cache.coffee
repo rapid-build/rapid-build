@@ -6,6 +6,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	minifyHtml    = require 'gulp-minify-html'
 	templateCache = require 'gulp-angular-templatecache'
 	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
+	dirHelper     = require("#{config.req.helpers}/dir") config, gulp
 	runNgFormify  = config.angular.ngFormify
 	forWatchFile  = !!watchFile.path
 
@@ -65,12 +66,16 @@ module.exports = (gulp, config, watchFile={}) ->
 		defer.promise
 
 	run = ->
+		defer  = q.defer()
 		isProd = config.env.is.prod
 		file   = if isProd then 'min' else 'main'
 		file   = config.fileName.views[file]
 		dest   = config.dist.rb.client.scripts.dir
 		src    = [].concat glob.views.rb, glob.views.app
-		runTask src, dest, file, isProd
+		dirHelper.hasFiles(src).done (hasFiles) ->
+			return defer.resolve() unless hasFiles
+			runTask(src, dest, file, isProd).done -> defer.resolve()
+		defer.promise
 
 	runSingle = -> # todo: optimize for one file
 		run()

@@ -4,7 +4,7 @@ module.exports = (gulp, config) ->
 	path        = require 'path'
 	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
-	dirHelper   = require("#{config.req.helpers}/dir") config
+	dirHelper   = require("#{config.req.helpers}/dir") config, gulp
 
 	# Global Objects
 	# ==============
