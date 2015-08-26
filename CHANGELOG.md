@@ -1,3 +1,13 @@
+## [0.31.5](https://github.com/jyounce/rapid-build/compare/v0.31.4...v0.31.5) (2015-08-26)
+
+
+### Bug Fixes
+
+* **npmignore:** add npm prepublish script to remove bower_components directory ([03da374](https://github.com/jyounce/rapid-build/commit/03da374))
+* **npmignore:** exclude files that aren't needed ([f0907c1](https://github.com/jyounce/rapid-build/commit/f0907c1))
+
+
+
 ## [0.31.4](https://github.com/jyounce/rapid-build/compare/v0.31.3...v0.31.4) (2015-08-21)
 
 
