@@ -1,12 +1,40 @@
-todo.md
-.travis.yml
-config/config.json
-docs/
-changelog/
-test/
-
-# testing
+# folders
 # =======
-src/client/images/wolverine.png
-src/client/views/docs
-src/client/views/rapid-build.html
+bower_components/
+dist/
+
+# dot files
+# =========
+.orig
+.travis.yml
+
+# file extensions
+# ===============
+*.log
+*.db # ex: Thumbs.db
+
+# root folders
+# ============
+/test/
+
+# root files
+# ==========
+/bower.json
+
+# folder files
+# ============
+config/config.json
+
+# files
+# =====
+files/**/*.*
+src/client/**/*.*
+
+# retain empty folder via .gitkeep
+# ================================
+!files/.gitkeep
+!src/client/**/.gitkeep
+
+# file negation
+# =============
+!src/client/spa.html

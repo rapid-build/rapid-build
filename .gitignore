@@ -1,34 +1,42 @@
+# folders
+# =======
 bower_components/
 dist/
 node_modules/
-public/
-temp/
+
+# dot files
+# =========
+.*.swp
+._*
 .DS_Store
+.git
+.lock-wscript
 .orig
-ehthumbs.db
-npm-debug.log
-phantomjsdriver.log
-test-results.xml
-Thumbs.db
+
+# file extensions
+# ===============
+*.db  # ex: Thumbs.db
+*.log # ex: npm-debug.log
+
+# root files
+# ==========
 /bower.json
 
-# templates
-# =========
+# folder files
+# ============
 config/config.json
-files/files.json
-files/prod-files.json
-files/prod-files-blueprint.json
-files/test-files.json
-src/client/scripts/app.coffee
-src/client/test/angular-mocks.js
-src/client/test/inject-angular-mocks.coffee
-
-# test
-# ====
 test/css/selectors.css
 
-# docs
-# ====
-src/client/images/wolverine.png
-src/client/views/docs
-src/client/views/rapid-build.html
+# files
+# =====
+files/**/*.*
+src/client/**/*.*
+
+# retain empty folder via .gitkeep
+# ================================
+!files/.gitkeep
+!src/client/**/.gitkeep
+
+# file negation
+# =============
+!src/client/spa.html
