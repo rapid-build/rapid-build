@@ -21,7 +21,7 @@
 	},
 	"main": "gulpfile.js",
 	"scripts": {
-		"prepublish": "node scripts/prepublish"
+		"prepublish": "npm update colors && npm update fs-extra && npm update q && node scripts/prepublish"
 	},
 	"devDependencies": {
 		"conventional-changelog": "~0.4.2",
