@@ -1,6 +1,6 @@
 # folders
 # =======
-bower_components/
+bower_components/ # also see scripts/prepublish.js
 dist/
 
 # dot files
