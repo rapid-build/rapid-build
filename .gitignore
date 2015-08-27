@@ -18,6 +18,9 @@ node_modules/
 # ===============
 *.db  # ex: Thumbs.db
 *.log # ex: npm-debug.log
+*.map
+*.sublime*
+*.tmp
 
 # root files
 # ==========

@@ -10,8 +10,11 @@ dist/
 
 # file extensions
 # ===============
-*.log
-*.db # ex: Thumbs.db
+*.db
+*.log # ex: Thumbs.db
+*.map
+*.sublime*
+*.tmp
 
 # root folders
 # ============
