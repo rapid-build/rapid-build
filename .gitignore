@@ -11,7 +11,6 @@ node_modules/
 .DS_Store
 .git
 .lock-wscript
-.orig
 .svn
 
 # file extensions
@@ -19,6 +18,7 @@ node_modules/
 *.db  # ex: Thumbs.db
 *.log # ex: npm-debug.log
 *.map
+*.orig
 *.sublime*
 *.tmp
 

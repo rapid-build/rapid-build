@@ -5,7 +5,6 @@ dist/
 
 # dot files
 # =========
-.orig
 .travis.yml
 
 # file extensions
@@ -13,6 +12,7 @@ dist/
 *.db
 *.log # ex: Thumbs.db
 *.map
+*.orig
 *.sublime*
 *.tmp
 
