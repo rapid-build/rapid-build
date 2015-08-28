@@ -1,3 +1,16 @@
+## [0.31.6](https://github.com/jyounce/rapid-build/compare/v0.31.5...v0.31.6) (2015-08-28)
+
+
+### Bug Fixes
+
+* **prepublish:** install node_modules that prepublish uses on npm prepublish ([ffa81f2](https://github.com/jyounce/rapid-build/commit/ffa81f2))
+
+### Performance Improvements
+
+* **server:** start the server via require instead of using node's spawn function ([efc41ce](https://github.com/jyounce/rapid-build/commit/efc41ce))
+
+
+
 ## [0.31.5](https://github.com/jyounce/rapid-build/compare/v0.31.4...v0.31.5) (2015-08-26)
 
 
