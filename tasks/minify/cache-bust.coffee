@@ -35,7 +35,7 @@ module.exports = (gulp, config) ->
 	runDelUnstampedPaths = ->
 		defer = q.defer()
 		return promiseHelp.get defer if not unstampedPaths.length
-		del unstampedPaths, force:true, (e) ->
+		del(unstampedPaths, force:true).then (paths) ->
 			# console.log 'unstamped files deleted'.yellow
 			defer.resolve()
 		defer.promise

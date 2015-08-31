@@ -45,7 +45,7 @@ module.exports = (gulp, config) ->
 			config.temp.client['scripts'].dir
 			config.temp.client['styles'].dir
 		]
-		del src, force:true, (e) ->
+		del(src, force:true).then (paths) ->
 			# console.log 'cleaned temp scripts and styles'.yellow
 			defer.resolve()
 		defer.promise

@@ -53,7 +53,7 @@ module.exports = (gulp, config) ->
 
 	delTask = (src, msg) ->
 		defer = q.defer()
-		del src, force:true, ->
+		del(src, force:true).then (paths) ->
 			console.log msg.yellow if msg
 			defer.resolve()
 		defer.promise

@@ -5,13 +5,13 @@ module.exports = (gulp, config, watchFile={}) ->
 
 	runSingle = ->
 		defer = q.defer()
-		del watchFile.rbDistPath, force:true, (e) ->
+		del(watchFile.rbDistPath, force:true).then (paths) ->
 			defer.resolve()
 		defer.promise
 
 	runMulti = ->
 		defer = q.defer()
-		del config.dist.dir, force:true, (e) ->
+		del(config.dist.dir, force:true).then (paths) ->
 			defer.resolve()
 		defer.promise
 

@@ -5,7 +5,7 @@ module.exports = (gulp, config) ->
 
 	cleanTask = (src) ->
 		defer = q.defer()
-		del src, force:true, (e) ->
+		del(src, force:true).then (paths) ->
 			# console.log 'cleaned dist test'.yellow
 			defer.resolve()
 		defer.promise

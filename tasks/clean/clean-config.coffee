@@ -4,7 +4,7 @@ module.exports = (gulp, config) ->
 
 	runTask = (src) ->
 		defer = q.defer()
-		del src, force:true, (e) ->
+		del(src, force:true).then (paths) ->
 			# console.log 'config.json deleted'.yellow
 			defer.resolve()
 		defer.promise

@@ -33,7 +33,7 @@ module.exports = (gulp, config) ->
 	# =====
 	cleanResultsFile = (src, file) ->
 		defer = q.defer()
-		del src, force:true, (e) ->
+		del(src, force:true).then (paths) ->
 			# console.log "removed #{file}".yellow
 			defer.resolve()
 		defer.promise
