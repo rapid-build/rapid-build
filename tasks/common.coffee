@@ -23,6 +23,7 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}less"
 				"#{config.rb.prefix.task}copy-server-config"
 				"#{config.rb.prefix.task}copy-server-node_modules"
+				"#{config.rb.prefix.task}copy-extra-files"
 			]
 			"#{config.rb.prefix.task}build-files"
 			cb

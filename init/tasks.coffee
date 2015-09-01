@@ -43,6 +43,7 @@ module.exports = (gulp, config) ->
 	# ====
 	require("#{config.req.tasks}/copy/copy-bower_components")           gulp, config     # copy-bower_components
 	require("#{config.req.tasks}/copy/copy-css")                        gulp, config     # copy-css
+	require("#{config.req.tasks}/copy/copy-extra-files")                gulp, config     # copy-extra-files
 	require("#{config.req.tasks}/copy/copy-html")                       gulp, config     # copy-html
 	require("#{config.req.tasks}/copy/copy-images")                     gulp, config     # copy-images
 	require("#{config.req.tasks}/copy/copy-js")                         gulp, config     # copy-js

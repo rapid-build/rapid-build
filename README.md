@@ -148,6 +148,7 @@ gulp rapid-build:test:prod
 # test.browsers                                     = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
 # server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
 # httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://www.npmjs.com/package/http-proxy-middleware
+# extra.copy[client|server]                         = (array of strings) = file paths: additional files to copy to dist/client and or dist/server that the build didn't copy
 # =============================================================================================================================================================================================================================
 ```
 
