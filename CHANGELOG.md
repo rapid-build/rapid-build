@@ -1,3 +1,12 @@
+# [0.32.0](https://github.com/jyounce/rapid-build/compare/v0.31.6...v0.32.0) (2015-09-01)
+
+
+### Features
+
+* **option:** add build option extra.copy\[client|server\] ([757f328](https://github.com/jyounce/rapid-build/commit/757f328))
+
+
+
 ## [0.31.6](https://github.com/jyounce/rapid-build/compare/v0.31.5...v0.31.6) (2015-08-28)
 
 
