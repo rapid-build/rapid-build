@@ -7,6 +7,7 @@ module.exports = (config, options) ->
 	# order matters because of 'ngMockE2E'
 	# ====================================
 	modules = ['ngMockE2E', 'ngResource', 'ngRoute', 'ngSanitize']
+	modules.splice 1, modules.length - 1 if options.exclude.angular.modules
 
 	# init angular
 	# ============

@@ -141,6 +141,7 @@ gulp rapid-build:test:prod
 # minify.spa.file                                   = (boolean) defaults to true = for prod build, minify the spa.html file
 # minify.cacheBust                                  = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension
 # exclude.angular.files                             = (boolean) defaults to false = set to true to exclude the angular files that come with rapid-build from dist (lib and modules)
+# exclude.angular.modules                           = (boolean) defaults to false = set to true to exclude injecting the angular modules that come with rapid-build ['ngResource', 'ngRoute', 'ngSanitize']
 # exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
