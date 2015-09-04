@@ -3,4 +3,4 @@
 # =====================================================
 angular.module '<%= moduleName %>', [<% _.forEach(modules, function(module) { %>
 	'<%= module %>'<% }); %>
-]
+] if typeof angular isnt 'undefined'
