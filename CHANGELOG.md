@@ -1,3 +1,16 @@
+# [0.33.0](https://github.com/jyounce/rapid-build/compare/v0.32.0...v0.33.0) (2015-09-09)
+
+
+### Bug Fixes
+
+* **angular:** prevent browser from throwing an error if angular isn't defined in app.js ([464f552](https://github.com/jyounce/rapid-build/commit/464f552))
+
+### Features
+
+* **option:** add build option exclude.angular.modules ([a457e8e](https://github.com/jyounce/rapid-build/commit/a457e8e))
+
+
+
 # [0.32.0](https://github.com/jyounce/rapid-build/compare/v0.31.6...v0.32.0) (2015-09-01)
 
 
