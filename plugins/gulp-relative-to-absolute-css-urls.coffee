@@ -7,25 +7,43 @@ urlRegex    = /url\s*\(\s*['"]?([^\/].*?)['"]?\s*\)/g # for find and replace
 
 # Helpers
 # =======
-swapBackslashes = (_path) ->
-	regx = /\\/g
-	_path.replace regx, '/'
+pathHelp =
+	isWin: (_path) ->
+		_path.indexOf('\\') isnt -1
 
-hasTrailingSlash = (_path) ->
-	_path[_path.length-1] is '/'
+	isWinAbs: (_path) ->
+		_path.indexOf(':\\') isnt -1
+
+	removeDrive: (_path) ->
+		return _path if not @isWinAbs _path
+		i     = _path.indexOf(':\\') + 1
+		_path = _path.substr i
+
+	swapBackslashes: (_path) ->
+		regx = /\\/g
+		_path.replace regx, '/'
+
+	format: (_path) ->
+		return _path if not @isWin _path
+		_path = @removeDrive _path
+		_path = @swapBackslashes _path
+		_path
+
+	hasTrailingSlash: (_path) ->
+		_path[_path.length-1] is '/'
 
 formatAbsFromPath = (_path) -> # need a beginning / and no trailing /
 	return null if not _path
 	_path  = _path.trim()
-	_path  = swapBackslashes _path
-	_path  = _path.slice 0, -1 if _path.length > 1 and hasTrailingSlash _path
+	_path  = pathHelp.swapBackslashes _path
+	_path  = _path.slice 0, -1 if _path.length > 1 and pathHelp.hasTrailingSlash _path
 	return null  if _path.length is 1 and _path[0] is '/'
 	return _path if _path.indexOf('/') is 0
 	_path  = "/#{_path}"
 
 formatAbsPath = (file, absFromPath) ->
 	_path = file.path.replace file.cwd, ''
-	_path = swapBackslashes _path
+	_path = pathHelp.swapBackslashes _path
 	_path = _path.replace absFromPath, ''
 	_path = path.dirname _path
 
@@ -45,6 +63,7 @@ replaceCssUrls = (file, absFromPath) ->
 		return match if isAbsolute
 		return match if isExternal
 		_path = path.resolve absPath, urlPath
+		_path = pathHelp.format _path
 		# console.log _path
 		# url = _path.replace(/'/g,'').replace(/"/g,'') # old sauce, why was this here??
 		url = "url('#{_path}')"
@@ -65,7 +84,6 @@ gulpRelativeToAbsoluteCssUrls = (absFromPath) ->
 		cb null, file
 
 module.exports = gulpRelativeToAbsoluteCssUrls
-
 
 
 
