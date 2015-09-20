@@ -1,3 +1,12 @@
+## [0.33.1](https://github.com/jyounce/rapid-build/compare/v0.33.0...v0.33.1) (2015-09-20)
+
+
+### Bug Fixes
+
+* **css imports:** add support for css imports ([032f470](https://github.com/jyounce/rapid-build/commit/032f470))
+
+
+
 # [0.33.0](https://github.com/jyounce/rapid-build/compare/v0.32.0...v0.33.0) (2015-09-09)
 
 
