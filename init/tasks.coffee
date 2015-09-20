@@ -43,7 +43,6 @@ module.exports = (gulp, config) ->
 	# ====
 	require("#{config.req.tasks}/copy/copy-bower_components")       gulp, config # copy-bower_components
 	require("#{config.req.tasks}/copy/copy-css")                    gulp, config # copy-css
-	require("#{config.req.tasks}/copy/copy-extra-files")            gulp, config # copy-extra-files
 	require("#{config.req.tasks}/copy/copy-html")                   gulp, config # copy-html
 	require("#{config.req.tasks}/copy/copy-images")                 gulp, config # copy-images
 	require("#{config.req.tasks}/copy/copy-js")                     gulp, config # copy-js
@@ -51,6 +50,13 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/copy/copy-server-config")          gulp, config # copy-server-config
 	require("#{config.req.tasks}/copy/copy-server-node_modules")    gulp, config # copy-server-node_modules
 	require("#{config.req.tasks}/copy/copy-views")                  gulp, config # copy-views
+
+	# extra
+	# =====
+	require("#{config.req.tasks}/extra/compile-extra-coffee")       gulp, config # compile-extra-coffee
+	require("#{config.req.tasks}/extra/compile-extra-es6")          gulp, config # compile-extra-es6
+	require("#{config.req.tasks}/extra/compile-extra-less")         gulp, config # compile-extra-less
+	require("#{config.req.tasks}/extra/copy-extra-files")           gulp, config # copy-extra-files
 
 	# format
 	# ======

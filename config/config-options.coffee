@@ -107,12 +107,24 @@ module.exports = (config, options) ->
 	proxyOptions = ->
 		options.httpProxy = null if not isType.array options.httpProxy
 
-	extraOptions = ->
-		options.extra = {} if not isType.object options.extra
-		# copy additional files to dist that the build didn't copy
-		options.extra.copy = {} if not isType.object options.extra.copy
+	extraCopy = ->
 		options.extra.copy.client = null if not isType.array options.extra.copy.client
 		options.extra.copy.server = null if not isType.array options.extra.copy.server
+
+	extraCompile = ->
+		options.extra.compile.client.coffee = null if not isType.array options.extra.compile.client.coffee
+		options.extra.compile.client.es6    = null if not isType.array options.extra.compile.client.es6
+		options.extra.compile.client.less   = null if not isType.array options.extra.compile.client.less
+		options.extra.compile.server.less   = null if not isType.array options.extra.compile.server.less
+
+	extraOptions = ->
+		options.extra = {} if not isType.object options.extra
+		options.extra.copy    = {} if not isType.object options.extra.copy
+		options.extra.compile = {} if not isType.object options.extra.compile
+		options.extra.compile.client = {} if not isType.object options.extra.compile.client
+		options.extra.compile.server = {} if not isType.object options.extra.compile.server
+		extraCopy()
+		extraCompile()
 
 	# init
 	# ====
