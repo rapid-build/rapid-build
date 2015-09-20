@@ -1,21 +1,25 @@
 module.exports = (gulp, config) ->
-	q         = require 'q'
-	gulpif    = require 'gulp-if'
-	minifyCss = require 'gulp-minify-css'
-	minOpts   = advanced: false
+	q           = require 'q'
+	minifyCss   = require 'gulp-minify-css'
+	promiseHelp = require "#{config.req.helpers}/promise"
+	minOpts =
+		advanced: false
+		processImport: false # inlining imports in inline-css-imports
 
 	runTask = (appOrRb) ->
-		defer  = q.defer()
-		minify = config.minify.css.styles
-		gulp.src config.glob.dist[appOrRb].client.styles.all
-			.pipe gulpif minify, minifyCss minOpts
-			.pipe gulp.dest config.dist[appOrRb].client.styles.dir
+		defer = q.defer()
+		src   = config.glob.dist[appOrRb].client.styles.all
+		dest  = config.dist[appOrRb].client.styles.dir
+		gulp.src src
+			.pipe minifyCss minOpts
+			.pipe gulp.dest dest
 			.on 'end', ->
 				console.log "minified #{appOrRb} dist styles".yellow
 				defer.resolve()
 		defer.promise
 
 	runTasks = ->
+		return promiseHelp.get() unless config.minify.css.styles
 		defer = q.defer()
 		q.all([
 			runTask 'rb'

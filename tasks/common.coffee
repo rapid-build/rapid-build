@@ -25,6 +25,7 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}copy-server-node_modules"
 				"#{config.rb.prefix.task}copy-extra-files"
 			]
+			"#{config.rb.prefix.task}absolute-css-urls"
 			"#{config.rb.prefix.task}build-files"
 			cb
 		)

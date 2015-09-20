@@ -2,6 +2,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	q            = require 'q'
 	tasks        = require("#{config.req.helpers}/tasks")()
 	forWatchFile = !!watchFile.path
+	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
 
 	runTask = (src, dest) ->
 		defer = q.defer()
@@ -12,8 +13,14 @@ module.exports = (gulp, config, watchFile={}) ->
 				defer.resolve()
 		defer.promise
 
-	runSingle = ->
-		runTask watchFile.path, watchFile.rbDistDir
+	runSingle = -> # synchronously
+		defer  = q.defer()
+		_tasks = [
+			-> runTask watchFile.path, watchFile.rbDistDir
+			-> absCssUrls gulp, config, watchFile.rbDistPath
+		]
+		_tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
 
 	runMulti = ->
 		tasks.run.async(

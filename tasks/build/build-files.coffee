@@ -44,9 +44,17 @@ module.exports = (gulp, config) ->
 		# log.json glob, "#{appOrRb} #{type}"
 		glob
 
+	getImportExcludes = (appOrRb, type, glob) ->
+		imports = config.internal.getImportsAppOrRb appOrRb, true
+		return glob unless imports.length
+		glob = glob.concat imports
+		# log.json glob, "#{appOrRb} #{type}"
+		glob
+
 	getGlob = (appOrRb, type, lang) ->
 		glob = config.glob.dist[appOrRb].client[type][lang]
 		glob = getExcludes appOrRb, type, glob
+		glob = getImportExcludes appOrRb, type, glob if lang is 'css'
 		glob
 
 	setGlobs = ->

@@ -7,6 +7,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	plumber      = require 'gulp-plumber'
 	lessHelper   = require("#{config.req.helpers}/Less") config, gulp
 	forWatchFile = !!watchFile.path
+	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
 
 	# streams
 	# =======
@@ -30,6 +31,10 @@ module.exports = (gulp, config, watchFile={}) ->
 			.pipe less()
 			.pipe gulpif forWatch, addToDistPath appOrRb
 			.pipe gulp.dest dest
+			.on 'data', (file) ->
+				return if not forWatch
+				watchFilePath = path.relative file.cwd, file.path
+				absCssUrls gulp, config, watchFilePath
 			.on 'end', ->
 				# console.log dest
 				defer.resolve()
@@ -51,7 +56,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		new lessHelper config.glob.src[appOrRb].client.styles.less
 			.setImports()
 			.then (me) ->
-				src  = me.getWatchSrc watchFile.path
+				src = me.getWatchSrc watchFile.path
 				defer.resolve src
 		defer.promise
 

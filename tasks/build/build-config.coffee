@@ -1,19 +1,8 @@
 module.exports = (gulp, config) ->
-	q        = require 'q'
-	rename   = require 'gulp-rename'
-	template = require 'gulp-template'
-	format   = require("#{config.req.helpers}/format")()
+	configHelp = require("#{config.req.helpers}/config") config
 
-	runTask = (src, dest, file, data) ->
-		defer = q.defer()
-		gulp.src src
-			.pipe rename file
-			.pipe template config: data
-			.pipe gulp.dest dest
-			.on 'end', ->
-				# console.log 'config.json built'.yellow
-				defer.resolve()
-		defer.promise
+	runTask = ->
+		configHelp.buildFile true
 
 	# task deps
 	# =========
@@ -22,9 +11,4 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}build-config", taskDeps, ->
-		runTask(
-			config.templates.config.src.path
-			config.templates.config.dest.dir
-			config.templates.config.dest.file
-			format.json config
-		)
+		runTask()

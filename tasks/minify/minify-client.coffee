@@ -5,7 +5,6 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-client", (cb) ->
 		gulpSequence(
-			"#{config.rb.prefix.task}relative-to-absolute-css-urls"
 			[
 				"#{config.rb.prefix.task}minify-css"
 				"#{config.rb.prefix.task}minify-html"
@@ -15,6 +14,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}build-prod-files-blueprint"
 			"#{config.rb.prefix.task}build-prod-files"
 			"#{config.rb.prefix.task}concat-scripts-and-styles"
+			"#{config.rb.prefix.task}inline-css-imports"
 			"#{config.rb.prefix.task}cleanup-client"
 			"#{config.rb.prefix.task}css-file-split"
 			"#{config.rb.prefix.task}build-spa:prod"

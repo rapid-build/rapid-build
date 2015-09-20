@@ -1,19 +1,19 @@
 module.exports = (gulp, config) ->
-	q           = require 'q'
-	fse         = require 'fs-extra'
-	findPort    = require 'find-port'
-	promiseHelp = require "#{config.req.helpers}/promise"
+	q          = require 'q'
+	fse        = require 'fs-extra'
+	findPort   = require 'find-port'
+	configHelp = require("#{config.req.helpers}/config") config
 
 	# global
 	# ======
-	updateConfig = false
+	buildConfigFile = false
 
 	# helpers
 	# =======
 	isPortUsed = (server, openPorts, configPort) ->
 		used = openPorts.indexOf(configPort) is -1
 		# console.log "is #{server} port #{configPort} used: #{used}".yellow
-		updateConfig = true if used and updateConfig is false
+		buildConfigFile = true if used and buildConfigFile is false
 		used
 
 	getConfigPorts = ->
@@ -59,21 +59,11 @@ module.exports = (gulp, config) ->
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
-	updateConfigFile = ->
-		return promiseHelp.get() unless updateConfig
-		# console.log 'update config:', updateConfig
-		defer      = q.defer()
-		format     = spaces: '\t'
-		configFile = config.templates.config.dest.path
-		fse.writeJson configFile, config, format, (e) ->
-			defer.resolve()
-		defer.promise
-
 	runTasks = -> # synchronously
 		defer = q.defer()
 		tasks = [
 			-> setPorts()
-			-> updateConfigFile()
+			-> configHelp.buildFile buildConfigFile, 'rebuild'
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise

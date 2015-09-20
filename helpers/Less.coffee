@@ -1,7 +1,10 @@
 module.exports = (config, gulp) ->
-	q           = require 'q'
-	lessImports = require 'less-imports'
-	log         = require "#{config.req.helpers}/log"
+	q          = require 'q'
+	path       = require 'path'
+	log        = require "#{config.req.helpers}/log"
+	pathHelp   = require "#{config.req.helpers}/path"
+	cmtsRegex  = /\/\/.*|\/\*\s*?.*?\s*?\*\//g
+	importRegX = /@import\s*?(?!\s*?\(css\)*?).*?['"]+?(.*?)['"]/g
 
 	class Less
 		# private methods
@@ -22,6 +25,21 @@ module.exports = (config, gulp) ->
 		isImport = (imports, _path) ->
 			imports.indexOf(_path) isnt -1
 
+		findImports = (file) ->
+			contents = file.contents
+			return [] unless contents
+			contents = contents.toString()
+			base     = file.base
+			imports  = []
+			contents = contents.replace cmtsRegex, '' # first strip the comments
+			while (matches = importRegX.exec contents) != null
+				match = matches[1]
+				continue if match.indexOf('//') isnt -1
+				_path = path.resolve base, match
+				_path = pathHelp.format _path
+				imports.push _path
+			imports
+
 		# constructor
 		# ===========
 		constructor: (@src) ->
@@ -30,17 +48,17 @@ module.exports = (config, gulp) ->
 
 		# public methods
 		# ==============
-		addImport: (_path) ->
-			paths = lessImports.findImports _path
+		addImport: (file) ->
+			paths = findImports file
 			return @ if not paths.length
-			@files[_path] = paths
+			@files[file.path] = paths
 			@
 
 		setImports: ->
 			defer = q.defer()
-			gulp.src @src, read:false
+			gulp.src @src
 				.on 'data', (file) =>
-					@addImport file.path
+					@addImport file
 				.on 'end', =>
 					defer.resolve @
 			defer.promise

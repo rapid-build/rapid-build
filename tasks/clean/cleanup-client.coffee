@@ -40,6 +40,16 @@ module.exports = (gulp, config) ->
 			defer.resolve()
 		defer.promise
 
+	cleanCssImportsTask = (msg) ->
+		defer = q.defer()
+		q.all([
+			delTask config.internal.getImportsAppOrRb 'rb'
+			delTask config.internal.getImportsAppOrRb 'app'
+		]).done ->
+			console.log msg.yellow if msg
+			defer.resolve()
+		defer.promise
+
 	moveTempTask = (msg) ->
 		defer = q.defer()
 		src   = config.temp.client.glob
@@ -73,6 +83,7 @@ module.exports = (gulp, config) ->
 		tasks = [
 			-> setBlueprint()
 			-> multiCleanTask 'cleaned client min files'
+			-> cleanCssImportsTask 'cleaned css imports'
 			-> moveTempTask 'moved .temp files to client root'
 			-> delTask config.temp.client.dir, 'deleted .temp directory'
 			-> delEmptyDirsTask 'deleted empty directories'

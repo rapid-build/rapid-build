@@ -73,7 +73,10 @@ module.exports = (gulp, config, browserSync) ->
 		return changeTask taskName, file if opts.taskOnly
 		tasks[taskName](gulp, config, file).then ->
 			return tasks.browserSync() if opts.bsReload
-			tasks.buildSpa()
+			if taskName is 'clean' and opts.cleanCb
+				opts.cleanCb(file).then -> tasks.buildSpa()
+			else
+				tasks.buildSpa()
 
 	events = (file, taskName, opts={}) -> # add, change, unlink
 		log.watch taskName, file, opts
@@ -115,6 +118,12 @@ module.exports = (gulp, config, browserSync) ->
 		return promiseHelp.get() unless config.spa.custom
 		createWatch spaFilePath, 'build spa', lang: config.spa.dist.file
 
+	# callbacks
+	# =========
+	cleanStylesCb = (file) ->
+		config.internal.deleteFileImports file.rbAppOrRb, file.rbDistPath
+		promiseHelp.get()
+
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}watch", ->
@@ -123,8 +132,8 @@ module.exports = (gulp, config, browserSync) ->
 			# images
 			createWatch config.glob.src.app.client.images.all,     'image',  lang:'image',  srcType:'images',  bsReload:true
 			# styles
-			createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles'
-			createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css'
+			createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles',  cleanCb: cleanStylesCb
+			createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
 			# client scripts
 			createWatch config.glob.src.app.client.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
 			createWatch config.glob.src.app.client.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'
