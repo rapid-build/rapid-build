@@ -1,3 +1,12 @@
+# [0.34.0](https://github.com/jyounce/rapid-build/compare/v0.33.1...v0.34.0) (2015-09-20)
+
+
+### Features
+
+* **option:** add build option extra.compile ([9cdfa16](https://github.com/jyounce/rapid-build/commit/9cdfa16))
+
+
+
 ## [0.33.1](https://github.com/jyounce/rapid-build/compare/v0.33.0...v0.33.1) (2015-09-20)
 
 
