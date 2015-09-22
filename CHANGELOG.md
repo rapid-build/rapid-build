@@ -1,3 +1,16 @@
+# [0.35.0](https://github.com/jyounce/rapid-build/compare/v0.34.0...v0.35.0) (2015-09-22)
+
+
+### Bug Fixes
+
+* **css imports:** external urls ([4f1b82f](https://github.com/jyounce/rapid-build/commit/4f1b82f))
+
+### Features
+
+* **sass:** let's get sassy! add support for sass, also fix some less import bugs ([0fe3b96](https://github.com/jyounce/rapid-build/commit/0fe3b96))
+
+
+
 # [0.34.0](https://github.com/jyounce/rapid-build/compare/v0.33.1...v0.34.0) (2015-09-20)
 
 
