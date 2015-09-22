@@ -81,7 +81,7 @@ pathHelp =
 
 	formatCssUrl: (match, formatTask, config, paths={}, opts={}) ->
 		isExternal = @isExternal paths.url
-		return match if isExternal
+		return url: match if isExternal
 		isAbsolute = @isAbsolute paths.url
 		msg        = if isAbsolute then 'absolute' else 'relative'
 		_path      = if isAbsolute then @getAbsolute paths, opts else @getRelative paths
