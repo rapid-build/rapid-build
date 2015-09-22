@@ -92,6 +92,7 @@ module.exports = (config, options) ->
 			if index is 0
 				ext  = path.extname _path
 				lang = if ext and ext.indexOf('*') is -1 then ext.substr 1 else 'all'
+				lang = 'sass' if lang is 'scss'
 				lang = 'all' if allTypes.indexOf(k1) isnt -1
 				type = { type: k1, lang, path: "!#{_path}" }
 				break

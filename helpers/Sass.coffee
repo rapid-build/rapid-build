@@ -6,7 +6,7 @@ module.exports = (config, gulp) ->
 	cmtsRegex  = /\/\/.*|\/\*\s*?.*?\s*?\*\//g
 	importRegX = /@import\s*?(?!\s*?\(css\)*?).*?['"]+?(.*?)['"]/g
 
-	class Less
+	class Sass
 		# private methods
 		# ===============
 		getImports = (files) ->
@@ -23,22 +23,37 @@ module.exports = (config, gulp) ->
 			imports
 
 		isImport = (imports, _path) ->
-			imports.indexOf(_path) isnt -1
+			flag  = false
+			return flag unless imports.length
+			_path = getExtlessPath _path
+			for _import in imports
+				if _import.indexOf(_path) isnt -1 then flag = true; break
+			flag
+
+		fileHasImport = (imports, _path) ->
+			isImport imports, _path
+
+		getExtlessPath = (_path) -> # because of '.{sass,scss}'
+			lastIndex = _path.lastIndexOf('.') + 1
+			_path     = _path.substr 0, lastIndex
 
 		findImports = (file) ->
 			contents = file.contents
 			return [] unless contents
 			contents = contents.toString()
 			dir      = path.dirname file.path
-			lessExt  = '.less'
+			cssExt   = '.css'
+			sassExts = '.{sass,scss}'
 			imports  = []
 			contents = contents.replace cmtsRegex, '' # first strip the comments
 			while (matches = importRegX.exec contents) != null
 				match  = matches[1]
 				continue if match.indexOf('//') isnt -1
+				continue if matches[0].indexOf('url(') isnt -1
 				_path  = path.resolve dir, match
 				impDir = path.extname _path
-				_path += lessExt unless impDir
+				continue if impDir is cssExt
+				_path += sassExts unless impDir
 				_path  = pathHelp.format _path
 				imports.push _path
 			imports
@@ -81,10 +96,10 @@ module.exports = (config, gulp) ->
 			return [ _path ] if not isImport imports, _path
 			# is import, what non import(s) has it?
 			src = []
-			for own k1, v1 of files
-				continue if isImport imports, k1
-				continue if v1.indexOf(_path) is -1 # file has import
-				src.push k1
+			for own _file, fileImports of files
+				continue if isImport imports, _file
+				continue unless fileHasImport fileImports, _path
+				src.push _file
 			src
 
 

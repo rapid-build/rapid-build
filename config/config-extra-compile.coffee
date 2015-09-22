@@ -4,30 +4,34 @@ module.exports = (config, options) ->
 	test = require("#{config.req.helpers}/test")()
 
 	# init extra.compile
-	# compile additional files [coffee|es6|less]
+	# compile additional files [coffee|es6|less|sass]
 	# to dist that the build didn't compile
-	# ==========================================
+	# ===============================================
 	compile =
 		rb:
 			client:
 				coffee: []
 				es6:    []
 				less:   []
+				sass:   []
 			server:
 				less:   []
+				sass:   []
 		app:
 			client:
 				coffee: options.extra.compile.client.coffee or []
 				es6:    options.extra.compile.client.es6    or []
 				less:   options.extra.compile.client.less   or []
+				sass:   options.extra.compile.client.sass   or []
 			server:
 				less:   options.extra.compile.server.less   or []
+				sass:   options.extra.compile.server.sass   or []
 
 	# format compile paths
 	# ====================
 	formatCompilePaths = (appOrRb) ->
 		for loc in ['client','server']
-			for lang in ['coffee','es6','less']
+			for lang in ['coffee','es6','less','sass']
 				files = compile[appOrRb][loc][lang]
 				continue unless files
 				continue unless files.length

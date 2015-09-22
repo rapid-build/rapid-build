@@ -16,7 +16,7 @@ module.exports = (config) ->
 		images: 'gif,jpg,jpeg,png'
 		js:     'js'
 		less:   'less'
-		sass:   'sass' # not used yet
+		sass:   'sass,scss'
 
 	getExts = (_exts) -> # _exts = string array
 		_exts = _exts.split ','
@@ -39,7 +39,7 @@ module.exports = (config) ->
 		images:    "/**/*.{#{exts.images}}"
 		js:        "/**/*.#{exts.js}"
 		less:      "/**/*.#{exts.less}"
-		sass:      "/**/*.#{exts.sass}"
+		sass:      "/**/*.{#{exts.sass}}"
 		bustFiles: "/**/*.{#{getExts 'css,js,images'}}"
 		bustRefs:  "/**/*.{#{getExts 'html,css,js'}}"
 
@@ -88,7 +88,7 @@ module.exports = (config) ->
 	addGlob 'src', 'scripts', ['es6']
 	addGlob 'src', 'styles',  ['css']
 	addGlob 'src', 'styles',  ['less']
-	# addGlob 'src', 'styles',  ['sass']
+	addGlob 'src', 'styles',  ['sass']
 	addGlob 'src', 'test',    ['css', 'js']
 	addGlob 'src', 'test',    ['coffee']
 	addGlob 'src', 'test',    ['es6']

@@ -115,7 +115,9 @@ module.exports = (config, options) ->
 		options.extra.compile.client.coffee = null if not isType.array options.extra.compile.client.coffee
 		options.extra.compile.client.es6    = null if not isType.array options.extra.compile.client.es6
 		options.extra.compile.client.less   = null if not isType.array options.extra.compile.client.less
+		options.extra.compile.client.sass   = null if not isType.array options.extra.compile.client.sass
 		options.extra.compile.server.less   = null if not isType.array options.extra.compile.server.less
+		options.extra.compile.server.sass   = null if not isType.array options.extra.compile.server.sass
 
 	extraOptions = ->
 		options.extra = {} if not isType.object options.extra

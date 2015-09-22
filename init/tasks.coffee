@@ -34,6 +34,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/compile/coffee")                   gulp, config # coffee
 	require("#{config.req.tasks}/compile/es6")                      gulp, config # es6
 	require("#{config.req.tasks}/compile/less")                     gulp, config # less
+	require("#{config.req.tasks}/compile/sass")                     gulp, config # sass
 
 	# config
 	# ======
@@ -56,6 +57,7 @@ module.exports = (gulp, config) ->
 	require("#{config.req.tasks}/extra/compile-extra-coffee")       gulp, config # compile-extra-coffee
 	require("#{config.req.tasks}/extra/compile-extra-es6")          gulp, config # compile-extra-es6
 	require("#{config.req.tasks}/extra/compile-extra-less")         gulp, config # compile-extra-less
+	require("#{config.req.tasks}/extra/compile-extra-sass")         gulp, config # compile-extra-sass
 	require("#{config.req.tasks}/extra/copy-extra-files")           gulp, config # copy-extra-files
 
 	# format

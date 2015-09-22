@@ -16,6 +16,7 @@ module.exports = (gulp, config, browserSync) ->
 		image:  require "#{config.req.tasks}/copy/copy-images"
 		js:     require "#{config.req.tasks}/copy/copy-js"
 		less:   require "#{config.req.tasks}/compile/less"
+		sass:   require "#{config.req.tasks}/compile/sass"
 		tCache: require "#{config.req.tasks}/minify/template-cache"
 		buildSpa: ->
 			gulp.start "#{config.rb.prefix.task}watch-build-spa"
@@ -134,6 +135,7 @@ module.exports = (gulp, config, browserSync) ->
 			# styles
 			createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles',  cleanCb: cleanStylesCb
 			createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
+			createWatch config.glob.src.app.client.styles.sass,    'sass',   lang:'sass',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
 			# client scripts
 			createWatch config.glob.src.app.client.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
 			createWatch config.glob.src.app.client.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'

@@ -14,7 +14,7 @@ $ npm install rapid-build
 *Rapidly* develop distributable client and server side packages/folders.
 rapid-build currently supports the following technologies:
 * languages
-	* [css](https://developer.mozilla.org/en-US/docs/Web/CSS) and [less](http://lesscss.org/) (client)
+	* [css](https://developer.mozilla.org/en-US/docs/Web/CSS), [less](http://lesscss.org/) and [sass](http://sass-lang.com/) (client)
 	* [html](https://developer.mozilla.org/en-US/docs/Web/HTML) (client)
 	* [js](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [es6](https://babeljs.io/) and [coffeescript](http://coffeescript.org/) (client and server)
 * frameworks
@@ -150,8 +150,8 @@ gulp rapid-build:test:prod
 # server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
 # httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://www.npmjs.com/package/http-proxy-middleware
 # extra.copy[client|server]                         = (array of strings) = file paths: additional files to copy to dist/client and or dist/server that the build didn't copy
-# extra.compile.client[coffee|es6|less]             = (array of strings) = file paths: additional files to compile to dist/client that the build didn't compile
-# extra.compile.server.less                         = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
+# extra.compile.client[coffee|es6|less|sass]        = (array of strings) = file paths: additional files to compile to dist/client that the build didn't compile
+# extra.compile.server[less|sass]                   = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
 # =============================================================================================================================================================================================================================
 ```
 
@@ -169,6 +169,7 @@ gulp rapid-build:test:prod
 		* coffee -> js - (client and server)
 		* es6 -> js - (client and server)
 		* less -> css - (client)
+		* sass -> css - (client)
 
 #### Default Build:
 1. run common tasks (see above)
