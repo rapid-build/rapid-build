@@ -12,7 +12,7 @@ module.exports = (gulp, config) ->
 		port:    config.ports.reload
 		ui:      port: config.ports.reloadUI
 		browser: 'google chrome'
-		# open: false
+		open:    config.browser.open
 
 	# events
 	# ======

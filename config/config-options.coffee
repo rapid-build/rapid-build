@@ -133,6 +133,10 @@ module.exports = (config, options) ->
 		extraCopy()
 		extraCompile()
 
+	browserOptions = ->
+		options.browser = {} if not isType.object options.browser
+		options.browser.open = null if not isType.boolean options.browser.open
+
 	# init
 	# ====
 	buildOptions()
@@ -147,6 +151,7 @@ module.exports = (config, options) ->
 	serverDistOptions()
 	serverOptions()
 	proxyOptions()
+	browserOptions()
 	extraOptions()
 
 	# logs

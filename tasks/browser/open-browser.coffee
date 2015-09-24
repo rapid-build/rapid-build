@@ -11,4 +11,5 @@ module.exports = (gulp, config) ->
 
 	gulp.task "#{config.rb.prefix.task}open-browser", ->
 		return promiseHelp.get() unless config.build.server
+		return promiseHelp.get() unless config.browser.open
 		runTask config.ports.server
