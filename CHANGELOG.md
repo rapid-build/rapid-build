@@ -1,3 +1,12 @@
+# [0.37.0](https://github.com/jyounce/rapid-build/compare/v0.36.0...v0.37.0) (2015-09-24)
+
+
+### Features
+
+* **option:** add build option browser.open, defaults to true ([5885e17](https://github.com/jyounce/rapid-build/commit/5885e17))
+
+
+
 # [0.36.0](https://github.com/jyounce/rapid-build/compare/v0.35.0...v0.36.0) (2015-09-24)
 
 
