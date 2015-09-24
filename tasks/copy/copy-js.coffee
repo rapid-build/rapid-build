@@ -19,7 +19,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		tasks.run.async(
 			config, runTask,
 			'scripts', 'js',
-			['client']
+			['client', 'server']
 		)
 
 	# register task
