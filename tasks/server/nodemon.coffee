@@ -1,7 +1,8 @@
 module.exports = (gulp, config, browserSync) ->
-	q       = require 'q'
-	path    = require 'path'
-	nodemon = require 'gulp-nodemon'
+	q           = require 'q'
+	path        = require 'path'
+	nodemon     = require 'gulp-nodemon'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# globals
 	# =======
@@ -15,6 +16,7 @@ module.exports = (gulp, config, browserSync) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}nodemon", ->
+		return promiseHelp.get() unless config.build.server
 		defer = q.defer()
 		nodemon
 			script: rbServerFile

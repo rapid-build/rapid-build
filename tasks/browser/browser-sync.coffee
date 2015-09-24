@@ -1,6 +1,7 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
 	browserSync = require 'browser-sync'
+	promiseHelp = require "#{config.req.helpers}/promise"
 	bs          = browserSync.create()
 
 	# helpers
@@ -24,6 +25,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}browser-sync", ->
+		return promiseHelp.get() unless config.build.server
 		defer    = q.defer()
 		bsConfig = getBsConfig()
 		bs.init bsConfig, ->

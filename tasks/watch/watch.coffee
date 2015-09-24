@@ -21,6 +21,7 @@ module.exports = (gulp, config, browserSync) ->
 		buildSpa: ->
 			gulp.start "#{config.rb.prefix.task}watch-build-spa"
 		browserSync: ->
+			return unless config.build.server
 			browserSync.reload stream:false
 
 	# helpers
@@ -128,27 +129,32 @@ module.exports = (gulp, config, browserSync) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}watch", ->
-		defer = q.defer()
-		q.all([
-			# images
-			createWatch config.glob.src.app.client.images.all,     'image',  lang:'image',  srcType:'images',  bsReload:true
-			# styles
-			createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles',  cleanCb: cleanStylesCb
-			createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
-			createWatch config.glob.src.app.client.styles.sass,    'sass',   lang:'sass',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
-			# client scripts
-			createWatch config.glob.src.app.client.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
-			createWatch config.glob.src.app.client.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'
-			createWatch config.glob.src.app.client.scripts.js,     'js',     lang:'js',     srcType:'scripts'
-			# server scripts
-			createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server'
-			createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server'
-			createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server'
-			# views
-			htmlWatch config.glob.src.app.client.views.html
-			# spa
-			spaWatch config.spa.src.path
-		]).done -> defer.resolve()
+		defer   = q.defer()
+		watches = []
+
+		# client watch: images, styles, scripts, views and the spa.html
+		watches = watches.concat [
+			-> createWatch config.glob.src.app.client.images.all,     'image',  lang:'image',  srcType:'images',  bsReload:true
+			-> createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles',  cleanCb: cleanStylesCb
+			-> createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
+			-> createWatch config.glob.src.app.client.styles.sass,    'sass',   lang:'sass',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
+			-> createWatch config.glob.src.app.client.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
+			-> createWatch config.glob.src.app.client.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'
+			-> createWatch config.glob.src.app.client.scripts.js,     'js',     lang:'js',     srcType:'scripts'
+			-> htmlWatch config.glob.src.app.client.views.html
+			-> spaWatch config.spa.src.path
+		] if config.build.client
+
+		# server watch: scripts
+		watches = watches.concat [
+			-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server'
+			-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server'
+			-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server'
+		] if config.build.server
+
+		# async
+		promises = watches.map (watch) -> watch()
+		q.all(promises).done -> defer.resolve()
 		defer.promise
 
 

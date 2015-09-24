@@ -1,8 +1,9 @@
 module.exports = (gulp, config) ->
-	q         = require 'q'
-	coffee    = require 'gulp-coffee'
-	plumber   = require 'gulp-plumber'
-	extraHelp = require("#{config.req.helpers}/extra") config
+	q           = require 'q'
+	coffee      = require 'gulp-coffee'
+	plumber     = require 'gulp-plumber'
+	promiseHelp = require "#{config.req.helpers}/promise"
+	extraHelp   = require("#{config.req.helpers}/extra") config
 
 	runTask = (src, dest, base, appOrRb, loc) ->
 		defer = q.defer()
@@ -16,9 +17,10 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	runTasks = ->
-		extraHelp.run.tasks.async runTask, 'compile', 'coffee'
+		extraHelp.run.tasks.async runTask, 'compile', 'coffee', ['client']
 
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}compile-extra-coffee", ->
+		return promiseHelp.get() unless config.build.client
 		runTasks()

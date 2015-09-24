@@ -6,6 +6,11 @@ module.exports = (config, options) ->
 
 	# format options helpers
 	# ======================
+	buildOptions = ->
+		options.build = {} if not isType.object options.build
+		options.build.client = null if not isType.boolean options.build.client
+		options.build.server = null if not isType.boolean options.build.server
+
 	distAndSrcOptions = ->
 		['dist', 'src'].forEach (v1) ->
 			options[v1] = {} if not isType.object options[v1]
@@ -130,7 +135,8 @@ module.exports = (config, options) ->
 
 	# init
 	# ====
-	distAndSrcOptions() # must be first
+	buildOptions()
+	distAndSrcOptions() # must be 2nd
 	portOptions()
 	orderOptions()
 	angularOptions()

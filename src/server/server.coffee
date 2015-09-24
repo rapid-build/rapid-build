@@ -20,6 +20,7 @@ app.listen port, ->
 	console.log "#{config.server.msg.start} #{config.ports.server}"
 
 app.get '/', (req, res) ->
+	return res.send 'Hello Server!' unless config.build.client
 	res.sendFile spa, root: clientDirPath
 
 # options to pass

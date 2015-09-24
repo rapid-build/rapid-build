@@ -1,7 +1,8 @@
 module.exports = (gulp, config) ->
-	q        = require 'q'
-	rename   = require 'gulp-rename'
-	template = require 'gulp-template'
+	q           = require 'q'
+	rename      = require 'gulp-rename'
+	template    = require 'gulp-template'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# task
 	# ====
@@ -26,6 +27,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}build-angular-modules", ->
+		return promiseHelp.get() unless config.build.client
 		data = getData()
 		runTask(
 			config.templates.angularModules.src.path

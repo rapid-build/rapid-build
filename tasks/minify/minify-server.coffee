@@ -1,7 +1,8 @@
 module.exports = (gulp, config) ->
-	q          = require 'q'
-	minifyJs   = require 'gulp-uglify'
-	minifyJson = require 'gulp-jsonminify'
+	q           = require 'q'
+	minifyJs    = require 'gulp-uglify'
+	minifyJson  = require 'gulp-jsonminify'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	minJsTask = (src, dest) ->
 		defer = q.defer()
@@ -35,6 +36,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-server", ->
+		return promiseHelp.get() unless config.build.server
 		runTasks(
 			config.dist.app.server.scripts.dir
 			'!**/node_modules/**'

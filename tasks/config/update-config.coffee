@@ -10,6 +10,10 @@ module.exports = (gulp, config) ->
 		# ===
 		config.env.set gulp # must be first
 
+		# build
+		# =====
+		return promiseHelp.get() unless config.build.client
+
 		# angular
 		# =======
 		config.angular.removeRbMocksModule()

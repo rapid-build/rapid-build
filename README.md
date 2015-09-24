@@ -99,6 +99,7 @@ gulp rapid-build:test:prod
 # Example: options.ports.server = 5000
 # Options is an object, you can set the following properties:
 # -----------------------------------------------------------
+# build[client|server]                              = (boolean) both default to true = atleast one is required to be true
 # dist.dir                                          = (string)  defaults to 'dist'
 # dist.client.dir                                   = (string)  defaults to 'client'
 # dist.client[images|scripts|styles|test|views].dir = (string)  defaults to property name

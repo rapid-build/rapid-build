@@ -1,5 +1,6 @@
 module.exports = (gulp, config, watchFile={}) ->
 	q            = require 'q'
+	promiseHelp  = require "#{config.req.helpers}/promise"
 	tasks        = require("#{config.req.helpers}/tasks")()
 	forWatchFile = !!watchFile.path
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
@@ -32,4 +33,6 @@ module.exports = (gulp, config, watchFile={}) ->
 	# register task
 	# =============
 	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}copy-css", -> runMulti()
+	gulp.task "#{config.rb.prefix.task}copy-css", ->
+		return promiseHelp.get() unless config.build.client
+		runMulti()

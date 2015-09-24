@@ -21,7 +21,8 @@ module.exports = (gulp, config) ->
 		defer.promise
 
 	runTasks = ->
-		extraHelp.run.tasks.async runTask, 'compile', 'sass'
+		locs = config.build.getLocs()
+		extraHelp.run.tasks.async runTask, 'compile', 'sass', locs
 
 	# register task
 	# =============

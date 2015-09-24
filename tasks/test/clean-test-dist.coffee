@@ -1,7 +1,8 @@
 module.exports = (gulp, config) ->
-	q    = require 'q'
-	del  = require 'del'
-	path = require 'path'
+	q           = require 'q'
+	del         = require 'del'
+	path        = require 'path'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	cleanTask = (src) ->
 		defer = q.defer()
@@ -20,5 +21,6 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}clean-test-dist", ->
+		return promiseHelp.get() unless config.build.client
 		runTask()
 

@@ -5,6 +5,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	gulpif       = require 'gulp-if'
 	sass         = require 'gulp-sass'
 	plumber      = require 'gulp-plumber'
+	promiseHelp  = require "#{config.req.helpers}/promise"
 	tasks        = require("#{config.req.helpers}/tasks")()
 	sassHelper   = require("#{config.req.helpers}/Sass") config, gulp
 	forWatchFile = !!watchFile.path
@@ -99,7 +100,9 @@ module.exports = (gulp, config, watchFile={}) ->
 	# register task
 	# =============
 	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}sass", -> runMulti()
+	gulp.task "#{config.rb.prefix.task}sass", ->
+		return promiseHelp.get() unless config.build.client
+		runMulti()
 
 
 

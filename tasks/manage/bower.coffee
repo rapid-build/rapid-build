@@ -38,4 +38,5 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}bower", taskDeps, ->
+		return promiseHelp.get() unless config.build.client
 		runTasks()

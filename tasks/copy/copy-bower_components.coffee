@@ -60,6 +60,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}copy-bower_components", ->
+		return promiseHelp.get() unless config.build.client
 		runTasks()
 
 

@@ -79,8 +79,10 @@ module.exports = (gulp, config) ->
 	# register tasks
 	# ==============
 	gulp.task "#{config.rb.prefix.task}build-spa", ->
+		return promiseHelp.get() unless config.build.client
 		runTask getData 'files.json'
 
 	gulp.task "#{config.rb.prefix.task}build-spa:prod", ->
+		return promiseHelp.get() unless config.build.client
 		runTask getData 'prod-files.json'
 

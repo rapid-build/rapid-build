@@ -4,11 +4,11 @@ module.exports = (config) ->
 
 	# private
 	# =======
-	getTasks = (tasksCb, srcBase, srcTask) ->
+	getTasks = (tasksCb, srcBase, srcTask, locs) ->
 		args  = []
 		tasks = []
 		for appOrRb in ['rb','app']
-			for loc in ['client','server']
+			for loc in locs
 				src = srcBase[appOrRb][loc]
 				src = src[srcTask] if srcTask
 				_args = {
@@ -30,17 +30,17 @@ module.exports = (config) ->
 	# ======
 	run:
 		tasks:
-			async: (tasksCb, task, subTask) ->
+			async: (tasksCb, task, subTask, locs) ->
 				defer = q.defer()
-				tasks = getTasks tasksCb, config.extra[task], subTask
+				tasks = getTasks tasksCb, config.extra[task], subTask, locs
 				return promiseHelp.get defer unless tasks.length
 				promises = tasks.map (_task) -> _task()
 				q.all(promises).done -> defer.resolve()
 				defer.promise
 
-			sync: (tasksCb, task, subTask) ->
+			sync: (tasksCb, task, subTask, locs) ->
 				defer = q.defer()
-				tasks = getTasks tasksCb, config.extra[task], subTask
+				tasks = getTasks tasksCb, config.extra[task], subTask, locs
 				return promiseHelp.get defer unless tasks.length
 				tasks.reduce(q.when, q()).done -> defer.resolve()
 				defer.promise

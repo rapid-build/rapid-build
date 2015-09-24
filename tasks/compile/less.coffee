@@ -5,6 +5,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	gulpif       = require 'gulp-if'
 	less         = require 'gulp-less'
 	plumber      = require 'gulp-plumber'
+	promiseHelp  = require "#{config.req.helpers}/promise"
 	lessHelper   = require("#{config.req.helpers}/Less") config, gulp
 	forWatchFile = !!watchFile.path
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
@@ -94,7 +95,9 @@ module.exports = (gulp, config, watchFile={}) ->
 	# register task
 	# =============
 	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}less", -> runMulti()
+	gulp.task "#{config.rb.prefix.task}less", ->
+		return promiseHelp.get() unless config.build.client
+		runMulti()
 
 
 
