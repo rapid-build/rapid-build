@@ -1,3 +1,16 @@
+# [0.36.0](https://github.com/jyounce/rapid-build/compare/v0.35.0...v0.36.0) (2015-09-24)
+
+
+### Bug Fixes
+
+* **server:** copy server js src files to the server ([a4108d9](https://github.com/jyounce/rapid-build/commit/a4108d9))
+
+### Features
+
+* **option:** add build option build\[client|server\] both default to true ([8af0923](https://github.com/jyounce/rapid-build/commit/8af0923))
+
+
+
 # [0.35.0](https://github.com/jyounce/rapid-build/compare/v0.34.0...v0.35.0) (2015-09-22)
 
 
