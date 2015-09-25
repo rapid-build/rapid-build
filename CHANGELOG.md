@@ -1,3 +1,12 @@
+# [0.38.0](https://github.com/jyounce/rapid-build/compare/v0.37.0...v0.38.0) (2015-09-25)
+
+
+### Features
+
+* **option:** add build option exclude.spa, defaults to false ([0f0df60](https://github.com/jyounce/rapid-build/commit/0f0df60))
+
+
+
 # [0.37.0](https://github.com/jyounce/rapid-build/compare/v0.36.0...v0.37.0) (2015-09-24)
 
 
