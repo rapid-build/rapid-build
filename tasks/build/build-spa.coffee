@@ -80,9 +80,11 @@ module.exports = (gulp, config) ->
 	# ==============
 	gulp.task "#{config.rb.prefix.task}build-spa", ->
 		return promiseHelp.get() unless config.build.client
+		return promiseHelp.get() if config.exclude.spa
 		runTask getData 'files.json'
 
 	gulp.task "#{config.rb.prefix.task}build-spa:prod", ->
 		return promiseHelp.get() unless config.build.client
+		return promiseHelp.get() if config.exclude.spa
 		runTask getData 'prod-files.json'
 

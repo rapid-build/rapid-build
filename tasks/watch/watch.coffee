@@ -118,6 +118,7 @@ module.exports = (gulp, config, browserSync) ->
 	# ============================================
 	spaWatch = (spaFilePath) ->
 		return promiseHelp.get() unless config.spa.custom
+		return promiseHelp.get() if config.exclude.spa
 		createWatch spaFilePath, 'build spa', lang: config.spa.dist.file
 
 	# callbacks

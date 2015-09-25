@@ -19,6 +19,7 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}minify-spa", ->
+		return promiseHelp.get() if config.exclude.spa
 		return promiseHelp.get() if not config.minify.spa.file
 		runTask(
 			config.spa.dist.path

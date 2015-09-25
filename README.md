@@ -141,6 +141,7 @@ gulp rapid-build:test:prod
 # minify.js.mangle                                  = (boolean) defaults to true = for prod build, mangle the names in the js
 # minify.spa.file                                   = (boolean) defaults to true = for prod build, minify the spa.html file
 # minify.cacheBust                                  = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension
+# exclude.spa                                       = (boolean) defaults to false = set to true to exclude spa.html from client dist
 # exclude.angular.files                             = (boolean) defaults to false = set to true to exclude the angular files that come with rapid-build from dist (lib and modules)
 # exclude.angular.modules                           = (boolean) defaults to false = set to true to exclude injecting the angular modules that come with rapid-build ['ngResource', 'ngRoute', 'ngSanitize']
 # exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust

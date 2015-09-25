@@ -21,6 +21,7 @@ module.exports = (config, options) ->
 	# init exclude
 	# ============
 	exclude =
+		spa: !!options.exclude.spa
 		angular:
 			files: get.opt.deep2 'angular', 'files', false
 		rb:
