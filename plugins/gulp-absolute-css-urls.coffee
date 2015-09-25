@@ -45,6 +45,7 @@ pathHelp =
 
 	getRelative: (paths) ->
 		_path = path.resolve paths.abs, paths.url
+		pathHelp.format _path
 
 	getAbsolute: (paths, opts) ->
 		prependPath = opts.prependPath isnt false

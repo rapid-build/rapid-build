@@ -134,10 +134,12 @@ gulp rapid-build:test:prod
 # spa.dist.fileName                                 = (string)  defaults to file name of spa.src.filePath or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
 # spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
 # minify.css.styles                                 = (boolean) defaults to true = for prod build, minify the css
+# minify.css.fileName                               = (string)  defaults to 'styles.min.css'
 # minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
 # minify.html.views                                 = (boolean) defaults to true = for prod build, minify the html
 # minify.html.templateCache                         = (boolean) defaults to true = for prod build, use the template cache
 # minify.js.scripts                                 = (boolean) defaults to true = for prod build, minify the js
+# minify.js.fileName                                = (string)  defaults to 'scripts.min.js'
 # minify.js.mangle                                  = (boolean) defaults to true = for prod build, mangle the names in the js
 # minify.spa.file                                   = (boolean) defaults to true = for prod build, minify the spa.html file
 # minify.cacheBust                                  = (boolean) defaults to true = for prod build, ensures the user always receives the latest files, adds an md5 checksum to the client files before their extension

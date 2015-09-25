@@ -68,10 +68,11 @@ module.exports = (gulp, config) ->
 					cnt++
 					minCnt++
 					exclude = false
+					fileName = path.basename config.fileName[type].min, ".#{ext}"
 					MinFiles[type].push(
 						cnt:   cnt
 						type:  'include'
-						name:  "#{type}.min.#{minCnt}.#{ext}"
+						name:  "#{fileName}.#{minCnt}.#{ext}"
 						files: []
 					)
 				MinFiles[type][cnt-1].files.push file
@@ -87,7 +88,7 @@ module.exports = (gulp, config) ->
 				includes.index = i
 			# console.log file.type
 		return promiseHelp.get() unless includes.total is 1
-		MinFiles[type][includes.index].name = "#{type}.min.#{ext}"
+		MinFiles[type][includes.index].name = config.fileName[type].min
 		promiseHelp.get()
 
 	# Multi Tasks

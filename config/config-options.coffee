@@ -74,10 +74,12 @@ module.exports = (config, options) ->
 		options.minify.spa       = {} unless isType.object options.minify.spa
 		options.minify.cacheBust = null unless isType.boolean options.minify.cacheBust
 		options.minify.css.styles         = null unless isType.boolean options.minify.css.styles
+		options.minify.css.fileName       = null unless isType.string options.minify.css.fileName
 		options.minify.css.splitMinFile   = null unless isType.boolean options.minify.css.splitMinFile
 		options.minify.html.views         = null unless isType.boolean options.minify.html.views
 		options.minify.html.templateCache = null unless isType.boolean options.minify.html.templateCache
 		options.minify.js.scripts         = null unless isType.boolean options.minify.js.scripts
+		options.minify.js.fileName        = null unless isType.string options.minify.js.fileName
 		options.minify.js.mangle          = null unless isType.boolean options.minify.js.mangle
 		options.minify.spa.file           = null unless isType.boolean options.minify.spa.file
 

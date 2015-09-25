@@ -10,15 +10,25 @@ module.exports = (config, options) ->
 		return true if isType.null opt
 		opt
 
+	getFileName = (type, lang) ->
+		ext    = ".#{lang}"
+		fName  = options.minify[lang].fileName
+		return "#{type}.min#{ext}" unless fName # default ex: scripts.min.js
+		hasExt = fName.indexOf(ext) isnt -1
+		fName += ext unless hasExt
+		fName
+
 	# init minify
 	# ===========
 	minify =
 		css:
 			styles: getOption 'css', 'styles'
 			splitMinFile: getOption 'css', 'splitMinFile'
+			fileName: getFileName 'styles', 'css'
 		js:
 			scripts: getOption 'js', 'scripts'
 			mangle: getOption 'js', 'mangle'
+			fileName: getFileName 'scripts', 'js'
 		html:
 			views: getOption 'html', 'views'
 			templateCache: getOption 'html', 'templateCache'

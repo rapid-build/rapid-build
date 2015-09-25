@@ -119,9 +119,10 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}css-file-split", ->
 		return promiseHelp.get() if not config.minify.css.splitMinFile
-		ext  = '.css'
-		dest = config.dist.app.client.styles.dir
-		src  = path.join dest, "{styles.min#{ext},styles.min.*#{ext}}"
+		ext      = '.css'
+		dest     = config.dist.app.client.styles.dir
+		fileName = path.basename config.fileName.styles.min, ext
+		src      = path.join dest, "{#{fileName}#{ext},#{fileName}.*#{ext}}"
 		runTask src, dest, ext
 
 
