@@ -1,3 +1,12 @@
+# [0.39.0](https://github.com/jyounce/rapid-build/compare/v0.38.0...v0.39.0) (2015-09-25)
+
+
+### Features
+
+* **option:** add build option minify\[css|js\].fileName ([d020567](https://github.com/jyounce/rapid-build/commit/d020567))
+
+
+
 # [0.38.0](https://github.com/jyounce/rapid-build/compare/v0.37.0...v0.38.0) (2015-09-25)
 
 
