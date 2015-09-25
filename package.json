@@ -74,7 +74,7 @@
 		"karma-safari-launcher": "0.1.1",
 		"lodash": "3.10.1",
 		"open": "0.0.5",
-		"postcss": "5.0.6",
+		"postcss": "5.0.8",
 		"postcss-import": "7.0.0",
 		"q": "1.4.1",
 		"through2": "2.0.0"
