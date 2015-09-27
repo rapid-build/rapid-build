@@ -1,3 +1,21 @@
+# [0.40.0](https://github.com/jyounce/rapid-build/compare/v0.39.0...v0.40.0) (2015-09-27)
+
+
+### Features
+
+* **api tasks:** create and expose api tasks test:client and test:server, change existing test ta ([18db4de](https://github.com/jyounce/rapid-build/commit/18db4de))
+
+### Breaking Changes
+The api option test.browsers has changed to test.client.browsers because the build now supports testing client and server side code.
+
+**Before:**  
+options.test.browsers
+
+**Now:**  
+options.test.client.browsers
+
+
+
 # [0.39.0](https://github.com/jyounce/rapid-build/compare/v0.38.0...v0.39.0) (2015-09-25)
 
 
