@@ -20,6 +20,6 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}clean-rb-test-src", ->
+	gulp.task "#{config.rb.prefix.task}clean-rb-client-test-src", ->
 		runTask() # all files are generated
 

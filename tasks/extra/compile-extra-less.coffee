@@ -15,11 +15,13 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = ->
-		locs = config.build.getLocs()
-		extraHelp.run.tasks.async runTask, 'compile', 'less', locs
+	runTasks = (loc) ->
+		extraHelp.run.tasks.async runTask, 'compile', 'less', [loc]
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}compile-extra-less", ->
-		runTasks()
+	gulp.task "#{config.rb.prefix.task}compile-extra-less:client", ->
+		runTasks 'client'
+
+	gulp.task "#{config.rb.prefix.task}compile-extra-less:server", ->
+		runTasks 'server'

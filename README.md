@@ -20,7 +20,7 @@ rapid-build currently supports the following technologies:
 * frameworks
 	* [angular](https://angularjs.org/) (client)
 	* [karma](http://karma-runner.github.io/) (client testing)
-	* [jasmine](http://jasmine.github.io/) (client testing)
+	* [jasmine](http://jasmine.github.io/) (client and server testing)
 	* [express](http://expressjs.com/) (server)
 * package managers
 	* [bower](http://bower.io/) (client)
@@ -106,6 +106,7 @@ gulp rapid-build:test:prod
 # dist.client.bower.dir                             = (string)  defaults to 'bower_components'
 # dist.client.libs.dir                              = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
 # dist.server.dir                                   = (string)  defaults to 'server'
+# dist.server.test.dir                              = (string)  defaults to 'test'
 # dist.server.fileName                              = (string)  defaults to 'routes.js': this is the server's entry script
 # src.dir                                           = (string)  defaults to 'src'
 # src.client.dir                                    = (string)  defaults to 'client'
@@ -113,6 +114,7 @@ gulp rapid-build:test:prod
 # src.client.bower.dir                              = (string)  defaults to 'bower_components'
 # src.client.libs.dir                               = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
 # src.server.dir                                    = (string)  defaults to 'server'
+# src.server.test.dir                               = (string)  defaults to 'test'
 # ports.server                                      = (int)     defaults to 3000, web server port
 # ports.reload                                      = (int)     defaults to 3001, browsersync server port 
 # ports.reloadUI                                    = (int)     defaults to 3002, browsersync's user-interface server port 
@@ -150,7 +152,7 @@ gulp rapid-build:test:prod
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # exclude.from.dist[client|server]                  = (array of strings) = file paths: exclude client or server files from the dist folder 
-# test.browsers                                     = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
+# test.client.browsers                              = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
 # server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
 # httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://www.npmjs.com/package/http-proxy-middleware
 # browser.open                                      = (boolean) defaults to true = open the browser once the build completes, applies to builds: default, dev and prod:server
@@ -205,8 +207,10 @@ gulp rapid-build:test:prod
 
 #### Test Build:
 1. run common tasks (see above)
-2. copy test scripts to dist/client/
-3. run tests in [PhantomJS](http://phantomjs.org/)
+2. copy client test scripts to dist/client/
+3. run client tests in [PhantomJS](http://phantomjs.org/)
+4. copy server test scripts to dist/server/
+5. run server tests using [jasmine](http://jasmine.github.io/)
 
 ## Develop Rapidly!
 ![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/shake-and-bake.jpg "Shake n' Bake!")

@@ -5,7 +5,6 @@ module.exports = (gulp, config, watchFile={}) ->
 	gulpif        = require 'gulp-if'
 	minifyHtml    = require 'gulp-minify-html'
 	templateCache = require 'gulp-angular-templatecache'
-	promiseHelp   = require "#{config.req.helpers}/promise"
 	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
 	dirHelper     = require("#{config.req.helpers}/dir") config, gulp
 	runNgFormify  = config.angular.ngFormify
@@ -88,7 +87,6 @@ module.exports = (gulp, config, watchFile={}) ->
 	# =============
 	return runSingle() if forWatchFile
 	gulp.task "#{config.rb.prefix.task}template-cache", ->
-		return promiseHelp.get() unless config.build.client
 		runMulti()
 
 

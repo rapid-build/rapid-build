@@ -1,7 +1,6 @@
 module.exports = (gulp, config, watchFile={}) ->
 	q            = require 'q'
 	gulpif       = require 'gulp-if'
-	promiseHelp  = require "#{config.req.helpers}/promise"
 	ngFormify    = require "#{config.req.plugins}/gulp-ng-formify"
 	tasks        = require("#{config.req.helpers}/tasks")()
 	runNgFormify = config.angular.ngFormify
@@ -31,5 +30,4 @@ module.exports = (gulp, config, watchFile={}) ->
 	# =============
 	return runSingle() if forWatchFile
 	gulp.task "#{config.rb.prefix.task}copy-html", ->
-		return promiseHelp.get() unless config.build.client
 		runMulti()

@@ -246,7 +246,8 @@ module.exports = (config) ->
 
 			src: (loc='rb', opts={}) ->
 				return if not me.has.bower loc
-				env      = opts.env or config.env.name
+				env      = opts.env
+				env      = 'prod' if not env and config.env.is.prod
 				env      = 'dev' if ['dev','prod'].indexOf(env) is -1
 				absPaths = []
 				relPaths = {}

@@ -1,13 +1,12 @@
 module.exports = (gulp, config) ->
 	q           = require 'q'
 	del         = require 'del'
-	path        = require 'path'
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	cleanTask = (src) ->
 		defer = q.defer()
 		del(src, force:true).then (paths) ->
-			# console.log 'cleaned dist test'.yellow
+			# console.log 'cleaned client dist test'.yellow
 			defer.resolve()
 		defer.promise
 
@@ -20,7 +19,8 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}clean-test-dist", ->
+	gulp.task "#{config.rb.prefix.task}clean-client-test-dist", ->
 		return promiseHelp.get() unless config.build.client
+		return promiseHelp.get() if config.exclude.angular.files
 		runTask()
 

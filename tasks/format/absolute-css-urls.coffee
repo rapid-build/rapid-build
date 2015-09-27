@@ -77,7 +77,6 @@ module.exports = (gulp, config, watchFilePath) ->
 	# =============
 	return runSingle() if forWatchFile
 	gulp.task "#{config.rb.prefix.task}absolute-css-urls", ->
-		return promiseHelp.get() unless config.build.client
 		runTasks()
 
 

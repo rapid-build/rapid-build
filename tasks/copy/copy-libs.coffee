@@ -1,6 +1,5 @@
 module.exports = (gulp, config) ->
-	q           = require 'q'
-	promiseHelp = require "#{config.req.helpers}/promise"
+	q = require 'q'
 
 	runTask = (src, dest, appOrRb) ->
 		defer = q.defer()
@@ -30,5 +29,4 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}copy-libs", ->
-		return promiseHelp.get() unless config.build.client
 		runTasks()

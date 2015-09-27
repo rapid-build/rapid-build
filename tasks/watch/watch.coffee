@@ -19,6 +19,7 @@ module.exports = (gulp, config, browserSync) ->
 		sass:   require "#{config.req.tasks}/compile/sass"
 		tCache: require "#{config.req.tasks}/minify/template-cache"
 		buildSpa: ->
+			return promiseHelp.get() unless config.build.client
 			gulp.start "#{config.rb.prefix.task}watch-build-spa"
 		browserSync: ->
 			return unless config.build.server
@@ -74,7 +75,7 @@ module.exports = (gulp, config, browserSync) ->
 	addAndUnlinkTask = (taskName, file, opts) ->
 		return changeTask taskName, file if opts.taskOnly
 		tasks[taskName](gulp, config, file).then ->
-			return tasks.browserSync() if opts.bsReload
+			return tasks.browserSync() if opts.bsReload or opts.loc is 'server'
 			if taskName is 'clean' and opts.cleanCb
 				opts.cleanCb(file).then -> tasks.buildSpa()
 			else

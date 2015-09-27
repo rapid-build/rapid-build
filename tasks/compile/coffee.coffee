@@ -19,15 +19,19 @@ module.exports = (gulp, config, watchFile={}) ->
 	runSingle = ->
 		runTask watchFile.path, watchFile.rbDistDir
 
-	runMulti = ->
-		locs = config.build.getLocs()
+	runMulti = (loc) ->
 		tasks.run.async(
 			config, runTask,
 			'scripts', 'coffee',
-			locs
+			[loc]
 		)
 
 	# register task
 	# =============
 	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}coffee", -> runMulti()
+
+	gulp.task "#{config.rb.prefix.task}coffee:client", ->
+		runMulti 'client'
+
+	gulp.task "#{config.rb.prefix.task}coffee:server", ->
+		runMulti 'server'

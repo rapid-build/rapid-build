@@ -23,7 +23,7 @@ module.exports = (gulp, config) ->
 	getKarmaConfig = ->
 		autoWatch:  false
 		basePath:   config.app.dir
-		browsers:   config.test.browsers # see config-test.coffee
+		browsers:   config.test.client.browsers # see config-test.coffee
 		frameworks: ['jasmine', 'jasmine-matchers']
 		port:       config.ports.test
 		reporters:  ['dots']
@@ -77,7 +77,7 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}run-tests", ->
+	gulp.task "#{config.rb.prefix.task}run-client-tests", ->
 		runTask()
 
 

@@ -15,15 +15,19 @@ module.exports = (gulp, config, watchFile={}) ->
 	runSingle = ->
 		runTask watchFile.path, watchFile.rbDistDir
 
-	runMulti = ->
-		locs = config.build.getLocs()
+	runMulti = (loc) ->
 		tasks.run.async(
 			config, runTask,
 			'scripts', 'js',
-			locs
+			[loc]
 		)
 
 	# register task
 	# =============
 	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}copy-js", -> runMulti()
+
+	gulp.task "#{config.rb.prefix.task}copy-js:client", ->
+		runMulti 'client'
+
+	gulp.task "#{config.rb.prefix.task}copy-js:server", ->
+		runMulti 'server'

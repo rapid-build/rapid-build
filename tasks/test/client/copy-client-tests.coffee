@@ -41,5 +41,5 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}copy-tests", ->
+	gulp.task "#{config.rb.prefix.task}copy-client-tests", ->
 		runMulti()

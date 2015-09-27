@@ -1,3 +1,5 @@
+# Updates config.ports if a port is in use.
+# =========================================
 module.exports = (gulp, config) ->
 	q          = require 'q'
 	fse        = require 'fs-extra'
@@ -48,21 +50,21 @@ module.exports = (gulp, config) ->
 			defer.resolve()
 		defer.promise
 
-	setPorts = -> # synchronously
+	setPorts = (forTestClientPort) -> # synchronously
 		defer = q.defer()
 		tasks = [
 			-> setPort 'server'
 			-> setPort 'reload'
 			-> setPort 'reloadUI'
-			-> setPort 'test'
 		]
+		tasks = [ -> setPort 'test' ] if forTestClientPort
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
-	runTasks = -> # synchronously
+	runTasks = (forTestClientPort) -> # synchronously
 		defer = q.defer()
 		tasks = [
-			-> setPorts()
+			-> setPorts forTestClientPort
 			-> configHelp.buildFile buildConfigFile, 'rebuild'
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
@@ -72,5 +74,8 @@ module.exports = (gulp, config) ->
 	# =============
 	gulp.task "#{config.rb.prefix.task}find-open-port", ->
 		runTasks()
+
+	gulp.task "#{config.rb.prefix.task}find-open-port:test:client", ->
+		runTasks true
 
 

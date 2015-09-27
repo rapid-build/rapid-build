@@ -58,10 +58,11 @@ module.exports = (config) ->
 	addGlob = (loc, type, langs, includeBower, includeLibs) ->
 		for own k1, v1 of glob[loc]
 			for own k2, v2 of v1
-				continue if k2 is 'server' and type isnt 'scripts'
+				continue if k2 is 'server' and ['scripts','test'].indexOf(type) is -1
 				continue if k2 is 'server' and (includeBower or includeLibs)
 				v2[type] = {} if not isType.object v2[type]
-				langs.forEach (v3) ->
+				for v3 in langs
+					continue if k2 is 'server' and type is 'test' and v3 is 'css'
 					typeDir = pathHelp.format config[loc][k1][k2][type].dir
 					if includeBower or includeLibs
 						bowerDir = pathHelp.format config[loc][k1][k2]['bower'].dir
@@ -114,6 +115,17 @@ module.exports = (config) ->
 
 	excludeSpaSrc 'libs',  'all'
 	excludeSpaSrc 'views', 'html'
+
+	# exclude server tests
+	# ====================
+	excludeServerTests = ->
+		for appOrRb in ['app','rb']
+			exclude = path.join config.src[appOrRb].server.test.dir, '**'
+			exclude = "!#{exclude}"
+			for own k1, v1 of glob.src[appOrRb].server.scripts
+				v1.push exclude
+
+	excludeServerTests()
 
 	# cache bust
 	# ==========

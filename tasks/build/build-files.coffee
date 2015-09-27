@@ -4,17 +4,16 @@
 #	scripts: []
 # ===================
 module.exports = (gulp, config) ->
-	q           = require 'q'
-	path        = require 'path'
-	gs          = require 'glob-stream'
-	rename      = require 'gulp-rename'
-	template    = require 'gulp-template'
-	pathHelp    = require "#{config.req.helpers}/path"
-	log         = require "#{config.req.helpers}/log"
-	promiseHelp = require "#{config.req.helpers}/promise"
-	format      = require("#{config.req.helpers}/format")()
-	data        = client: styles:[], scripts:[]
-	globs       = null
+	q        = require 'q'
+	path     = require 'path'
+	gs       = require 'glob-stream'
+	rename   = require 'gulp-rename'
+	template = require 'gulp-template'
+	pathHelp = require "#{config.req.helpers}/path"
+	log      = require "#{config.req.helpers}/log"
+	format   = require("#{config.req.helpers}/format")()
+	data     = client: styles:[], scripts:[]
+	globs    = null
 
 	# task
 	# ====
@@ -136,7 +135,6 @@ module.exports = (gulp, config) ->
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}build-files", taskDeps, ->
-		return promiseHelp.get() unless config.build.client
 		runTask()
 
 

@@ -19,11 +19,15 @@ module.exports = (config, options) ->
 				# dir
 				options[v1][v2] = {} unless isType.object options[v1][v2]
 				options[v1][v2].dir = null unless isType.string options[v1][v2].dir
-				return if v2 is 'server'
 				# types dir
-				['bower', 'images', 'libs', 'scripts', 'styles', 'test', 'views'].forEach (v3) ->
-					options[v1][v2][v3] = {} unless isType.object options[v1][v2][v3]
-					options[v1][v2][v3].dir = null unless isType.string options[v1][v2][v3].dir
+				if v2 is 'server'
+					['test'].forEach (v3) ->
+						options[v1][v2][v3] = {} unless isType.object options[v1][v2][v3]
+						options[v1][v2][v3].dir = null unless isType.string options[v1][v2][v3].dir
+				else
+					['bower', 'images', 'libs', 'scripts', 'styles', 'test', 'views'].forEach (v3) ->
+						options[v1][v2][v3] = {} unless isType.object options[v1][v2][v3]
+						options[v1][v2][v3].dir = null unless isType.string options[v1][v2][v3].dir
 
 	portOptions = -> # server ports
 		options.ports = {} unless isType.object options.ports
@@ -103,7 +107,8 @@ module.exports = (config, options) ->
 
 	testOptions = ->
 		options.test = {} unless isType.object options.test
-		options.test.browsers = null unless isType.array options.test.browsers
+		options.test.client = {} unless isType.object options.test.client
+		options.test.client.browsers = null unless isType.array options.test.client.browsers
 
 	serverDistOptions = -> # app server dist entry file
 		options.dist.server.fileName = null unless isType.string options.dist.server.fileName

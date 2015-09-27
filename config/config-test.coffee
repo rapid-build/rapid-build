@@ -4,14 +4,16 @@ module.exports = (config, options) ->
 
 	# init test
 	# =========
-	test = {}
+	test =
+		client: {}
+		dist:   {}
 
 	# browsers
 	# ========
 	getBrowsers = ->
 		browsers     = ['PhantomJS'] # default
 		browserOpts  = ['Chrome', 'Firefox', 'IE', 'Safari'] # case sensitive
-		userBrowsers = options.test.browsers
+		userBrowsers = options.test.client.browsers
 		return browsers unless userBrowsers
 		return browsers unless userBrowsers.length
 		# format the browser names, they are case sensitive
@@ -26,7 +28,7 @@ module.exports = (config, options) ->
 			browsers.push match
 		browsers
 
-	test.browsers = getBrowsers()
+	test.client.browsers = getBrowsers()
 
 	# test files
 	# ==========
@@ -37,6 +39,8 @@ module.exports = (config, options) ->
 				client:
 					scripts: config.glob[loc][appOrRb].client.test.js
 					styles:  config.glob[loc][appOrRb].client.test.css
+				server:
+					scripts: config.glob[loc][appOrRb].server.test.js
 		structure
 
 	test.dist = getTestFiles 'dist'

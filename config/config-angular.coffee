@@ -67,12 +67,20 @@ module.exports = (config, options) ->
 		else if not angular.httpBackend.dev
 			removeRbMocksModule()
 
-	angular.updateHttpBackendStatus = ->
-		if config.env.is.test and angular.httpBackend.dev
-			httpBackendEnabled = true
-		else if config.env.is.prod and angular.httpBackend.prod
-			httpBackendEnabled = true
-		config.angular.httpBackend.enabled = !!httpBackendEnabled
+	angular.updateHttpBackendStatus = -> # called in update-angular-mocks-config
+		isDefaultOrDev  = config.env.is.defaultOrDev
+		isProd          = config.env.is.prod
+		isTest          = config.env.is.testClient
+		isTestProd      = isProd and isTest
+		httpBackendDev  = angular.httpBackend.dev
+		httpBackendProd = angular.httpBackend.prod
+		# the rules
+		enabled = true if isDefaultOrDev and httpBackendDev
+		enabled = true if isProd and httpBackendProd
+		enabled = true if isTest and httpBackendDev and not isProd
+		enabled = true if isTest and httpBackendProd and isProd
+
+		config.angular.httpBackend.enabled = !!enabled
 
 	# add angular to config
 	# =====================

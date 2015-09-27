@@ -42,6 +42,7 @@ module.exports = (config, options) ->
 			o.clientStyles  = options[loc].client.styles.dir
 			o.clientTest    = options[loc].client.test.dir
 			o.clientViews   = options[loc].client.views.dir
+			o.serverTest    = options[loc].server.test.dir
 
 		clientDirName = if loc is 'dist' then o.clientDir or dir.client else null
 		serverDirName = if loc is 'dist' then o.serverDir or dir.server else null
@@ -70,6 +71,8 @@ module.exports = (config, options) ->
 				dirName: serverDirName
 				scripts:
 					dir: o.serverDir or dir.scripts
+				test:
+					dir: o.serverTest or dir.test
 		if loc is 'dist'
 			unless isApp
 				info.client.dirName = config.rb.prefix.distDir
@@ -128,12 +131,12 @@ module.exports = (config, options) ->
 			continue if k1 is 'dir'
 			for own k2, v2 of v1
 				continue if k2 is 'dir'
-				continue if k2 is 'server'
 				for own k3, v3 of v2
 					continue if k3 is 'dirName'
 					continue if k3 is 'dir'
+					continue if k2 is 'server' and k3 isnt 'test'
 					if k1 is 'app'
-						v3.dirName = options[loc].client[k3].dir or dir[k3]
+						v3.dirName = options[loc][k2][k3].dir or dir[k3]
 					else
 						v3.dirName = dir[k3]
 	addDirName 'dist'

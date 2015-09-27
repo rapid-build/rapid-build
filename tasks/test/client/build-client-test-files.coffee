@@ -106,7 +106,7 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}build-test-files", ->
+	gulp.task "#{config.rb.prefix.task}build-client-test-files", ->
 		runTask()
 
 

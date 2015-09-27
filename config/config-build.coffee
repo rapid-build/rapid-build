@@ -16,14 +16,6 @@ module.exports = (config, options) ->
 			console.error msg.error
 		.exit 1
 
-	# methods
-	# =======
-	build.getLocs = ->
-		locs = []
-		locs.push 'client' if build.client
-		locs.push 'server' if build.server
-		locs
-
 	# add build to config
 	# ===================
 	config.build = build

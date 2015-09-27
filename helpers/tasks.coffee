@@ -1,4 +1,4 @@
-module.exports = ->
+module.exports = (gulp={}) ->
 	q = require 'q'
 
 	# private
@@ -29,3 +29,8 @@ module.exports = ->
 			defer = q.defer()
 			tasks.reduce(q.when, q()).done -> defer.resolve()
 			defer.promise
+
+	wasCalledFrom: (task) -> # return boolean
+		calledFromTask = gulp.seq.indexOf(task) isnt -1
+		# console.log "was called from task #{task} = #{calledFromTask}".yellow
+		calledFromTask

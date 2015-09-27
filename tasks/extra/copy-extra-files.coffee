@@ -11,11 +11,13 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = ->
-		locs = config.build.getLocs()
-		extraHelp.run.tasks.async runTask, 'copy', null, locs
+	runTasks = (loc) ->
+		extraHelp.run.tasks.async runTask, 'copy', null, [loc]
 
 	# register task
 	# =============
-	gulp.task "#{config.rb.prefix.task}copy-extra-files", ->
-		runTasks()
+	gulp.task "#{config.rb.prefix.task}copy-extra-files:client", ->
+		runTasks 'client'
+
+	gulp.task "#{config.rb.prefix.task}copy-extra-files:server", ->
+		runTasks 'server'
