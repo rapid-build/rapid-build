@@ -68,10 +68,9 @@ module.exports = (config, options) ->
 			removeRbMocksModule()
 
 	angular.updateHttpBackendStatus = -> # called in update-angular-mocks-config
-		isDefaultOrDev  = config.env.is.defaultOrDev
+		isDefaultOrDev  = config.env.is.default or config.env.is.dev
 		isProd          = config.env.is.prod
 		isTest          = config.env.is.testClient
-		isTestProd      = isProd and isTest
 		httpBackendDev  = angular.httpBackend.dev
 		httpBackendProd = angular.httpBackend.prod
 		# the rules

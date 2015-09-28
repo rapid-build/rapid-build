@@ -14,15 +14,18 @@ module.exports = (config, rbDir) ->
 	# =========
 	rb.tasks = {}
 	rb.tasks.default             = 'rapid-build'
-	rb.tasks.dev                 = "#{rb.tasks.default}:dev"
-	rb.tasks.prod                = "#{rb.tasks.default}:prod"
-	rb.tasks['prod:server']      = "#{rb.tasks.default}:prod:server"
 	rb.tasks.test                = "#{rb.tasks.default}:test"
-	rb.tasks['test:prod']        = "#{rb.tasks.default}:test:prod"
 	rb.tasks['test:client']      = "#{rb.tasks.default}:test:client"
 	rb.tasks['test:server']      = "#{rb.tasks.default}:test:server"
-	rb.tasks['test:client:prod'] = "#{rb.tasks.default}:test:client:prod"
-	rb.tasks['test:server:prod'] = "#{rb.tasks.default}:test:server:prod"
+	rb.tasks.dev                 = "#{rb.tasks.default}:dev"
+	rb.tasks['dev:test']         = "#{rb.tasks.default}:dev:test"
+	rb.tasks['dev:test:client']  = "#{rb.tasks.default}:dev:test:client"
+	rb.tasks['dev:test:server']  = "#{rb.tasks.default}:dev:test:server"
+	rb.tasks.prod                = "#{rb.tasks.default}:prod"
+	rb.tasks['prod:server']      = "#{rb.tasks.default}:prod:server"
+	rb.tasks['prod:test']        = "#{rb.tasks.default}:prod:test"
+	rb.tasks['prod:test:client'] = "#{rb.tasks.default}:prod:test:client"
+	rb.tasks['prod:test:server'] = "#{rb.tasks.default}:prod:test:server"
 
 	# prefixes
 	# ========

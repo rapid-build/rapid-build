@@ -87,11 +87,11 @@ gulp.task('default', ['rapid-build'])
 
 // or from the terminal type one of the 6:
 gulp rapid-build
+gulp rapid-build:test
 gulp rapid-build:dev
 gulp rapid-build:prod
 gulp rapid-build:prod:server
-gulp rapid-build:test
-gulp rapid-build:test:prod
+gulp rapid-build:prod:test
 ```
 
 ## Options API

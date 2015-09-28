@@ -14,28 +14,39 @@ module.exports = (config) ->
 		switch name
 			when 'default'
 				env.is.default = true
-				env.is.defaultOrDev = true
-			when 'dev'
-				env.is.dev = true
-				env.is.defaultOrDev = true
-			when 'prod'
-				env.is.prod = true
 			when 'test'
-				env.is.testClient = true
-				env.is.testServer = true
-			when 'test:prod'
-				env.is.prod = true
+				env.is.default    = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'test:client'
-				env.is.testClient = true
-			when 'test:client:prod'
-				env.is.prod = true
+				env.is.default    = true
 				env.is.testClient = true
 			when 'test:server'
+				env.is.default    = true
 				env.is.testServer = true
-			when 'test:server:prod'
+			when 'dev'
+				env.is.dev = true
+			when 'dev:test'
+				env.is.dev        = true
+				env.is.testClient = true
+				env.is.testServer = true
+			when 'dev:test:client'
+				env.is.dev        = true
+				env.is.testClient = true
+			when 'dev:test:server'
+				env.is.dev        = true
+				env.is.testServer = true
+			when 'prod'
 				env.is.prod = true
+			when 'prod:test'
+				env.is.prod       = true
+				env.is.testClient = true
+				env.is.testServer = true
+			when 'prod:test:client'
+				env.is.prod       = true
+				env.is.testClient = true
+			when 'prod:test:server'
+				env.is.prod       = true
 				env.is.testServer = true
 
 	# init env
@@ -47,7 +58,6 @@ module.exports = (config) ->
 	# ==
 	env.is =
 		default: true
-		defaultOrDev: true
 		dev:  false
 		prod: false
 		testClient: false
@@ -57,14 +67,17 @@ module.exports = (config) ->
 	# =======
 	env.set = (taskSeqs) -> # called in 'set-env-config' which is called first in 'common'
 		switch taskSeqs[2]
-			when config.rb.tasks.dev  then config.env.name = 'dev'
-			when config.rb.tasks.prod then config.env.name = 'prod'
 			when config.rb.tasks.test then config.env.name = 'test'
-			when config.rb.tasks['test:prod']   then config.env.name = 'test:prod'
 			when config.rb.tasks['test:client'] then config.env.name = 'test:client'
 			when config.rb.tasks['test:server'] then config.env.name = 'test:server'
-			when config.rb.tasks['test:client:prod'] then config.env.name = 'test:client:prod'
-			when config.rb.tasks['test:server:prod'] then config.env.name = 'test:server:prod'
+			when config.rb.tasks.dev then config.env.name = 'dev'
+			when config.rb.tasks['dev:test'] then config.env.name = 'dev:test'
+			when config.rb.tasks['dev:test:client'] then config.env.name = 'dev:test:client'
+			when config.rb.tasks['dev:test:server'] then config.env.name = 'dev:test:server'
+			when config.rb.tasks.prod then config.env.name = 'prod'
+			when config.rb.tasks['prod:test'] then config.env.name = 'prod:test'
+			when config.rb.tasks['prod:test:client'] then config.env.name = 'prod:test:client'
+			when config.rb.tasks['prod:test:server'] then config.env.name = 'prod:test:server'
 
 		setIsEnv()
 

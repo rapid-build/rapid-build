@@ -53,8 +53,17 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
-	# test client
-	# ===========
+	# test default - client and server
+	# ================================
+	gulp.task config.rb.tasks['test'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			config.rb.tasks['test:client']
+			config.rb.tasks['test:server']
+			cb
+		) -> defer.resolve()
+
+	# test default - client
+	# =====================
 	gulp.task config.rb.tasks['test:client'], ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}common-client"
@@ -63,20 +72,8 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
 
-	# Test client prod
-	# ================
-	gulp.task config.rb.tasks['test:client:prod'], ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			"#{config.rb.prefix.task}common-client"
-			"#{config.rb.prefix.task}minify-client"
-			"#{config.rb.prefix.task}common-test-client"
-			"#{config.rb.prefix.task}clean-client-test-dist"
-			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test:prod']
-
-
-	# test server
-	# ===========
+	# test default - server
+	# =====================
 	gulp.task config.rb.tasks['test:server'], ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}common-server"
@@ -85,9 +82,29 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
 
-	# test server prod
-	# ================
-	gulp.task config.rb.tasks['test:server:prod'], ["#{config.rb.prefix.task}common"], (cb) ->
+	# test prod - client and server
+	# =============================
+	gulp.task config.rb.tasks['prod:test'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			config.rb.tasks['prod:test:client']
+			config.rb.tasks['prod:test:server']
+			cb
+		) -> defer.resolve()
+
+	# test prod - client
+	# ==================
+	gulp.task config.rb.tasks['prod:test:client'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}common-client"
+			"#{config.rb.prefix.task}minify-client"
+			"#{config.rb.prefix.task}common-test-client"
+			"#{config.rb.prefix.task}clean-client-test-dist"
+			cb
+		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:test']
+
+	# test prod - server
+	# ==================
+	gulp.task config.rb.tasks['prod:test:server'], ["#{config.rb.prefix.task}common"], (cb) ->
 		gulpSequence(
 			"#{config.rb.prefix.task}common-server"
 			"#{config.rb.prefix.task}minify-server"
@@ -95,25 +112,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-test-server"
 			"#{config.rb.prefix.task}clean-server-test-dist"
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test:prod']
-
-	# test client and server
-	# ======================
-	gulp.task config.rb.tasks['test'], ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			config.rb.tasks['test:client']
-			config.rb.tasks['test:server']
-			cb
-		) -> defer.resolve()
-
-	# test client and server
-	# ======================
-	gulp.task config.rb.tasks['test:prod'], ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			config.rb.tasks['test:client:prod']
-			config.rb.tasks['test:server:prod']
-			cb
-		) -> defer.resolve()
+		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:test']
 
 	# return
 	# ======
