@@ -148,6 +148,17 @@ module.exports = (config, options) ->
 			['app', 'rb'].forEach (v2) ->
 				config[v1][v2].server.scripts.dir = config[v1][v2].server.dir
 
+	addToServerRbDist = ->
+		config.dist.rb.server.scripts.file = file.rbServer # rb server dist bootstrap file
+		config.dist.rb.server.scripts.path = path.join(
+			config.app.dir
+			config.dist.rb.server.scripts.dir
+		)
+		config.dist.rb.server.scripts.filePath = path.join(
+			config.dist.rb.server.scripts.path
+			config.dist.rb.server.scripts.file
+		)
+
 	addToServerAppDist = ->
 		config.dist.app.server.scripts.file = # app server dist entry file
 			options.dist.server.fileName or file.appServer
@@ -156,12 +167,8 @@ module.exports = (config, options) ->
 			path.join config.app.dir, config.dist.app.server.scripts.dir
 
 	updateServerScriptsDir() # server dir is server.scripts.dir
+	addToServerRbDist()      # add file, path and filePath
 	addToServerAppDist()     # add file and path
-	config.dist.rb.server.scripts.file = file.rbServer # rb server dist bootstrap file
-	config.dist.rb.server.scripts.path = path.join(
-		config.dist.rb.server.scripts.dir
-		config.dist.rb.server.scripts.file
-	)
 
 	# final touch-ups
 	# ===============
