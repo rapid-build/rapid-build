@@ -7,6 +7,7 @@ module.exports = (gulp, config) ->
 	moduleHelp  = require "#{config.req.helpers}/module"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	format      = require("#{config.req.helpers}/format")()
+	resultsFile = path.join config.dist.app.client.dir, 'test-results.json'
 
 	# Global
 	# ======
@@ -31,10 +32,9 @@ module.exports = (gulp, config) ->
 
 	# tasks
 	# =====
-	cleanResultsFile = (src, file) ->
+	cleanResultsFile = (src) ->
 		defer = q.defer()
 		del(src, force:true).then (paths) ->
-			# console.log "removed #{file}".yellow
 			defer.resolve()
 		defer.promise
 
@@ -50,7 +50,7 @@ module.exports = (gulp, config) ->
 			karmaConfig.files = tests.scripts
 
 		server = new Server karmaConfig, (exitCode) ->
-			console.log "karma has exited with #{exitCode}".yellow
+			# console.log "karma has exited with #{exitCode}".yellow
 			TestResults.status   = if not exitCode then 'passed' else 'failed'
 			TestResults.exitCode = exitCode
 			defer.resolve()
@@ -63,14 +63,20 @@ module.exports = (gulp, config) ->
 		fs.writeFileSync file, format.json TestResults
 		promiseHelp.get()
 
+	failureCheck = ->
+		return promiseHelp.get() if TestResults.status is 'passed'
+		process.on 'exit', ->
+			msg = "Client test failed - created #{resultsFile}"
+			console.error msg.error
+		.exit 1
+
 	runTask = -> # synchronously
 		defer = q.defer()
-		resultsFileName = 'test-results.json'
-		resultsFilePath = path.join config.dist.app.client.dir, resultsFileName
 		tasks = [
-			-> cleanResultsFile resultsFilePath, resultsFileName
+			-> cleanResultsFile resultsFile
 			-> runTests()
-			-> writeResultsFile resultsFilePath
+			-> writeResultsFile resultsFile
+			-> failureCheck()
 		]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise

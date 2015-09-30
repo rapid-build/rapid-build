@@ -91,9 +91,10 @@ module.exports = (gulp, config) ->
 	# server
 	# ======
 	require("#{config.req.tasks}/server/find-open-port")            gulp, config
-	require("#{config.req.tasks}/server/start-server")              gulp, config
-	require("#{config.req.tasks}/server/spawn-server")              gulp, config
 	require("#{config.req.tasks}/server/nodemon")                   gulp, config, bs
+	require("#{config.req.tasks}/server/spawn-server")              gulp, config
+	require("#{config.req.tasks}/server/start-server")              gulp, config
+	require("#{config.req.tasks}/server/stop-server")               gulp, config
 
 	# client test
 	# ===========

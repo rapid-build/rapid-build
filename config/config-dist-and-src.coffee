@@ -19,7 +19,7 @@ module.exports = (config, options) ->
 
 	file =
 		appServer: 'routes.js' # app server dist entry file
-		rbServer:  'server.js' # rb server dist bootstrap file
+		rbServerInit: 'init-server.js' # rb server dist bootstrap file
 
 	# dirs
 	# ====
@@ -149,7 +149,7 @@ module.exports = (config, options) ->
 				config[v1][v2].server.scripts.dir = config[v1][v2].server.dir
 
 	addToServerRbDist = ->
-		config.dist.rb.server.scripts.file = file.rbServer # rb server dist bootstrap file
+		config.dist.rb.server.scripts.file = file.rbServerInit # rb server dist bootstrap file
 		config.dist.rb.server.scripts.path = path.join(
 			config.app.dir
 			config.dist.rb.server.scripts.dir

@@ -2,7 +2,6 @@
 # =========================================
 module.exports = (gulp, config) ->
 	q          = require 'q'
-	fse        = require 'fs-extra'
 	findPort   = require 'find-port'
 	configHelp = require("#{config.req.helpers}/config") config
 

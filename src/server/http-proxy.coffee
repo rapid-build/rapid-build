@@ -1,5 +1,4 @@
-module.exports = (app, config, opts) ->
-	return if not config.httpProxy.length
+module.exports = (app, config) ->
 	proxyMidware = require 'http-proxy-middleware' # express middleware
 	proxies      = []
 
@@ -12,3 +11,7 @@ module.exports = (app, config, opts) ->
 	# add middleware to express app
 	# =============================
 	app.use proxies
+
+	# return middleware
+	# =================
+	proxyMidware

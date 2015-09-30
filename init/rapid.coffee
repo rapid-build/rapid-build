@@ -79,6 +79,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-server"
 			"#{config.rb.prefix.task}start-server"
 			"#{config.rb.prefix.task}common-test-server"
+			"#{config.rb.prefix.task}stop-server"
 			cb
 		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
 
@@ -111,6 +112,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}start-server"
 			"#{config.rb.prefix.task}common-test-server"
 			"#{config.rb.prefix.task}clean-server-test-dist"
+			"#{config.rb.prefix.task}stop-server"
 			cb
 		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:test']
 

@@ -1,7 +1,6 @@
 module.exports = (gulp, config, browserSync) ->
-	q           = require 'q'
-	path        = require 'path'
-	nodemon     = require 'gulp-nodemon'
+	q       = require 'q'
+	nodemon = require 'gulp-nodemon'
 
 	# globals
 	# =======
