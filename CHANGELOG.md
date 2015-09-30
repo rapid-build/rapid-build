@@ -1,3 +1,36 @@
+## [0.40.1](https://github.com/jyounce/rapid-build/compare/v0.40.0...v0.40.1) (2015-09-30)
+
+
+### Bug Fixes
+
+* **api:** change task test:prod to prod:test ([8d19e4f](https://github.com/jyounce/rapid-build/commit/8d19e4f))
+* **test server task:** stop the server when the test has ran ([9a2f9e9](https://github.com/jyounce/rapid-build/commit/9a2f9e9))
+
+
+### Breaking Changes
+
+* The application server routes file arguments have changed because it was limited to only app and opts. Now this file accepts one server argument that is an object containing app, express, middleware, paths and server.
+
+**Before:**
+```javascript
+module.exports = (app, opts) => {
+  app.get('/api/superheroes', (req, res) =>
+  ...
+}
+```
+
+**Now:**
+```javascript
+module.exports = (server) => {
+  var app = server.app
+
+  app.get('/api/superheroes', (req, res) =>
+  ...
+}
+```
+
+
+
 # [0.40.0](https://github.com/jyounce/rapid-build/compare/v0.39.0...v0.40.0) (2015-09-27)
 
 
