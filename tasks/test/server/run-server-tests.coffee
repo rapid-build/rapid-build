@@ -1,11 +1,12 @@
-module.exports = (gulp, config) ->
-	q           = require 'q'
-	del         = require 'del'
-	path        = require 'path'
-	fse         = require 'fs-extra'
-	promiseHelp = require "#{config.req.helpers}/promise"
-	jasmine     = require("#{config.req.helpers}/jasmine") config
-	resultsFile = path.join config.dist.app.server.dir, 'test-results.json'
+module.exports = (gulp, config, watchFilePath) ->
+	q            = require 'q'
+	del          = require 'del'
+	path         = require 'path'
+	fse          = require 'fs-extra'
+	promiseHelp  = require "#{config.req.helpers}/promise"
+	jasmine      = require("#{config.req.helpers}/jasmine") config
+	resultsFile  = path.join config.dist.app.server.dir, 'test-results.json'
+	forWatchFile = !!watchFilePath
 
 	# tasks
 	# =====
@@ -32,6 +33,9 @@ module.exports = (gulp, config) ->
 			console.error msg.error
 		.exit 1
 
+	runSingle = (file) ->
+		jasmine.init(file).reExecute() # returns promise
+
 	runMulti = -> # synchronously
 		defer = q.defer()
 		tasks = [
@@ -45,7 +49,10 @@ module.exports = (gulp, config) ->
 
 	# register task
 	# =============
+	return runSingle watchFilePath if forWatchFile
+
 	gulp.task "#{config.rb.prefix.task}run-server-tests", ->
+		return promiseHelp.get() unless config.build.server
 		runMulti()
 
 

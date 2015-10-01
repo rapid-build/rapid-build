@@ -9,6 +9,8 @@ module.exports = (gulp, config, browserSync) ->
 	ignoreDirs = [
 		config.node_modules.rb.dist.dir
 		config.node_modules.app.dist.dir
+		config.dist.rb.server.test.dir
+		config.dist.app.server.test.dir
 	]
 
 	# register task

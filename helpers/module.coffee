@@ -1,6 +1,25 @@
 module.exports =
 	cache:
-		delete: (modulePath) ->
-			isCached = !!require.cache[modulePath]
-			delete require.cache[modulePath] if isCached
-			isCached
+		get: (id) ->
+			cache = require.cache
+			return null unless cache or cache.length
+			cache[id]
+
+		getIds: ->
+			cache = require.cache
+			return [] unless cache or cache.length
+			Object.keys cache
+
+		delete: (id) -> # recursively, id = module's absolute path
+			return unless id
+			files    = require.cache[id]
+			isCached = !!files
+			# console.log "is cached #{isCached}:", id
+			return unless isCached
+
+			children = files.children
+			if children.length
+				for file in children
+					@delete file.id
+
+			delete require.cache[id]

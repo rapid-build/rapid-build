@@ -31,6 +31,19 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
+	# test dev - server
+	# =================
+	gulp.task config.rb.tasks['dev:test:server'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}common-server"
+			"#{config.rb.prefix.task}copy-server-tests"
+			"#{config.rb.prefix.task}start-server:dev"
+			"#{config.rb.prefix.task}browser-sync"
+			"#{config.rb.prefix.task}watch"
+			"#{config.rb.prefix.task}run-server-tests"
+			cb
+		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['dev:test']
+
 	# prod
 	# ====
 	gulp.task config.rb.tasks.prod, ["#{config.rb.prefix.task}common"], (cb) ->

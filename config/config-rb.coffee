@@ -1,4 +1,6 @@
 module.exports = (config, rbDir) ->
+	fs   = require 'fs'
+	path = require 'path'
 	log  = require "#{config.req.helpers}/log"
 	test = require("#{config.req.helpers}/test")()
 	pkg  = require "#{config.req.rb}/package.json"
@@ -9,6 +11,15 @@ module.exports = (config, rbDir) ->
 	rb.name    = pkg.name
 	rb.version = pkg.version
 	rb.dir     = rbDir
+
+	# is symlink - determine if it has been installed via npm link
+	# ==========
+	getIsSymlink = ->
+		dir       = path.join config.req.app, 'node_modules', rb.name
+		isSymlink = fs.lstatSync(dir).isSymbolicLink()
+		isSymlink
+
+	rb.isSymlink = getIsSymlink()
 
 	# api tasks
 	# =========

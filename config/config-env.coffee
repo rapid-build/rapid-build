@@ -16,37 +16,46 @@ module.exports = (config) ->
 				env.is.default = true
 			when 'test'
 				env.is.default    = true
+				env.is.test       = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'test:client'
 				env.is.default    = true
+				env.is.test       = true
 				env.is.testClient = true
 			when 'test:server'
 				env.is.default    = true
+				env.is.test       = true
 				env.is.testServer = true
 			when 'dev'
 				env.is.dev = true
 			when 'dev:test'
 				env.is.dev        = true
+				env.is.test       = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'dev:test:client'
 				env.is.dev        = true
+				env.is.test       = true
 				env.is.testClient = true
 			when 'dev:test:server'
 				env.is.dev        = true
+				env.is.test       = true
 				env.is.testServer = true
 			when 'prod'
 				env.is.prod = true
 			when 'prod:test'
 				env.is.prod       = true
+				env.is.test       = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'prod:test:client'
 				env.is.prod       = true
+				env.is.test       = true
 				env.is.testClient = true
 			when 'prod:test:server'
 				env.is.prod       = true
+				env.is.test       = true
 				env.is.testServer = true
 
 	# init env
@@ -60,6 +69,7 @@ module.exports = (config) ->
 		default: true
 		dev:  false
 		prod: false
+		test: false
 		testClient: false
 		testServer: false
 

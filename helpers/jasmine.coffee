@@ -1,14 +1,35 @@
+# API:
+# jasmine.init file(s)
+# jasmine.execute()
+# jasmine.reExecute()
+# jasmine.getResults()
+# Note:
+# 5 seconds is the default spec timeout
+# =====================================
 module.exports = (config) ->
 	q             = require 'q'
 	path          = require 'path'
 	Jasmine       = require 'jasmine'
 	Reporter      = require 'jasmine-terminal-reporter'
+	isType        = require "#{config.req.helpers}/isType"
+	moduleHelp    = require "#{config.req.helpers}/module"
 	jasmineExpect = path.join config.node_modules.rb.src.relPath, 'jasmine-expect', 'index.js'
 
+	# helpers
+	# =======
+	getHelperFilePath = (file) ->
+		return file unless config.rb.isSymlink
+		file = file.replace config.node_modules.app.src.dir, config.node_modules.rb.src.dir
+		file = file.replace config.node_modules.rb.src.relPath, 'node_modules'
+		file
+
+	# return
+	# ======
 	jasmine =
 		# properties
 		# ==========
 		defer:   q.defer()
+		files:   []
 		jasmine: null
 		results: status: null, total: 0, passed: 0, failed: 0, failedSpecs: []
 
@@ -16,12 +37,18 @@ module.exports = (config) ->
 		# ======
 		init: (files) ->
 			@_setJasmine()
-			._setConfig files
+			._setFiles files
+			._setConfig()
 			._setOnComplete()
 			._addReporter()
 			@
 
-		execute: -> # 5 seconds is the default spec timeout
+		execute: ->
+			@jasmine.execute()
+			@defer.promise
+
+		reExecute: ->
+			@_deleteCache()
 			@jasmine.execute()
 			@defer.promise
 
@@ -34,10 +61,14 @@ module.exports = (config) ->
 			@jasmine = new Jasmine()
 			@
 
-		_setConfig: (files) ->
+		_setFiles: (files) ->
+			@files = if not isType.array files then [ files ] else files
+			@
+
+		_setConfig: ->
 			@jasmine.loadConfig
 				spec_dir: ''
-				spec_files: files
+				spec_files: @files
 				helpers: [ jasmineExpect ]
 			@
 
@@ -60,4 +91,24 @@ module.exports = (config) ->
 					@results.failed++
 					@results.failedSpecs.push result.fullName
 			@
+
+		_deleteCache: ->
+			@_deleteCacheSpecFiles()
+			@_deleteHelperFiles()
+			@
+
+		_deleteCacheSpecFiles: ->
+			specFiles = @jasmine.specFiles
+			return @ unless specFiles.length
+			for file in specFiles
+				moduleHelp.cache.delete file
+			@
+
+		_deleteHelperFiles: ->
+			helperFiles = @jasmine.helperFiles
+			return @ unless helperFiles.length
+			for file in helperFiles
+				moduleHelp.cache.delete getHelperFilePath file
+			@
+
 
