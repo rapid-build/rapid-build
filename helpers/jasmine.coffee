@@ -101,6 +101,7 @@ module.exports = (config) ->
 			specFiles = @jasmine.specFiles
 			return @ unless specFiles.length
 			for file in specFiles
+				file = path.normalize file
 				moduleHelp.cache.delete file
 			@
 
@@ -108,6 +109,7 @@ module.exports = (config) ->
 			helperFiles = @jasmine.helperFiles
 			return @ unless helperFiles.length
 			for file in helperFiles
+				file = path.normalize file
 				moduleHelp.cache.delete getHelperFilePath file
 			@
 
