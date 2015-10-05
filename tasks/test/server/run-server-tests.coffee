@@ -47,12 +47,28 @@ module.exports = (gulp, config, watchFilePath) ->
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
+	runMultiDev = -> # synchronously
+		defer = q.defer()
+		tasks = [
+			-> cleanResultsFile resultsFile
+			-> runTests config.glob.dist.app.server.test.js
+		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
+
+	runTask = (isDev) ->
+		return promiseHelp.get() unless config.build.server
+		return runMultiDev() if isDev
+		runMulti()
+
 	# register task
 	# =============
 	return runSingle watchFilePath if forWatchFile
 
 	gulp.task "#{config.rb.prefix.task}run-server-tests", ->
-		return promiseHelp.get() unless config.build.server
-		runMulti()
+		runTask()
+
+	gulp.task "#{config.rb.prefix.task}run-server-tests:dev", ->
+		runTask true
 
 

@@ -16,7 +16,6 @@ module.exports = (gulp, config) ->
 			]
 			"#{config.rb.prefix.task}copy-client-tests"
 			"#{config.rb.prefix.task}build-client-test-files"
-			"#{config.rb.prefix.task}run-client-tests"
 			cb
 		)
 

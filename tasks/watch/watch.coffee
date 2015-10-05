@@ -18,7 +18,9 @@ module.exports = (gulp, config, browserSync) ->
 		less:       require "#{config.req.tasks}/compile/less"
 		sass:       require "#{config.req.tasks}/compile/sass"
 		tCache:     require "#{config.req.tasks}/minify/template-cache"
+		clientTest: require "#{config.req.tasks}/test/client/copy-client-tests"
 		serverTest: require "#{config.req.tasks}/test/server/copy-server-tests"
+
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
 			gulp.start "#{config.rb.prefix.task}watch-build-spa"
@@ -76,7 +78,7 @@ module.exports = (gulp, config, browserSync) ->
 	addAndUnlinkTask = (taskName, file, opts) ->
 		return changeTask taskName, file if opts.taskOnly
 		tasks[taskName](gulp, config, file).then ->
-			return promiseHelp.get() if opts.loc is 'server' and opts.isTest
+			return promiseHelp.get() if opts.isTest
 			return tasks.browserSync() if opts.bsReload or opts.loc is 'server'
 			if taskName is 'clean' and opts.cleanCb
 				opts.cleanCb(file).then -> tasks.buildSpa()
@@ -148,17 +150,19 @@ module.exports = (gulp, config, browserSync) ->
 			-> spaWatch config.spa.src.path
 		]
 		serverWatches = [ # server watch: scripts
-			-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server'
-			-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server'
 			-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server'
+			-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server'
+			-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server'
 		]
 		clientTestWatches = [
-
+			-> createWatch config.glob.src.app.client.test.js,     'clientTest', lang:'js',     srcType:'test', isTest:true, logTaskName:'client test'
+			-> createWatch config.glob.src.app.client.test.es6,    'clientTest', lang:'es6',    srcType:'test', extDist:'js', isTest:true, logTaskName:'client test'
+			-> createWatch config.glob.src.app.client.test.coffee, 'clientTest', lang:'coffee', srcType:'test', extDist:'js', isTest:true, logTaskName:'client test'
 		]
 		serverTestWatches = [
-			-> createWatch config.glob.src.app.server.test.coffee, 'serverTest', lang:'coffee', srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
-			-> createWatch config.glob.src.app.server.test.es6,    'serverTest', lang:'es6',    srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
 			-> createWatch config.glob.src.app.server.test.js,     'serverTest', lang:'js',     srcType:'test', loc:'server', isTest:true, logTaskName:'server test'
+			-> createWatch config.glob.src.app.server.test.es6,    'serverTest', lang:'es6',    srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
+			-> createWatch config.glob.src.app.server.test.coffee, 'serverTest', lang:'coffee', srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
 		]
 
 		# setup watch rules

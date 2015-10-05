@@ -11,7 +11,7 @@ module.exports = (gulp, config) ->
 
 	# Global
 	# ======
-	TestResults = status: null, exitCode: null
+	TestResults = status: 'passed', total: 0, passed: 0, failed: 0
 
 	# helpers
 	# =======
@@ -30,6 +30,38 @@ module.exports = (gulp, config) ->
 		reporters:  ['dots']
 		singleRun:  true
 
+	formatScripts = (_scripts) ->
+		scripts = []
+		tests   = config.glob.dist.app.client.test.js[0]
+		for script in _scripts
+			isTest = script.indexOf(config.dist.app.client.test.dir) isnt -1
+			continue if isTest
+			isAppScript = script.indexOf(config.dist.app.client.scripts.dir) isnt -1
+			watched     = isAppScript
+			scripts.push { watched, pattern: script }
+		scripts.push { watched: true, pattern: tests }
+		scripts
+
+	updateTestResults = (results) ->
+		TestResults.status = if !!results.exitCode then 'failed' else 'passed'
+		TestResults.total  = results.success + results.failed
+		TestResults.passed = results.success
+		TestResults.failed = results.failed
+		TestResults
+
+	hasTestsCheck = (cnt) ->
+		return true if cnt
+		console.log 'no test scripts to run'.yellow
+		false
+
+	startKarmaServer = (karmaConfig, defer) ->
+		server = new Server karmaConfig, (exitCode) ->
+		server.start()
+		server.on 'run_complete', (browsers, results) ->
+			updateTestResults results
+			defer.resolve()
+		server
+
 	# tasks
 	# =====
 	cleanResultsFile = (src) ->
@@ -42,20 +74,21 @@ module.exports = (gulp, config) ->
 		defer       = q.defer()
 		tests       = getTestsFile()
 		karmaConfig = getKarmaConfig()
+		testCnt     = tests.scriptsTestCount
+		return promiseHelp.get defer unless hasTestsCheck testCnt
+		karmaConfig.files = tests.scripts
+		startKarmaServer karmaConfig, defer
+		defer.promise
 
-		if not tests.scriptsTestCount
-			console.log 'no test scripts to run'.yellow
-			return promiseHelp.get defer
-		else
-			karmaConfig.files = tests.scripts
-
-		server = new Server karmaConfig, (exitCode) ->
-			# console.log "karma has exited with #{exitCode}".yellow
-			TestResults.status   = if not exitCode then 'passed' else 'failed'
-			TestResults.exitCode = exitCode
-			defer.resolve()
-
-		server.start()
+	runDevTests = ->
+		defer         = q.defer()
+		tests         = getTestsFile()
+		karmaConfig   = getKarmaConfig()
+		testCnt       = tests.scriptsTestCount
+		karmaConfig.files     = formatScripts tests.scripts
+		karmaConfig.autoWatch = true
+		karmaConfig.singleRun = false
+		startKarmaServer karmaConfig, defer
 		defer.promise
 
 	writeResultsFile = (file) ->
@@ -70,7 +103,7 @@ module.exports = (gulp, config) ->
 			console.error msg.error
 		.exit 1
 
-	runTask = -> # synchronously
+	runDefaultTask = -> # synchronously
 		defer = q.defer()
 		tasks = [
 			-> cleanResultsFile resultsFile
@@ -81,10 +114,28 @@ module.exports = (gulp, config) ->
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
+	runDevTask = -> # synchronously
+		defer = q.defer()
+		tasks = [
+			-> cleanResultsFile resultsFile
+			-> runDevTests()
+		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
+
+	runTask = (isDev) ->
+		return promiseHelp.get() unless config.build.client
+		return promiseHelp.get() if config.exclude.angular.files
+		return runDevTask() if isDev
+		runDefaultTask()
+
 	# register task
 	# =============
 	gulp.task "#{config.rb.prefix.task}run-client-tests", ->
 		runTask()
+
+	gulp.task "#{config.rb.prefix.task}run-client-tests:dev", ->
+		runTask true
 
 
 

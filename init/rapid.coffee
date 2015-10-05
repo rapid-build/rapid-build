@@ -18,6 +18,37 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
+	# test default - client and server
+	# ================================
+	gulp.task config.rb.tasks['test'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			config.rb.tasks['test:client']
+			config.rb.tasks['test:server']
+			cb
+		) -> defer.resolve()
+
+	# test default - client
+	# =====================
+	gulp.task config.rb.tasks['test:client'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}common-client"
+			"#{config.rb.prefix.task}build-spa"
+			"#{config.rb.prefix.task}common-test-client"
+			"#{config.rb.prefix.task}run-client-tests"
+			cb
+		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
+
+	# test default - server
+	# =====================
+	gulp.task config.rb.tasks['test:server'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}common-server"
+			"#{config.rb.prefix.task}start-server"
+			"#{config.rb.prefix.task}common-test-server"
+			"#{config.rb.prefix.task}stop-server"
+			cb
+		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
+
 	# dev
 	# ===
 	gulp.task config.rb.tasks.dev, ["#{config.rb.prefix.task}common"], (cb) ->
@@ -31,6 +62,35 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
+	# test dev - client and server
+	# ============================
+	gulp.task config.rb.tasks['dev:test'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}common-client"
+			"#{config.rb.prefix.task}build-spa"
+			"#{config.rb.prefix.task}common-test-client"
+			"#{config.rb.prefix.task}run-client-tests:dev"
+			"#{config.rb.prefix.task}common-server"
+			"#{config.rb.prefix.task}copy-server-tests"
+			"#{config.rb.prefix.task}start-server:dev"
+			"#{config.rb.prefix.task}browser-sync"
+			"#{config.rb.prefix.task}run-server-tests:dev"
+			"#{config.rb.prefix.task}watch"
+			cb
+		) -> defer.resolve()
+
+	# test dev - client
+	# =================
+	gulp.task config.rb.tasks['dev:test:client'], ["#{config.rb.prefix.task}common"], (cb) ->
+		gulpSequence(
+			"#{config.rb.prefix.task}common-client"
+			"#{config.rb.prefix.task}build-spa"
+			"#{config.rb.prefix.task}common-test-client"
+			"#{config.rb.prefix.task}run-client-tests:dev"
+			"#{config.rb.prefix.task}watch"
+			cb
+		) -> defer.resolve()
+
 	# test dev - server
 	# =================
 	gulp.task config.rb.tasks['dev:test:server'], ["#{config.rb.prefix.task}common"], (cb) ->
@@ -39,10 +99,10 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}copy-server-tests"
 			"#{config.rb.prefix.task}start-server:dev"
 			"#{config.rb.prefix.task}browser-sync"
+			"#{config.rb.prefix.task}run-server-tests:dev"
 			"#{config.rb.prefix.task}watch"
-			"#{config.rb.prefix.task}run-server-tests"
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['dev:test']
+		) -> defer.resolve()
 
 	# prod
 	# ====
@@ -66,36 +126,6 @@ module.exports = (gulp, config) ->
 			cb
 		) -> defer.resolve()
 
-	# test default - client and server
-	# ================================
-	gulp.task config.rb.tasks['test'], ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			config.rb.tasks['test:client']
-			config.rb.tasks['test:server']
-			cb
-		) -> defer.resolve()
-
-	# test default - client
-	# =====================
-	gulp.task config.rb.tasks['test:client'], ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			"#{config.rb.prefix.task}common-client"
-			"#{config.rb.prefix.task}build-spa"
-			"#{config.rb.prefix.task}common-test-client"
-			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
-
-	# test default - server
-	# =====================
-	gulp.task config.rb.tasks['test:server'], ["#{config.rb.prefix.task}common"], (cb) ->
-		gulpSequence(
-			"#{config.rb.prefix.task}common-server"
-			"#{config.rb.prefix.task}start-server"
-			"#{config.rb.prefix.task}common-test-server"
-			"#{config.rb.prefix.task}stop-server"
-			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
-
 	# test prod - client and server
 	# =============================
 	gulp.task config.rb.tasks['prod:test'], ["#{config.rb.prefix.task}common"], (cb) ->
@@ -112,6 +142,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-client"
 			"#{config.rb.prefix.task}minify-client"
 			"#{config.rb.prefix.task}common-test-client"
+			"#{config.rb.prefix.task}run-client-tests"
 			"#{config.rb.prefix.task}clean-client-test-dist"
 			cb
 		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:test']
