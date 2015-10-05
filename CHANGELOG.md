@@ -4,7 +4,7 @@
 ### Features
 
 * **api task:** create and expose api task dev:test:server ([702ae85](https://github.com/jyounce/rapid-build/commit/702ae85))
-* **api tasks:** create and expose api tasks dev:test and dev:test:server ([b84bea0](https://github.com/jyounce/rapid-build/commit/b84bea0))
+* **api tasks:** create and expose api tasks dev:test and dev:test:client ([b84bea0](https://github.com/jyounce/rapid-build/commit/b84bea0))
 
 
 
