@@ -1,3 +1,13 @@
+# [0.41.0](https://github.com/jyounce/rapid-build/compare/v0.40.1...v0.41.0) (2015-10-05)
+
+
+### Features
+
+* **api task:** create and expose api task dev:test:server ([702ae85](https://github.com/jyounce/rapid-build/commit/702ae85))
+* **api tasks:** create and expose api tasks dev:test and dev:test:server ([b84bea0](https://github.com/jyounce/rapid-build/commit/b84bea0))
+
+
+
 ## [0.40.1](https://github.com/jyounce/rapid-build/compare/v0.40.0...v0.40.1) (2015-09-30)
 
 
