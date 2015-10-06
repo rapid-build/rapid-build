@@ -26,7 +26,7 @@ module.exports = (gulp, options={}) ->
 	#     build = process.argv[2]
 	#     rapid = require('rapid-build') opts
 	#     rapid(build).done -> console.log 'build finished'
-	# =========================================================
+	# =============================================================
 	(env = 'default') ->
 		gulp.start config.rb.tasks[env]
 		promise
