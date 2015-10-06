@@ -10,6 +10,23 @@ module.exports = (gulp, options={}) ->
 	config    = require("#{rbDir}/config") rbDir, options
 	tasks     = require("#{config.req.init}/tasks") gulp, config
 	promise   = require("#{config.req.init}/rapid") gulp, config
-	(env = 'default') -> # kick off rapid-build task
+
+	# sequence:
+	# 1. init rapid
+	# 2. execute rapid to kick off the build
+	# 3. return promise when build is complete
+	#
+	# note: function not executed if app calls build task from gulp
+	# example - gulpfile.js:
+	#   gulp.task 'default', ['rapid-build:dev']
+	#
+	# example - build.js:
+	#   terminal: node build dev
+	#   build.js:
+	#     build = process.argv[2]
+	#     rapid = require('rapid-build') opts
+	#     rapid(build).done -> console.log 'build finished'
+	# =========================================================
+	(env = 'default') ->
 		gulp.start config.rb.tasks[env]
 		promise
