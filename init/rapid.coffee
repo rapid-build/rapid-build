@@ -3,7 +3,7 @@
 module.exports = (gulp, config) ->
 	q            = require 'q'
 	gulpSequence = require('gulp-sequence').use gulp
-	task         = require("#{config.req.helpers}/tasks") gulp
+	taskHelp     = require("#{config.req.helpers}/tasks") gulp
 	defer        = q.defer()
 
 	# default
@@ -36,7 +36,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-test-client"
 			"#{config.rb.prefix.task}run-client-tests"
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
+		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['test']
 
 	# test default - server
 	# =====================
@@ -47,7 +47,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-test-server"
 			"#{config.rb.prefix.task}stop-server"
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['test']
+		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['test']
 
 	# dev
 	# ===
@@ -115,7 +115,7 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}minify-server"
 			]
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:server']
+		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['prod:server']
 
 	# prod server
 	# ===========
@@ -145,7 +145,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}run-client-tests"
 			"#{config.rb.prefix.task}clean-client-test-dist"
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:test']
+		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['prod:test']
 
 	# test prod - server
 	# ==================
@@ -158,7 +158,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}clean-server-test-dist"
 			"#{config.rb.prefix.task}stop-server"
 			cb
-		) -> defer.resolve() unless task.wasCalledFrom config.rb.tasks['prod:test']
+		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['prod:test']
 
 	# return
 	# ======
