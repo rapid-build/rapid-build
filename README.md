@@ -94,6 +94,35 @@ gulp rapid-build:prod:server
 gulp rapid-build:prod:test
 ```
 
+## Directory Structure
+Everthing is optional besides nodes_modules/, build.js and package.json.
+```
+src/ 
+├── client/
+│   ├── bower_components/ (generated folder via bower.json)
+│   ├── images/
+│   │   └── **/*.{gif,jpg,jpeg,png}
+│   ├── libs/
+│   │   └── **/*.*
+│   ├── scripts/
+│   │   └── **/*.{coffee,es6,js}
+│   ├── styles/
+│   │   └── **/*.{css,less,sass,scss}
+│   ├── test/
+│   │   └── **/*.{coffee,es6,js}
+│   ├── views/
+│   │   └── **/*.html
+│   └── spa.html (optional, see options.spa.src.filePath)
+├── server/
+│   ├── test/
+│   │   └── **/*.{coffee,es6,js}
+│   └── routes.{coffee,es6,js} (see options.dist.server.fileName)
+nodes_modules/ (generated folder via package.json)
+bower.json
+build.js (see how to use)
+package.json
+```
+
 ## Options API
 ```coffeescript
 # Example: options.ports.server = 5000
@@ -211,35 +240,6 @@ gulp rapid-build:prod:test
 3. run client tests in [PhantomJS](http://phantomjs.org/)
 4. copy server test scripts to dist/server/
 5. run server tests using [jasmine](http://jasmine.github.io/)
-
-## Directory Structure
-Everthing is optional besides nodes_modules/, build.js and package.json.
-```
-src/ 
-├── client/
-│   ├── bower_components/ (generated folder via bower.json)
-│   ├── images/
-│   │   └── **/*.{gif,jpg,jpeg,png}
-│   ├── libs/
-│   │   └── **/*.*
-│   ├── scripts/
-│   │   └── **/*.{coffee,es6,js}
-│   ├── styles/
-│   │   └── **/*.{css,less,sass,scss}
-│   ├── test/
-│   │   └── **/*.{coffee,es6,js}
-│   ├── views/
-│   │   └── **/*.html
-│   └── spa.html (optional, see options.spa.src.filePath)
-├── server/
-│   ├── test/
-│   │   └── **/*.{coffee,es6,js}
-│   └── routes.{coffee,es6,js} (see options.dist.server.fileName)
-nodes_modules/ (generated folder via package.json)
-bower.json
-build.js (see how to use)
-package.json
-```
 
 ## Develop Rapidly!
 ![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/shake-and-bake.jpg "Shake n' Bake!")
