@@ -51,6 +51,7 @@ rapid-build currently supports the following technologies:
 
 ```javascript
 /**
+ * build.js
  * Init rapid-build.
  * Rapid uses smart defaults.
  * Pass in options if you need customization.
@@ -72,9 +73,8 @@ rapid().then(function() {
 
 ```javascript
 /**
- * Steps if you are using gulp.
- * In your gulpfile.js init rapid-build and
- * pass in gulp (pass in options too if you need customization).
+ * gulpfile.js - steps if you are using gulp.
+ * Init rapid-build and pass in gulp (pass in options too if you need customization).
  * 4 build tasks become available after initializing rapid (see build modes).
  * Build tasks are: 'rapid-build', 'rapid-build:dev', 'rapid-build:prod' and 'rapid-build:test'
  * *********************************************************************************************/
@@ -211,6 +211,35 @@ gulp rapid-build:prod:test
 3. run client tests in [PhantomJS](http://phantomjs.org/)
 4. copy server test scripts to dist/server/
 5. run server tests using [jasmine](http://jasmine.github.io/)
+
+## Directory Structure
+Everthing is optional besides nodes_modules/, build.js and package.json.
+```
+src/ 
+├── client/
+│   ├── bower_components/ (generated folder via bower.json)
+│   ├── images/
+│   │   └── **/*.{gif,jpg,jpeg,png}
+│   ├── libs/
+│   │   └── **/*.*
+│   ├── scripts/
+│   │   └── **/*.{coffee,es6,js}
+│   ├── styles/
+│   │   └── **/*.{css,less,sass,scss}
+│   ├── test/
+│   │   └── **/*.{coffee,es6,js}
+│   ├── views/
+│   │   └── **/*.html
+│   └── spa.html (optional, see options.spa.src.filePath)
+├── server/
+│   ├── test/
+│   │   └── **/*.{coffee,es6,js}
+│   └── routes.{coffee,es6,js} (see options.dist.server.fileName)
+nodes_modules/ (generated folder via package.json)
+bower.json
+build.js (see how to use)
+package.json
+```
 
 ## Develop Rapidly!
 ![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/shake-and-bake.jpg "Shake n' Bake!")
