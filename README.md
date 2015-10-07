@@ -1,5 +1,4 @@
 # rapid-build
-**Developing**, not for use yet.  
 **Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0  
 
 Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
