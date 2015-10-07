@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q              = require 'q'
 	del            = require 'del'
 	path           = require 'path'
@@ -34,7 +34,7 @@ module.exports = (gulp, config) ->
 
 	runDelUnstampedPaths = ->
 		defer = q.defer()
-		return promiseHelp.get defer if not unstampedPaths.length
+		return promiseHelp.get defer unless unstampedPaths.length
 		del(unstampedPaths, force:true).then (paths) ->
 			# console.log 'unstamped files deleted'.yellow
 			defer.resolve()
@@ -50,27 +50,29 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runCacheBustTask = -> # synchronously
-		defer         = q.defer()
-		bust          = new Bust bustOpts
-		srcFiles      = config.glob.dist.app.client.cacheBust.files
-		srcRefs       = config.glob.dist.app.client.cacheBust.references
-		dest          = config.dist.app.client.dir
-		prodFilesSrc  = path.join config.templates.files.dest.dir, 'prod-files.json'
-		prodFilesDest = config.templates.files.dest.dir
-		tasks = [
-			-> runStampFiles srcFiles, dest, bust
-			-> runStampRefs srcRefs, dest, bust
-			-> runStampRefs prodFilesSrc, prodFilesDest, bust
-			-> runDelUnstampedPaths()
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # synchronously
+			return promiseHelp.get() unless config.minify.cacheBust
+			defer         = q.defer()
+			bust          = new Bust bustOpts
+			srcFiles      = config.glob.dist.app.client.cacheBust.files
+			srcRefs       = config.glob.dist.app.client.cacheBust.references
+			dest          = config.dist.app.client.dir
+			prodFilesSrc  = path.join config.templates.files.dest.dir, 'prod-files.json'
+			prodFilesDest = config.templates.files.dest.dir
+			tasks = [
+				-> runStampFiles srcFiles, dest, bust
+				-> runStampRefs srcRefs, dest, bust
+				-> runStampRefs prodFilesSrc, prodFilesDest, bust
+				-> runDelUnstampedPaths()
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}cache-bust", ->
-		return promiseHelp.get() if not config.minify.cacheBust
-		runCacheBustTask()
+	# return
+	# ======
+	api.runTask()
 
 

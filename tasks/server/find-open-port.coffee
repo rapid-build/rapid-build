@@ -1,6 +1,6 @@
 # Updates config.ports if a port is in use.
 # =========================================
-module.exports = (gulp, config) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q          = require 'q'
 	findPort   = require 'find-port'
 	configHelp = require("#{config.req.helpers}/config") config
@@ -60,21 +60,22 @@ module.exports = (gulp, config) ->
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
-	runTasks = (forTestClientPort) -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> setPorts forTestClientPort
-			-> configHelp.buildFile buildConfigFile, 'rebuild'
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: (loc) -> # synchronously
+			defer = q.defer()
+			forTestClientPort = loc is 'test:client'
+			tasks = [
+				-> setPorts forTestClientPort
+				-> configHelp.buildFile buildConfigFile, 'rebuild'
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}find-open-port", ->
-		runTasks()
+	# return
+	# ======
+	api.runTask taskOpts.loc
 
-	gulp.task "#{config.rb.prefix.task}find-open-port:test:client", ->
-		runTasks true
 
 

@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
 	minifyHtml  = require 'gulp-minify-html'
@@ -6,7 +6,7 @@ module.exports = (gulp, config) ->
 
 	minifyTask = (appOrRb) ->
 		defer = q.defer()
-		return promiseHelp.get defer if not config.minify.html.views
+		return promiseHelp.get defer unless config.minify.html.views
 
 		minOpts = config.minify.html.options
 		gulp.src config.glob.dist[appOrRb].client.views.all
@@ -40,17 +40,19 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = ->
-		defer = q.defer()
-		minifyTasks().done ->
-			moveTask().done ->
-				defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # template-cache task minifies the html
+			return promiseHelp.get() if config.minify.html.templateCache
+			defer = q.defer()
+			minifyTasks().done ->
+				moveTask().done ->
+					defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}minify-html", ->
-		return runTasks() if not config.minify.html.templateCache
-		promiseHelp.get()
+	# return
+	# ======
+	api.runTask()
 
 

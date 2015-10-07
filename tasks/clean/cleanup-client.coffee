@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	del         = require 'del'
 	path        = require 'path'
@@ -73,28 +73,28 @@ module.exports = (gulp, config) ->
 						config.dist.app.client.dir
 						[], 'reverse'
 					)
-		return promiseHelp.get() if not emptyDirs.length
+		return promiseHelp.get() unless emptyDirs.length
 		delTask emptyDirs, msg
 
-	# Main Task
-	# =========
-	runTask = -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> setBlueprint()
-			-> multiCleanTask 'cleaned client min files'
-			-> cleanCssImportsTask 'cleaned css imports'
-			-> moveTempTask 'moved .temp files to client root'
-			-> delTask config.temp.client.dir, 'deleted .temp directory'
-			-> delEmptyDirsTask 'deleted empty directories'
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # synchronously
+			defer = q.defer()
+			tasks = [
+				-> setBlueprint()
+				-> multiCleanTask 'cleaned client min files'
+				-> cleanCssImportsTask 'cleaned css imports'
+				-> moveTempTask 'moved .temp files to client root'
+				-> delTask config.temp.client.dir, 'deleted .temp directory'
+				-> delEmptyDirsTask 'deleted empty directories'
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}cleanup-client", ->
-		runTask()
+	# return
+	# ======
+	api.runTask()
 
 
 

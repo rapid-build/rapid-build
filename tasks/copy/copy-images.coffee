@@ -1,7 +1,7 @@
-module.exports = (gulp, config, watchFile={}) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
-	tasks        = require("#{config.req.helpers}/tasks")()
-	forWatchFile = !!watchFile.path
+	tasks        = require("#{config.req.helpers}/tasks") config
+	forWatchFile = !!taskOpts.watchFile
 
 	runTask = (src, dest) ->
 		defer = q.defer()
@@ -12,18 +12,16 @@ module.exports = (gulp, config, watchFile={}) ->
 				defer.resolve()
 		defer.promise
 
-	runSingle = ->
-		runTask watchFile.path, watchFile.rbDistDir
+	# API
+	# ===
+	api =
+		runSingle: ->
+			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
 
-	runMulti = ->
-		tasks.run.async(
-			config, runTask,
-			'images', 'all',
-			['client']
-		)
+		runMulti: ->
+			tasks.run.async runTask, 'images', 'all', ['client']
 
-	# register task
-	# =============
-	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}copy-images", ->
-		runMulti()
+	# return
+	# ======
+	return api.runSingle() if forWatchFile
+	api.runMulti()

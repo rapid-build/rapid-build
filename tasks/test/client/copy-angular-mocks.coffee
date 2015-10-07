@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
 	es          = require 'event-stream'
@@ -36,16 +36,18 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTask = ->
-		src  = bowerHelper.get.src 'rb', pkg:'angular-mocks', test:true
-		dest = config.src.rb.client.test.dir
-		# console.log src
-		copyTask src, dest
+	# API
+	# ===
+	api =
+		runTask: ->
+			return promiseHelp.get() if config.angular.httpBackend.enabled
+			src  = bowerHelper.get.src 'rb', pkg:'angular-mocks', test:true
+			dest = config.src.rb.client.test.dir
+			# console.log src
+			copyTask src, dest
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}copy-angular-mocks", ->
-		return promiseHelp.get() if config.angular.httpBackend.enabled
-		runTask()
+	# return
+	# ======
+	api.runTask()
 
 

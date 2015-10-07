@@ -65,9 +65,9 @@ module.exports = (config) ->
 			_files
 
 		getPkgDeps: (deps) ->
-			return null if not deps
-			return null if not isType.object deps
-			return null if not Object.keys(deps).length
+			return null unless deps
+			return null unless isType.object deps
+			return null unless Object.keys(deps).length
 			deps
 
 		getPkg: (pkg, loc='rb') ->
@@ -82,19 +82,19 @@ module.exports = (config) ->
 			deps:    pkgDeps
 
 		getSubPkgs: (pkgs) ->
-			return null if not pkgs.length
+			return null unless pkgs.length
 			# log.json pkgs
 			rbPkgs  = if me.has.bower 'rb'  then me.get.pkgs.from.appOrRb 'rb'  else {}
 			appPkgs = if me.has.bower 'app' then me.get.pkgs.from.appOrRb 'app' else {}
 			allPkgs = Object.keys(rbPkgs).concat Object.keys appPkgs
-			return null if not allPkgs.length
+			return null unless allPkgs.length
 			subPkgs = {}
 			for own i, pkg of pkgs
-				continue if not pkg.deps
+				continue unless pkg.deps
 				for own name, version of pkg.deps
 					continue if allPkgs.indexOf(name) isnt -1
 					subPkgs[name] = version
-			return null if not Object.keys(subPkgs).length
+			return null unless Object.keys(subPkgs).length
 			# log.json subPkgs
 			subPkgs
 
@@ -155,7 +155,7 @@ module.exports = (config) ->
 		removeRbAngularMocks: (loc, paths) ->
 			return if loc isnt 'rb'
 			if config.env.is.prod
-				@_removeRbAngularMocks paths if not config.angular.httpBackend.prod
+				@_removeRbAngularMocks paths unless config.angular.httpBackend.prod
 			else if not config.angular.httpBackend.dev
 				@_removeRbAngularMocks paths
 
@@ -179,7 +179,7 @@ module.exports = (config) ->
 						require config.bower[loc].path
 
 					pkg: (pkg, loc='rb') ->
-						return if not me.has.installed.pkg pkg, loc
+						return unless me.has.installed.pkg pkg, loc
 						# console.log pkg, loc
 						require(
 							path.join(
@@ -196,8 +196,8 @@ module.exports = (config) ->
 						mainDeps
 				to:
 					install: (loc='rb', force=false) ->
-						return if not me.has.bower loc
-						force   = helper.forceInstall loc if not force
+						return unless me.has.bower loc
+						force   = helper.forceInstall loc unless force
 						pkgs    = []
 						pkgsObj = me.get.pkgs.from.appOrRb loc
 						if force
@@ -214,7 +214,7 @@ module.exports = (config) ->
 			installed:
 				pkg: (pkg, loc='rb') ->
 					pkg = me.get.json.from.pkg pkg, loc
-					return if not pkg
+					return unless pkg
 					# log.json pkg
 					helper.getPkg pkg, loc
 
@@ -245,7 +245,7 @@ module.exports = (config) ->
 					pkgs
 
 			src: (loc='rb', opts={}) ->
-				return if not me.has.bower loc
+				return unless me.has.bower loc
 				env      = opts.env
 				env      = 'prod' if not env and config.env.is.prod
 				env      = 'dev' if ['dev','prod'].indexOf(env) is -1

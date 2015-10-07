@@ -1,12 +1,16 @@
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q            = require 'q'
-	path         = require 'path'
 	rbServerFile = config.dist.rb.server.scripts.filePath
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}spawn-server", ->
-		defer = q.defer()
-		require rbServerFile
-		defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			require rbServerFile
+			defer.resolve()
+			defer.promise
+
+	# return
+	# ======
+	api.runTask()

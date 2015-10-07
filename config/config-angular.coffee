@@ -63,7 +63,7 @@ module.exports = (config, options) ->
 
 	angular.removeRbMocksModule = ->
 		if config.env.is.prod
-			removeRbMocksModule() if not angular.httpBackend.prod
+			removeRbMocksModule() unless angular.httpBackend.prod
 		else if not angular.httpBackend.dev
 			removeRbMocksModule()
 

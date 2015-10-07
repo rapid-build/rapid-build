@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	minifyCss   = require 'gulp-minify-css'
 	promiseHelp = require "#{config.req.helpers}/promise"
@@ -18,16 +18,18 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = ->
-		return promiseHelp.get() unless config.minify.css.styles
-		defer = q.defer()
-		q.all([
-			runTask 'rb'
-			runTask 'app'
-		]).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			return promiseHelp.get() unless config.minify.css.styles
+			defer = q.defer()
+			q.all([
+				runTask 'rb'
+				runTask 'app'
+			]).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}minify-css", ->
-		runTasks()
+	# return
+	# ======
+	api.runTask()

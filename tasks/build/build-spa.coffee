@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q           = require 'q'
 	path        = require 'path'
 	gulpif      = require 'gulp-if'
@@ -61,30 +61,29 @@ module.exports = (gulp, config) ->
 			title:       config.spa.title
 			description: config.spa.description
 
-	# main task
-	# =========
-	runTask = (data={}) -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> buildTask(
-				config.spa.src.path
-				config.dist.app.client.dir
-				config.spa.dist.file
-				data
-			)
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: (env) -> # synchronously
+			return promiseHelp.get() unless config.build.client
+			return promiseHelp.get() if config.exclude.spa
+			defer = q.defer()
+			json  = if env is 'prod' then 'prod-files.json' else 'files.json'
+			data  = getData json
+			tasks = [
+				-> buildTask(
+					config.spa.src.path
+					config.dist.app.client.dir
+					config.spa.dist.file
+					data
+				)
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# register tasks
-	# ==============
-	gulp.task "#{config.rb.prefix.task}build-spa", ->
-		return promiseHelp.get() unless config.build.client
-		return promiseHelp.get() if config.exclude.spa
-		runTask getData 'files.json'
+	# return
+	# ======
+	api.runTask taskOpts.env
 
-	gulp.task "#{config.rb.prefix.task}build-spa:prod", ->
-		return promiseHelp.get() unless config.build.client
-		return promiseHelp.get() if config.exclude.spa
-		runTask getData 'prod-files.json'
+
 

@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q               = require 'q'
 	path            = require 'path'
 	rename          = require 'gulp-rename'
@@ -87,27 +87,28 @@ module.exports = (gulp, config) ->
 		]).done -> defer.resolve()
 		defer.promise
 
-	# Main Task
-	# =========
-	runTask = -> # synchronously
-		defer       = q.defer()
-		jsonEnvFile = if config.env.is.prod then 'prod-files.json' else 'files.json'
-		tasks = [
-			-> setFiles jsonEnvFile
-			-> setMultiTestFiles()
-			-> addMultiFilesToTestFiles()
-			-> buildTask()
-		]
-		tasks.reduce(q.when, q()).done ->
-			# log.json Files, 'Files ='
-			# log.json TestFiles, 'test files ='
-			defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # synchronously
+			defer       = q.defer()
+			jsonEnvFile = if config.env.is.prod then 'prod-files.json' else 'files.json'
+			tasks = [
+				-> setFiles jsonEnvFile
+				-> setMultiTestFiles()
+				-> addMultiFilesToTestFiles()
+				-> buildTask()
+			]
+			tasks.reduce(q.when, q()).done ->
+				# log.json Files, 'Files ='
+				# log.json TestFiles, 'test files ='
+				defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}build-client-test-files", ->
-		runTask()
+	# return
+	# ======
+	api.runTask()
+
 
 
 

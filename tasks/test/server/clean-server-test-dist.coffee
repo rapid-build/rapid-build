@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q           = require 'q'
 	del         = require 'del'
 	promiseHelp = require "#{config.req.helpers}/promise"
@@ -10,16 +10,18 @@ module.exports = (gulp, config) ->
 			defer.resolve()
 		defer.promise
 
-	runTask = ->
-		src = [
-			config.dist.rb.server.test.dir
-			config.dist.app.server.test.dir
-		]
-		cleanTask src
+	# API
+	# ===
+	api =
+		runTask: ->
+			return promiseHelp.get() unless config.build.server
+			src = [
+				config.dist.rb.server.test.dir
+				config.dist.app.server.test.dir
+			]
+			cleanTask src
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}clean-server-test-dist", ->
-		return promiseHelp.get() unless config.build.server
-		runTask()
+	# return
+	# ======
+	api.runTask()
 

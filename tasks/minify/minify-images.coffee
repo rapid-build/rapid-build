@@ -1,4 +1,6 @@
-module.exports = (gulp, config) ->
+# todo: actually minify the images
+# ================================
+module.exports = (config, gulp) ->
 	q    = require 'q'
 	path = require 'path'
 
@@ -11,15 +13,21 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}minify-images", ->
-		src  = "#{config.glob.dist.rb.client.images.all}/*"
-		dest = path.join(
-					config.temp.client.dir
-					config.rb.prefix.distDir
-					config.dist.rb.client.images.dirName
-				)
-		moveTask src, dest
+	# API
+	# ===
+	api =
+		runTask: ->
+			src  = "#{config.glob.dist.rb.client.images.all}/*"
+			dest = path.join(
+						config.temp.client.dir
+						config.rb.prefix.distDir
+						config.dist.rb.client.images.dirName
+					)
+			moveTask src, dest
+
+	# return
+	# ======
+	api.runTask()
+
 
 

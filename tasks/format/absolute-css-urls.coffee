@@ -1,10 +1,11 @@
-module.exports = (gulp, config, watchFilePath) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	_            = require 'lodash'
 	absCssUrls   = require "#{config.req.plugins}/gulp-absolute-css-urls"
 	promiseHelp  = require "#{config.req.helpers}/promise"
 	configHelp   = require("#{config.req.helpers}/config") config
-	forWatchFile = !!watchFilePath
+	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
+	forWatchFile = !!taskOpts.watchFilePath
 
 	# global
 	# ======
@@ -17,7 +18,7 @@ module.exports = (gulp, config, watchFilePath) ->
 		promiseHelp.get()
 
 	buildSpa = ->
-		gulp.start "#{config.rb.prefix.task}watch-build-spa"
+		taskHelp.startTask 'watch-build-spa'
 
 	# tasks
 	# =====
@@ -38,14 +39,6 @@ module.exports = (gulp, config, watchFilePath) ->
 				defer.resolve()
 		defer.promise
 
-	runSingle = ->
-		clone = config.internal.getImports()
-		opts  = prependPath: false, src: watchFilePath, watchFileBase: true
-		runTask('app', 'styles', opts).done ->
-			imports  = config.internal.getImports()
-			areEqual = _.isEqual clone, imports
-			buildSpa() unless areEqual
-
 	runMulti = ->
 		defer = q.defer()
 		q.all([
@@ -60,23 +53,33 @@ module.exports = (gulp, config, watchFilePath) ->
 			defer.resolve()
 		defer.promise
 
-	runTasks = -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> runMulti()
-			-> setBuildConfigFile()
-			-> configHelp.buildFile buildConfigFile, 'rebuild'
-		]
-		tasks.reduce(q.when, q()).done ->
-			# console.log 'rb', config.internal.rb.client.css.imports
-			# console.log 'app', config.internal.app.client.css.imports
-			defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runSingle: ->
+			clone = config.internal.getImports()
+			opts  = prependPath: false, src: taskOpts.watchFilePath, watchFileBase: true
+			runTask('app', 'styles', opts).done ->
+				imports  = config.internal.getImports()
+				areEqual = _.isEqual clone, imports
+				buildSpa() unless areEqual
 
-	# register task
-	# =============
-	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}absolute-css-urls", ->
-		runTasks()
+		runTask: -> # synchronously
+			defer = q.defer()
+			tasks = [
+				-> runMulti()
+				-> setBuildConfigFile()
+				-> configHelp.buildFile buildConfigFile, 'rebuild'
+			]
+			tasks.reduce(q.when, q()).done ->
+				# console.log 'rb', config.internal.rb.client.css.imports
+				# console.log 'app', config.internal.app.client.css.imports
+				defer.resolve()
+			defer.promise
+
+	# return
+	# ======
+	return api.runSingle() if forWatchFile
+	api.runTask()
 
 

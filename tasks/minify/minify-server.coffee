@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	minifyJs    = require 'gulp-uglify'
 	minifyJson  = require 'gulp-jsonminify'
@@ -25,19 +25,22 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = (serverDist, exclude) ->
-		defer = q.defer()
-		q.all([
-			minJsTask   ["#{serverDist}/**/*.js",   exclude], serverDist
-			minJsonTask ["#{serverDist}/**/*.json", exclude], serverDist
-		]).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			return promiseHelp.get() unless config.build.server
+			defer      = q.defer()
+			serverDist = config.dist.app.server.scripts.dir
+			exclude    = '!**/node_modules/**'
+			q.all([
+				minJsTask   ["#{serverDist}/**/*.js",   exclude], serverDist
+				minJsonTask ["#{serverDist}/**/*.json", exclude], serverDist
+			]).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}minify-server", ->
-		return promiseHelp.get() unless config.build.server
-		runTasks(
-			config.dist.app.server.scripts.dir
-			'!**/node_modules/**'
-		)
+	# return
+	# ======
+	api.runTask()
+
+

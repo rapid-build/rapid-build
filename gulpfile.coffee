@@ -5,7 +5,7 @@ module.exports = (gulp, options={}) ->
 	# if gulp isn't supplied, load it from rapid-build's node_modules
 	# ===============================================================
 	rbDir     = __dirname
-	gulp      = require 'gulp' if not gulp
+	gulp      = require 'gulp' unless gulp
 	bootstrap = require("#{rbDir}/bootstrap")()
 	config    = require("#{rbDir}/config") rbDir, options
 	tasks     = require("#{config.req.init}/tasks") gulp, config

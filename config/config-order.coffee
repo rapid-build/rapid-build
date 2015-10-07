@@ -56,7 +56,7 @@ module.exports = (config, options) ->
 	# rb order
 	# ========
 	files = []
-	files = files.concat rb.files.angular if not config.exclude.angular.files
+	files = files.concat rb.files.angular unless config.exclude.angular.files
 	order.rb.scripts.first = files.concat rb.files.rb
 
 	# methods
@@ -66,7 +66,7 @@ module.exports = (config, options) ->
 
 	order.removeRbAngularMocks = ->
 		if config.env.is.prod
-			removeRbAngularMocks() if not config.angular.httpBackend.prod
+			removeRbAngularMocks() unless config.angular.httpBackend.prod
 		else if not config.angular.httpBackend.dev
 			removeRbAngularMocks()
 
@@ -76,7 +76,7 @@ module.exports = (config, options) ->
 		for own k1, v1 of order
 			for own k2, v2 of v1
 				for own k3, v3 of v2
-					continue if not v3.length
+					continue unless v3.length
 					v3.forEach (v4, i) ->
 						ext   = path.extname v4
 						v3[i] = v3[i].replace ext, '' if ext isnt '.min'

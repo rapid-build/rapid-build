@@ -1,4 +1,4 @@
-module.exports = (gulp, config, browserSync) ->
+module.exports = (config) ->
 	q       = require 'q'
 	nodemon = require 'gulp-nodemon'
 
@@ -13,18 +13,25 @@ module.exports = (gulp, config, browserSync) ->
 		config.dist.app.server.test.dir
 	]
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}nodemon", ->
-		defer = q.defer()
-		nodemon
-			script: rbServerFile
-			ext:    'js json'
-			watch:  watchDir # todo: watch isn't restarting on file deletion
-			ignore: ignoreDirs
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			nodemon
+				script: rbServerFile
+				ext:    'js json'
+				watch:  watchDir # todo: watch isn't restarting on file deletion
+				ignore: ignoreDirs
 
-		.on 'start', ->
-			browserSync.emitter._events.serverRestart() if browserSync
-			defer.resolve()
+			.on 'start', ->
+				browserSync = require "#{config.req.tasks}/browser/browser-sync"
+				browserSync.delayedRestart()
+				defer.resolve()
 
-		defer.promise
+			defer.promise
+
+
+	# return
+	# ======
+	api.runTask()

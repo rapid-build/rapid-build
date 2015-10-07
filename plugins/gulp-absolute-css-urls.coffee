@@ -17,7 +17,7 @@ pathHelp =
 		_path.indexOf(':\\') isnt -1
 
 	removeDrive: (_path) ->
-		return _path if not @isWinAbs _path
+		return _path unless @isWinAbs _path
 		i     = _path.indexOf(':\\') + 1
 		_path = _path.substr i
 
@@ -26,7 +26,7 @@ pathHelp =
 		_path.replace regx, '/'
 
 	format: (_path) ->
-		return _path if not @isWin _path
+		return _path unless @isWin _path
 		_path = @removeDrive _path
 		_path = @swapBackslashes _path
 		_path
@@ -93,7 +93,7 @@ pathHelp =
 
 format =
 	root: (_path) -> # need a beginning / and no trailing /
-		return null if not _path
+		return null unless _path
 		_path  = _path.trim()
 		_path  = pathHelp.swapBackslashes _path
 		_path  = _path.slice 0, -1 if _path.length > 1 and pathHelp.hasTrailingSlash _path

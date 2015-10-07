@@ -1,21 +1,25 @@
-module.exports = (gulp, config, watchFile={}) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	del          = require 'del'
-	forWatchFile = !!watchFile.path
+	forWatchFile = !!taskOpts.watchFile
 
-	runSingle = ->
-		defer = q.defer()
-		del(watchFile.rbDistPath, force:true).then (paths) ->
-			defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runSingle: ->
+			defer = q.defer()
+			src   = taskOpts.watchFile.rbDistPath
+			del(src, force:true).then (paths) ->
+				defer.resolve()
+			defer.promise
 
-	runMulti = ->
-		defer = q.defer()
-		del(config.dist.dir, force:true).then (paths) ->
-			defer.resolve()
-		defer.promise
+		runMulti: ->
+			defer = q.defer()
+			del(config.dist.dir, force:true).then (paths) ->
+				defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}clean-dist", -> runMulti()
+	# return
+	# ======
+	return api.runSingle() if forWatchFile
+	api.runMulti()

@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	del         = require 'del'
 	path        = require 'path'
@@ -58,22 +58,22 @@ module.exports = (gulp, config) ->
 		]).done -> defer.resolve()
 		defer.promise
 
-	# Main Task
-	# =========
-	runTask = -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> setBlueprint()
-			-> cleanTask()
-			-> multiConcatTask()
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # synchronously
+			defer = q.defer()
+			tasks = [
+				-> setBlueprint()
+				-> cleanTask()
+				-> multiConcatTask()
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}concat-scripts-and-styles", ->
-		runTask()
+	# return
+	# ======
+	api.runTask()
 
 
 

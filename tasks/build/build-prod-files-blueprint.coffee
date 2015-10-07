@@ -1,12 +1,12 @@
-module.exports = (gulp, config) ->
-	q               = require 'q'
-	path            = require 'path'
-	rename          = require 'gulp-rename'
-	template        = require 'gulp-template'
-	log             = require "#{config.req.helpers}/log"
-	pathHelp        = require "#{config.req.helpers}/path"
-	promiseHelp     = require "#{config.req.helpers}/promise"
-	format          = require("#{config.req.helpers}/format")()
+module.exports = (config, gulp) ->
+	q           = require 'q'
+	path        = require 'path'
+	rename      = require 'gulp-rename'
+	template    = require 'gulp-template'
+	log         = require "#{config.req.helpers}/log"
+	pathHelp    = require "#{config.req.helpers}/path"
+	promiseHelp = require "#{config.req.helpers}/promise"
+	format      = require("#{config.req.helpers}/format")()
 
 	# Global Objects
 	# ==============
@@ -124,28 +124,28 @@ module.exports = (gulp, config) ->
 		]).done -> defer.resolve()
 		defer.promise
 
-	# Main Task
-	# =========
-	runTask = -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> setDevFiles()
-			-> setMultiMinFileExcludes()
-			-> setMultiMinFiles()
-			-> setMultiMinFilesCleanup()
-			-> buildTask()
-		]
-		tasks.reduce(q.when, q()).done ->
-			# log.json DevFiles, 'dev files ='
-			# log.json MinFileExcludes, 'min file excludes ='
-			# log.json MinFiles, 'min files ='
-			defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # synchronously
+			defer = q.defer()
+			tasks = [
+				-> setDevFiles()
+				-> setMultiMinFileExcludes()
+				-> setMultiMinFiles()
+				-> setMultiMinFilesCleanup()
+				-> buildTask()
+			]
+			tasks.reduce(q.when, q()).done ->
+				# log.json DevFiles, 'dev files ='
+				# log.json MinFileExcludes, 'min file excludes ='
+				# log.json MinFiles, 'min files ='
+				defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}build-prod-files-blueprint", ->
-		runTask()
+	# return
+	# ======
+	api.runTask()
 
 
 

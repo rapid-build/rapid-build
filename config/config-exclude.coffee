@@ -101,18 +101,18 @@ module.exports = (config, options) ->
 
 	getExcludeFromDist = (appOrRb, loc) -> # prepend src path to values then prepend '!'
 		paths = exclude[appOrRb].from.dist[loc]
-		return [] if not paths.length
+		return [] unless paths.length
 		types   = getExcludeFromDirTypes appOrRb, loc
 		srcPath = config.src[appOrRb][loc].dir
 		paths   = (path.join srcPath, _path for _path in paths)
 		eTypes  = {}
 		for _path in paths
 			type = getExcludeFromDistType types, appOrRb, loc, _path
-			continue if not type
-			eTypes[type.type] = {} if not eTypes[type.type]
-			eTypes[type.type][type.lang] = [] if not eTypes[type.type][type.lang]
+			continue unless type
+			eTypes[type.type] = {} unless eTypes[type.type]
+			eTypes[type.type][type.lang] = [] unless eTypes[type.type][type.lang]
 			eTypes[type.type][type.lang].push type.path
-		return [] if not Object.keys(eTypes).length
+		return [] unless Object.keys(eTypes).length
 		eTypes
 
 	exclude.rb.from.dist.client  = getExcludeFromDist 'rb', 'client'

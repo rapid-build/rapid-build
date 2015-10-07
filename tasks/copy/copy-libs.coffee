@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q = require 'q'
 
 	runTask = (src, dest, appOrRb) ->
@@ -10,23 +10,25 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = ->
-		defer = q.defer()
-		q.all([
-			runTask(
-				config.glob.src.rb.client.libs.all
-				config.dist.rb.client.libs.dir
-				'rb'
-			)
-			runTask(
-				config.glob.src.app.client.libs.all
-				config.dist.app.client.libs.dir
-				'app'
-			)
-		]).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			q.all([
+				runTask(
+					config.glob.src.rb.client.libs.all
+					config.dist.rb.client.libs.dir
+					'rb'
+				)
+				runTask(
+					config.glob.src.app.client.libs.all
+					config.dist.app.client.libs.dir
+					'app'
+				)
+			]).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}copy-libs", ->
-		runTasks()
+	# return
+	# ======
+	api.runTask()

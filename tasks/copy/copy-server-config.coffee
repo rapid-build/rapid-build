@@ -1,19 +1,20 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q = require 'q'
 
-	runTask = (src, dest) ->
-		defer = q.defer()
-		gulp.src src
-			.pipe gulp.dest dest
-			.on 'end', ->
-				# console.log dest
-				defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			src   = config.templates.config.dest.path
+			dest  = config.dist.rb.server.scripts.dir
+			gulp.src src
+				.pipe gulp.dest dest
+				.on 'end', ->
+					# console.log dest
+					defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}copy-server-config", ->
-		runTask(
-			config.templates.config.dest.path
-			config.dist.rb.server.scripts.dir
-		)
+	# return
+	# ======
+	api.runTask()

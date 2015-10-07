@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
 	es          = require 'event-stream'
@@ -22,8 +22,8 @@ module.exports = (gulp, config) ->
 
 	getExcludeFromDist = (appOrRb) ->
 		excludes = config.exclude[appOrRb].from.dist.client
-		return [] if not Object.keys(excludes).length
-		return [] if not excludes.bower
+		return [] unless Object.keys(excludes).length
+		return [] unless excludes.bower
 		excludes.bower.all
 
 	runTask = (src, dest, appOrRb) ->
@@ -49,17 +49,19 @@ module.exports = (gulp, config) ->
 			appOrRb
 		)
 
-	runTasks = ->
-		defer = q.defer()
-		q.all([
-			getComponents 'rb', config.exclude.angular.files
-			getComponents 'app'
-		]).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			q.all([
+				getComponents 'rb', config.exclude.angular.files
+				getComponents 'app'
+			]).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}copy-bower_components", ->
-		runTasks()
+	# return
+	# ======
+	api.runTask()
 
 

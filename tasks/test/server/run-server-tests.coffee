@@ -1,4 +1,4 @@
-module.exports = (gulp, config, watchFilePath) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	del          = require 'del'
 	path         = require 'path'
@@ -6,7 +6,7 @@ module.exports = (gulp, config, watchFilePath) ->
 	promiseHelp  = require "#{config.req.helpers}/promise"
 	jasmine      = require("#{config.req.helpers}/jasmine") config
 	resultsFile  = path.join config.dist.app.server.dir, 'test-results.json'
-	forWatchFile = !!watchFilePath
+	forWatchFile = !!taskOpts.watchFilePath
 
 	# tasks
 	# =====
@@ -33,9 +33,6 @@ module.exports = (gulp, config, watchFilePath) ->
 			console.error msg.error
 		.exit 1
 
-	runSingle = (file) ->
-		jasmine.init(file).reExecute() # returns promise
-
 	runMulti = -> # synchronously
 		defer = q.defer()
 		tasks = [
@@ -56,19 +53,20 @@ module.exports = (gulp, config, watchFilePath) ->
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
-	runTask = (isDev) ->
-		return promiseHelp.get() unless config.build.server
-		return runMultiDev() if isDev
-		runMulti()
+	# API
+	# ===
+	api =
+		runSingle: (file) ->
+			jasmine.init(file).reExecute() # returns promise
 
-	# register task
-	# =============
-	return runSingle watchFilePath if forWatchFile
+		runTask: (env) ->
+			return promiseHelp.get() unless config.build.server
+			return runMultiDev() if env is 'dev'
+			runMulti()
 
-	gulp.task "#{config.rb.prefix.task}run-server-tests", ->
-		runTask()
-
-	gulp.task "#{config.rb.prefix.task}run-server-tests:dev", ->
-		runTask true
+	# return
+	# ======
+	return api.runSingle taskOpts.watchFilePath if forWatchFile
+	api.runTask taskOpts.env
 
 

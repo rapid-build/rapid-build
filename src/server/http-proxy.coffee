@@ -3,10 +3,10 @@ module.exports = (app, config) ->
 	proxies      = []
 
 	for proxy in config.httpProxy
-		continue if not proxy.context
+		continue unless proxy.context
 		proxies.push proxyMidware proxy.context, proxy.options
 
-	return if not proxies.length
+	return unless proxies.length
 
 	# add middleware to express app
 	# =============================

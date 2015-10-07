@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q           = require 'q'
 	fs          = require 'fs'
 	del         = require 'del'
@@ -123,19 +123,18 @@ module.exports = (gulp, config) ->
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 
-	runTask = (isDev) ->
-		return promiseHelp.get() unless config.build.client
-		return promiseHelp.get() if config.exclude.angular.files
-		return runDevTask() if isDev
-		runDefaultTask()
+	# API
+	# ===
+	api =
+		runTask: (env) ->
+			return promiseHelp.get() unless config.build.client
+			return promiseHelp.get() if config.exclude.angular.files
+			return runDevTask() if env is 'dev'
+			runDefaultTask()
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}run-client-tests", ->
-		runTask()
-
-	gulp.task "#{config.rb.prefix.task}run-client-tests:dev", ->
-		runTask true
+	# return
+	# ======
+	api.runTask taskOpts.env
 
 
 

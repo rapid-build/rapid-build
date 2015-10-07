@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q           = require 'q'
 	bower       = require 'bower'
 	promiseHelp = require "#{config.req.helpers}/promise"
@@ -23,19 +23,17 @@ module.exports = (gulp, config) ->
 
 		defer.promise
 
-	runTasks = ->
-		defer = q.defer()
-		q.all([
-			runTask 'rb'
-			runTask 'app'
-		]).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			q.all([
+				runTask 'rb'
+				runTask 'app'
+			]).done -> defer.resolve()
+			defer.promise
 
-	# task deps
-	# =========
-	taskDeps = ["#{config.rb.prefix.task}build-bower-json"]
-
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}bower", taskDeps, ->
-		runTasks()
+	# return
+	# ======
+	api.runTask()

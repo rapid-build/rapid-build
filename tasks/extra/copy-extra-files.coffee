@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q         = require 'q'
 	extraHelp = require("#{config.req.helpers}/extra") config
 
@@ -11,13 +11,12 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = (loc) ->
-		extraHelp.run.tasks.async runTask, 'copy', null, [loc]
+	# API
+	# ===
+	api =
+		runTask: (loc) ->
+			extraHelp.run.tasks.async runTask, 'copy', null, [loc]
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}copy-extra-files:client", ->
-		runTasks 'client'
-
-	gulp.task "#{config.rb.prefix.task}copy-extra-files:server", ->
-		runTasks 'server'
+	# return
+	# ======
+	api.runTask taskOpts.loc

@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q    = require 'q'
 	del  = require 'del'
 	path = require 'path'
@@ -10,16 +10,18 @@ module.exports = (gulp, config) ->
 			defer.resolve()
 		defer.promise
 
-	runTask = ->
-		dest = config.src.rb.client.test.dir
-		src  = [
-			path.join dest, '*'
-			path.join "!#{dest}", '.gitkeep'
-		]
-		cleanTask src
+	# API
+	# ===
+	api =
+		runTask: -> # all files are generated
+			dest = config.src.rb.client.test.dir
+			src  = [
+				path.join dest, '*'
+				path.join "!#{dest}", '.gitkeep'
+			]
+			cleanTask src
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}clean-rb-client-test-src", ->
-		runTask() # all files are generated
+	# return
+	# ======
+	api.runTask()
 

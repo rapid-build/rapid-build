@@ -12,7 +12,7 @@ module.exports = (config, gulp) ->
 		getImports = (files) ->
 			imports = {}
 			for own k1, v1 of files
-				continue if not v1.length
+				continue unless v1.length
 				v1.forEach (v2, i) ->
 					imports[v2] = i
 			Object.keys imports
@@ -68,7 +68,7 @@ module.exports = (config, gulp) ->
 		# ==============
 		addImport: (file) ->
 			paths = findImports file
-			return @ if not paths.length
+			return @ unless paths.length
 			@files[file.path] = paths
 			@
 
@@ -93,7 +93,7 @@ module.exports = (config, gulp) ->
 		getWatchSrc: (_path) ->
 			files   = @getFiles()
 			imports = getImports files
-			return [ _path ] if not isImport imports, _path
+			return [ _path ] unless isImport imports, _path
 			# is import, what non import(s) has it?
 			src = []
 			for own _file, fileImports of files

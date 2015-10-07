@@ -35,7 +35,7 @@ module.exports = (config) ->
 		_imports = []
 		negated  = if negated then '!' else ''
 		for own k1, v1 of imports
-			continue if not v1.length
+			continue unless v1.length
 			for v2 in v1
 				_imports.push "#{negated}#{v2}"
 		_imports

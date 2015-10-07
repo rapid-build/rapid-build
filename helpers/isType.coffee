@@ -5,8 +5,11 @@ module.exports =
 	boolean: (v) ->
 		typeof v is 'boolean'
 
+	function: (v) ->
+		typeof v is 'function'
+
 	int: (v) ->
-		return false if not @number v
+		return false unless @number v
 		v % 1 is 0
 
 	null: (v) ->

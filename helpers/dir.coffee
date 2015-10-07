@@ -12,10 +12,10 @@ module.exports = (config, gulp) ->
 		catch e
 			console.log e.message.error
 			return _dirs
-		return _dirs if not filenames.length
+		return _dirs unless filenames.length
 		for filePath in filenames
 			newPath = path.join _path, filePath
-			continue if not fs.statSync(newPath).isDirectory()
+			continue unless fs.statSync(newPath).isDirectory()
 			_dirs.push newPath
 			getDirsRecursively newPath, _dirs
 		_dirs
@@ -26,7 +26,7 @@ module.exports = (config, gulp) ->
 			flag = false
 			for fPath in filterPaths
 				if _path.indexOf(fPath) isnt -1 then flag = true; break
-			_dirs.push _path if not flag
+			_dirs.push _path unless flag
 		_dirs
 
 	# API
@@ -44,7 +44,7 @@ module.exports = (config, gulp) ->
 
 		emptyDirs: (initPath, filterPaths=[], reverse) ->
 			dirs = @dirs initPath, filterPaths, reverse
-			return dirs if not dirs.length
+			return dirs unless dirs.length
 			_dirs    = []
 			fileDirs = {}
 
@@ -52,19 +52,19 @@ module.exports = (config, gulp) ->
 				filenames = fs.readdirSync _path
 				for filePath, i in filenames
 					newPath = path.join _path, filePath
-					continue if not fs.statSync(newPath).isFile()
+					continue unless fs.statSync(newPath).isFile()
 					fileDirs[_path] = i + 1 # total files
 
-			return dirs if not Object.keys(fileDirs).length
+			return dirs unless Object.keys(fileDirs).length
 
 			for _path in dirs
 				flag = false
 				for own k, v of fileDirs
 					if k.indexOf(_path) isnt -1 then flag = true; break
-				_dirs.push _path if not flag
+				_dirs.push _path unless flag
 
 			_dirs
-			
+
 	# returns promise with hasFiles boolean value
 	hasFiles: (src) ->
 		defer    = q.defer()

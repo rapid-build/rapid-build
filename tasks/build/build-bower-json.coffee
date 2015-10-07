@@ -1,20 +1,7 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q        = require 'q'
 	rename   = require 'gulp-rename'
 	template = require 'gulp-template'
-
-	# task
-	# ====
-	runTask = (src, dest, file, data={}) ->
-		defer = q.defer()
-		gulp.src src
-			.pipe rename file
-			.pipe template data
-			.pipe gulp.dest dest
-			.on 'end', ->
-				# console.log 'bower.json built'.yellow
-				defer.resolve()
-		defer.promise
 
 	# helpers
 	# =======
@@ -24,14 +11,26 @@ module.exports = (gulp, config) ->
 		total   = Object.keys(deps).length
 		data    = { version, deps, total }
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}build-bower-json", ->
-		data = getData()
-		runTask(
-			config.templates.bowerJson.src.path
-			config.templates.bowerJson.dest.dir
-			config.templates.bowerJson.dest.file
-			data
-		)
+	# API
+	# ===
+	api =
+		runTask: (src, dest, file) ->
+			defer = q.defer()
+			data  = getData()
+			gulp.src src
+				.pipe rename file
+				.pipe template data
+				.pipe gulp.dest dest
+				.on 'end', ->
+					# console.log 'bower.json built'.yellow
+					defer.resolve()
+			defer.promise
+
+	# return
+	# ======
+	api.runTask(
+		config.templates.bowerJson.src.path
+		config.templates.bowerJson.dest.dir
+		config.templates.bowerJson.dest.file
+	)
 

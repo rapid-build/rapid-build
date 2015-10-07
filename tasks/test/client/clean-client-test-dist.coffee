@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q           = require 'q'
 	del         = require 'del'
 	promiseHelp = require "#{config.req.helpers}/promise"
@@ -10,17 +10,18 @@ module.exports = (gulp, config) ->
 			defer.resolve()
 		defer.promise
 
-	runTask = ->
-		src = [
-			config.dist.rb.client.test.dir
-			config.dist.app.client.test.dir
-		]
-		cleanTask src
+	# API
+	# ===
+	api =
+		runTask: ->
+			return promiseHelp.get() unless config.build.client
+			return promiseHelp.get() if config.exclude.angular.files
+			src = [
+				config.dist.rb.client.test.dir
+				config.dist.app.client.test.dir
+			]
+			cleanTask src
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}clean-client-test-dist", ->
-		return promiseHelp.get() unless config.build.client
-		return promiseHelp.get() if config.exclude.angular.files
-		runTask()
-
+	# return
+	# ======
+	api.runTask()

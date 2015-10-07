@@ -10,7 +10,7 @@ module.exports = (config, options) ->
 	getSrcFilePath = (_isCustom, _path) ->
 		rbDir  = config.src.rb.client.dir
 		appDir = config.src.app.client.dir
-		return path.join rbDir, 'spa.html' if not _isCustom
+		return path.join rbDir, 'spa.html' unless _isCustom
 		_path  = pathHelp.format _path
 		_path  = "/#{_path}" if _path[0] isnt '/'
 		_path  = path.join appDir, _path

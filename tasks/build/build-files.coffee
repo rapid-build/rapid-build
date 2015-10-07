@@ -3,7 +3,7 @@
 #	styles:  []
 #	scripts: []
 # ===================
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q        = require 'q'
 	path     = require 'path'
 	gs       = require 'glob-stream'
@@ -39,7 +39,7 @@ module.exports = (gulp, config) ->
 	# =====
 	getExcludes = (appOrRb, type, glob) ->
 		spaExcludes = config.exclude[appOrRb].from.spaFile[type]
-		return glob if not spaExcludes.length
+		return glob unless spaExcludes.length
 		glob = glob.concat spaExcludes
 		# log.json glob, "#{appOrRb} #{type}"
 		glob
@@ -112,29 +112,25 @@ module.exports = (gulp, config) ->
 		]).done -> defer.resolve()
 		defer.promise
 
-	# main task
-	# =========
-	runTask = -> # sync
-		defer = q.defer()
-		tasks = [
-			-> buildData()
-			-> buildFile(
-				config.templates.files.src.path
-				config.templates.files.dest.dir
-				config.templates.files.dest.file
-				format.json data
-			)
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # sync
+			defer = q.defer()
+			tasks = [
+				-> buildData()
+				-> buildFile(
+					config.templates.files.src.path
+					config.templates.files.dest.dir
+					config.templates.files.dest.file
+					format.json data
+				)
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# task deps
-	# =========
-	taskDeps = ["#{config.rb.prefix.task}clean-files"]
-
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}build-files", taskDeps, ->
-		runTask()
+	# return
+	# ======
+	api.runTask()
 
 

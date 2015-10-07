@@ -1,7 +1,7 @@
-module.exports = (gulp, config, watchFile={}) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
-	tasks        = require("#{config.req.helpers}/tasks")()
-	forWatchFile = !!watchFile.path
+	tasks        = require("#{config.req.helpers}/tasks") config
+	forWatchFile = !!taskOpts.watchFile
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
 
 	runTask = (src, dest) ->
@@ -13,24 +13,22 @@ module.exports = (gulp, config, watchFile={}) ->
 				defer.resolve()
 		defer.promise
 
-	runSingle = -> # synchronously
-		defer  = q.defer()
-		_tasks = [
-			-> runTask watchFile.path, watchFile.rbDistDir
-			-> absCssUrls gulp, config, watchFile.rbDistPath
-		]
-		_tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runSingle: -> # synchronously
+			defer  = q.defer()
+			_tasks = [
+				-> runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
+				-> absCssUrls config, gulp, watchFilePath: taskOpts.watchFile.rbDistPath
+			]
+			_tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	runMulti = ->
-		tasks.run.async(
-			config, runTask,
-			'styles', 'css',
-			['client']
-		)
+		runMulti: ->
+			tasks.run.async runTask, 'styles', 'css', ['client']
 
-	# register task
-	# =============
-	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}copy-css", ->
-		runMulti()
+	# return
+	# ======
+	return api.runSingle() if forWatchFile
+	api.runMulti()

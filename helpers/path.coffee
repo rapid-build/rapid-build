@@ -6,7 +6,7 @@ module.exports =
 		path.indexOf(':\\') isnt -1
 
 	removeDrive: (path) ->
-		return path if not @isWinAbs path
+		return path unless @isWinAbs path
 		i    = path.indexOf(':\\') + 1
 		path = path.substr i
 
@@ -15,7 +15,7 @@ module.exports =
 		path.replace regx, '/'
 
 	format: (path) ->
-		return path if not @isWin path
+		return path unless @isWin path
 		path = @removeDrive path
 		path = @swapBackslashes path
 		path
@@ -26,7 +26,7 @@ module.exports =
 	removeLocPartial: (locPaths, partial) ->
 		paths   = {}
 		partial = @format partial
-		partial += '/' if not @hasTrailingSlash partial
+		partial += '/' unless @hasTrailingSlash partial
 		for own k, v of locPaths
 			paths[k] = []
 			v.forEach (path, i) ->

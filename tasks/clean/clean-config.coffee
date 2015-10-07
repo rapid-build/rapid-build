@@ -1,17 +1,18 @@
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q   = require 'q'
 	del = require 'del'
 
-	runTask = (src) ->
-		defer = q.defer()
-		del(src, force:true).then (paths) ->
-			# console.log 'config.json deleted'.yellow
-			defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: (src) ->
+			defer = q.defer()
+			del(src, force:true).then (paths) ->
+				# console.log 'config.json deleted'.yellow
+				defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}clean-config", ->
-		runTask config.templates.config.dest.path
-
+	# return
+	# ======
+	api.runTask config.templates.config.dest.path
 

@@ -1,35 +1,67 @@
-module.exports = (gulp, config) ->
-	q           = require 'q'
-	browserSync = require 'browser-sync'
-	promiseHelp = require "#{config.req.helpers}/promise"
-	bs          = browserSync.create()
+module.exports =
+	# props
+	# =====
+	bs: {}
+	bsConfig: {}
 
-	# helpers
-	# =======
-	getBsConfig = ->
-		files:   config.glob.browserSync
-		proxy:   "http://localhost:#{config.ports.server}/"
-		port:    config.ports.reload
-		ui:      port: config.ports.reloadUI
-		browser: 'google chrome'
-		open:    config.browser.open
-
-	# events
-	# ======
-	bs.emitter.on 'serverRestart', ->
-		return if not bs.active
-		setTimeout ->
-			bs.reload stream:false
-		, 1000
-
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}browser-sync", ->
+	# public methods
+	# ==============
+	init: (config) ->
+		promiseHelp = require "#{config.req.helpers}/promise"
 		return promiseHelp.get() unless config.build.server
-		defer    = q.defer()
-		bsConfig = getBsConfig()
-		bs.init bsConfig, ->
+		@set()
+		.setBsConfig config
+		._initBs() # returns promise
+
+	isRunning: ->
+		!!@bs.active
+
+	restart: ->
+		return @ unless @isRunning()
+		# console.log 'BROWSER SYNC RESTART:', @bs.name
+		@bs.reload stream:false
+		@
+
+	delayedRestart: ->
+		return @ unless @isRunning()
+		setTimeout =>
+			@restart()
+		, 1000
+		@
+
+	# private methods
+	# ===============
+	_initBs: ->
+		q     = require 'q'
+		defer = q.defer()
+		# console.log 'BROWSER SYNC STARTED', @bs.name
+		@bs.init @bsConfig, ->
 			defer.resolve()
 		defer.promise
 
-	bs
+	# setters
+	# =======
+	set: ->
+		@bs = require('browser-sync').create()
+		@
+
+	setBsConfig: (config) ->
+		@bsConfig =
+			files:   config.glob.browserSync
+			proxy:   "http://localhost:#{config.ports.server}/"
+			port:    config.ports.reload
+			ui:      port: config.ports.reloadUI
+			browser: 'google chrome'
+			open:    config.browser.open
+		@
+
+	# getters
+	# =======
+	get: ->
+		@bs
+
+	getBsConfig: ->
+		@bsConfig
+
+
+

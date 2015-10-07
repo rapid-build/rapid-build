@@ -3,7 +3,7 @@
 module.exports = (gulp, config) ->
 	q            = require 'q'
 	gulpSequence = require('gulp-sequence').use gulp
-	taskHelp     = require("#{config.req.helpers}/tasks") gulp
+	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
 	defer        = q.defer()
 
 	# default

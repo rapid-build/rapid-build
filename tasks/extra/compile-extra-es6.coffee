@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q         = require 'q'
 	babel     = require 'gulp-babel'
 	plumber   = require 'gulp-plumber'
@@ -15,10 +15,12 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = (loc) ->
-		extraHelp.run.tasks.async runTask, 'compile', 'es6', [loc]
+	# API
+	# ===
+	api =
+		runTask: (loc) ->
+			extraHelp.run.tasks.async runTask, 'compile', 'es6', [loc]
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}compile-extra-es6:client", ->
-		runTasks 'client'
+	# return
+	# ======
+	api.runTask taskOpts.loc

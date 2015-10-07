@@ -1,4 +1,4 @@
-module.exports = (gulp, config, watchFile={}) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	path         = require 'path'
 	es           = require 'event-stream'
@@ -6,7 +6,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	less         = require 'gulp-less'
 	plumber      = require 'gulp-plumber'
 	lessHelper   = require("#{config.req.helpers}/Less") config, gulp
-	forWatchFile = !!watchFile.path
+	forWatchFile = !!taskOpts.watchFile
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
 
 	# streams
@@ -32,9 +32,9 @@ module.exports = (gulp, config, watchFile={}) ->
 			.pipe gulpif forWatch, addToDistPath appOrRb
 			.pipe gulp.dest dest
 			.on 'data', (file) ->
-				return if not forWatch
+				return unless forWatch
 				watchFilePath = path.relative file.cwd, file.path
-				absCssUrls gulp, config, watchFilePath
+				absCssUrls config, gulp, { watchFilePath }
 			.on 'end', ->
 				# console.log dest
 				defer.resolve()
@@ -56,7 +56,7 @@ module.exports = (gulp, config, watchFile={}) ->
 		new lessHelper config.glob.src[appOrRb].client.styles.less
 			.setImports()
 			.then (me) ->
-				src = me.getWatchSrc watchFile.path
+				src = me.getWatchSrc taskOpts.watchFile.path
 				defer.resolve src
 		defer.promise
 
@@ -78,24 +78,24 @@ module.exports = (gulp, config, watchFile={}) ->
 			runTask(src, dest).done -> defer.resolve()
 		defer.promise
 
-	# entry points
-	# ============
-	runSingle = ->
-		runLessWatch watchFile.rbAppOrRb
+	# API
+	# ===
+	api =
+		runSingle: ->
+			runLessWatch taskOpts.watchFile.rbAppOrRb
 
-	runMulti = ->
-		defer = q.defer()
-		q.all([
-			runLess 'app'
-			runLess 'rb'
-		]).done -> defer.resolve()
-		defer.promise
+		runMulti: ->
+			defer = q.defer()
+			q.all([
+				runLess 'app'
+				runLess 'rb'
+			]).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}less", ->
-		runMulti()
+	# return
+	# ======
+	return api.runSingle() if forWatchFile
+	api.runMulti()
 
 
 

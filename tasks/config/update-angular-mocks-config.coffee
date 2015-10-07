@@ -1,6 +1,6 @@
 # Task is only called from the common task.
 # =========================================
-module.exports = (gulp, config) ->
+module.exports = (config) ->
 	q           = require 'q'
 	promiseHelp = require "#{config.req.helpers}/promise"
 	configHelp  = require("#{config.req.helpers}/config") config
@@ -12,17 +12,19 @@ module.exports = (gulp, config) ->
 		config.glob.removeRbAngularMocks()
 		promiseHelp.get()
 
-	runTasks = -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> updateConfig()
-			-> configHelp.buildFile true, 'rebuild'
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: -> # synchronously
+			defer = q.defer()
+			tasks = [
+				-> updateConfig()
+				-> configHelp.buildFile true, 'rebuild'
+			]
+			tasks.reduce(q.when, q()).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}update-angular-mocks-config", ->
-		runTasks()
+	# return
+	# ======
+	api.runTask()
 

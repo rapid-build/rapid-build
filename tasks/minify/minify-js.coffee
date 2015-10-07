@@ -1,4 +1,4 @@
-module.exports = (gulp, config) ->
+module.exports = (config, gulp) ->
 	q        = require 'q'
 	gulpif   = require 'gulp-if'
 	minifyJs = require 'gulp-uglify'
@@ -15,15 +15,17 @@ module.exports = (gulp, config) ->
 				defer.resolve()
 		defer.promise
 
-	runTasks = ->
-		defer = q.defer()
-		q.all([
-			runTask 'rb'
-			runTask 'app'
-		]).done -> defer.resolve()
-		defer.promise
+	# API
+	# ===
+	api =
+		runTask: ->
+			defer = q.defer()
+			q.all([
+				runTask 'rb'
+				runTask 'app'
+			]).done -> defer.resolve()
+			defer.promise
 
-	# register task
-	# =============
-	gulp.task "#{config.rb.prefix.task}minify-js", ->
-		runTasks()
+	# return
+	# ======
+	api.runTask()

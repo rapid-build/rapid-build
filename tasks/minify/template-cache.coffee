@@ -1,4 +1,4 @@
-module.exports = (gulp, config, watchFile={}) ->
+module.exports = (config, gulp, taskOpts={}) ->
 	q             = require 'q'
 	path          = require 'path'
 	es            = require 'event-stream'
@@ -8,7 +8,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
 	dirHelper     = require("#{config.req.helpers}/dir") config, gulp
 	runNgFormify  = config.angular.ngFormify
-	forWatchFile  = !!watchFile.path
+	forWatchFile = !!taskOpts.watchFile
 
 	# globs
 	# =====
@@ -22,7 +22,7 @@ module.exports = (gulp, config, watchFile={}) ->
 	# helpers
 	# =======
 	getAppOrRb = (base, loc, type) -> # base = file.base from buffer
-		return if not base
+		return unless base
 		return 'rb' if base.indexOf(config[loc].rb.client[type].dir) isnt -1
 		'app'
 
@@ -77,17 +77,19 @@ module.exports = (gulp, config, watchFile={}) ->
 			runTask(src, dest, file, isProd).done -> defer.resolve()
 		defer.promise
 
-	runSingle = -> # todo: optimize for one file
-		run()
+	# API
+	# ===
+	api =
+		runSingle: -> # todo: optimize for one file
+			run()
 
-	runMulti = ->
-		run()
+		runMulti: ->
+			run()
 
-	# register task
-	# =============
-	return runSingle() if forWatchFile
-	gulp.task "#{config.rb.prefix.task}template-cache", ->
-		runMulti()
+	# return
+	# ======
+	return api.runSingle() if forWatchFile
+	api.runMulti()
 
 
 

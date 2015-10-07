@@ -60,7 +60,7 @@ module.exports = (config) ->
 			for own k2, v2 of v1
 				continue if k2 is 'server' and ['scripts','test'].indexOf(type) is -1
 				continue if k2 is 'server' and (includeBower or includeLibs)
-				v2[type] = {} if not isType.object v2[type]
+				v2[type] = {} unless isType.object v2[type]
 				for v3 in langs
 					continue if k2 is 'server' and type is 'test' and v3 is 'css'
 					typeDir = pathHelp.format config[loc][k1][k2][type].dir
@@ -160,7 +160,7 @@ module.exports = (config) ->
 
 	glob.removeRbAngularMocks = ->
 		if config.env.is.prod
-			removeRbAngularMocks() if not config.angular.httpBackend.prod
+			removeRbAngularMocks() unless config.angular.httpBackend.prod
 		else if not config.angular.httpBackend.dev
 			removeRbAngularMocks()
 
@@ -173,12 +173,12 @@ module.exports = (config) ->
 				v1[i] += ".#{ext}"
 
 	addFirst = (appOrRb, type, array, ext) ->
-		return if not array.length
+		return unless array.length
 		array.slice().reverse().forEach (v) ->
 			glob.dist[appOrRb].client[type][ext].unshift v
 
 	addLast = (appOrRb, type, array, ext) ->
-		return if not array.length
+		return unless array.length
 		array.forEach (v) ->
 			glob.dist[appOrRb].client[type][ext].push "!#{v}", v
 
@@ -187,7 +187,7 @@ module.exports = (config) ->
 			for own k2, v2 of v1
 				tot = config.order[k1][k2].first.length +
 					  config.order[k1][k2].last.length
-				continue if not tot
+				continue unless tot
 				ext = 'js'  if k2 is 'scripts'
 				ext = 'css' if k2 is 'styles'
 				addDistDir k1, v2, ext
@@ -201,16 +201,16 @@ module.exports = (config) ->
 	addExcludeFromDist = (loc) ->
 		for appOrRb in ['app','rb']
 			excludes = config.exclude[appOrRb].from.dist[loc]
-			continue if not Object.keys(excludes).length
+			continue unless Object.keys(excludes).length
 			for own k1, v1 of glob.src[appOrRb][loc]
 				continue if k1 is 'all'
 				for own k2, v2 of v1
-					continue if not v2.length
-					continue if not excludes[k1]
+					continue unless v2.length
+					continue unless excludes[k1]
 					ePaths = excludes[k1]['all']
 					ePaths = if ePaths then ePaths else excludes[k1][k2]
-					continue if not ePaths
-					continue if not ePaths.length
+					continue unless ePaths
+					continue unless ePaths.length
 					glob.src[appOrRb][loc][k1][k2] = v2.concat ePaths
 
 	addExcludeFromDist 'client'
