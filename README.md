@@ -244,6 +244,16 @@ package.json
 ## Develop Rapidly!
 ![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/shake-and-bake.jpg "Shake n' Bake!")
 
+## Known Issues
+These are either being worked on or on the todo list.
+* doesn't support sass "import multiple files in one @import"
+```scss
+// note: it will compile but the dist will end up with duplicate css
+// example:
+@import "rounded-corners", "text-shadow";
+```
+
+
 
 
 
