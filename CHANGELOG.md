@@ -1,3 +1,12 @@
+# [0.42.0](https://github.com/jyounce/rapid-build/compare/v0.41.0...v0.42.0) (2015-10-07)
+
+
+### Performance Improvements
+
+* **tasks:** lazy load build tasks ([18c9e57](https://github.com/jyounce/rapid-build/commit/18c9e57))
+
+
+
 # [0.41.0](https://github.com/jyounce/rapid-build/compare/v0.40.1...v0.41.0) (2015-10-05)
 
 
