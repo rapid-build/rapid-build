@@ -76,6 +76,7 @@ module.exports = (config, gulp) ->
 			@imports
 
 		getWatchSrc: (_path) ->
+			_path   = pathHelp.format _path
 			files   = @getFiles()
 			imports = getImports files
 			return [ _path ] unless isImport imports, _path
