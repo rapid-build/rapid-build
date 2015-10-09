@@ -1,3 +1,14 @@
+## [0.42.1](https://github.com/jyounce/rapid-build/compare/v0.42.0...v0.42.1) (2015-10-09)
+
+
+### Bug Fixes
+
+* **option:** fix build option httpProxy by removing lodash dependency ([7439f93](https://github.com/jyounce/rapid-build/commit/7439f93))
+* **server:** allow application to define express's home route '/' if necessary ([7a1e472](https://github.com/jyounce/rapid-build/commit/7a1e472))
+* **windows:** fix the watch for less and sass ([4689c64](https://github.com/jyounce/rapid-build/commit/4689c64))
+
+
+
 # [0.42.0](https://github.com/jyounce/rapid-build/compare/v0.41.0...v0.42.0) (2015-10-07)
 
 
