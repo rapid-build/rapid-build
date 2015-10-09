@@ -15,7 +15,6 @@ server.app        = server.express()
 server.middleware = { bodyParser }
 server.paths      = client: clientDirPath, server: serverDirPath
 server.server     = require('./start-server') server.app, config
-require('./app-defaults') server, config
 
 # load optional http proxy
 # ========================
@@ -33,4 +32,6 @@ catch e
 	else
 		console.log e # log e if there is an actual error
 
-
+# load default app configuration
+# ==============================
+require('./app-defaults') server, config

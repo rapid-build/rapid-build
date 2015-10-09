@@ -8,7 +8,7 @@ module.exports = (server, config) ->
 	app.use server.express.static server.paths.client
 	app.use server.middleware.bodyParser.json() # parse application/json
 
-	app.get '/', (req, res) ->
+	app.get '*', (req, res) ->
 		msg = 'Hello Server!'
 		return res.send msg unless config.build.client
 		return res.send msg if config.exclude.spa
