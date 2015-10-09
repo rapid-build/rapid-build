@@ -1,7 +1,7 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
-	_            = require 'lodash'
 	absCssUrls   = require "#{config.req.plugins}/gulp-absolute-css-urls"
+	arrayHelp    = require "#{config.req.helpers}/array"
 	promiseHelp  = require "#{config.req.helpers}/promise"
 	configHelp   = require("#{config.req.helpers}/config") config
 	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
@@ -61,7 +61,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			opts  = prependPath: false, src: taskOpts.watchFilePath, watchFileBase: true
 			runTask('app', 'styles', opts).done ->
 				imports  = config.internal.getImports()
-				areEqual = _.isEqual clone, imports
+				areEqual = arrayHelp.areEqual clone, imports, true
 				buildSpa() unless areEqual
 
 		runTask: -> # synchronously
