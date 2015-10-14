@@ -16,9 +16,14 @@ server.middleware = { bodyParser }
 server.paths      = client: clientDirPath, server: serverDirPath
 server.server     = require('./start-server') server.app, config
 
+# load defaults
+# =============
+require('./defaults/app-settings') server, config
+require('./defaults/app-middleware') server, config
+
 # load optional http proxy
 # ========================
-proxyFilePath = path.join dir, 'http-proxy.js'
+proxyFilePath = path.join dir, 'options', 'http-proxy.js'
 require(proxyFilePath) server.app, config if config.httpProxy.length
 
 # load optional app server dist entry script
@@ -34,4 +39,4 @@ catch e
 
 # load default app configuration
 # ==============================
-require('./app-defaults') server, config
+require('./defaults/app-routes') server, config
