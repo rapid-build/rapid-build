@@ -1,3 +1,12 @@
+## [0.42.2](https://github.com/jyounce/rapid-build/compare/v0.42.1...v0.42.2) (2015-10-15)
+
+
+### Bug Fixes
+
+* **server:** fix parsing application/json post and put requests ([ba2aa71](https://github.com/jyounce/rapid-build/commit/ba2aa71))
+
+
+
 ## [0.42.1](https://github.com/jyounce/rapid-build/compare/v0.42.0...v0.42.1) (2015-10-09)
 
 
