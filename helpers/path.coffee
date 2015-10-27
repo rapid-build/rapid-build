@@ -26,7 +26,7 @@ module.exports =
 	removeLocPartial: (locPaths, partial) ->
 		paths   = {}
 		partial = @format partial
-		partial += '/' unless @hasTrailingSlash partial
+		# partial += '/' unless @hasTrailingSlash partial
 		for own k, v of locPaths
 			paths[k] = []
 			v.forEach (path, i) ->
