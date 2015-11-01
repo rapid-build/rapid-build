@@ -1,3 +1,12 @@
+## [0.42.3](https://github.com/jyounce/rapid-build/compare/v0.42.2...v0.42.3) (2015-11-01)
+
+
+### Bug Fixes
+
+* **client file paths:** output absolute file paths in spa.html instead of relative ([ed337a3](https://github.com/jyounce/rapid-build/commit/ed337a3))
+
+
+
 ## [0.42.2](https://github.com/jyounce/rapid-build/compare/v0.42.1...v0.42.2) (2015-10-15)
 
 
