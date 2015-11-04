@@ -7,9 +7,12 @@ module.exports = (config, gulp) ->
 		defer   = q.defer()
 		minify  = config.minify.js.scripts
 		minOpts = mangle: config.minify.js.mangle
-		gulp.src config.glob.dist[appOrRb].client.scripts.all
+		src     = config.glob.dist[appOrRb].client.scripts.all
+		dest    = config.dist[appOrRb].client.scripts.dir
+		src.push '!**/*.json' # do not minify json files, uglify has issues with quoted keys
+		gulp.src src
 			.pipe gulpif minify, minifyJs minOpts
-			.pipe gulp.dest config.dist[appOrRb].client.scripts.dir
+			.pipe gulp.dest dest
 			.on 'end', ->
 				console.log "minified #{appOrRb} dist scripts".yellow
 				defer.resolve()
