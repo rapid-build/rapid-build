@@ -8,6 +8,7 @@ module.exports =
 	# ==============
 	init: (config) ->
 		promiseHelp = require "#{config.req.helpers}/promise"
+		return promiseHelp.get() unless config.browser.reload
 		return promiseHelp.get() unless config.build.server
 		@set()
 		.setBsConfig config

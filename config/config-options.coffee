@@ -143,7 +143,8 @@ module.exports = (config, options) ->
 
 	browserOptions = ->
 		options.browser = {} unless isType.object options.browser
-		options.browser.open = null unless isType.boolean options.browser.open
+		options.browser.open   = null unless isType.boolean options.browser.open
+		options.browser.reload = null unless isType.boolean options.browser.reload
 
 	# init
 	# ====

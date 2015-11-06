@@ -184,6 +184,7 @@ package.json
 # server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
 # httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://www.npmjs.com/package/http-proxy-middleware
 # browser.open                                      = (boolean) defaults to true = open the browser once the build completes, applies to builds: default, dev and prod:server
+# browser.reload                                    = (boolean) defaults to true = reloads the browser once you save your src file, only applies to dev builds
 # extra.copy[client|server]                         = (array of strings) = file paths: additional files to copy to dist/client and or dist/server that the build didn't copy
 # extra.compile.client[coffee|es6|less|sass]        = (array of strings) = file paths: additional files to compile to dist/client that the build didn't compile
 # extra.compile.server[less|sass]                   = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile

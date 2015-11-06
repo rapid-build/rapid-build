@@ -5,7 +5,8 @@ module.exports = (config, options) ->
 	# init browser
 	# ============
 	browser = {}
-	browser.open = if options.browser.open is false then false else true
+	browser.open   = if options.browser.open   is false then false else true
+	browser.reload = if options.browser.reload is false then false else true
 
 	# add browser to config
 	# =====================
