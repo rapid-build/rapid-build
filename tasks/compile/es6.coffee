@@ -1,15 +1,17 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	babel        = require 'gulp-babel'
-	plumber      = require 'gulp-plumber'
-	tasks        = require("#{config.req.helpers}/tasks") config
-	forWatchFile = !!taskOpts.watchFile
+	q             = require 'q'
+	babel         = require 'gulp-babel'
+	plumber       = require 'gulp-plumber'
+	useStrictMode = require 'babel-plugin-transform-strict-mode'
+	tasks         = require("#{config.req.helpers}/tasks") config
+	forWatchFile  = !!taskOpts.watchFile
+	babelOpts     = plugins: [useStrictMode]
 
 	runTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
 			.pipe plumber()
-			.pipe babel()
+			.pipe babel babelOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
 				# console.log dest
