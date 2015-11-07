@@ -112,10 +112,10 @@ src/
 │   ├── views/
 │   │   └── **/*.html
 │   └── spa.html (optional, see options.spa.src.filePath)
-├── server/
-│   ├── test/
-│   │   └── **/*.{coffee,es6,js}
-│   └── routes.{coffee,es6,js} (see options.dist.server.fileName)
+└── server/
+    ├── test/
+    │   └── **/*.{coffee,es6,js}
+    └── routes.{coffee,es6,js} (see options.dist.server.fileName)
 nodes_modules/ (generated folder via package.json)
 bower.json
 build.js (see how to use)
