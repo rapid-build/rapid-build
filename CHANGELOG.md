@@ -1,3 +1,17 @@
+# [0.43.0](https://github.com/jyounce/rapid-build/compare/v0.42.3...v0.43.0) (2015-11-07)
+
+
+### Bug Fixes
+
+* **minifying client json:** do not use uglify-js to minify client json files, it has issues with quoted json keys ([2959573](https://github.com/jyounce/rapid-build/commit/2959573))
+
+### Features
+
+* **babel:** use npm package babel-plugin-transform-strict-mode ([206ade4](https://github.com/jyounce/rapid-build/commit/206ade4))
+* **option:** add build option browser.reload which defaults to true and only applies to dev builds ([354004d](https://github.com/jyounce/rapid-build/commit/354004d))
+
+
+
 ## [0.42.3](https://github.com/jyounce/rapid-build/compare/v0.42.2...v0.42.3) (2015-11-01)
 
 
