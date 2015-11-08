@@ -85,7 +85,9 @@ module.exports = (config, gulp) ->
 		opts   = allowEmpty: true
 		stream = gs.create glob, opts
 		stream.on 'data', (file) ->
-			files.push pathHelp.format file.path
+			_path = path.normalize file.path
+			_path = pathHelp.format _path
+			files.push pathHelp.format _path
 		.on 'end', ->
 			addData type, files
 			defer.resolve()
