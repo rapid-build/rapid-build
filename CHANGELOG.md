@@ -1,3 +1,12 @@
+## [0.43.1](https://github.com/jyounce/rapid-build/compare/v0.43.0...v0.43.1) (2015-11-08)
+
+
+### Bug Fixes
+
+* **windows:** ensure correct file paths in spa.html ([8fc5868](https://github.com/jyounce/rapid-build/commit/8fc5868))
+
+
+
 # [0.43.0](https://github.com/jyounce/rapid-build/compare/v0.42.3...v0.43.0) (2015-11-07)
 
 
