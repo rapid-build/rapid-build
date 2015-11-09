@@ -2,10 +2,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 	q             = require 'q'
 	babel         = require 'gulp-babel'
 	plumber       = require 'gulp-plumber'
-	useStrictMode = require 'babel-plugin-transform-strict-mode'
+	es2015        = require 'babel-preset-es2015'
 	tasks         = require("#{config.req.helpers}/tasks") config
 	forWatchFile  = !!taskOpts.watchFile
-	babelOpts     = plugins: [useStrictMode]
+	babelOpts     = presets: [es2015]
 
 	runTask = (src, dest) ->
 		defer = q.defer()
