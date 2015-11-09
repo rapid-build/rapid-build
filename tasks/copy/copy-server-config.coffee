@@ -1,10 +1,12 @@
 module.exports = (config, gulp) ->
-	q = require 'q'
+	q           = require 'q'
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# API
 	# ===
 	api =
 		runTask: ->
+			return promiseHelp.get() if config.exclude.default.server.files
 			defer = q.defer()
 			src   = config.templates.config.dest.path
 			dest  = config.dist.rb.server.scripts.dir

@@ -238,6 +238,16 @@ module.exports = (config) ->
 	# ============
 	glob.browserSync = path.join pathHelp.format(config.dist.app.client.dir), lang.all
 
+	# exclude rb server files
+	# =======================
+	excludeRbServerFiles = ->
+		return unless config.exclude.default.server.files
+		scripts = glob.src.rb.server.scripts
+		for own k1, v1 of scripts
+			scripts[k1] = []
+
+	excludeRbServerFiles()
+
 	# add glob to config
 	# ==================
 	config.glob = glob

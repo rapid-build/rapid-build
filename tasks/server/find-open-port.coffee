@@ -1,9 +1,10 @@
 # Updates config.ports if a port is in use.
 # =========================================
 module.exports = (config, gulp, taskOpts={}) ->
-	q          = require 'q'
-	findPort   = require 'find-port'
-	configHelp = require("#{config.req.helpers}/config") config
+	q           = require 'q'
+	findPort    = require 'find-port'
+	promiseHelp = require "#{config.req.helpers}/promise"
+	configHelp  = require("#{config.req.helpers}/config") config
 
 	# global
 	# ======
@@ -51,12 +52,16 @@ module.exports = (config, gulp, taskOpts={}) ->
 
 	setPorts = (forTestClientPort) -> # synchronously
 		defer = q.defer()
-		tasks = [
-			-> setPort 'server'
-			-> setPort 'reload'
-			-> setPort 'reloadUI'
-		]
-		tasks = [ -> setPort 'test' ] if forTestClientPort
+		switch !!forTestClientPort
+			when true then tasks = [ -> setPort 'test' ]
+			else
+				return promiseHelp.get defer unless config.build.server
+				return promiseHelp.get defer if config.exclude.default.server.files
+				tasks = [
+					-> setPort 'server'
+					-> setPort 'reload'
+					-> setPort 'reloadUI'
+				]
 		tasks.reduce(q.when, q()).done -> defer.resolve()
 		defer.promise
 

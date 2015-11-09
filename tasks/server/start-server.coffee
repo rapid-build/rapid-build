@@ -7,6 +7,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	api =
 		runTask: (cb, env) ->
 			return promiseHelp.get() unless config.build.server
+			return promiseHelp.get() if config.exclude.default.server.files
 			serverTask = if env is 'dev' then 'nodemon' else 'spawn-server'
 			gulpSequence(
 				"#{config.rb.prefix.task}#{serverTask}"

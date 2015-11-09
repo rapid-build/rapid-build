@@ -9,6 +9,7 @@ module.exports = (config) ->
 	api =
 		runTask: ->
 			return promiseHelp.get() unless config.build.server
+			return promiseHelp.get() if config.exclude.default.server.files
 			defer      = q.defer()
 			stopServer = require stopServerFile
 			stopServer().done -> defer.resolve()

@@ -13,5 +13,6 @@ module.exports = (config) ->
 	# return
 	# ======
 	return promiseHelp.get() unless config.build.server
+	return promiseHelp.get() if config.exclude.default.server.files
 	return promiseHelp.get() unless config.browser.open
 	api.runTask config.ports.server

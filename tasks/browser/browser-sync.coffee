@@ -10,6 +10,7 @@ module.exports =
 		promiseHelp = require "#{config.req.helpers}/promise"
 		return promiseHelp.get() unless config.browser.reload
 		return promiseHelp.get() unless config.build.server
+		return promiseHelp.get() if config.exclude.default.server.files
 		@set()
 		.setBsConfig config
 		._initBs() # returns promise

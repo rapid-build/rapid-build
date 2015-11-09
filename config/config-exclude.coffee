@@ -13,8 +13,8 @@ module.exports = (config, options) ->
 				opt = options.exclude[type][opt]
 				return defaultVal if isType.null opt
 				opt
-			deep3: (opt, type, defaultVal) ->
-				opt = options.exclude.from[opt][type]
+			deep3: (base, opt, type, defaultVal) ->
+				opt = options.exclude[base][opt][type]
 				return defaultVal if isType.null opt
 				opt
 
@@ -24,6 +24,9 @@ module.exports = (config, options) ->
 		spa: !!options.exclude.spa
 		angular:
 			files: get.opt.deep2 'angular', 'files', false
+		default:
+			server:
+				files: get.opt.deep3 'default', 'server', 'files', false
 		rb:
 			from:
 				cacheBust: []
@@ -40,14 +43,14 @@ module.exports = (config, options) ->
 			from:
 				cacheBust: get.opt.deep2 'from', 'cacheBust', []
 				minFile:
-					scripts: get.opt.deep3 'minFile', 'scripts', []
-					styles:  get.opt.deep3 'minFile', 'styles',  []
+					scripts: get.opt.deep3 'from', 'minFile', 'scripts', []
+					styles:  get.opt.deep3 'from', 'minFile', 'styles',  []
 				spaFile:
-					scripts: get.opt.deep3 'spaFile', 'scripts', []
-					styles:  get.opt.deep3 'spaFile', 'styles',  []
+					scripts: get.opt.deep3 'from', 'spaFile', 'scripts', []
+					styles:  get.opt.deep3 'from', 'spaFile', 'styles',  []
 				dist:
-					client: get.opt.deep3 'dist', 'client', []
-					server: get.opt.deep3 'dist', 'server', []
+					client: get.opt.deep3 'from', 'dist', 'client', []
+					server: get.opt.deep3 'from', 'dist', 'server', []
 
 	# format options
 	# ==============
