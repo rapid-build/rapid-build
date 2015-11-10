@@ -1,3 +1,16 @@
+# [0.44.0](https://github.com/jyounce/rapid-build/compare/v0.43.1...v0.44.0) (2015-11-10)
+
+
+### Bug Fixes
+
+* **compiling es6:** add babel plugin, babel-preset-es2015 ([a0ca9b0](https://github.com/jyounce/rapid-build/commit/a0ca9b0))
+
+### Features
+
+* **option:** add build option exclude.default.server.files which is a boolean and defaults to false ([a7ed1ed](https://github.com/jyounce/rapid-build/commit/a7ed1ed))
+
+
+
 ## [0.43.1](https://github.com/jyounce/rapid-build/compare/v0.43.0...v0.43.1) (2015-11-08)
 
 
