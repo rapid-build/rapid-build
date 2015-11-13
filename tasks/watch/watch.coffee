@@ -123,8 +123,9 @@ module.exports = (config, gulp) ->
 	# html watch (handle angular template cache)
 	# ==========================================
 	htmlWatch = (views) ->
-		return if config.angular.templateCache.dev
-			createWatch views, 'tCache', lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
+		if config.angular.templateCache.dev
+			return promiseHelp.get() if config.exclude.default.client.files
+			return createWatch views, 'tCache', lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
 		createWatch views, 'html', lang:'html', srcType:'views', bsReload:true
 
 	# spa watch (if custom spa file then watch it)

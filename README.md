@@ -176,6 +176,7 @@ package.json
 # exclude.spa                                       = (boolean) defaults to false = set to true to exclude spa.html from client dist
 # exclude.angular.files                             = (boolean) defaults to false = set to true to exclude the angular files that come with rapid-build from dist (lib and modules)
 # exclude.angular.modules                           = (boolean) defaults to false = set to true to exclude injecting the angular modules that come with rapid-build ['ngResource', 'ngRoute', 'ngSanitize']
+# exclude.default.client.files                      = (boolean) defaults to false = set to true to exclude the client files rapid-build sends to the dist client directory
 # exclude.default.server.files                      = (boolean) defaults to false = set to true to exclude the server files rapid-build sends to the dist server directory
 # exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file

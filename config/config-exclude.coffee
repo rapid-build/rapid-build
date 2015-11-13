@@ -25,6 +25,8 @@ module.exports = (config, options) ->
 		angular:
 			files: get.opt.deep2 'angular', 'files', false
 		default:
+			client:
+				files: get.opt.deep3 'default', 'client', 'files', false
 			server:
 				files: get.opt.deep3 'default', 'server', 'files', false
 		rb:

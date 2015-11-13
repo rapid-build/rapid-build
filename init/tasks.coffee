@@ -22,10 +22,12 @@ module.exports = (gulp, config) ->
 
 	# clean
 	# =====
-	taskHelp.addTask 'clean-config',   '/clean/clean-config'
-	taskHelp.addTask 'clean-dist',     '/clean/clean-dist'
-	taskHelp.addTask 'clean-files',    '/clean/clean-files'
-	taskHelp.addTask 'cleanup-client', '/clean/cleanup-client'
+	taskHelp.addTask 'clean-config',         '/clean/clean-config'
+	taskHelp.addTask 'clean-dist',           '/clean/clean-dist'
+	taskHelp.addTask 'clean-files',          '/clean/clean-files'
+	taskHelp.addTask 'clean-rb-client',      '/clean/clean-rb-client'
+	taskHelp.addTask 'clean-rb-client:test', '/clean/clean-rb-client', env: 'test'
+	taskHelp.addTask 'cleanup-client',       '/clean/cleanup-client'
 
 	# common
 	# ======
@@ -116,6 +118,7 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'copy-client-tests',          '/test/client/copy-client-tests'
 	taskHelp.addTask 'run-client-tests',           '/test/client/run-client-tests'
 	taskHelp.addTask 'run-client-tests:dev',       '/test/client/run-client-tests', env: 'dev'
+
 	# server test
 	# ===========
 	taskHelp.addTask 'clean-server-test-dist', '/test/server/clean-server-test-dist'

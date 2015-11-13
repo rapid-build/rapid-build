@@ -95,6 +95,7 @@ module.exports = (config, options) ->
 		options.exclude.spa     = null unless isType.boolean options.exclude.spa
 		options.exclude.angular.files   = null unless isType.boolean options.exclude.angular.files
 		options.exclude.angular.modules = null unless isType.boolean options.exclude.angular.modules
+		options.exclude.default.client  = {} unless isType.object options.exclude.default.client
 		options.exclude.default.server  = {} unless isType.object options.exclude.default.server
 		options.exclude.from.cacheBust  = null unless isType.array options.exclude.from.cacheBust
 		options.exclude.from.minFile    = {} unless isType.object options.exclude.from.minFile
@@ -106,6 +107,7 @@ module.exports = (config, options) ->
 		options.exclude.from.spaFile.styles  = null unless isType.array options.exclude.from.spaFile.styles
 		options.exclude.from.dist.client     = null unless isType.array options.exclude.from.dist.client
 		options.exclude.from.dist.server     = null unless isType.array options.exclude.from.dist.server
+		options.exclude.default.client.files = null unless isType.boolean options.exclude.default.client.files
 		options.exclude.default.server.files = null unless isType.boolean options.exclude.default.server.files
 
 	testOptions = ->

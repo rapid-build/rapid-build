@@ -16,6 +16,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}copy-angular-mocks"
 				]
 				"#{config.rb.prefix.task}copy-client-tests"
+				"#{config.rb.prefix.task}clean-rb-client:test" # if exclude.default.client.files
 				"#{config.rb.prefix.task}build-client-test-files"
 				cb
 			)

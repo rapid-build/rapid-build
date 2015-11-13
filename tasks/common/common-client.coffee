@@ -29,6 +29,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}copy-extra-files:client"
 				]
 				"#{config.rb.prefix.task}absolute-css-urls"
+				"#{config.rb.prefix.task}clean-rb-client" # if exclude.default.client.files
 				"#{config.rb.prefix.task}build-files"
 				cb
 			)
