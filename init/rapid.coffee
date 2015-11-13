@@ -16,7 +16,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}start-server"
 			"#{config.rb.prefix.task}open-browser"
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test default - client and server
 	# ================================
@@ -25,7 +25,7 @@ module.exports = (gulp, config) ->
 			config.rb.tasks['test:client']
 			config.rb.tasks['test:server']
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test default - client
 	# =====================
@@ -36,7 +36,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-test-client"
 			"#{config.rb.prefix.task}run-client-tests"
 			cb
-		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['test']
+		) -> defer.resolve config unless taskHelp.wasCalledFrom config.rb.tasks['test']
 
 	# test default - server
 	# =====================
@@ -47,7 +47,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}common-test-server"
 			"#{config.rb.prefix.task}stop-server"
 			cb
-		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['test']
+		) -> defer.resolve config unless taskHelp.wasCalledFrom config.rb.tasks['test']
 
 	# dev
 	# ===
@@ -60,7 +60,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}browser-sync"
 			"#{config.rb.prefix.task}watch"
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test dev - client and server
 	# ============================
@@ -77,7 +77,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}run-server-tests:dev"
 			"#{config.rb.prefix.task}watch"
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test dev - client
 	# =================
@@ -89,7 +89,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}run-client-tests:dev"
 			"#{config.rb.prefix.task}watch"
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test dev - server
 	# =================
@@ -102,7 +102,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}run-server-tests:dev"
 			"#{config.rb.prefix.task}watch"
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# prod
 	# ====
@@ -115,7 +115,7 @@ module.exports = (gulp, config) ->
 				"#{config.rb.prefix.task}minify-server"
 			]
 			cb
-		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['prod:server']
+		) -> defer.resolve config unless taskHelp.wasCalledFrom config.rb.tasks['prod:server']
 
 	# prod server
 	# ===========
@@ -124,7 +124,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}start-server"
 			"#{config.rb.prefix.task}open-browser"
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test prod - client and server
 	# =============================
@@ -133,7 +133,7 @@ module.exports = (gulp, config) ->
 			config.rb.tasks['prod:test:client']
 			config.rb.tasks['prod:test:server']
 			cb
-		) -> defer.resolve()
+		) -> defer.resolve config
 
 	# test prod - client
 	# ==================
@@ -145,7 +145,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}run-client-tests"
 			"#{config.rb.prefix.task}clean-client-test-dist"
 			cb
-		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['prod:test']
+		) -> defer.resolve config unless taskHelp.wasCalledFrom config.rb.tasks['prod:test']
 
 	# test prod - server
 	# ==================
@@ -158,7 +158,7 @@ module.exports = (gulp, config) ->
 			"#{config.rb.prefix.task}clean-server-test-dist"
 			"#{config.rb.prefix.task}stop-server"
 			cb
-		) -> defer.resolve() unless taskHelp.wasCalledFrom config.rb.tasks['prod:test']
+		) -> defer.resolve config unless taskHelp.wasCalledFrom config.rb.tasks['prod:test']
 
 	# return
 	# ======
