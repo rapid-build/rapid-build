@@ -1,3 +1,13 @@
+# [0.45.0](https://github.com/jyounce/rapid-build/compare/v0.44.0...v0.45.0) (2015-11-14)
+
+
+### Features
+
+* **build completion:** resolve the build's config when it's promise is fulfilled ([865e245](https://github.com/jyounce/rapid-build/commit/865e245))
+* **option:** add build option exclude.default.client.files which is a boolean and defaults to false ([8ec2049](https://github.com/jyounce/rapid-build/commit/8ec2049))
+
+
+
 # [0.44.0](https://github.com/jyounce/rapid-build/compare/v0.43.1...v0.44.0) (2015-11-10)
 
 
