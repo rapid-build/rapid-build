@@ -1,3 +1,16 @@
+# [0.46.0](https://github.com/jyounce/rapid-build/compare/v0.45.0...v0.46.0) (2015-12-08)
+
+
+### Features
+
+* **bump deps:**
+	* bower and del ([ddf421a](https://github.com/jyounce/rapid-build/commit/ddf421a))
+	* babel-preset-es2015, jasmine and jasmine-core ([2d70dd0](https://github.com/jyounce/rapid-build/commit/2d70dd0))
+	* gulp-babel, gulp-minify-css, karma-chrome-launcher and phantomjs ([e02c336](https://github.com/jyounce/rapid-build/commit/e02c336))
+	* gulp-template ([85312b0](https://github.com/jyounce/rapid-build/commit/85312b0))
+
+
+
 # [0.45.0](https://github.com/jyounce/rapid-build/compare/v0.44.0...v0.45.0) (2015-11-14)
 
 
