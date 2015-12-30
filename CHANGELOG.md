@@ -1,3 +1,17 @@
+# [0.47.0](https://github.com/jyounce/rapid-build/compare/v0.46.0...v0.47.0) (2015-12-29)
+
+
+### Features
+
+* **bump deps:**
+	* conventional-changelog, gulp-nodemon, gulp-sequence, karma and karma-phantomjs-launcher ([ceb1692](https://github.com/jyounce/rapid-build/commit/ceb1692))
+	* glob-stream ([b3c911b](https://github.com/jyounce/rapid-build/commit/b3c911b))
+	* body-parser, browser-sync, fs-extra and postcss ([cf00060](https://github.com/jyounce/rapid-build/commit/cf00060))
+	* bower ([c40b8bf](https://github.com/jyounce/rapid-build/commit/c40b8bf))
+	* gulp-sass ([bbc3cfb](https://github.com/jyounce/rapid-build/commit/bbc3cfb))
+
+
+
 # [0.46.0](https://github.com/jyounce/rapid-build/compare/v0.45.0...v0.46.0) (2015-12-08)
 
 
