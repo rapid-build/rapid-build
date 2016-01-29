@@ -1,10 +1,10 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
-	minifyCss   = require 'gulp-minify-css'
+	minifyCss   = require 'gulp-cssnano'
 	promiseHelp = require "#{config.req.helpers}/promise"
 	minOpts =
-		advanced: false
-		processImport: false # inlining imports in inline-css-imports
+		save: true
+		normalizeUrl: false # build does this, see absolute-css-urls
 
 	runTask = (appOrRb) ->
 		defer = q.defer()
