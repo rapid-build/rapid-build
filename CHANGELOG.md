@@ -4,7 +4,7 @@
 ### Features
 * **bump deps:**
 	* replace gulp-minify-css with gulp-cssnano for css minification ([e91e55c](https://github.com/jyounce/rapid-build/commit/e91e55c))
-	* bower, browser-sync, express, fs-extra, http-proxy-…middleware, jasmine-terminal-reporter, karma, karma-phantomjs-launcher, phantomjs-prebuilt and postcss ([1101b60](https://github.com/jyounce/rapid-build/commit/1101b60))
+	* bower, browser-sync, express, fs-extra, http-proxy-middleware, jasmine-terminal-reporter, karma, karma-phantomjs-launcher, phantomjs-prebuilt and postcss ([1101b60](https://github.com/jyounce/rapid-build/commit/1101b60))
 
 
 
