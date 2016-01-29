@@ -1,3 +1,13 @@
+# [0.48.0](https://github.com/jyounce/rapid-build/compare/v0.47.0...v0.48.0) (2016-01-29)
+
+
+### Features
+* **bump deps:**
+	* replace gulp-minify-css with gulp-cssnano for css minification ([e91e55c](https://github.com/jyounce/rapid-build/commit/e91e55c))
+	* bower, browser-sync, express, fs-extra, http-proxy-…middleware, jasmine-terminal-reporter, karma, karma-phantomjs-launcher, phantomjs-prebuilt and postcss ([1101b60](https://github.com/jyounce/rapid-build/commit/1101b60))
+
+
+
 # [0.47.0](https://github.com/jyounce/rapid-build/compare/v0.46.0...v0.47.0) (2015-12-29)
 
 
