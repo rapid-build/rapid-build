@@ -3,7 +3,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	path          = require 'path'
 	es            = require 'event-stream'
 	gulpif        = require 'gulp-if'
-	minifyHtml    = require 'gulp-minify-html'
+	minifyHtml    = require 'gulp-htmlmin'
 	templateCache = require 'gulp-angular-templatecache'
 	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
 	dirHelper     = require("#{config.req.helpers}/dir") config, gulp

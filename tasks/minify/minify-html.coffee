@@ -1,7 +1,7 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
-	minifyHtml  = require 'gulp-minify-html'
+	minifyHtml  = require 'gulp-htmlmin'
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	minifyTask = (appOrRb) ->

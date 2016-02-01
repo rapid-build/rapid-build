@@ -33,7 +33,12 @@ module.exports = (config, options) ->
 			views: getOption 'html', 'views'
 			templateCache: getOption 'html', 'templateCache'
 			options: # not configurable
-				conditionals:true, empty:true, ssi:true
+				collapseWhitespace:    true
+				removeComments:        true # excludes ie conditionals
+				removeEmptyElements:   false
+				removeEmptyAttributes: false
+				ignoreCustomFragments: [/<!--\s*?#\s*?include.*?-->/ig] # exclude custom html spa placeholder comments
+
 		spa:
 			file: getOption 'spa', 'file'
 
