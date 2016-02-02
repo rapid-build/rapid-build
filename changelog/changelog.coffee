@@ -1,5 +1,5 @@
-# Only for rapid-build development
-# ================================
+# Only for the build development
+# ==============================
 path = require 'path'
 root = path.join __dirname, '..'
 process.chdir root

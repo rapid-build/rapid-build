@@ -49,8 +49,8 @@ pathHelp =
 
 	getAbsolute: (paths, opts) ->
 		prependPath = opts.prependPath isnt false
-		base        = paths.base # /Users/jyounce/npm-packages/rapid-test/dist/client/libs/
-		rel         = paths.rel  # rapid/styles/x.css
+		base        = paths.base # /Users/jyounce/npm-packages/build-test/dist/client/libs/
+		rel         = paths.rel  # build/styles/x.css
 		# console.log "Base: #{base} | Rel: #{rel}"
 		base        = base.split '/'
 		# console.log base
@@ -58,19 +58,19 @@ pathHelp =
 		base        = "/#{base}" # /libs
 		# console.log "Base: #{base}"
 		rel         = rel.split '/'
-		rel         = rel[0] # rapid
+		rel         = rel[0] # build
 		rel         = "/#{rel}"
 		# console.log "Rel: #{rel}"
 		_path       = ''
 		_path       = "#{base}#{rel}" if prependPath
 		_path       = "/#{opts.rbDistDir}#{_path}" if paths.isRbPath
-		_path       = "#{_path}#{paths.url}" # /libs/rapid/images/x.png
+		_path       = "#{_path}#{paths.url}" # /libs/build/images/x.png
 		# console.log _path
 		_path
 
 	getCssUrl: (_path) ->
 		_path = @format _path
-		url   = "url('#{_path}')" # url('/libs/rapid/images/x.png')
+		url   = "url('#{_path}')" # url('/libs/build/images/x.png')
 
 	getCssImport: (_path) ->
 		_path   = @format _path

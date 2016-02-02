@@ -1,5 +1,5 @@
-# RAPID-BUILD'S AVAILABLE TASKS
-# =============================
+# THE BUILD'S AVAILABLE TASKS
+# ===========================
 module.exports = (gulp, config) ->
 	q            = require 'q'
 	gulpSequence = require('gulp-sequence').use gulp

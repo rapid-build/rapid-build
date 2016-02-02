@@ -7,9 +7,10 @@ module.exports = (config, gulp) ->
 	# =======
 	getData = ->
 		version = '0.0.0'
+		name    = config.rb.name
 		deps    = config.angular.bowerDeps
 		total   = Object.keys(deps).length
-		data    = { version, deps, total }
+		data    = { name, version, deps, total }
 
 	# API
 	# ===

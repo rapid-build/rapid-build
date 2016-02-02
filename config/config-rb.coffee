@@ -24,7 +24,7 @@ module.exports = (config, rbDir) ->
 	# api tasks
 	# =========
 	rb.tasks = {}
-	rb.tasks.default             = 'rapid-build'
+	rb.tasks.default             = rb.name
 	rb.tasks.test                = "#{rb.tasks.default}:test"
 	rb.tasks['test:client']      = "#{rb.tasks.default}:test:client"
 	rb.tasks['test:server']      = "#{rb.tasks.default}:test:server"
@@ -41,8 +41,8 @@ module.exports = (config, rbDir) ->
 	# prefixes
 	# ========
 	rb.prefix = {}
-	rb.prefix.task    = 'rb-' # prefix for all internal tasks
-	rb.prefix.distDir = 'rapid-build'
+	rb.prefix.task    = pkg.tasksPrefix # prefix for all internal tasks
+	rb.prefix.distDir = rb.name
 
 	# add rb to config
 	# ================

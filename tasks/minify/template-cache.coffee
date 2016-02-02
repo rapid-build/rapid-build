@@ -34,7 +34,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 
 	# streams
 	# =======
-	addToDistPath = -> # add 'views/' for app and 'rapid-build/views/' for rb
+	addToDistPath = -> # add 'views/' for app and 'build/views/' for rb
 		transform = (file, cb) ->
 			appOrRb   = getAppOrRb file.base, 'src', 'views'
 			dirName   = config.dist[appOrRb].client.views.dirName

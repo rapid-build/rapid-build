@@ -1,4 +1,4 @@
-# rapid bootstrap
+# build bootstrap
 # ===============
 module.exports = ->
 	colors = require 'colors'

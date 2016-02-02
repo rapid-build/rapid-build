@@ -1,5 +1,5 @@
 /**
- * init rapid-build
+ * init the build
  * arguments are: gulp and options
  * argument order does not matter
  * pass in gulp if your app is using gulp

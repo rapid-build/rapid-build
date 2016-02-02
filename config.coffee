@@ -1,4 +1,4 @@
-# rapid config
+# build config
 # ============
 module.exports = (rbDir, options) ->
 	# init config
