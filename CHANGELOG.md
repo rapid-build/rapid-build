@@ -1,3 +1,13 @@
+# [0.49.0](https://github.com/jyounce/rapid-build/compare/v0.48.0...v0.49.0) (2016-02-02)
+
+
+### Features
+* **bump deps:**
+	* gulp-babel and karma-jasmine ([9c96e3f](https://github.com/jyounce/rapid-build/commit/9c96e3f))
+	* replace gulp-minify-html with gulp-htmlmin for html minification ([2002c42](https://github.com/jyounce/rapid-build/commit/2002c42))
+
+
+
 # [0.48.0](https://github.com/jyounce/rapid-build/compare/v0.47.0...v0.48.0) (2016-01-29)
 
 
