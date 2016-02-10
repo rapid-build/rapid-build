@@ -5,7 +5,7 @@ Releases are documented here [changelog](https://github.com/jyounce/rapid-build/
 More and better documentation *coming real soon*!
 
 ## Installation
-If installed globally you may need to set your [NODE_PATH](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
+If installing globally you may need to set your [NODE_PATH](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
 ```bash
 $ npm install rapid-build
 ```
