@@ -1,3 +1,12 @@
+# [0.50.0](https://github.com/jyounce/rapid-build/compare/v0.49.0...v0.50.0) (2016-02-10)
+
+
+### Features
+
+* **installation:** add global install support, eliminating the need to install the build multiple times ([4fa26ef](https://github.com/jyounce/rapid-build/commit/4fa26ef))
+
+
+
 # [0.49.0](https://github.com/jyounce/rapid-build/compare/v0.48.0...v0.49.0) (2016-02-02)
 
 
