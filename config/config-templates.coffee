@@ -22,25 +22,10 @@ module.exports = (config) ->
 
 	# set templates info
 	# ==================
-	templates.config = getInfo(
-		'config.tpl'
-		'config.json'
-		path.join config.rb.dir, 'config'
-	)
-	templates.files = getInfo(
-		'files.tpl'
-		'files.json'
-		path.join config.rb.dir, 'files'
-	)
 	templates.angularModules = getInfo(
 		'angular-modules.tpl'
 		'app.coffee'
 		config.src.rb.client.scripts.dir
-	)
-	templates.bowerJson = getInfo(
-		'bower-json.tpl'
-		'bower.json'
-		config.rb.dir
 	)
 
 	# add templates to config

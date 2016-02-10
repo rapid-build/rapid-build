@@ -6,13 +6,11 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
 	fs          = require 'fs'
+	fse         = require 'fs-extra'
 	path        = require 'path'
 	bless       = require 'gulp-bless'
-	rename      = require 'gulp-rename'
-	template    = require 'gulp-template'
 	pathHelp    = require "#{config.req.helpers}/path"
 	promiseHelp = require "#{config.req.helpers}/promise"
-	format      = require("#{config.req.helpers}/format")()
 
 	# Global Objects
 	# ==============
@@ -65,7 +63,7 @@ module.exports = (config, gulp) ->
 
 	updateProdFiles = ->
 		dest      = pathHelp.format config.dist.app.client.styles.dir
-		file      = path.join config.templates.files.dest.dir, 'prod-files.json'
+		file      = config.generated.pkg.files.prodFiles
 		ProdFiles = require file
 		styles    = []
 		for v1 in ProdFiles.client.styles
@@ -81,18 +79,12 @@ module.exports = (config, gulp) ->
 		promiseHelp.get()
 
 	buildProdFiles = ->
-		src  = path.join config.templates.dir, 'prod-files.tpl'
-		dest = config.templates.files.dest.dir
-		file = 'prod-files.json'
-		data = format.json ProdFiles
-		defer = q.defer()
-		gulp.src src
-			.pipe rename file
-			.pipe template prodFiles: data
-			.pipe gulp.dest dest
-			.on 'end', ->
-				console.log 'prod-files.json rebuilt because of css file split'.yellow
-				defer.resolve()
+		defer    = q.defer()
+		format   = spaces: '\t'
+		jsonFile = config.generated.pkg.files.prodFiles
+		fse.writeJson jsonFile, ProdFiles, format, (e) ->
+			console.log 'rebuilt prod-files.json because of css file split'.yellow
+			defer.resolve()
 		defer.promise
 
 	rebuildProdFiles = ->  # synchronously

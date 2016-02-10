@@ -8,7 +8,7 @@ module.exports = (config, gulp) ->
 		runTask: ->
 			return promiseHelp.get() if config.exclude.default.server.files
 			defer = q.defer()
-			src   = config.templates.config.dest.path
+			src   = config.generated.pkg.config
 			dest  = config.dist.rb.server.scripts.dir
 			gulp.src src
 				.pipe gulp.dest dest

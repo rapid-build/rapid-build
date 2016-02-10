@@ -19,7 +19,7 @@ module.exports = (config, gulp) ->
 			.pipe template data
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log 'inject-angular-mocks.coffee built'.yellow
+				# console.log 'built inject-angular-mocks.coffee'.yellow
 				defer.resolve()
 		defer.promise
 

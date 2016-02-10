@@ -1,12 +1,10 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
-	rename      = require 'gulp-rename'
-	template    = require 'gulp-template'
+	fse         = require 'fs-extra'
 	log         = require "#{config.req.helpers}/log"
 	pathHelp    = require "#{config.req.helpers}/path"
 	promiseHelp = require "#{config.req.helpers}/promise"
-	format      = require("#{config.req.helpers}/format")()
 
 	# Global Objects
 	# ==============
@@ -17,18 +15,12 @@ module.exports = (config, gulp) ->
 	# Build Task
 	# ==========
 	buildTask = ->
-		src  = path.join config.templates.dir, 'prod-files-blueprint.tpl'
-		dest = config.templates.files.dest.dir
-		file = 'prod-files-blueprint.json'
-		data = format.json MinFiles
-		defer = q.defer()
-		gulp.src src
-			.pipe rename file
-			.pipe template prodFilesBlueprint: data
-			.pipe gulp.dest dest
-			.on 'end', ->
-				console.log 'prod-files-blueprint.json built'.yellow
-				defer.resolve()
+		defer    = q.defer()
+		format   = spaces: '\t'
+		jsonFile = config.generated.pkg.files.prodFilesBlueprint
+		fse.writeJson jsonFile, MinFiles, format, (e) ->
+			console.log 'built prod-files-blueprint.json'.yellow
+			defer.resolve()
 		defer.promise
 
 	# Single Tasks
@@ -94,7 +86,7 @@ module.exports = (config, gulp) ->
 	# Multi Tasks
 	# ===========
 	setDevFiles = ->
-		files    = require config.templates.files.dest.path
+		files    = require config.generated.pkg.files.files
 		DevFiles =
 			scripts: files.client.scripts
 			styles:  files.client.styles

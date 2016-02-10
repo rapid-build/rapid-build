@@ -13,7 +13,7 @@ module.exports = (gulp, config) ->
 	# =====
 	taskHelp.addTask 'build-angular-modules',      '/build/build-angular-modules'
 	taskHelp.addTask 'build-bower-json',           '/build/build-bower-json'
-	taskHelp.addTask 'build-config',               '/build/build-config', deps: ['clean-config']
+	taskHelp.addTask 'build-config',               '/build/build-config'
 	taskHelp.addTask 'build-files',                '/build/build-files',  deps: ['clean-files']
 	taskHelp.addTask 'build-prod-files',           '/build/build-prod-files'
 	taskHelp.addTask 'build-prod-files-blueprint', '/build/build-prod-files-blueprint'
@@ -22,7 +22,6 @@ module.exports = (gulp, config) ->
 
 	# clean
 	# =====
-	taskHelp.addTask 'clean-config',         '/clean/clean-config'
 	taskHelp.addTask 'clean-dist',           '/clean/clean-dist'
 	taskHelp.addTask 'clean-files',          '/clean/clean-files'
 	taskHelp.addTask 'clean-rb-client',      '/clean/clean-rb-client'
@@ -79,9 +78,13 @@ module.exports = (gulp, config) ->
 	# ======
 	taskHelp.addTask 'absolute-css-urls', '/format/absolute-css-urls'
 
+	# generate
+	# ========
+	taskHelp.addTask 'generate-pkg', '/generate/generate-pkg'
+
 	# manage
 	# ======
-	taskHelp.addTask 'bower', '/manage/bower', deps:['build-bower-json']
+	taskHelp.addTask 'bower', '/manage/bower'
 
 	# minify
 	# ======

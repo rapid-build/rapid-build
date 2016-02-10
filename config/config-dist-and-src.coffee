@@ -102,7 +102,7 @@ module.exports = (config, options) ->
 		isSrc  = loc is 'src'
 		isDist = loc is 'dist'
 		if isSrc
-			cwd = config.rb.dir if src is 'rb'
+			cwd = config.generated.pkg.path if src is 'rb' # was config.rb.dir
 			cwd = config.app.dir if src is 'app'
 		loc = config[loc][src]
 		for own k1, v1 of loc

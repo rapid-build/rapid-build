@@ -60,8 +60,8 @@ module.exports = (config, gulp) ->
 			srcFiles      = config.glob.dist.app.client.cacheBust.files
 			srcRefs       = config.glob.dist.app.client.cacheBust.references
 			dest          = config.dist.app.client.dir
-			prodFilesSrc  = path.join config.templates.files.dest.dir, 'prod-files.json'
-			prodFilesDest = config.templates.files.dest.dir
+			prodFilesSrc  = config.generated.pkg.files.prodFiles
+			prodFilesDest = config.generated.pkg.files.path
 			tasks = [
 				-> runStampFiles srcFiles, dest, bust
 				-> runStampRefs srcRefs, dest, bust

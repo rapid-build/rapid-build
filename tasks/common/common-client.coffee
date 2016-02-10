@@ -9,6 +9,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			return promiseHelp.get() unless config.build.client
 			gulpSequence(
 				"#{config.rb.prefix.task}update-angular-mocks-config"
+				"#{config.rb.prefix.task}build-bower-json"
 				"#{config.rb.prefix.task}bower"
 				"#{config.rb.prefix.task}build-angular-modules"
 				[

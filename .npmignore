@@ -1,6 +1,6 @@
 # folders
 # =======
-bower_components/ # also see scripts/prepublish.js
+bower_components/
 dist/
 
 # dot files
@@ -22,20 +22,18 @@ dist/
 
 # root files
 # ==========
-/bower.json
 
 # folder files
 # ============
-config/config.json
 
 # files
 # =====
-files/**/*.*
+generated/**/*
 src/client/**/*.*
 
 # retain empty folder via .gitkeep
 # ================================
-!files/.gitkeep
+!generated/.gitkeep
 !src/client/**/.gitkeep
 
 # file negation

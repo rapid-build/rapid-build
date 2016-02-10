@@ -1,37 +1,29 @@
 module.exports = (config, gulp) ->
-	q        = require 'q'
-	rename   = require 'gulp-rename'
-	template = require 'gulp-template'
+	q   = require 'q'
+	fse = require 'fs-extra'
 
 	# helpers
 	# =======
 	getData = ->
-		version = '0.0.0'
-		name    = config.rb.name
-		deps    = config.angular.bowerDeps
-		total   = Object.keys(deps).length
-		data    = { name, version, deps, total }
+		version      = '0.0.0'
+		name         = config.rb.name
+		dependencies = config.angular.bowerDeps
+		{ name, version, dependencies }
 
 	# API
 	# ===
 	api =
 		runTask: (src, dest, file) ->
-			defer = q.defer()
-			data  = getData()
-			gulp.src src
-				.pipe rename file
-				.pipe template data
-				.pipe gulp.dest dest
-				.on 'end', ->
-					# console.log 'bower.json built'.yellow
-					defer.resolve()
+			defer    = q.defer()
+			format   = spaces: '\t'
+			json     = getData()
+			jsonFile = config.generated.pkg.bower
+			fse.writeJson jsonFile, json, format, (e) ->
+				console.log 'built bower.json'.yellow
+				defer.resolve()
 			defer.promise
 
 	# return
 	# ======
-	api.runTask(
-		config.templates.bowerJson.src.path
-		config.templates.bowerJson.dest.dir
-		config.templates.bowerJson.dest.file
-	)
+	api.runTask()
 

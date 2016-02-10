@@ -33,7 +33,7 @@ module.exports = (config, options) ->
 
 	# placeholders
 	# ============
-	spa.title       = options.spa.title or pkg.name or 'Application'
+	spa.title       = options.spa.title or config.app.name or 'Application'
 	spa.description = options.spa.description or pkg.description or null
 
 	# dist

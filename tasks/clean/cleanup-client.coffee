@@ -26,7 +26,7 @@ module.exports = (config, gulp) ->
 	# Multi Tasks
 	# ===========
 	setBlueprint = ->
-		file      = path.join config.templates.files.dest.dir, 'prod-files-blueprint.json'
+		file      = config.generated.pkg.files.prodFilesBlueprint
 		Blueprint = require file
 		promiseHelp.get()
 

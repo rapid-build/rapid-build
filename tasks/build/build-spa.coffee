@@ -37,14 +37,14 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.pipe template data
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log "#{file} built".yellow
+				# console.log "built #{file}".yellow
 				defer.resolve()
 		defer.promise
 
 	# helpers
 	# =======
 	getFilesJson = (jsonEnvFile) ->
-		jsonEnvFile = path.join config.templates.files.dest.dir, jsonEnvFile
+		jsonEnvFile = path.join config.generated.pkg.files.path, jsonEnvFile
 		moduleHelp.cache.delete jsonEnvFile
 		files = require(jsonEnvFile).client
 		files = pathHelp.removeLocPartial files, config.dist.app.client.dir

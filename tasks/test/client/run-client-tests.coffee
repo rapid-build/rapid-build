@@ -16,7 +16,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# helpers
 	# =======
 	getTestsFile = ->
-		tests = path.join config.templates.files.dest.dir, 'test-files.json'
+		tests = config.generated.pkg.files.testFiles
 		moduleHelp.cache.delete tests
 		tests = require(tests).client
 		tests

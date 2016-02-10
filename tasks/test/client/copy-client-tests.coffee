@@ -3,7 +3,9 @@ module.exports = (config, gulp, taskOpts={}) ->
 	babel        = require 'gulp-babel'
 	coffee       = require 'gulp-coffee'
 	plumber      = require 'gulp-plumber'
+	es2015       = require 'babel-preset-es2015'
 	tasks        = require("#{config.req.helpers}/tasks") config
+	babelOpts    = presets: [es2015]
 	forWatchFile = !!taskOpts.watchFile
 
 	coffeeTask = (src, dest) ->
@@ -19,7 +21,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		defer = q.defer()
 		gulp.src src
 			.pipe plumber()
-			.pipe babel()
+			.pipe babel babelOpts
 			.pipe gulp.dest dest
 			.on 'end', -> defer.resolve()
 		defer.promise

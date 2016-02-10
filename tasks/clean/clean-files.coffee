@@ -14,6 +14,6 @@ module.exports = (config) ->
 
 	# return
 	# ======
-	api.runTask config.templates.files.dest.path
+	api.runTask config.generated.pkg.files.files
 
 

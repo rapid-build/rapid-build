@@ -1,3 +1,4 @@
+# old sauce since generate-pkg
 module.exports = (config) ->
 	q   = require 'q'
 	del = require 'del'
@@ -14,5 +15,5 @@ module.exports = (config) ->
 
 	# return
 	# ======
-	api.runTask config.templates.config.dest.path
+	api.runTask config.generated.pkg.config
 

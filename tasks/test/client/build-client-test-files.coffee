@@ -1,13 +1,11 @@
 module.exports = (config, gulp) ->
-	q               = require 'q'
-	path            = require 'path'
-	rename          = require 'gulp-rename'
-	template        = require 'gulp-template'
-	log             = require "#{config.req.helpers}/log"
-	pathHelp        = require "#{config.req.helpers}/path"
-	moduleHelp      = require "#{config.req.helpers}/module"
-	promiseHelp     = require "#{config.req.helpers}/promise"
-	format          = require("#{config.req.helpers}/format")()
+	q           = require 'q'
+	path        = require 'path'
+	fse         = require 'fs-extra'
+	log         = require "#{config.req.helpers}/log"
+	pathHelp    = require "#{config.req.helpers}/path"
+	moduleHelp  = require "#{config.req.helpers}/module"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# Global Objects
 	# ==============
@@ -21,18 +19,12 @@ module.exports = (config, gulp) ->
 	# Build Task
 	# ==========
 	buildTask = ->
-		src  = path.join config.templates.dir, 'test-files.tpl'
-		dest = config.templates.files.dest.dir
-		file = 'test-files.json'
-		data = format.json TestFiles
-		defer = q.defer()
-		gulp.src src
-			.pipe rename file
-			.pipe template testFiles: data
-			.pipe gulp.dest dest
-			.on 'end', ->
-				console.log 'test-files.json built'.yellow
-				defer.resolve()
+		defer    = q.defer()
+		format   = spaces: '\t'
+		jsonFile = config.generated.pkg.files.testFiles
+		fse.writeJson jsonFile, TestFiles, format, (e) ->
+			console.log "built test-files.json".yellow
+			defer.resolve()
 		defer.promise
 
 	# Single Tasks
@@ -60,7 +52,7 @@ module.exports = (config, gulp) ->
 	# Multi Tasks
 	# ===========
 	setFiles = (jsonEnvFile) ->
-		jsonEnvFile = path.join config.templates.files.dest.dir, jsonEnvFile
+		jsonEnvFile = path.join config.generated.pkg.files.path, jsonEnvFile
 		moduleHelp.cache.delete jsonEnvFile
 		files = require jsonEnvFile
 		Files =

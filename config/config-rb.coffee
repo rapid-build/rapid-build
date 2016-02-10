@@ -15,9 +15,11 @@ module.exports = (config, rbDir) ->
 	# is symlink - determine if it has been installed via npm link
 	# ==========
 	getIsSymlink = ->
-		dir       = path.join config.req.app, 'node_modules', rb.name
-		isSymlink = fs.lstatSync(dir).isSymbolicLink()
-		isSymlink
+		dir = path.join config.req.app, 'node_modules', rb.name
+		try
+			isSymlink = fs.lstatSync(dir).isSymbolicLink()
+		catch e # globally installed
+			isSymlink = false
 
 	rb.isSymlink = getIsSymlink()
 

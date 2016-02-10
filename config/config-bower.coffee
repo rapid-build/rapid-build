@@ -19,7 +19,7 @@ module.exports = (config, options) ->
 	addInfo = ->
 		['app', 'rb'].forEach (v) ->
 			bower[v].file = defaults.file
-			bower[v].dir  = config[v].dir
+			bower[v].dir  = if v is 'rb' then config.generated.pkg.path else config[v].dir
 			bower[v].path = path.join bower[v].dir, bower[v].file
 	addInfo()
 

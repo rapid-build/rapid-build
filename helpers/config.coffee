@@ -8,7 +8,7 @@ module.exports = (config) ->
 		msg        = 'rebuilt' if msg isnt 'built'
 		defer      = q.defer()
 		format     = spaces: '\t'
-		configFile = config.templates.config.dest.path
+		configFile = config.generated.pkg.config
 		fse.writeJson configFile, config, format, (e) ->
 			console.log "#{msg} config.json".yellow
 			defer.resolve()

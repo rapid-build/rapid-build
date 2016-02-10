@@ -14,6 +14,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			gulpSequence(
 				"#{config.rb.prefix.task}set-env-config" # must be first and only called here
 				"#{config.rb.prefix.task}clean-dist"
+				"#{config.rb.prefix.task}generate-pkg"
 				"#{config.rb.prefix.task}build-config"
 				cb
 			)

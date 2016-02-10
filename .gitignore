@@ -24,21 +24,20 @@ node_modules/
 
 # root files
 # ==========
-/bower.json
+/*.tgz # npm package
 
 # folder files
 # ============
-config/config.json
 test/css/selectors.css
 
 # files
 # =====
-files/**/*.*
+generated/**/*
 src/client/**/*.*
 
 # retain empty folder via .gitkeep
 # ================================
-!files/.gitkeep
+!generated/.gitkeep
 !src/client/**/.gitkeep
 
 # file negation

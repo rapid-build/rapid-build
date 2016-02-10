@@ -6,27 +6,23 @@
 module.exports = (config, gulp) ->
 	q        = require 'q'
 	path     = require 'path'
+	fse      = require 'fs-extra'
 	gs       = require 'glob-stream'
-	rename   = require 'gulp-rename'
-	template = require 'gulp-template'
 	pathHelp = require "#{config.req.helpers}/path"
 	log      = require "#{config.req.helpers}/log"
-	format   = require("#{config.req.helpers}/format")()
 	data     = client: styles:[], scripts:[]
 	globs    = null
 
 	# task
 	# ====
-	buildFile = (src, dest, file, files) ->
-		defer = q.defer()
-		gulp.src src
-			.pipe rename file
-			.pipe template { files }
-			.pipe gulp.dest dest
-			.on 'end', ->
-				# console.log 'files.json built'.yellow
-				clearData() # todo, optimize this
-				defer.resolve()
+	buildFile = (json) ->
+		defer    = q.defer()
+		format   = spaces: '\t'
+		jsonFile = config.generated.pkg.files.files
+		fse.writeJson jsonFile, json, format, (e) ->
+			console.log 'built files.json'.yellow
+			clearData() # todo, optimize this
+			defer.resolve()
 		defer.promise
 
 	# for watch events: add and unlink
@@ -121,12 +117,7 @@ module.exports = (config, gulp) ->
 			defer = q.defer()
 			tasks = [
 				-> buildData()
-				-> buildFile(
-					config.templates.files.src.path
-					config.templates.files.dest.dir
-					config.templates.files.dest.file
-					format.json data
-				)
+				-> buildFile data
 			]
 			tasks.reduce(q.when, q()).done -> defer.resolve()
 			defer.promise
