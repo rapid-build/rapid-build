@@ -53,7 +53,9 @@ module.exports = (config) ->
 				['client', 'server'].forEach (v2) ->
 					glob[loc][v1][v2] = {}
 					if v2 isnt 'server'
-						glob[loc][v1][v2].all = "#{config[loc][v1][v2].dir}/**"
+						_path = path.join config[loc][v1][v2].dir, lang.all
+						_path = pathHelp.format _path
+						glob[loc][v1][v2].all = _path
 
 	addGlob = (loc, type, langs, includeBower, includeLibs) ->
 		for own k1, v1 of glob[loc]
@@ -63,17 +65,16 @@ module.exports = (config) ->
 				v2[type] = {} unless isType.object v2[type]
 				for v3 in langs
 					continue if k2 is 'server' and type is 'test' and v3 is 'css'
-					typeDir = pathHelp.format config[loc][k1][k2][type].dir
+					_path = config[loc][k1][k2][type].dir
+					_path = pathHelp.format path.join _path, lang[v3]
 					if includeBower or includeLibs
-						bowerDir = pathHelp.format config[loc][k1][k2]['bower'].dir
-						libsDir  = pathHelp.format config[loc][k1][k2]['libs'].dir
-						v2[type][v3] = [
-							path.join bowerDir, lang[v3]
-							path.join libsDir,  lang[v3]
-							path.join typeDir,  lang[v3]
-						]
+						bowerPath    = config[loc][k1][k2]['bower'].dir
+						libsPath     = config[loc][k1][k2]['libs'].dir
+						bowerPath    = pathHelp.format path.join bowerPath, lang[v3]
+						libsPath     = pathHelp.format path.join libsPath, lang[v3]
+						v2[type][v3] = [bowerPath, libsPath, _path]
 					else
-						v2[type][v3] = [ path.join typeDir, lang[v3] ]
+						v2[type][v3] = [_path]
 
 	# init glob
 	# =========
@@ -111,7 +112,8 @@ module.exports = (config) ->
 	# exclude spa.html
 	# ================
 	excludeSpaSrc = (type, lang) ->
-		glob.src.app.client[type][lang].push "!#{config.spa.src.path}"
+		spa = pathHelp.format config.spa.src.path
+		glob.src.app.client[type][lang].push "!#{spa}"
 
 	excludeSpaSrc 'libs',  'all'
 	excludeSpaSrc 'views', 'html'
@@ -120,7 +122,8 @@ module.exports = (config) ->
 	# ====================
 	excludeServerTests = ->
 		for appOrRb in ['app','rb']
-			exclude = path.join config.src[appOrRb].server.test.dir, '**'
+			exclude = path.join config.src[appOrRb].server.test.dir, lang.all
+			exclude = pathHelp.format exclude
 			exclude = "!#{exclude}"
 			for own k1, v1 of glob.src[appOrRb].server.scripts
 				v1.push exclude
@@ -131,14 +134,15 @@ module.exports = (config) ->
 	# ==========
 	addCacheBust = (type, lang) ->
 		_glob = path.join config.dist.app.client.dir, lang
+		_glob = pathHelp.format _glob
 		glob.dist.app.client.cacheBust[type] = [ _glob ]
 
 	addCacheBustExcludes = ->
 		glob.dist.app.client.cacheBust.files =
 			[].concat(
 				glob.dist.app.client.cacheBust.files
-				config.exclude.rb.from.cacheBust
-				config.exclude.app.from.cacheBust
+				pathHelp.formats config.exclude.rb.from.cacheBust
+				pathHelp.formats config.exclude.app.from.cacheBust
 			)
 
 	glob.dist.app.client.cacheBust = {}
@@ -150,7 +154,9 @@ module.exports = (config) ->
 	# =======
 	removeAppAngularMocksDir = ->
 		srcScripts  = glob.src.app.client.scripts
-		noMocksGlob = "!#{config.angular.httpBackend.dir}#{lang.all}"
+		noMocksGlob = path.join config.angular.httpBackend.dir, lang.all
+		noMocksGlob = pathHelp.format noMocksGlob
+		noMocksGlob = "!#{noMocksGlob}"
 		for own k, v of srcScripts
 			srcScripts[k].push noMocksGlob
 
@@ -171,6 +177,7 @@ module.exports = (config) ->
 			v1.forEach (v, i) ->
 				v1[i] = path.join config.dist[appOrRb].client.dir, v
 				v1[i] += ".#{ext}"
+				v1[i] = pathHelp.format v1[i]
 
 	addFirst = (appOrRb, type, array, ext) ->
 		return unless array.length
@@ -227,8 +234,9 @@ module.exports = (config) ->
 	addNodeModules = (loc) ->
 		for appOrRb, v of config.node_modules
 			for module in v.modules
-				_path = pathHelp.format v[loc].modules[module]
-				glob.node_modules[appOrRb][loc][module] = path.join _path, lang.all
+				_path = path.join v[loc].modules[module], lang.all
+				_path = pathHelp.format _path
+				glob.node_modules[appOrRb][loc][module] = _path
 
 	glob.node_modules = {}
 	addNodeModulesDistAndSrc()
@@ -236,7 +244,7 @@ module.exports = (config) ->
 
 	# browser sync
 	# ============
-	glob.browserSync = path.join pathHelp.format(config.dist.app.client.dir), lang.all
+	glob.browserSync = pathHelp.format path.join pathHelp.format(config.dist.app.client.dir), lang.all
 
 	# exclude rb server files
 	# =======================

@@ -14,9 +14,16 @@ module.exports =
 		regx = /\\/g
 		path.replace regx, '/'
 
+	formats: (paths) ->
+		_paths = []
+		return _paths unless Array.isArray paths
+		return _paths unless paths.length
+		for path in paths
+			_paths.push @format path
+		_paths
+
 	format: (path) ->
 		return path unless @isWin path
-		path = @removeDrive path
 		path = @swapBackslashes path
 		path
 
