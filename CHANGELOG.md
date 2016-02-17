@@ -1,3 +1,12 @@
+## [0.51.1](https://github.com/jyounce/rapid-build/compare/v0.51.0...v0.51.1) (2016-02-17)
+
+
+### Bug Fixes
+
+* **server tests:** to recognize jasmine-expect matchers when installed globally ([840afbb](https://github.com/jyounce/rapid-build/commit/840afbb))
+
+
+
 # [0.51.0](https://github.com/jyounce/rapid-build/compare/v0.50.0...v0.51.0) (2016-02-17)
 
 
