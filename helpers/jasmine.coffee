@@ -13,7 +13,7 @@ module.exports = (config) ->
 	Reporter      = require 'jasmine-terminal-reporter'
 	isType        = require "#{config.req.helpers}/isType"
 	moduleHelp    = require "#{config.req.helpers}/module"
-	jasmineExpect = path.join config.node_modules.rb.src.relPath, 'jasmine-expect', 'index.js'
+	jasmineExpect = path.join config.node_modules.rb.dist.modules['jasmine-expect'], 'index.js'
 
 	# helpers
 	# =======

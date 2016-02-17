@@ -18,6 +18,7 @@ module.exports = (config) ->
 			src = [
 				config.dist.rb.server.test.dir
 				config.dist.app.server.test.dir
+				config.node_modules.rb.dist.modules['jasmine-expect']
 			]
 			cleanTask src
 
