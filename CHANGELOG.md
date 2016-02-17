@@ -1,3 +1,12 @@
+# [0.51.0](https://github.com/jyounce/rapid-build/compare/v0.50.0...v0.51.0) (2016-02-17)
+
+
+### Features
+
+* **windows:** add support for build and project being on different drives ([ac69d31](https://github.com/jyounce/rapid-build/commit/ac69d31))
+
+
+
 # [0.50.0](https://github.com/jyounce/rapid-build/compare/v0.49.0...v0.50.0) (2016-02-10)
 
 
