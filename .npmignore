@@ -10,7 +10,7 @@ dist/
 # file extensions
 # ===============
 *.db
-*.log # ex: Thumbs.db
+*.log
 *.map
 *.orig
 *.sublime*
@@ -19,6 +19,8 @@ dist/
 # root folders
 # ============
 /test/
+/temp/
+/tools/
 
 # root files
 # ==========

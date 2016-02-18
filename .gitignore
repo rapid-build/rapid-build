@@ -15,28 +15,29 @@ node_modules/
 
 # file extensions
 # ===============
-*.db  # ex: Thumbs.db
-*.log # ex: npm-debug.log
+*.db
+*.log
 *.map
 *.orig
 *.sublime*
+*.tgz
 *.tmp
 
 # root files
 # ==========
-/*.tgz # npm package
 
 # folder files
 # ============
-test/css/selectors.css
 
 # files
 # =====
+temp/**/*
 generated/**/*
 src/client/**/*.*
 
 # retain empty folder via .gitkeep
 # ================================
+!temp/.gitkeep
 !generated/.gitkeep
 !src/client/**/.gitkeep
 

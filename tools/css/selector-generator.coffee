@@ -1,5 +1,21 @@
-fs = require 'fs'
+# bootstrap
+# =========
+require 'colors'
 
+# requires
+# ========
+fse  = require 'fs-extra'
+path = require 'path'
+
+# constants
+# =========
+TEMP_PATH         = path.resolve __dirname, '../../temp'
+CSS_DIR           = path.basename __dirname
+CSS_DEST_PATH     = path.join TEMP_PATH, CSS_DIR, 'selectors.css'
+CSS_DEST_PATH_REL = path.relative "#{TEMP_PATH}/..", CSS_DEST_PATH
+
+# Colors
+# ======
 class Colors
 	_total     = null
 	_colors    = null
@@ -41,6 +57,10 @@ class Colors
 			string += v
 		string
 
+# init
+# ====
 selectors = new Colors('blue','gray').setSelectors().getSelectors()
-# selectors = new Colors('blue','gray','green','red').setSelectors().getSelectors()
-fs.writeFile 'selectors.css', selectors
+fse.outputFile CSS_DEST_PATH, selectors, (e) ->
+	return console.log e if e
+	console.log "created #{CSS_DEST_PATH_REL}".cyan
+
