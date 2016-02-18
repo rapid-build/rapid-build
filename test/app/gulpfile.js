@@ -49,7 +49,7 @@ require(buildPath)(gulp, options);
  * gulp prod:test:client
  * gulp prod:test:server
  ******************************************************/
-gulp.task('default', ['build-buddy'], function(cb) {
+gulp.task('default', ['rapid-build'], function(cb) {
 	console.log('Build Complete!');
 	cb();
 })

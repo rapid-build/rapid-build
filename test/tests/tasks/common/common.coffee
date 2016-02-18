@@ -10,10 +10,10 @@ genPath  = path.join rootDir, 'generated', 'build-test'
 
 
 describe 'common task', ->
-	execSync 'gulp bb-common', cwd: appPath
+	execSync 'gulp rb-common', cwd: appPath
 
 	describe 'clean-dist', ->
-		it 'clean-dist should delete the dist directory', async (done) ->
+		it 'should delete the dist directory', async (done) ->
 			try stats = await fs.statAsync "#{appPath}/dist"
 			cleaned = !stats?.isDirectory()
 			expect(cleaned).toBeTrue 'cleaned'

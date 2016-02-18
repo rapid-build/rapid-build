@@ -1,6 +1,11 @@
+configX = require('../core/config')()
+# console.log config
+# console.log config.paths.abs.root
+# console.log config.paths.abs.test.path
+return
+
 # requires
 # ========
-require 'colors'
 q      = require 'q'
 path   = require 'path'
 gWatch = require 'gulp-watch'
@@ -36,7 +41,7 @@ tests = path.join tests, '**', '*.*'
 
 # run tests
 # =========
-jasmine = require('./jasmine/jasmine') config
+jasmine = require('./framework/jasmine') config
 jasmine.init(tests).execute()
 # console.log 'jasmine',  jasmine
 

@@ -18,6 +18,7 @@ dist/
 
 # root folders
 # ============
+/core/
 /test/
 /temp/
 /tools/
