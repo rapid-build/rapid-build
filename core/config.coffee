@@ -39,6 +39,7 @@ module.exports = ->
 			builds:    path.join testPath, 'builds'
 			framework: path.join testPath, 'framework'
 			helpers:   path.join testPath, 'helpers'
+			init:      path.join testPath, 'init'
 			tasks:     path.join testPath, 'tasks'
 			tests:     path.join testPath, 'tests'
 
