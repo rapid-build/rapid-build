@@ -1,5 +1,5 @@
 # rapid-build
-**Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 0.10.0  
+**Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 4.0.0  
 
 Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
 More and better documentation *coming real soon*!
