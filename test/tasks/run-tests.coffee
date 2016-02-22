@@ -3,12 +3,12 @@
 module.exports = (jasmine) ->
 	# requires
 	# ========
-	path = require 'path'
+	path        = require 'path'
+	testsHelper = require "#{global.rb.paths.abs.test.helpers}/tests"
 
 	# test files
 	# ==========
-	testsRel = global.rb.paths.rel.test.tests
-	tests    = path.join testsRel, '**', '*.*'
+	tests = testsHelper.get.paths 'default', 'rel'
 
 	# task
 	# ====

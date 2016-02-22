@@ -1,8 +1,8 @@
 # bootstrap
 # =========
-return
 config = require('../core/config')()
 require("#{config.paths.abs.test.bootstrap}/globals") config
+return
 
 # requires
 # ========

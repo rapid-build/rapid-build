@@ -7,8 +7,8 @@ module.exports = (config) ->
 	execSync = require('child_process').execSync
 	fs       = Promise.promisifyAll require 'fs'
 
-	# add to config
-	# =============
+	# nm
+	# ==
 	config.nm = { execSync, fs, Promise }
 
 	# add it!

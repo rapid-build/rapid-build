@@ -1,19 +1,20 @@
 # watch-tests
-# =========
+# ===========
 module.exports = (jasmine) ->
-	path     = require 'path'
-	gWatch   = require 'gulp-watch'
-	testsAbs = global.rb.paths.abs.test.tests
-	testsRel = global.rb.paths.rel.test.tests
-	tests    = path.join testsAbs, '**', '*.*'
+	# requires
+	# ========
+	path        = require 'path'
+	gWatch      = require 'gulp-watch'
+	testsHelper = require "#{global.rb.paths.abs.test.helpers}/tests"
+
+	# test files
+	# ==========
+	tests = testsHelper.get.paths 'default', 'abs'
 
 	# helpers
 	# =======
-	getTest = (testRel) ->
-		path.join testsRel, testRel
-
 	logMsg = (event, test) ->
-		test = test.replace global.rb.paths.rel.test.path, ''
+		test = testsHelper.get.log.path test
 		console.log "#{event}: #{test}".info
 
 	# task
@@ -22,7 +23,7 @@ module.exports = (jasmine) ->
 		new global.rb.nm.Promise (resolve, reject) ->
 			gWatch tests, read:false, (file) ->
 				event = file.event
-				test  = getTest file.relative
+				test  = testsHelper.get.path file.path, 'rel'
 				logMsg event, test
 				return if event is 'unlink'
 				jasmine.init(test).reExecute()
