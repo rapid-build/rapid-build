@@ -8,8 +8,9 @@ module.exports = ->
 
 	# vars
 	# ====
-	rootPath = path.dirname __dirname
-	testPath = path.join rootPath, 'test'
+	rootPath      = path.dirname __dirname
+	generatedPath = path.join rootPath, 'generated'
+	testPath      = path.join rootPath, 'test'
 
 	# int config
 	# ==========
@@ -25,13 +26,19 @@ module.exports = ->
 	# =========
 	config.paths.abs =
 		root:         rootPath
-		generated:    path.join rootPath, 'generated'
 		node_modules: path.join rootPath, 'node_modules'
+		temp:         path.join rootPath, 'temp'
 		tools:        path.join rootPath, 'tools'
+		generated:
+			path:    generatedPath
+			testApp: path.join generatedPath, 'build-test'
 		test:
 			path:      testPath
 			app:       path.join testPath, 'app'
+			bootstrap: path.join testPath, 'bootstrap'
 			framework: path.join testPath, 'framework'
+			helpers:   path.join testPath, 'helpers'
+			tasks:     path.join testPath, 'tasks'
 			tests:     path.join testPath, 'tests'
 
 	# paths rel
@@ -54,6 +61,8 @@ module.exports = ->
 	# return
 	# ======
 	# console.log "#{'CONFIG'.info.bold}:", config
+	# console.log "#{'CONFIG PKGS'.info.bold}:", config.pkgs
+	# console.log "#{'CONFIG PATHS'.info.bold}:", config.paths
 	config
 
 

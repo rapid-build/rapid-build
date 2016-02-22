@@ -1,16 +1,17 @@
+# common task test
+# ================
 async    = require 'asyncawait/async'
 await    = require 'asyncawait/await'
-path     = require 'path'
-Promise  = require 'bluebird'
-execSync = require('child_process').execSync
-fs       = Promise.promisifyAll require 'fs'
-rootDir  = process.cwd()
-appPath  = path.join rootDir, 'test', 'app'
-genPath  = path.join rootDir, 'generated', 'build-test'
+fs       = global.rb.nm.fs
+execSync = global.rb.nm.execSync
+prefix   = global.rb.pkgs.rb.tasksPrefix
+appPath  = global.rb.paths.abs.test.app
+genPath  = global.rb.paths.abs.generated.testApp
 
-
+# tests
+# =====
 describe 'common task', ->
-	execSync 'gulp rb-common', cwd: appPath
+	execSync "gulp #{prefix}common", cwd: appPath
 
 	describe 'clean-dist', ->
 		it 'should delete the dist directory', async (done) ->

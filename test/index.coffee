@@ -1,69 +1,28 @@
-configX = require('../core/config')()
-# console.log config
-# console.log config.paths.abs.root
-# console.log config.paths.abs.test.path
+# bootstrap
+# =========
 return
+config = require('../core/config')()
+require("#{config.paths.abs.test.bootstrap}/globals") config
 
 # requires
 # ========
-q      = require 'q'
-path   = require 'path'
-gWatch = require 'gulp-watch'
+async      = require 'asyncawait/async'
+await      = require 'asyncawait/await'
+jasmine    = require("#{global.rb.paths.abs.test.framework}/jasmine")()
+runTests   = require("#{global.rb.paths.abs.test.tasks}/run-tests")   jasmine
+watchTests = require("#{global.rb.paths.abs.test.tasks}/watch-tests") jasmine
 
 # vars
 # ====
-dir     = __dirname
-rootDir = path.dirname dir
-argv    = process.argv
-isDev   = !!argv[2] && argv[2].toLowerCase() is 'dev'
+argv  = process.argv
+isDev = !!argv[2] && argv[2].toLowerCase() is 'dev'
 
-# config req
-# ==========
-config =
-	req:
-		rb:           rootDir
-		helpers:      path.join rootDir, 'helpers'
-		jasmine:      path.join dir,     'jasmine'
-		tests:        path.join dir,     'tests'
-		node_modules: path.join rootDir, 'node_modules'
+# tasks
+# =====
+runTasks = async ->
+	await runTests()
+	await watchTests() if isDev
 
-# config node_modules
-# ===================
-config.node_modules =
-	'jasmine-expect': path.join 'node_modules', 'jasmine-expect'
-
-# console.log 'config', config
-
-# test files
-# ==========
-tests = path.relative config.req.rb, config.req.tests
-tests = path.join tests, '**', '*.*'
-
-# run tests
-# =========
-jasmine = require('./framework/jasmine') config
-jasmine.init(tests).execute()
-# console.log 'jasmine',  jasmine
-
-# DEV
-# ===
-return unless isDev
-testsDir = path.relative config.req.rb, config.req.tests
-testGlob = path.join config.req.tests, '**', '*.*'
-
-# watches
-# =======
-createWatch = (glob) ->
-	defer = q.defer()
-	gWatch glob, read:false, (file) ->
-		test = path.join testsDir, file.relative
-		# console.log "test: #{test}".cyan
-		jasmine.init(test).reExecute()
-	.on 'ready', ->
-		console.log "watching tests".yellow
-		defer.resolve()
-	defer.promise
-
-createWatch testGlob
-
-
+# return
+# ======
+runTasks()
