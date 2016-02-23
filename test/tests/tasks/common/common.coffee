@@ -5,7 +5,7 @@ await    = require 'asyncawait/await'
 rb       = global.rb
 fs       = rb.nm.fs
 execSync = rb.nm.execSync
-appPath  = rb.paths.abs.test.app
+appPaths = rb.paths.abs.test.app
 genPath  = rb.paths.abs.generated.testApp
 prefix   = rb.pkgs.rb.tasksPrefix
 genDir   = rb.pkgs.test.name
@@ -14,7 +14,7 @@ genDir   = rb.pkgs.test.name
 # =====
 describe 'common task', ->
 	it 'should run', async (done) ->
-		try execSync "gulp #{prefix}common --silent", cwd: appPath
+		try execSync "gulp #{prefix}common --silent", cwd: appPaths.path
 		catch e then e = e.message.replace /\r?\n|\r/g, ''
 		# console.log 'COMMON'.info.bold
 		expect(e).not.toBeDefined()
@@ -22,7 +22,7 @@ describe 'common task', ->
 
 	describe 'clean-dist', ->
 		it 'should delete dist dir', async (done) ->
-			try stats = await fs.statAsync "#{appPath}/dist"
+			try stats = await fs.statAsync appPaths.dist.path
 			result = stats?.isDirectory()
 			expect(result).not.toBeDefined()
 			done()
