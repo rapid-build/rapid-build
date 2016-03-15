@@ -2,13 +2,17 @@
 # ================
 async    = require 'asyncawait/async'
 await    = require 'asyncawait/await'
-rb       = global.rb
-fs       = rb.nm.fs
-execSync = rb.nm.execSync
-appPaths = rb.paths.abs.test.app
-genPath  = rb.paths.abs.generated.testApp
-prefix   = rb.pkgs.rb.tasksPrefix
-genDir   = rb.pkgs.test.name
+Promise  = require 'bluebird'
+execSync = require('child_process').execSync
+fs       = Promise.promisifyAll require 'fs'
+config   = require "#{process.cwd()}/temp/config.json"
+
+# vars
+# ====
+appPaths = config.paths.abs.test.app
+genPath  = config.paths.abs.generated.testApp
+prefix   = config.pkgs.rb.tasksPrefix
+genDir   = config.pkgs.test.name
 
 # tests
 # =====

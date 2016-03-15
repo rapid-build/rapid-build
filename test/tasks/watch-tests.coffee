@@ -1,11 +1,12 @@
 # watch-tests
 # ===========
-module.exports = (jasmine) ->
+module.exports = (config, jasmine) ->
 	# requires
 	# ========
 	path        = require 'path'
 	gWatch      = require 'gulp-watch'
-	testsHelper = require "#{global.rb.paths.abs.test.helpers}/tests"
+	Promise     = require 'bluebird'
+	testsHelper = require("#{config.paths.abs.test.helpers}/tests") config
 
 	# test files
 	# ==========
@@ -20,7 +21,7 @@ module.exports = (jasmine) ->
 	# task
 	# ====
 	createWatch = ->
-		new global.rb.nm.Promise (resolve, reject) ->
+		new Promise (resolve, reject) ->
 			gWatch tests, read:false, (file) ->
 				event = file.event
 				test  = testsHelper.get.path file.path, 'rel'

@@ -1,10 +1,10 @@
 # run-tests
 # =========
-module.exports = (jasmine) ->
+module.exports = (config, jasmine) ->
 	# requires
 	# ========
 	path        = require 'path'
-	testsHelper = require "#{global.rb.paths.abs.test.helpers}/tests"
+	testsHelper = require("#{config.paths.abs.test.helpers}/tests") config
 
 	# test files
 	# ==========
@@ -13,7 +13,7 @@ module.exports = (jasmine) ->
 	# task
 	# ====
 	runTask = ->
-		jasmine.init(tests).execute() # returns promist
+		jasmine.init(tests).execute() # returns promise
 
 	# return
 	# ======

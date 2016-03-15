@@ -33,7 +33,6 @@ module.exports = (config) ->
 			testApp: path.join generatedPath, 'build-test'
 		test:
 			path:      testPath
-			bootstrap: path.join testPath, 'bootstrap'
 			builds:    path.join testPath, 'builds'
 			framework: path.join testPath, 'framework'
 			helpers:   path.join testPath, 'helpers'

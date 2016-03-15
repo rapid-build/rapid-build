@@ -6,14 +6,14 @@
 # Note:
 # 5 seconds is the default spec timeout
 # =====================================
-module.exports = ->
+module.exports = (config) ->
 	q             = require 'q'
 	path          = require 'path'
 	Jasmine       = require 'jasmine'
 	Reporter      = require 'jasmine-terminal-reporter'
-	isType        = require "#{global.rb.paths.abs.test.helpers}/is-type"
-	moduleHelp    = require "#{global.rb.paths.abs.test.helpers}/module"
-	jasmineExpect = path.join global.rb.paths.rel.node_modules, 'jasmine-expect', 'index.js'
+	isType        = require "#{config.paths.abs.test.helpers}/is-type"
+	moduleHelp    = require "#{config.paths.abs.test.helpers}/module"
+	jasmineExpect = path.join config.paths.rel.node_modules, 'jasmine-expect', 'index.js'
 
 	# return
 	# ======
