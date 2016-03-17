@@ -18,9 +18,9 @@ genDir   = config.pkgs.test.name
 # =====
 describe 'common-client task', ->
 	it 'should run', async (done) ->
-		try execSync "gulp #{prefix}common-client --silent", cwd: appPaths.path
+		try stdout = execSync "gulp #{prefix}common-client --silent", cwd: appPaths.path
 		catch e then e = e.message.replace /\r?\n|\r/g, ''
-		# console.log 'COMMON CLIENT'.info.bold
+		# console.log '\n', stdout.toString().info if stdout
 		expect(e).not.toBeDefined()
 		done()
 

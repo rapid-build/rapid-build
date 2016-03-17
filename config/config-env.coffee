@@ -1,6 +1,13 @@
+# ENV CONFIG
+# Override technique is only used for build system testing.
+# =========================================================
 module.exports = (config) ->
 	log  = require "#{config.req.helpers}/log"
 	test = require("#{config.req.helpers}/test")()
+
+	# constants
+	# =========
+	ENV_RB_MODE = process.env.RB_MODE
 
 	# helpers
 	# =======
@@ -13,7 +20,7 @@ module.exports = (config) ->
 		name = config.env.name
 		switch name
 			when 'default'
-				env.is.default = true
+				env.is.default    = true
 			when 'test'
 				env.is.default    = true
 				env.is.test       = true
@@ -42,8 +49,8 @@ module.exports = (config) ->
 				env.is.dev        = true
 				env.is.test       = true
 				env.is.testServer = true
-			when 'prod'
-				env.is.prod = true
+			when 'prod', 'prod:server'
+				env.is.prod       = true
 			when 'prod:test'
 				env.is.prod       = true
 				env.is.test       = true
@@ -61,43 +68,35 @@ module.exports = (config) ->
 	# init env
 	# ========
 	env = {}
-	env.name = 'default'
-
-	# is
-	# ==
+	env.name     = 'default'
+	env.override = !!ENV_RB_MODE
 	env.is =
-		default: true
-		dev:  false
-		prod: false
-		test: false
+		default:    true
+		dev:        false
+		prod:       false
+		test:       false
 		testClient: false
 		testServer: false
-
-	# methods
-	# =======
-	env.set = (taskSeqs) -> # called in 'set-env-config' which is called first in 'common'
-		switch taskSeqs[2]
-			when config.rb.tasks.test then config.env.name = 'test'
-			when config.rb.tasks['test:client'] then config.env.name = 'test:client'
-			when config.rb.tasks['test:server'] then config.env.name = 'test:server'
-			when config.rb.tasks.dev then config.env.name = 'dev'
-			when config.rb.tasks['dev:test'] then config.env.name = 'dev:test'
-			when config.rb.tasks['dev:test:client'] then config.env.name = 'dev:test:client'
-			when config.rb.tasks['dev:test:server'] then config.env.name = 'dev:test:server'
-			when config.rb.tasks.prod then config.env.name = 'prod'
-			when config.rb.tasks['prod:test'] then config.env.name = 'prod:test'
-			when config.rb.tasks['prod:test:client'] then config.env.name = 'prod:test:client'
-			when config.rb.tasks['prod:test:server'] then config.env.name = 'prod:test:server'
-
-		setIsEnv()
 
 	# add env to config
 	# =================
 	config.env = env
 
+	# public methods
+	# ==============
+	config.env.set = (mode) -> # mode = build mode (called in 'set-env-config' which is called first in 'common')
+		# console.log "OVERRIDE: #{config.env.override},".cyan, mode
+		return unless mode
+		config.env.name = mode
+		setIsEnv()
+
+	# env override
+	# ============
+	config.env.set ENV_RB_MODE if config.env.override
+
 	# logs
 	# ====
-	# log.json env, 'env ='
+	# log.json config.env, 'env ='
 
 	# tests
 	# =====
