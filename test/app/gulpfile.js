@@ -9,7 +9,8 @@ var path = require('path'),
  *******/
 var getBuildMode, getIsCiBuild;
 var buildMode, isCiBuild, options;
-var buildPath;
+var buildPath, config;
+var buildTask, gulpTask;
 
 /* Helpers
  **********/
@@ -25,31 +26,47 @@ getIsCiBuild = (_buildMode, _ciBuildMode) => { // return boolean
 	return _ciBuildMode.toLowerCase() === 'ci'
 }
 
+/* Init Config
+ **************/
+buildPath = path.resolve(__dirname, '../..');
+config    = { pkgs: { rb: {} } };
+try {
+	config = require(buildPath + '/temp/config.json'); // npm test creates this file (see /test/init/index.coffee)
+} catch (e) {
+	console.log(e.message);
+	config.pkgs.rb = require(buildPath + '/package.json');
+}
+
 /* Init Build
  *************/
-buildPath = path.resolve(__dirname, '../..');
 buildMode = getBuildMode(process.argv[2]);
 isCiBuild = getIsCiBuild(process.argv[2], process.argv[3]);
 options   = require('./build-options')(buildMode, isCiBuild);
 require(buildPath)(gulp, options);
 
+/* Init Tasks
+ *************/
+gulpTask  = buildMode;
+buildTask = config.pkgs.rb.name;
+if (gulpTask && gulpTask != 'default') buildTask += `:${buildMode}`;
+// console.log('TASKS ---', gulpTask, buildTask);
+if (!!gulp.tasks[gulpTask]) return
+
 /**
  * Run Build - in the console type one of the following:
  * gulp
- * gulp test
- * gulp test:client
- * gulp test:server
- * gulp dev
- * gulp dev:test
- * gulp dev:test:client
- * gulp dev:test:server
- * gulp prod
- * gulp prod:server
- * gulp prod:test
- * gulp prod:test:client
- * gulp prod:test:server
- ******************************************************/
-gulp.task('default', ['rapid-build'], function(cb) {
+ * gulp test | test:client | test:server
+ * gulp dev  | dev:test    | dev:test:client  | dev:test:server
+ * gulp prod | prod:test   | prod:test:client | prod:test:server | prod:server
+ ******************************************************************************/
+gulp.task('default', [config.pkgs.rb.name], function(cb) {
 	console.log('Build Complete!');
 	cb();
 })
+
+gulp.task(gulpTask, [buildTask], function(cb) {
+	console.log('Build Complete!');
+	cb();
+})
+
+

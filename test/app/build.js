@@ -35,19 +35,10 @@ build     = require(buildPath)(options)
 /**
  * Run Build - in the console type one of the following:
  * node build
- * node build test
- * node build test:client
- * node build test:server
- * node build dev
- * node build dev:test
- * node build dev:test:client
- * node build dev:test:server
- * node build prod
- * node build prod:server
- * node build prod:test
- * node build prod:test:client
- * node build prod:test:server
- ******************************************************/
+ * node build test | test:client | test:server
+ * node build dev  | dev:test    | dev:test:client  | dev:test:server
+ * node build prod | prod:test   | prod:test:client | prod:test:server | prod:server
+ ************************************************************************************/
 build(buildMode).then(() => {
 	console.log('Build Complete!')
 })
