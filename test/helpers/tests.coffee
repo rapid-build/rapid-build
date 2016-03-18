@@ -37,6 +37,7 @@ module.exports = (config) ->
 	run:
 		spec: (spec) ->
 			specFile = "#{TESTS_PATH}#{spec}-spec#{FILE_EXT}"
-			moduleHelp.cache.delete specFile # for jasmine watch
+			specFile = path.normalize specFile # for windows
+			moduleHelp.cache.delete specFile   # for jasmine watch
 			require specFile
 
