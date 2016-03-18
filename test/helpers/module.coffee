@@ -14,7 +14,7 @@ module.exports =
 			return unless id
 			files    = require.cache[id]
 			isCached = !!files
-			# console.log "is cached #{isCached}:", id
+			# console.log "cached #{isCached}:".info, id
 			return unless isCached
 
 			children = files.children

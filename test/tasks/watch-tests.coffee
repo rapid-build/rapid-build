@@ -1,16 +1,11 @@
 # watch-tests
 # ===========
 module.exports = (config, jasmine) ->
-	# requires
-	# ========
-	path        = require 'path'
+	return unless config.build.watchTests
 	gWatch      = require 'gulp-watch'
 	Promise     = require 'bluebird'
 	testsHelper = require("#{config.paths.abs.test.helpers}/tests") config
-
-	# test files
-	# ==========
-	tests = testsHelper.get.paths 'default', 'abs'
+	tests       = [ "#{config.paths.abs.test.tests}/**/*" ]
 
 	# helpers
 	# =======
