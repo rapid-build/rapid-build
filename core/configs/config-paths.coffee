@@ -7,6 +7,7 @@ module.exports = (config) ->
 	# ====
 	rootPath              = path.join __dirname, '..', '..'
 	buildName             = require("#{rootPath}/package.json").name
+	corePath              = path.join rootPath, 'core'
 	generatedPath         = path.join rootPath, 'generated'
 	testPath              = path.join rootPath, 'test'
 	testPathApp           = path.join testPath, 'app'
@@ -28,12 +29,16 @@ module.exports = (config) ->
 		node_modules: path.join rootPath, 'node_modules'
 		temp:         path.join rootPath, 'temp'
 		tools:        path.join rootPath, 'tools'
+		core:
+			path:  corePath
+			tasks: path.join corePath, 'tasks'
 		generated:
 			path:    generatedPath
 			testApp: path.join generatedPath, 'build-test'
 		test:
 			path:      testPath
 			builds:    path.join testPath, 'builds'
+			config:    path.join testPath, 'config'
 			framework: path.join testPath, 'framework'
 			helpers:   path.join testPath, 'helpers'
 			init:      path.join testPath, 'init'

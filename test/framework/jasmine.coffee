@@ -72,7 +72,7 @@ module.exports = (config) ->
 
 		_addReporter: ->
 			@jasmine.addReporter new Reporter
-				isVerbose: false
+				isVerbose: config.test.verbose
 				showColors: true
 				includeStackTrace: false
 

@@ -1,7 +1,8 @@
 /* Register Coffee
- * Get Config
  * Run Tests
  ******************/
 require('coffee-script/register');
-var config = require('../core/config')();
-require(config.paths.abs.test.init)(config);
+var path     = require('path');
+var initPath = path.join(__dirname, 'init', 'index');
+var pkgRoot  = path.resolve(__dirname, '..');
+require(initPath)(pkgRoot);

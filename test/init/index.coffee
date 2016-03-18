@@ -1,6 +1,11 @@
-module.exports = (config) ->
+module.exports = (pkgRoot) ->
 	async = require 'asyncawait/async'
 	await = require 'asyncawait/await'
+
+	# get config then build it (synchronously), specs use it
+	# ======================================================
+	config = require("#{pkgRoot}/test/config/config") pkgRoot
+	require("#{config.paths.abs.core.tasks}/build-config") config
 
 	# helpers
 	# =======
@@ -13,23 +18,18 @@ module.exports = (config) ->
 	# tasks
 	# =====
 	TASKS_PATH     = config.paths.abs.test.tasks
-	config.build   = require("#{TASKS_PATH}/build-info")  process.argv
 	runTests       = require("#{TASKS_PATH}/run-tests")   config, jasmine
 	watchTests     = require("#{TASKS_PATH}/watch-tests") config, jasmine
-	buildConfig    = require "#{TASKS_PATH}/build-config" # needed for spec files
 	addBuildEnvVar = require "#{TASKS_PATH}/add-build-env-var"
 
 	# tasks in order
 	# ==============
 	runTasks = async ->
-		await(
-			addBuildEnvVar config
-			buildConfig config
-		)
+		await addBuildEnvVar config
 		# timer = new Timer 'runTests', true
 		await runTests()
 		# timer.clear true
-		await watchTests() if config.build.watchTests
+		await watchTests() if config.test.watch
 
 	# return
 	# ======

@@ -1,7 +1,7 @@
 # watch-tests
 # ===========
 module.exports = (config, jasmine) ->
-	return unless config.build.watchTests
+	return unless config.test.watch
 	gWatch      = require 'gulp-watch'
 	Promise     = require 'bluebird'
 	testsHelper = require("#{config.paths.abs.test.helpers}/tests") config
