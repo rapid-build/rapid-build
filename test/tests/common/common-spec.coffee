@@ -1,4 +1,4 @@
-# test: common
+# spec: common
 # ============
 task   = 'common'
 config = require "#{process.cwd()}/temp/config.json"
@@ -6,6 +6,9 @@ tests  = require("#{config.paths.abs.test.helpers}/tests") config
 
 # tests
 # =====
-describe "#{task} task", ->
-	tests.run.task task
-	tests.run.spec '/common/common'
+describe "#{task} tasks", ->
+	tests.run.spec '/clean/clean-dist'
+	tests.run.spec '/generate/generate-pkg'
+	tests.run.spec '/build/build-config'
+
+
