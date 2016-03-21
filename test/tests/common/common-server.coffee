@@ -1,7 +1,6 @@
-# test: coffee:client
+# test: common-server
 # ===================
-spec   = 'coffee'
-task   = "#{spec}:client"
+task   = 'common-server'
 config = require "#{process.cwd()}/temp/config.json"
 tests  = require("#{config.paths.abs.test.helpers}/tests") config
 
@@ -9,4 +8,4 @@ tests  = require("#{config.paths.abs.test.helpers}/tests") config
 # =====
 describe "#{task} task", ->
 	tests.run.task task
-	tests.run.spec "/compile/#{spec}"
+	tests.run.spec '/common/common-server'

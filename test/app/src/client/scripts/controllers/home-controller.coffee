@@ -1,4 +1,4 @@
-angular.module('app').controller 'homeController', ['$scope', 'superheroesValue',
-	($scope, superheroes) ->
-		$scope.superheroes = superheroes
+angular.module('app').controller 'homeController', ['$scope', 'heroesValue',
+	($scope, heroes) ->
+		$scope.heroes = heroes
 ]

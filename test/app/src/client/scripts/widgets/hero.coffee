@@ -1,7 +1,7 @@
-angular.module('app').directive 'appSuperhero', ['$log', ($log) ->
+angular.module('app').directive 'appHero', ['$log', ($log) ->
 	replace: true
 	restrict: 'E'
-	templateUrl: 'views/widgets/superhero.html'
+	templateUrl: 'views/widgets/hero.html'
 	transclude: true
 	scope:
 		# leave off name to show all superheroes

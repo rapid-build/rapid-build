@@ -4,6 +4,7 @@ module.exports =
 	default: [
 		'/common/common'
 		'/common/common-client'
+		'/common/common-server'
 	]
 	dev: [
 		'/common/common'

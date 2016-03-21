@@ -1,4 +1,4 @@
-angular.module('app').value('superheroesValue', [
+angular.module('app').value('heroesValue', [
 	{
 		id: 1,
 		name: 'Superman',

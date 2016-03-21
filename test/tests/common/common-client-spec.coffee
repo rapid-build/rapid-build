@@ -1,5 +1,5 @@
-# spec: common
-# ============
+# spec: common-client
+# ===================
 task   = 'common-client'
 config = require "#{process.cwd()}/temp/config.json"
 tests  = require("#{config.paths.abs.test.helpers}/tests") config
@@ -9,8 +9,8 @@ tests  = require("#{config.paths.abs.test.helpers}/tests") config
 describe "#{task} tasks", ->
 	tests.run.spec '/build/build-bower-json'
 	tests.run.spec '/copy/copy-images'
-	tests.run.spec '/copy/copy-js'
-	tests.run.spec '/compile/coffee'
-	tests.run.spec '/compile/es6'
+	tests.run.spec '/copy/copy-js:client'
+	tests.run.spec '/compile/coffee:client'
+	tests.run.spec '/compile/es6:client'
 
 

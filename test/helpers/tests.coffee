@@ -46,10 +46,11 @@ module.exports = (config) ->
 
 		run:
 			spec: (spec) ->
-				specFile = "#{TESTS_PATH}#{spec}-spec#{FILE_EXT}"
-				specFile = path.normalize specFile # for windows
-				moduleHelp.cache.delete specFile   # for jasmine watch
-				require specFile
+				spec = spec.replace /:/g, '-'
+				spec = "#{TESTS_PATH}#{spec}-spec#{FILE_EXT}"
+				spec = path.normalize spec   # for windows
+				moduleHelp.cache.delete spec # for jasmine watch
+				require spec
 
 			task: (task, opts={}) -> # synchronously
 				it 'should run', (done) ->
