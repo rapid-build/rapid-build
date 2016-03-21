@@ -7,12 +7,13 @@ module.exports = (config) ->
 
 	# constants
 	# =========
-	FILE_EXT    = path.extname __filename
-	BUILD_PATH  = config.paths.abs.root
-	BUILDS_PATH = config.paths.abs.test.builds
-	TESTS_PATH  = config.paths.abs.test.tests
-	PREFIX      = config.pkgs.rb.tasksPrefix
-	TASK_OPTS   = cwd: config.paths.abs.test.app.path
+	FILE_EXT        = path.extname __filename
+	BUILD_PATH      = config.paths.abs.root
+	BUILDS_PATH     = config.paths.abs.test.builds
+	TESTS_PATH      = config.paths.abs.test.tests
+	PREFIX          = config.pkgs.rb.tasksPrefix
+	TASK_OPTS       = cwd: config.paths.abs.test.app.path
+	APP_CONFIG_PATH = "#{config.paths.abs.generated.testApp}/config.json"
 
 	# api
 	# ===
@@ -34,6 +35,11 @@ module.exports = (config) ->
 				path: (test) ->
 					test = test.replace 'test', ''
 					test
+
+			app:
+				config: ->
+					require APP_CONFIG_PATH
+
 		format:
 			e: (e) ->
 				e.message.replace /\r?\n|\r/g, ''
