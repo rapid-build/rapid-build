@@ -58,7 +58,7 @@ module.exports = (config) ->
 					task = "gulp #{PREFIX}#{task} --silent"
 					try stdout = execSync task, TASK_OPTS
 					catch e then e = api.format.e e
-					console.log stdout.toString().info if opts.verbose
+					console.log stdout.toString().info if config.test.verbose.tasks
 					expect(e).not.toBeDefined()
 					done()
 

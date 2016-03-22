@@ -1,4 +1,5 @@
 'use strict'
+require('coffee-script/register');
 
 /* Requires
  ***********/

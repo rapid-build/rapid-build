@@ -3,9 +3,13 @@
 module.exports = (pkgRoot) ->
 	# helpers
 	# =======
-	getOpts = ->
+	getOpts = -> # prep work
 		opts = process.argv.slice 2
-		opts = (opt.toLowerCase() for opt in opts) # prep work
+		return opts unless opts.length
+		for opt, i in opts
+			continue if opt.indexOf('options:') isnt -1
+			opts[i] = opt.toLowerCase()
+		opts
 
 	# build config (in order)
 	# =======================

@@ -17,15 +17,15 @@ module.exports = (pkgRoot) ->
 
 	# tasks
 	# =====
-	TASKS_PATH     = config.paths.abs.test.tasks
-	runTests       = require("#{TASKS_PATH}/run-tests")   config, jasmine
-	watchTests     = require("#{TASKS_PATH}/watch-tests") config, jasmine
-	addBuildEnvVar = require "#{TASKS_PATH}/add-build-env-var"
+	TASKS_PATH      = config.paths.abs.test.tasks
+	runTests        = require("#{TASKS_PATH}/run-tests")   config, jasmine
+	watchTests      = require("#{TASKS_PATH}/watch-tests") config, jasmine
+	addBuildEnvVars = require "#{TASKS_PATH}/add-build-env-vars"
 
 	# tasks in order
 	# ==============
 	runTasks = async ->
-		await addBuildEnvVar config
+		await addBuildEnvVars config
 		# timer = new Timer 'runTests', true
 		await runTests()
 		# timer.clear true

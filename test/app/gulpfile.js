@@ -1,4 +1,5 @@
 'use strict'
+require('coffee-script/register');
 
 /* Requires
  ***********/
@@ -7,7 +8,7 @@ var path = require('path'),
 
 /* Vars
  *******/
-var getBuildMode, getIsCiBuild;
+var getBuildMode, getIsCiBuild, getConfig;
 var buildMode, isCiBuild, options;
 var buildPath, config;
 var buildTask, gulpTask;
@@ -25,17 +26,20 @@ getIsCiBuild = (_buildMode, _ciBuildMode) => { // return boolean
 	if (typeof _ciBuildMode !== 'string') return false
 	return _ciBuildMode.toLowerCase() === 'ci'
 }
+getConfig = () => {
+	if (process.env.RB_TEST) {
+		config = require(buildPath + '/temp/config.json'); // npm test creates this file (see /test/init/index.coffee)
+	} else {
+		config = { pkgs: { rb: {} } };
+		config.pkgs.rb = require(buildPath + '/package.json');
+	}
+	return config;
+}
 
 /* Init Config
  **************/
 buildPath = path.resolve(__dirname, '../..');
-config    = { pkgs: { rb: {} } };
-try {
-	config = require(buildPath + '/temp/config.json'); // npm test creates this file (see /test/init/index.coffee)
-} catch (e) {
-	console.log(e.message);
-	config.pkgs.rb = require(buildPath + '/package.json');
-}
+config    = getConfig();
 
 /* Init Build
  *************/
