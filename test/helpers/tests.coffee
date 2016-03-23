@@ -62,7 +62,7 @@ module.exports = (config) ->
 						args.push '--silent' unless opts.verbose
 
 						child = spawn 'gulp', args, TASK_OPTS
-						processes.add "#{task}": child.pid
+						processes.add "#{task}": child.pid if opts.track
 
 						child.stdout.on 'data', (data) ->
 							return unless data
