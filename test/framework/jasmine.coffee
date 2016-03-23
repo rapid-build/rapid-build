@@ -12,6 +12,7 @@ module.exports = (config) ->
 	Jasmine       = require 'jasmine'
 	Reporter      = require 'jasmine-terminal-reporter'
 	isType        = require "#{config.paths.abs.test.helpers}/is-type"
+	processes     = require "#{config.paths.abs.test.helpers}/processes"
 	moduleHelp    = require "#{config.paths.abs.test.helpers}/module"
 	jasmineExpect = path.join config.paths.rel.node_modules, 'jasmine-expect', 'index.js'
 
@@ -67,7 +68,9 @@ module.exports = (config) ->
 		_setOnComplete: (defer) ->
 			@jasmine.onComplete (passed) =>
 				@results.status = if passed then 'passed' else 'failed'
-				@defer.resolve()
+				processes.kill().then =>
+					# console.log processes.get()
+					@defer.resolve()
 			@
 
 		_addReporter: ->

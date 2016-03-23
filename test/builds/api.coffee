@@ -6,6 +6,7 @@ module.exports =
 		'/common/common-client'
 		'/common/common-server'
 		'/build/build-spa'
+		'/server/start-server'
 	]
 	dev: [
 		'/common/common'
