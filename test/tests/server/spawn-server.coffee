@@ -1,10 +1,11 @@
-# spec: start-server
+# test: spawn-server
 # ==================
-task   = 'start-server'
+task   = 'spawn-server'
 config = require "#{process.cwd()}/temp/config.json"
 tests  = require("#{config.paths.abs.test.helpers}/tests") config
 
 # tests
 # =====
-describe "#{task} tasks", ->
-	tests.run.spec '/server/spawn-server'
+describe "#{task} task", ->
+	tests.run.task.async task, 'server started'
+	tests.run.spec "/server/#{task}"

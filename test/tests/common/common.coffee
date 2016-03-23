@@ -8,4 +8,4 @@ tests  = require("#{config.paths.abs.test.helpers}/tests") config
 # =====
 describe "#{task} task", ->
 	tests.run.task.sync task
-	tests.run.spec '/common/common'
+	tests.run.spec "/common/#{task}"
