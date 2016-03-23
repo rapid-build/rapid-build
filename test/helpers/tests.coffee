@@ -40,6 +40,8 @@ module.exports = (config) ->
 
 			app:
 				config: ->
+					appConfig = path.normalize APP_CONFIG_PATH # for windows
+					moduleHelp.cache.delete appConfig
 					require APP_CONFIG_PATH
 
 		format:

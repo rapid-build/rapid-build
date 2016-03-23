@@ -7,6 +7,6 @@ opts   = track: true
 
 # tests
 # =====
-describe "#{task} task", ->
+describe task, ->
 	tests.run.task.async task, 'server started', opts
 	tests.run.spec "/server/#{task}"

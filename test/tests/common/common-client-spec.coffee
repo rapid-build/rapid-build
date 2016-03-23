@@ -7,6 +7,7 @@ tests  = require("#{config.paths.abs.test.helpers}/tests") config
 # tests
 # =====
 describe "#{task} tasks", ->
+	tests.run.spec '/config/update-angular-mocks-config'
 	tests.run.spec '/build/build-bower-json'
 	tests.run.spec '/copy/copy-images'
 	tests.run.spec '/copy/copy-js:client'

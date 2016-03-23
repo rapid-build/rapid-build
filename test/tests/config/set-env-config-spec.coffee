@@ -11,7 +11,7 @@ BUILD_MODE  = ENV_RB_MODE or 'default'
 # =====
 describe task, ->
 	describe 'env properties', ->
-		env  = undefined
+		env = undefined
 
 		beforeAll ->
 			env = tests.get.app.config().env

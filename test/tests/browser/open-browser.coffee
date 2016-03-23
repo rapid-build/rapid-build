@@ -7,6 +7,6 @@ opts   = track: true, verbose: true
 
 # tests
 # =====
-describe "#{task} task", ->
+describe task, ->
 	tests.run.task.async task, 'open-browser', opts
 	tests.run.spec "/browser/#{task}" # todo
