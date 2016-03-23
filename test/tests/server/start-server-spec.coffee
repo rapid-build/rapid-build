@@ -1,19 +1,18 @@
 # spec: start-server
 # ==================
 task    = 'start-server'
-async   = require 'asyncawait/async'
-await   = require 'asyncawait/await'
-Promise = require 'bluebird'
-fs      = Promise.promisifyAll require 'fs'
+request = require 'request'
 config  = require "#{process.cwd()}/temp/config.json"
+tests   = require("#{config.paths.abs.test.helpers}/tests") config
 appPath = config.paths.abs.test.app.dist.client.path
+port    = tests.get.app.config().ports.server
+url     = "http://localhost:#{port}/"
 
-# tests (TODO)
-# ============
-# describe task, ->
-# 	it 'should start the server', async (done) ->
-# 		# console.log 'spec start-server'.attn
-# 		try stats = await fs.statAsync "#{appPath}/spa.html"
-# 		result = stats?.isFile()
-# 		expect(result).toBeTrue()
-# 		done()
+# tests
+# =====
+describe task, ->
+	it 'should start the server', (done) ->
+		request url, (e, res, body) ->
+			expect(e).toBeFalsy()
+			expect(res.statusCode).toBe 200 if res
+			done()
