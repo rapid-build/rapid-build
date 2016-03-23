@@ -7,6 +7,7 @@ module.exports =
 		'/common/common-server'
 		'/build/build-spa'
 		'/server/start-server'
+		'/browser/open-browser'
 	]
 	dev: [
 		'/common/common'

@@ -9,6 +9,7 @@
  * npm test verbose:*
  * npm test verbose:tasks
  * npm test verbose:jasmine
+ * npm test verbose:processes
  **********************************/
 require('coffee-script/register');
 var path     = require('path');

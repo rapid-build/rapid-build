@@ -6,8 +6,10 @@ module.exports = (config, opts=[]) ->
 	test =
 		watch: false
 		verbose:
-			tasks:   false
-			jasmine: false
+			tasks:     false
+			jasmine:   false
+			processes: false
+
 
 	# helpers
 	# =======
@@ -20,9 +22,10 @@ module.exports = (config, opts=[]) ->
 			continue if opt.indexOf('verbose') is -1
 			vb = opt.split ':'
 			if vb[0] is 'verbose' and vb.length is 1 then vOpts.jasmine = true;     break
-			if vb.indexOf('*')       isnt -1 then vOpts = tasks:true, jasmine:true; break
-			if vb.indexOf('tasks')   isnt -1 then vOpts.tasks   = true
-			if vb.indexOf('jasmine') isnt -1 then vOpts.jasmine = true
+			if vb.indexOf('*')         isnt -1 then vOpts = tasks:true, jasmine:true, processes:true; break
+			if vb.indexOf('tasks')     isnt -1 then vOpts.tasks     = true
+			if vb.indexOf('jasmine')   isnt -1 then vOpts.jasmine   = true
+			if vb.indexOf('processes') isnt -1 then vOpts.processes = true
 			break
 		vOpts
 
