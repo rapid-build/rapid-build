@@ -12,10 +12,13 @@
 #     server  | spa       | src    | test
 # ========================================================================
 module.exports = (config, opts=[]) ->
+	envHelper = require "#{config.paths.abs.test.helpers}/env"
+
 	# int build
 	# =========
 	build =
 		mode: ''
+		is:   {}
 		options:
 			angular:   false
 			browser:   false
@@ -61,6 +64,7 @@ module.exports = (config, opts=[]) ->
 	# set
 	# ===
 	build.mode    = getMode()
+	build.is      = envHelper.get build.mode
 	build.options = getOptions()
 
 	# add and return
