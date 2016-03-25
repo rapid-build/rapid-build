@@ -9,6 +9,7 @@ module.exports = (config) ->
 
 	# constants
 	# =========
+	IS_WIN          = process.platform is 'win32'
 	FILE_EXT        = path.extname __filename
 	BUILD_PATH      = config.paths.abs.root
 	BUILDS_PATH     = config.paths.abs.test.builds
@@ -63,7 +64,8 @@ module.exports = (config) ->
 						args = ["#{PREFIX}#{task}"]
 						args.push '--silent' unless opts.verbose
 
-						child = spawn 'gulp', args, TASK_OPTS
+						cmd   = if IS_WIN then 'gulp.cmd' else 'gulp'
+						child = spawn cmd, args, TASK_OPTS
 						processes.add "#{task}": child.pid if opts.track
 
 						child.stdout.on 'data', (data) ->
@@ -76,6 +78,8 @@ module.exports = (config) ->
 						child.on 'error', (e) -> # test error
 							return unless e
 							done.fail e.message
+
+						return if IS_WIN
 
 						child.on 'exit', (code) -> # task error
 							return unless code is 1

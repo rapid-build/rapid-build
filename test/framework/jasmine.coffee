@@ -69,7 +69,8 @@ module.exports = (config) ->
 			@jasmine.onComplete (passed) =>
 				@results.status = if passed then 'passed' else 'failed'
 				processes.kill(config).then (killed) =>
-					# console.log processes.get()
+					# console.log 'collection process:'.attn, processes.get()
+					# console.log 'killed processes:'.attn, killed
 					@defer.resolve()
 			@
 
