@@ -12,6 +12,7 @@ describe "#{task} tasks", ->
 	tests.run.spec '/manage/bower'
 	tests.run.spec '/build/build-angular-modules'
 	tests.run.spec '/copy/copy-bower_components'
+	tests.run.spec '/copy/copy-css'
 	tests.run.spec '/copy/copy-images'
 	tests.run.spec '/copy/copy-js:client'
 	tests.run.spec '/compile/coffee:client'
