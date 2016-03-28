@@ -1,6 +1,6 @@
-# spec: less
+# spec: sass
 # ==========
-task       = 'less'
+task       = 'sass'
 async      = require 'asyncawait/async'
 await      = require 'asyncawait/await'
 Promise    = require 'bluebird'
@@ -11,8 +11,8 @@ stylesPath = config.paths.abs.test.app.dist.client.styles
 # tests
 # =====
 describe task, ->
-	it 'should compile less to client dist', async (done) ->
-		try stats = await fs.statAsync "#{stylesPath}/app-less.css"
+	it 'should compile sass to client dist', async (done) ->
+		try stats = await fs.statAsync "#{stylesPath}/app-sass.css"
 		result = stats?.isFile()
 		expect(result).toBeDefined()
 		done()
