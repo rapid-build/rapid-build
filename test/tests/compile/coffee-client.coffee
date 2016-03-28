@@ -1,6 +1,6 @@
 # test: coffee:client
 # ===================
-task   = "coffee:client"
+task   = 'coffee:client'
 config = require "#{process.cwd()}/temp/config.json"
 tests  = require("#{config.paths.abs.test.helpers}/tests") config
 

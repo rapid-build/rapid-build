@@ -1,11 +1,11 @@
-# test: es6:server
-# ================
-task   = 'es6:server'
+# test: less
+# ==========
+task   = 'less'
 config = require "#{process.cwd()}/temp/config.json"
 tests  = require("#{config.paths.abs.test.helpers}/tests") config
 
 # tests
 # =====
-describe task, ->
+describe "#{task} task", ->
 	tests.run.task.sync task
 	tests.run.spec "/compile/#{task}"

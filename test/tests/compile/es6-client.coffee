@@ -1,6 +1,6 @@
 # test: es6:client
 # ================
-task   = "es6:client"
+task   = 'es6:client'
 config = require "#{process.cwd()}/temp/config.json"
 tests  = require("#{config.paths.abs.test.helpers}/tests") config
 

@@ -19,5 +19,6 @@ describe "#{task} tasks", ->
 	tests.run.spec '/copy/copy-views'
 	tests.run.spec '/compile/coffee:client'
 	tests.run.spec '/compile/es6:client'
+	tests.run.spec '/compile/less'
 
 
