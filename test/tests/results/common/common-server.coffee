@@ -11,5 +11,6 @@ describe "#{task} tasks", ->
 	tests.test.results '/compile/coffee:server'
 	tests.test.results '/compile/es6:server'
 	tests.test.results '/copy/copy-server-config'
+	tests.test.results '/copy/copy-server-node_modules'
 
 
