@@ -1,3 +1,12 @@
+## [0.51.2](https://github.com/jyounce/rapid-build/compare/v0.51.1...v0.51.2) (2016-03-29)
+
+
+### Minor Features
+
+* **bump deps:** babel-preset-es2015, browser-sync, fs-extra, glob-stream, gulp-uglify, http-proxy-middleware, karma, karma-jasmine-matchers, karma-chrome-launcher, phantomjs-prebuilt and postcss ([1d6de7b](https://github.com/jyounce/rapid-build/commit/1d6de7b))
+
+
+
 ## [0.51.1](https://github.com/jyounce/rapid-build/compare/v0.51.0...v0.51.1) (2016-02-17)
 
 
