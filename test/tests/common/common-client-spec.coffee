@@ -23,5 +23,6 @@ describe "#{task} tasks", ->
 	tests.run.spec '/compile/sass'
 	tests.run.spec '/format/absolute-css-urls'
 	tests.run.spec '/clean/clean-rb-client'
+	tests.run.spec '/build/build-files'
 
 
