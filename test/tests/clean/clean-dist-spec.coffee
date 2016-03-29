@@ -7,7 +7,6 @@ Promise  = require 'bluebird'
 fs       = Promise.promisifyAll require 'fs'
 config   = require "#{process.cwd()}/temp/config.json"
 distPath = config.paths.abs.test.app.dist.path
-# distPath = __dirname # fail test
 
 # tests
 # =====
