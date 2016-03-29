@@ -10,7 +10,7 @@ module.exports = (config) ->
 
 	# logging
 	# =======
-	# console.log "#{'PKGS'.info.bold}:", pkgs
+	# console.log 'PKGS:', pkgs
 
 	# add and return
 	# ==============

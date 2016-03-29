@@ -31,16 +31,16 @@ node_modules/
 
 # files
 # =====
-temp/**/*
+extra/temp/**/*
 generated/**/*
-src/client/**/*.*
+lib/src/client/**/*.*
 
 # retain empty folder via .gitkeep
 # ================================
-!temp/.gitkeep
+!extra/temp/.gitkeep
 !generated/.gitkeep
-!src/client/**/.gitkeep
+!lib/src/client/**/.gitkeep
 
 # file negation
 # =============
-!src/client/spa.html
+!lib/src/client/spa.html

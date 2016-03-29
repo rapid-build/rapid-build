@@ -2,14 +2,17 @@
 # ========
 fse    = require 'fs-extra'
 path   = require 'path'
-config = require('../../core/config')()
+tasks  = '../../tasks'
+config = require("#{tasks}/get-config")()
+require("#{tasks}/add-colors")()
 
 # constants
 # =========
-TEMP_PATH         = config.paths.abs.temp
+TEMP_PATH         = config.paths.abs.extra.temp
 CSS_DIR           = path.basename __dirname
 CSS_DEST_PATH     = path.join TEMP_PATH, CSS_DIR, 'selectors.css'
-CSS_DEST_PATH_REL = path.relative "#{TEMP_PATH}/..", CSS_DEST_PATH
+CSS_DEST_PATH_REL = path.relative "#{TEMP_PATH}/../..", CSS_DEST_PATH
+CSS_DEST_PATH_REL = path.normalize "/#{CSS_DEST_PATH_REL}"
 
 # Colors
 # ======
@@ -59,5 +62,5 @@ class Colors
 selectors = new Colors('blue','gray').setSelectors().getSelectors()
 fse.outputFile CSS_DEST_PATH, selectors, (e) ->
 	return console.log e if e
-	console.log "created #{CSS_DEST_PATH_REL}".info
+	console.log "created: #{CSS_DEST_PATH_REL}".info
 

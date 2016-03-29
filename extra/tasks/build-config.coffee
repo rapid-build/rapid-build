@@ -1,13 +1,12 @@
-# build /temp/config.json
-# =======================
+# BUILD: /extra/temp/config.json
+# ==============================
 module.exports = (config) ->
-	require 'colors'
-	path   = require 'path'
-	fse    = require 'fs-extra'
+	path = require 'path'
+	fse  = require 'fs-extra'
 
 	# vars
 	# ====
-	configPath = path.join config.paths.abs.temp, 'config.json'
+	configPath = path.join config.paths.abs.extra.temp, 'config.json'
 	format     = spaces: '\t'
 	msgPath    = "built: #{configPath}"
 
@@ -16,10 +15,10 @@ module.exports = (config) ->
 	task = ->
 		try
 			fse.writeJsonSync configPath, config, format
-			# console.log msgPath.cyan
+			# console.log msgPath
 		catch e
 			msg = e.message.replace /\r?\n|\r/g, ''
-			console.error "FAILED build-config: #{msg}".red.bold
+			console.error "FAILED build-config: #{msg}"
 
 	# return
 	# ======

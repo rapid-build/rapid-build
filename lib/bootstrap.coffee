@@ -1,5 +1,5 @@
-# bootstrap
-# =========
+# build bootstrap
+# ===============
 module.exports = ->
 	colors = require 'colors'
 	colors.setTheme

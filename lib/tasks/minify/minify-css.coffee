@@ -3,7 +3,8 @@ module.exports = (config, gulp) ->
 	minifyCss   = require 'gulp-cssnano'
 	promiseHelp = require "#{config.req.helpers}/promise"
 	minOpts =
-		save: true
+		safe: true
+		mergeRules: false
 		normalizeUrl: false # build does this, see absolute-css-urls
 
 	runTask = (appOrRb) ->

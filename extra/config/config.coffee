@@ -1,10 +1,7 @@
-# build core config
-# =================
+# BUILD EXTRA CONFIG
+# npm test depends on this!
+# =========================
 module.exports = ->
-	# bootstrap
-	# =========
-	require('./bootstrap')()
-
 	# build in order
 	# ==============
 	config = {}
@@ -13,7 +10,7 @@ module.exports = ->
 
 	# logging
 	# =======
-	# console.log 'CONFIG:\n'.info.bold, config
+	# console.log 'CONFIG:\n', config
 
 	# return
 	# ======

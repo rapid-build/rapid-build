@@ -28,7 +28,7 @@ getIsCiBuild = (_buildMode, _ciBuildMode) => { // return boolean
 }
 getConfig = () => {
 	if (process.env.RB_TEST) {
-		config = require(buildPath + '/temp/config.json'); // npm test creates this file (see /test/init/index.coffee)
+		config = require(buildPath + '/extra/temp/config.json'); // npm test creates this file (see /test/init/index.coffee)
 	} else {
 		config = { pkgs: { rb: {} } };
 		config.pkgs.rb = require(buildPath + '/package.json');

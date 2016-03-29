@@ -1,11 +1,12 @@
 module.exports = (pkgRoot) ->
 	async = require 'asyncawait/async'
 	await = require 'asyncawait/await'
+	require("#{pkgRoot}/extra/tasks/add-colors")()
 
 	# get config then build it (synchronously), specs use it
 	# ======================================================
 	config = require("#{pkgRoot}/test/config/config") pkgRoot
-	require("#{config.paths.abs.core.tasks}/build-config") config
+	require("#{config.paths.abs.extra.tasks}/build-config") config
 
 	# helpers
 	# =======

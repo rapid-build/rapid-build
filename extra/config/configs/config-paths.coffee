@@ -5,9 +5,9 @@ module.exports = (config) ->
 
 	# vars
 	# ====
-	rootPath              = path.join __dirname, '..', '..'
+	rootPath              = path.resolve __dirname, '..', '..', '..'
 	buildName             = require("#{rootPath}/package.json").name
-	corePath              = path.join rootPath, 'core'
+	extraPath             = path.join rootPath, 'extra'
 	generatedPath         = path.join rootPath, 'generated'
 	testPath              = path.join rootPath, 'test'
 	testPathTests         = path.join testPath, 'tests'
@@ -28,11 +28,12 @@ module.exports = (config) ->
 	paths.abs =
 		root:         rootPath
 		node_modules: path.join rootPath, 'node_modules'
-		temp:         path.join rootPath, 'temp'
-		tools:        path.join rootPath, 'tools'
-		core:
-			path:  corePath
-			tasks: path.join corePath, 'tasks'
+		extra:
+			path:   extraPath
+			config: path.join extraPath, 'config'
+			tasks:  path.join extraPath, 'tasks'
+			temp:   path.join extraPath, 'temp'
+			tools:  path.join extraPath, 'tools'
 		generated:
 			path:    generatedPath
 			testApp: path.join generatedPath, 'build-test'
@@ -94,13 +95,13 @@ module.exports = (config) ->
 
 	# logging
 	# =======
-	# console.log 'PATHS:\n'.info.bold, paths
-	# console.log 'PATHS ABS:\n'.info.bold, paths.abs
-	# console.log 'PATHS REL:\n'.info.bold, paths.rel
-	# console.log 'PATHS ABS TEST:\n'.info.bold, paths.abs.test
-	# console.log 'PATHS REL TEST:\n'.info.bold, paths.rel.test
-	# console.log 'PATHS ABS TEST APP:\n'.info.bold, paths.abs.test.app
-	# console.log 'PATHS REL TEST APP:\n'.info.bold, paths.rel.test.app
+	# console.log 'PATHS:\n', paths
+	# console.log 'PATHS ABS:\n', paths.abs
+	# console.log 'PATHS REL:\n', paths.rel
+	# console.log 'PATHS ABS TEST:\n', paths.abs.test
+	# console.log 'PATHS REL TEST:\n', paths.rel.test
+	# console.log 'PATHS ABS TEST APP:\n', paths.abs.test.app
+	# console.log 'PATHS REL TEST APP:\n', paths.rel.test.app
 
 	# add and return
 	# ==============

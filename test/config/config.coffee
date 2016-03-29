@@ -13,7 +13,7 @@ module.exports = (pkgRoot) ->
 
 	# build config (in order)
 	# =======================
-	config  = require("#{pkgRoot}/core/config")() # also bootstraps colors pkg
+	config  = require("#{pkgRoot}/extra/tasks/get-config")()
 	CONFIGS = "#{config.paths.abs.test.config}/configs"
 	opts    = getOpts opts
 	config  = require("#{CONFIGS}/config-build") config, opts

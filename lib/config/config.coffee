@@ -8,7 +8,7 @@ module.exports = (rbDir, options) ->
 
 	# get config in order
 	# ===================
-	config  = require("#{rbDir}/config/config-req")                config, rbDir
+	config  = require("#{rbDir}/config/configs/config-req")        config, rbDir
 	options = require("#{config.req.config}/config-options")       config, options
 	config  = require("#{config.req.config}/config-env")           config
 	config  = require("#{config.req.config}/config-rb")            config, rbDir

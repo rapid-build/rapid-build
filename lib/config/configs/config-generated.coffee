@@ -12,7 +12,7 @@ module.exports = (config) ->
 	# ==============
 	generated = {}
 	generated.dir  = 'generated'
-	generated.path = join config.rb.dir, generated.dir
+	generated.path = join config.rb.root, generated.dir
 	generated.pkg  = {}
 	generated.pkg.dir    = config.app.name
 	generated.pkg.path   = join generated.path, generated.pkg.dir

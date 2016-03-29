@@ -18,10 +18,9 @@ dist/
 
 # root folders
 # ============
-/core/
+/docs/
+/extra/
 /test/
-/temp/
-/tools/
 
 # root files
 # ==========
@@ -32,13 +31,13 @@ dist/
 # files
 # =====
 generated/**/*
-src/client/**/*.*
+lib/src/client/**/*.*
 
 # retain empty folder via .gitkeep
 # ================================
 !generated/.gitkeep
-!src/client/**/.gitkeep
+!lib/src/client/**/.gitkeep
 
 # file negation
 # =============
-!src/client/spa.html
+!lib/src/client/spa.html

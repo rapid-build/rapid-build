@@ -20,7 +20,11 @@
 	"engines": {
 		"node": ">=4.0.0"
 	},
-	"main": "gulpfile.js",
+	"main": "lib/gulpfile.js",
+	"directories": {
+		"lib": "./lib",
+		"test": "./test"
+	},
 	"scripts": {
 		"test": "node test"
 	},

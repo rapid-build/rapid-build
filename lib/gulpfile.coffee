@@ -7,7 +7,7 @@ module.exports = (gulp, options={}) ->
 	rbDir     = __dirname
 	gulp      = require 'gulp' unless gulp
 	bootstrap = require("#{rbDir}/bootstrap")()
-	config    = require("#{rbDir}/config") rbDir, options
+	config    = require("#{rbDir}/config/config") rbDir, options
 	tasks     = require("#{config.req.init}/tasks") gulp, config
 	promise   = require("#{config.req.init}/api") gulp, config
 

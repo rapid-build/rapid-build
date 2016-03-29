@@ -1,15 +1,17 @@
 module.exports = (config, rbDir) ->
-	fs   = require 'fs'
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
-	test = require("#{config.req.helpers}/test")()
-	pkg  = require "#{config.req.rb}/package.json"
+	fs       = require 'fs'
+	path     = require 'path'
+	log      = require "#{config.req.helpers}/log"
+	test     = require("#{config.req.helpers}/test")()
+	rootPath = path.resolve config.req.rb, '..'
+	pkg      = require "#{rootPath}/package.json"
 
 	# init rb
 	# =======
 	rb = {}
 	rb.name    = pkg.name
 	rb.version = pkg.version
+	rb.root    = rootPath
 	rb.dir     = rbDir
 
 	# is symlink - determine if it has been installed via npm link
