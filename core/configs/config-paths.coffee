@@ -10,6 +10,7 @@ module.exports = (config) ->
 	corePath              = path.join rootPath, 'core'
 	generatedPath         = path.join rootPath, 'generated'
 	testPath              = path.join rootPath, 'test'
+	testPathTests         = path.join testPath, 'tests'
 	testPathApp           = path.join testPath, 'app'
 	testPathAppDist       = path.join testPathApp, 'dist'
 	testPathAppDistClient = path.join testPathAppDist, 'client'
@@ -37,13 +38,15 @@ module.exports = (config) ->
 			testApp: path.join generatedPath, 'build-test'
 		test:
 			path:      testPath
-			builds:    path.join testPath, 'builds'
 			config:    path.join testPath, 'config'
 			framework: path.join testPath, 'framework'
 			helpers:   path.join testPath, 'helpers'
 			init:      path.join testPath, 'init'
 			tasks:     path.join testPath, 'tasks'
-			tests:     path.join testPath, 'tests'
+			tests:
+				path:    testPathTests
+				results: path.join testPathTests, 'results'
+				tasks:   path.join testPathTests, 'tasks'
 			app:
 				path: testPathApp
 				dist:

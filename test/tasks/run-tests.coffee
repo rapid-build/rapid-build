@@ -1,13 +1,17 @@
 # run-tests
 # =========
 module.exports = (config, jasmine) ->
-	testsHelper = require("#{config.paths.abs.test.helpers}/tests") config
-	tests       = testsHelper.get.paths config.build.mode, 'rel'
+	tests      = require("#{config.paths.abs.test.helpers}/tests") config
+	api        = "#{config.paths.abs.test.init}/api"
+	buildMode  = config.build.mode
+	buildMode  = 'default' unless buildMode
+	buildTasks = require(api)[buildMode]
+	specs      = tests.get.tests buildTasks, 'tasks'
 
 	# task
 	# ====
 	runTask = ->
-		jasmine.init(tests).execute() # returns promise
+		jasmine.init(specs).execute() # returns promise
 
 	# return
 	# ======
