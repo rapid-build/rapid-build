@@ -21,6 +21,8 @@ dist/
 /changelog/
 /docs/
 /extra/
+/scripts/
+/src/
 /test/
 
 # root files

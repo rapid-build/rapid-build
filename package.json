@@ -20,13 +20,15 @@
 	"engines": {
 		"node": ">=4.0.0"
 	},
-	"main": "lib/gulpfile.js",
+	"main": "./lib",
 	"directories": {
 		"lib": "./lib",
+		"src": "./src",
 		"test": "./test"
 	},
 	"scripts": {
-		"test": "node test"
+		"test": "node test",
+		"create-lib": "node scripts/create-lib"
 	},
 	"devDependencies": {
 		"asyncawait": "1.0.3",
