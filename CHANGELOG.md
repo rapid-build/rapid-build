@@ -1,3 +1,12 @@
+# [0.52.0](https://github.com/jyounce/rapid-build/compare/v0.51.2...v0.52.0) (2016-03-30)
+
+
+### Performance Improvements
+
+* **lib:** boost performance by precompiling the lib folder's coffee files into js files, package now ships with no coffee files ([6b356d9](https://github.com/jyounce/rapid-build/commit/6b356d9))
+
+
+
 ## [0.51.2](https://github.com/jyounce/rapid-build/compare/v0.51.1...v0.51.2) (2016-03-29)
 
 
