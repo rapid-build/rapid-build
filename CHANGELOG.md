@@ -1,3 +1,12 @@
+## [0.52.1](https://github.com/jyounce/rapid-build/compare/0.52.0...v0.52.1) (2016-03-30)
+
+
+### Bug Fixes
+
+* **lib:** do not register coffee on init script in lib ([444043a](https://github.com/jyounce/rapid-build/commit/444043a))
+
+
+
 # [0.52.0](https://github.com/jyounce/rapid-build/compare/v0.51.2...v0.52.0) (2016-03-30)
 
 
