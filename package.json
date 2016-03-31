@@ -29,7 +29,7 @@
 	"scripts": {
 		"test": "node test",
 		"create-lib": "node scripts/create-lib",
-		"pretest": "npm run create-lib"
+		"prepublish": "npm run create-lib"
 	},
 	"devDependencies": {
 		"asyncawait": "1.0.3",
