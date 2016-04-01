@@ -38,6 +38,14 @@ api =
 	get: ->
 		@collection
 
+	getOne: (pidKey) ->
+		pid = null
+		for _pid in @collection
+			for key, val of _pid
+				if key is pidKey then pid = _pid; break
+			break if pid
+		pid
+
 	kill: (config={}) ->
 		return get.promise [] unless @collection.length
 		defer    = q.defer()
@@ -101,6 +109,7 @@ api =
 
 	_logKill: (pidKey, pidVal, config) ->
 		return @ unless config
+		return @ unless config.test
 		return @ unless config.test.verbose.processes
 		msg = "killed #{pidKey} process: #{pidVal}"
 		console.log msg.info
