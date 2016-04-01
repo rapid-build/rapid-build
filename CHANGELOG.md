@@ -1,3 +1,12 @@
+## [0.53.1](https://github.com/jyounce/rapid-build/compare/v0.53.0...v0.53.1) (2016-04-01)
+
+
+### Bug Fixes
+
+* **travis ci:** add skip_cleanup on deploy ([1bc3688](https://github.com/jyounce/rapid-build/commit/1bc3688))
+
+
+
 # [0.53.0](https://github.com/jyounce/rapid-build/compare/0.52.1...v0.53.0) (2016-04-01)
 
 
