@@ -1,0 +1,18 @@
+/* Shared Layout
+ ****************/
+html { overflow-y: scroll; }
+body { background-color: #fbfbfb; }
+
+main,
+header.main,
+footer.main {
+	@padding: 20px;
+	padding-left: @padding;
+	padding-right: @padding;
+}
+
+main { margin: 0 0 75px; }
+
+@border: 1px solid #eee;
+footer.main { border-top:    @border; }
+header.main { border-bottom: @border; }

@@ -18,6 +18,8 @@ module.exports = (config) ->
 	testPathAppSrc        = path.join testPathApp, 'src'
 	testPathAppSrcClient  = path.join testPathAppSrc, 'client'
 	testPathAppSrcServer  = path.join testPathAppSrc, 'server'
+	testAppPkgPath        = path.join testPathApp, 'package.json'
+	testAppName           = require(testAppPkgPath).name
 
 	# int paths
 	# =========
@@ -36,7 +38,7 @@ module.exports = (config) ->
 			tools:  path.join extraPath, 'tools'
 		generated:
 			path:    generatedPath
-			testApp: path.join generatedPath, 'build-test'
+			testApp: path.join generatedPath, testAppName
 		test:
 			path:      testPath
 			config:    path.join testPath, 'config'

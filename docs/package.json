@@ -1,7 +1,7 @@
 {
-	"name": "rapid-build-test",
-	"version": "0.53.1",
-	"description": "Application for testing the rapid-build.",
+	"name": "rapid-build-docs",
+	"version": "0.1.0",
+	"description": "Documentation website for rapid-build.",
 	"author": {
 		"name": "Judd Younce",
 		"email": "jyounce@yahoo.com",
