@@ -1,6 +1,33 @@
 /* Main Footer
  **************/
 footer.main {
-	padding-top: 40px;
-	padding-bottom: 50px;
+	padding-top: 45px;
+	padding-bottom: 55px;
+
+	.rapid-mini-logo {
+		float: left;
+		margin: 8px 10px 0 0;
+		height: 26px;
+	}
+
+	q, .links {
+		color: #41392f;  // dark brown
+		font-size: 11px;
+	}
+
+	q {
+		display: inline-block;
+		margin-top: 7px;
+		font-style: italic;
+	}
+
+	.links {
+		position: relative;
+		top: -2px;
+		span {
+			&::after {
+				content: '>'
+			}
+		}
+	}
 }
