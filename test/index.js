@@ -1,6 +1,7 @@
 /* TEST API (can combine args too)
  * npm test
  * npm test watch
+ * npm test lib:src
  * npm test prod:server
  * npm test options:*
  * npm test options:exclude

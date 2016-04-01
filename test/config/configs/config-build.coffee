@@ -40,7 +40,8 @@ module.exports = (config, opts=[]) ->
 	getMode = ->
 		mode = build.mode
 		for opt in opts
-			continue if opt.indexOf('options') isnt -1
+			continue if opt.indexOf('lib')     isnt -1 # test lib or src
+			continue if opt.indexOf('options') isnt -1 # build options
 			continue if opt.indexOf('verbose') isnt -1 # test reporter
 			continue if opt.indexOf('watch')   isnt -1 # watching tests
 			mode = opt; break
