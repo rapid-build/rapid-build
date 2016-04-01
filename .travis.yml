@@ -1,11 +1,12 @@
 language: node_js
 node_js:
-  - 4.0
+  - 4
 notifications:
   email:
     on_success: always
 deploy:
   provider: npm
+  skip_cleanup: true
   email: jyounce@yahoo.com
   api_key:
     secure: yYju4dNoUdD5ORmbCgfXe69GK5dCESadaGRGSgfyXOM/Fdjxc9WogZ2LtuuxISQZ1eq8w+3hjU27IpimkBvJIlfv2exiVuOHNhuapPCyYYjuq0ux+vfgpZY9Wzz55nlMohgZZ1hVX3Q30AzSNp91kX8SpCbogc5Yf8s1SRCRO/M7GchhtFila8ZQ6EZts2M9LYd8c4rE3Kz90afJTPadrrlJYoY6nbqmvkutCc+YQm96x5rbhkYUxDJ7fixi5bIQd3wAHaK/UQbVM7T1k1z7ivKwMFkrvGquB+25EMJMyU31iTpf+GvKt+junh8x2uB5ayApy/I6uVsGaNbDkjBV/55cwL4ZtzrP4wEOpUsOICr8AzB8JcPVnLajYXfPPzn0daTAlxQ9TSMesW8Tz8rmW+t1bKaKn1qXmvHJrOevFp86X25hRfVda0uMWr9g+jCbAIji+4xG97qyz1+WjHV2w5xHc3otEEYPaf/Lc3yAVs8cCvOZVTnvTM3P4dMwBuv8Sq+eF1BW7ErYkT+xosGXOSzsAOqZpOlUc3PTRVudSbbg2dF3JfaYR6/DkQ3Rsgj7c5sfaU0Cml0C3Pn4Nc/KNkH6aP5kp6+xVPDbh24TpBOZ4zpIVSC7Ze3j9UPXS0UJIFNRlPsSE1gOvUePukAWpcKnInyWiJPM/3rP0/QxXoU=
