@@ -245,7 +245,7 @@ package.json
 5. run server tests using [jasmine](http://jasmine.github.io/)
 
 ## Develop Rapidly!
-![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/src/client/shake-and-bake.jpg "Shake n' Bake!")
+![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
 
 ## Known Issues
 These are either being worked on or on the todo list.
