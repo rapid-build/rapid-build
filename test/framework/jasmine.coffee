@@ -41,6 +41,7 @@ module.exports = (config) ->
 			@defer.promise
 
 		reExecute: ->
+			process.env.RB_TEST_WATCH = true
 			@_deleteCache()
 			@jasmine.execute()
 			@defer.promise

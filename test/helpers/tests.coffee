@@ -9,15 +9,16 @@ module.exports = (config) ->
 
 	# constants
 	# =========
-	IS_WIN            = process.platform is 'win32'
-	FILE_EXT          = path.extname __filename
-	BUILD_PATH        = config.paths.abs.root
-	TEST_REL          = config.paths.rel.test.path
-	TESTS_ABS         = config.paths.abs.test.tests
-	TESTS_REL         = config.paths.rel.test.tests
-	PREFIX            = config.pkgs.rb.tasksPrefix
-	TASK_OPTS         = cwd: config.paths.abs.test.app.path
-	APP_CONFIG_PATH   = "#{config.paths.abs.generated.testApp}/config.json"
+	IS_WIN          = process.platform is 'win32'
+	FILE_EXT        = path.extname __filename
+	BUILD_PATH      = config.paths.abs.root
+	TEST_REL        = config.paths.rel.test.path
+	TESTS_ABS       = config.paths.abs.test.tests
+	TESTS_REL       = config.paths.rel.test.tests
+	PREFIX          = config.pkgs.rb.tasksPrefix
+	TASK_OPTS       = cwd: config.paths.abs.test.app.path
+	APP_CONFIG_PATH = "#{config.paths.abs.generated.testApp}/config.json"
+	TEST_TIMEOUT    = 10000 # jasmine default is 5 seconds
 
 	# api
 	# ===
@@ -83,6 +84,7 @@ module.exports = (config) ->
 						child.on 'exit', (code) -> # task error
 							return unless code is 1
 							done.fail 'task exit code should not be 1'
+					, TEST_TIMEOUT
 
 
 				sync: (task, opts={}) -> # synchronously
@@ -95,6 +97,7 @@ module.exports = (config) ->
 						console.log stdout.toString().info if config.test.verbose.tasks
 						expect(e).not.toBeDefined()
 						done()
+					, TEST_TIMEOUT
 
 
 
