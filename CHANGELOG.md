@@ -1,3 +1,12 @@
+# [0.53.0](https://github.com/jyounce/rapid-build/compare/0.52.1...v0.53.0) (2016-04-01)
+
+
+### Performance Improvements
+
+* **lib:** boost performance by minifying the published javascript files in the lib directory ([9b2a6a0](https://github.com/jyounce/rapid-build/commit/9b2a6a0))
+
+
+
 ## [0.52.1](https://github.com/jyounce/rapid-build/compare/0.52.0...v0.52.1) (2016-03-30)
 
 
