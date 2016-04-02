@@ -27,9 +27,10 @@
 		"test": "./test"
 	},
 	"scripts": {
-		"test": "node test",
+		"bump": "node scripts/bump",
 		"create-lib": "node scripts/create-lib",
-		"prepublish": "npm run create-lib"
+		"prepublish": "npm run create-lib",
+		"test": "node test"
 	},
 	"devDependencies": {
 		"asyncawait": "1.0.3",
