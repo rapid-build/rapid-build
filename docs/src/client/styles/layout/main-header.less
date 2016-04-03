@@ -12,4 +12,18 @@ header.main {
 			height: 65px;
 		}
 	}
+
+	nav {
+		position: absolute;
+		top: 36px;
+		right: 0;
+		.nav {
+			border-bottom-color: transparent; // #eee
+			:not(.active) {
+				a:hover {
+					border-bottom-color: transparent; // #eee
+				}
+			}
+		}
+	}
 }

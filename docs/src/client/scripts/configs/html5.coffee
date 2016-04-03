@@ -1,4 +1,4 @@
-angular.module('app').config ['$locationProvider'
+angular.module('rapid-build').config ['$locationProvider'
 	($locationProvider) ->
 		$locationProvider.html5Mode
 			enabled: true

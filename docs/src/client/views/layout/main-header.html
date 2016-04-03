@@ -1,17 +1,29 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-xs-4 col-sm-3 col-md-3">
+		<div class="col-xs-3 col-sm-3 col-md-3">
 			<h1>
 				<strong>rapid-build</strong>
-				<a href="/">
+				<a href="/" title="Home">
 					<img class="rapid-logo"
 						 alt="rapid-build logo"
 						 src="/images/logos/rapid-build-logo.png">
 				</a>
 			</h1>
 		</div>
-		<div class="col-xs-8 col-sm-9 col-md-9">
-			<!-- navigation goes here -->
+		<div class="col-xs-9 col-sm-9 col-md-9">
+			<form name="siteSearch">
+				<rb:search model="search" align="right"></rb:search>
+			</form>
+			<rb:nav
+				kind="main"
+				activity="segment 1"
+				collection="[
+					{ caption: 'getting started', url: '/getting-started/' },
+					{ caption: 'how to use', url: '/how-to-use/' },
+					{ caption: 'build modes', url: '/build-modes/' },
+					{ caption: 'customize', url: '/customize/' }
+				]">
+			</rb:nav>
 		</div>
 	</div>
 </div>

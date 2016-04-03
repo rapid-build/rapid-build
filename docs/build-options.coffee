@@ -11,6 +11,7 @@ getCommonOptions = ->
 	minify: spa: file: false
 	spa: src: filePath: 'spa.html'
 	angular:
+		moduleName: 'rapid-build'
 		templateCache:
 			dev: true
 			useAbsolutePaths: true

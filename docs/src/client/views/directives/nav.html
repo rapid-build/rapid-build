@@ -1,0 +1,26 @@
+<nav class="rb-nav" ng-class="kind">
+	<h4 ng-bind="::caption" ng-if="!!caption"></h4>
+	<ul class="nav"
+		ng-class="[
+			kind == 'main' ? 'nav-tabs' : '',
+			kind == 'sub' ? 'nav-pills nav-stacked' : ''
+		].join(' ')">
+		<li ng-repeat="model in ::collection"
+			ng-class="[model.active === true ? 'active' : ''].join(' ')">
+			<b class="separator" ng-if="::separators"></b><a
+				tabindex="0"
+				title="{{model.title}}"
+				ng-click="clickActive(); clickAction(model)"
+				ng-href="{{model.url}}"
+				target="{{model.target}}">
+				<span class="caption"
+					  ng-bind="model.caption"
+					  ng-if="!!model.caption"></span><span
+						class="glyphicon"
+						ng-if="!!model.icon"
+						ng-class="'glyphicon-'+model.icon">
+				</span>
+			</a>
+		</li>
+	</ul>
+</nav>

@@ -1,4 +1,4 @@
-angular.module('app').config ['$routeProvider'
+angular.module('rapid-build').config ['$routeProvider'
 	($routeProvider) ->
 		$routeProvider
 			.when '/',
