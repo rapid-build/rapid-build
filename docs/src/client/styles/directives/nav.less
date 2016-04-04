@@ -8,10 +8,21 @@
 		font-weight: bold;
 		font-variant: small-caps;
 		text-transform: capitalize;
-		letter-spacing: 1.5px;
+		letter-spacing: .5px;
 		li {
 			a {
+				border-radius: 10px 10px 0 0;
 				padding: 10px 12px 15px;
+				#fontColors > .nav.main.link;
+				&:hover {
+					background-color: white;
+					border-bottom-color: white;
+				}
+			}
+			&.active {
+				a {
+					#fontColors > .nav.main.active;
+				}
 			}
 		}
 	}
