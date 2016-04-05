@@ -23,6 +23,11 @@ getCommonOptions = ->
 					'bower_components/bootstrap/less/bootstrap.less'
 					'bower_components/bootstrap/dist/js/bootstrap.js'
 				]
+	order:
+		scripts:
+			first: [
+				'scripts/prototypes/*.*'
+			]
 	extra:
 		copy:
 			client: [

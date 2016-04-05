@@ -1,4 +1,5 @@
 angular.module('rapid-build').controller 'homeController', ['$scope',
 	($scope) ->
-		console.log 'Let\'s get Rapid!'
+		$scope.intro = 'Let\'s get Rapid!'
+		# console.log 'Let\'s get Rapid!'
 ]
