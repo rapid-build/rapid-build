@@ -1,5 +1,55 @@
 /* Variables
  ************/
+// Backgrounds
+#bg {
+	.layout {
+		.header { background-color: #f5f5f5; }
+		.footer { background-color: #fbfbfb; }
+	}
+	.nav {
+		.main {
+			.hover { background-color: white; }
+		}
+	}
+}
+
+// Borders
+#borders {
+	.layout {
+		@border: 1px solid #e5e5e5;
+		.header { border-bottom: @border; }
+		.footer { border-bottom: @border; border-top: @border; }
+	}
+	.nav {
+		.main {
+			.hover,
+			.active {
+				border: 1px solid #ddd;
+				border-bottom-color: transparent;
+			}
+		}
+	}
+	.img {
+		.bordered { border: 1px solid #999; }
+	}
+	.hr { border-top: 1px dashed #cacaca; }
+	.section { border-bottom: 1px dashed #cacaca; }
+}
+
+// Font Sizes
+#fontSizes {
+	.text { font-size: 14px; }
+	.h1   { font-size: 36px; }
+	.h2   { font-size: 30px; }
+	.h3   { font-size: 27px; }
+	.h4   { font-size: 17px; }
+	.h5   { font-size: 15px; }
+	.h6   { font-size: 13px; }
+	.nav {
+		.main { font-size: 16px; }
+	}
+}
+
 // Font Colors
 #fontColors {
 	.text  { color: #58606D;   }
@@ -7,13 +57,15 @@
 	.h2    { color: steelblue; }
 	.h3    { color: steelblue; }
 	.h4    { color: steelblue; }
+	.h5    { color: steelblue; }
+	.h6    { color: steelblue; }
 	.links {
 		color: lightcoral;
 		&:hover { color: indianred; }
 	}
 	.nav {
 		.main {
-			.link   { color: darkgray; } // lightslategrey
+			.link   { color: lightslategrey; } // darkgray
 			.active { color: dimgray;  }
 		}
 	}

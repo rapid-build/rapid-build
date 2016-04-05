@@ -4,23 +4,25 @@
 	/* kinds
 	 ********/
 	&.main {
-		font-size: 16px;
 		font-weight: bold;
 		font-variant: small-caps;
 		text-transform: capitalize;
 		letter-spacing: .5px;
+		#fontSizes > .nav.main;
 		li {
 			a {
-				border-radius: 10px 10px 0 0;
 				padding: 10px 12px 15px;
+				border-radius: 10px 10px 0 0;
 				#fontColors > .nav.main.link;
+				&:focus { outline:none; }
 				&:hover {
-					background-color: white;
-					border-bottom-color: white;
+					#bg > .nav.main.hover;
+					#borders > .nav.main.hover;
 				}
 			}
 			&.active {
 				a {
+					#borders > .nav.main.active;
 					#fontColors > .nav.main.active;
 				}
 			}
