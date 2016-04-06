@@ -1,10 +1,15 @@
 /* SUPER PRE
  ************/
 .rb-pre {
-	display: inline-block;
 	margin-bottom: 25px;
 	padding: 18px 25px 19px;
 	text-align: left;
 	font-size: 15px;
 	line-height: 26px;
+
+	/* options
+	 **********/
+	&[inline] {
+		display: inline-block;
+	}
 }
