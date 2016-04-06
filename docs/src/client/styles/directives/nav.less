@@ -34,16 +34,34 @@
 	}
 
 	&.mini {
-		text-transform: lowercase;
+		font-weight: bolder;
+		text-transform: uppercase;
+		#fontSizes > .nav.mini;
 		li {
 			display: inline-block;
 			a {
 				display: inline-block;
-				border-radius: 10px;
+				#fontColors > .nav.mini.link;
+
+				.glyphicon {
+					#fontSizes > .nav.mini.icon;
+				}
 				.caption {
 					+ .glyphicon {
 						margin: 0 0 0 5px;
 					}
+				}
+				&:focus { outline:none; }
+				&:focus,
+				&:hover {
+					background-color: transparent;
+					#fontColors > .nav.mini.hover;
+				}
+			}
+			&.active {
+				a {
+					#fontColors > .nav.mini.active;
+					&:hover { cursor: default; }
 				}
 			}
 			.separator {
@@ -52,7 +70,7 @@
 				top: 3px;
 				height: 18px;
 				margin: 0 3px;
-				border-right: 1px solid #ddd;
+				#borders > .nav.mini.separators;
 			}
 			&:first-child {
 				.separator {
@@ -60,6 +78,12 @@
 				}
 			}
 		}
+	}
+
+	/* options
+	 **********/
+	&[center] {
+		text-align: center;
 	}
 }
 

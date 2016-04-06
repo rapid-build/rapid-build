@@ -3,33 +3,13 @@
 footer.main {
 	padding-top: 45px;
 	padding-bottom: 55px;
+	text-align: center;
 	#bg > .layout.footer;
 	#borders > .layout.footer;
+	#fontColors > .layout.footer;
 
-	.rapid-mini-logo {
-		float: left;
-		margin: 9px 10px 0 0;
-		height: 26px;
-	}
-
-	q, .links {
-		color: #41392f;  // dark brown
-		font-size: 11px;
-	}
-
-	q {
-		display: inline-block;
-		margin-top: 7px;
-		font-style: italic;
-	}
-
-	.links {
-		position: relative;
-		top: -2px;
-		span {
-			&::after {
-				content: '>'
-			}
-		}
-	}
+	.logo-link  { display: inline-block; }
+	.rb-version { display: block; }
+	.logo-link  { margin-bottom: 17px; }
+	.rb-version { margin-bottom: 15px; color: #666; }
 }

@@ -1,12 +1,25 @@
 <div class="container-fluid">
-	<img class="rapid-mini-logo"
-		 alt="rapid-build mini logo"
-		 src="/images/logos/rapid-build-mini-logo.png">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<a href="/" title="Home" class="logo-link">
+				<img class="rb-logo mini" alt="rapid-build mini logo"
+					 src="/images/logos/rapid-build-mini-logo.png">
+			</a>
 
-	<q>Develop Rapidly!</q><br/>
-	<small class="links">
-		<a target="_blank" href="https://github.com/jyounce/rapid-build">GitHub</a>
-		<span></span>
-		<a target="_blank" href="https://www.npmjs.com/package/rapid-build">npm rapid-build</a>
-	</small>
+			<rb:version msg></rb:version>
+
+			<rb:nav
+				kind="mini"
+				separators="true"
+				activity="segment 1"
+				collection="[
+					{ caption: 'about', url: '/about' },
+					{ target: '_blank', caption: 'npm rapid-build', url: 'https://www.npmjs.com/package/rapid-build' },
+					{ target: '_blank', caption: 'GitHub', url: 'https://github.com/jyounce/rapid-build' },
+					{ target: '_blank', caption: 'changelog', url: 'https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md' },
+					{ target: '_blank', caption: 'report an issue', url: 'https://github.com/jyounce/rapid-build/issues' },
+				]">
+			</rb:nav>
+		</div>
+	</div>
 </div>

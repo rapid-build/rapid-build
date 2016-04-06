@@ -4,6 +4,9 @@ angular.module('rapid-build').config ['$routeProvider'
 			.when '/',
 				templateUrl: '/views/mains/home.html'
 
+			.when '/about',
+				templateUrl: '/views/mains/about.html'
+
 			.when '/getting-started',
 				templateUrl: '/views/mains/getting-started.html'
 
