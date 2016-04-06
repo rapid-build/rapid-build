@@ -5,3 +5,7 @@ String::trimLeft = ->
 
 String::trimRight = ->
 	@replace /\s+$/, ''
+
+String::toTitleCase = ->
+	@replace /\w\S*/g, (txt) ->
+		txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
