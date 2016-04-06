@@ -8,10 +8,15 @@ logBuildMsg = (build, optionsFor) ->
 # Common Build Options
 # ====================
 getCommonOptions = ->
-	minify: spa: file: false
-	spa: src: filePath: 'spa.html'
+	minify:
+		spa:
+			file: false
+	spa:
+		src:
+			filePath: 'spa.html'
 	angular:
 		moduleName: 'rapid-build'
+		modules: ['hljs']
 		templateCache:
 			dev: true
 			useAbsolutePaths: true
@@ -27,6 +32,7 @@ getCommonOptions = ->
 		scripts:
 			first: [
 				'scripts/prototypes/*.*'
+				'libs/highlight/highlight.pack.js'
 			]
 	extra:
 		copy:

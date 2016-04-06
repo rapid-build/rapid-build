@@ -2,6 +2,7 @@
 	"name": "rapid-build-docs",
 	"version": "0.1.0",
 	"dependencies": {
-		"bootstrap": "3.3.6"
+		"bootstrap": "3.3.6",
+		"angular-highlightjs": "0.6.1"
 	}
 }
