@@ -1,0 +1,30 @@
+# folders (common)
+# ================
+bower_components/
+dist/
+node_modules/
+
+# dot files
+# =========
+.*.swp
+._*
+.DS_Store
+.git
+.lock-wscript
+.svn
+
+# file extensions
+# ===============
+*.db  # ex: Thumbs.db
+*.log # ex: npm-debug.log
+*.map
+*.orig
+*.sublime*
+*.tmp
+
+# folders (project specific)
+# ==========================
+
+# files (project specific)
+# ========================
+/-*
