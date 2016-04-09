@@ -7,6 +7,10 @@ appFilePath   = path.resolve dir, '..', config.dist.app.server.scripts.file
 clientDirPath = path.resolve dir, '..', '..', config.dist.app.client.dirName # creates absolute path to the client folder
 serverDirPath = path.resolve dir, '..', '..', config.dist.app.server.dirName
 
+# set NODE_ENV (conditionally)
+# ============================
+process.env.NODE_ENV = 'production' if config.env.is.prod
+
 # create the server object
 # ========================
 server = require './server'
