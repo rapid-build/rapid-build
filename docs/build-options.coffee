@@ -20,28 +20,31 @@ getCommonOptions = ->
 		templateCache:
 			dev: true
 			useAbsolutePaths: true
-	exclude:
-		from:
-			dist:
-				client: [
-					'bower_components/jquery/dist/jquery.js',
-					'bower_components/bootstrap/less/bootstrap.less'
-					'bower_components/bootstrap/dist/js/bootstrap.js'
-				]
 	order:
 		scripts:
 			first: [
 				'scripts/prototypes/*.*'
 				'libs/highlight/highlight.pack.js'
 			]
+	exclude:
+		from:
+			dist:
+				client: [
+					'bower_components/jquery/**'
+					'bower_components/font-awesome/less/**'
+					'bower_components/font-awesome/scss/**'
+					'bower_components/bootstrap/less/**'
+					'bower_components/bootstrap/dist/js/**'
+				]
 	extra:
 		copy:
 			client: [
-				'bower_components/bootstrap/fonts/**'
+				'bower_components/Ionicons/fonts/**'
+				'bower_components/bootstrap/dist/fonts/**'
+				'bower_components/bootstrap/dist/css/bootstrap.css'
+				'bower_components/font-awesome/fonts/**'
+				'bower_components/font-awesome/css/font-awesome.css'
 			]
-		compile:
-			client:
-				less: ['bower_components/bootstrap/less/bootstrap.less']
 
 # Dev Build Options
 # =================

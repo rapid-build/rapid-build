@@ -15,11 +15,10 @@
 				target="{{model.target}}">
 				<span class="caption"
 					  ng-bind="model.caption"
-					  ng-if="!!model.caption"></span><span
-						class="glyphicon"
-						ng-if="!!model.icon"
-						ng-class="'glyphicon-'+model.icon">
-				</span>
+					  ng-if="!!model.caption"></span><rb:icon
+					  ng-if="!!model.icon"
+					  kind="{{model.icon}}">
+				</rb:icon>
 			</a>
 		</li>
 	</ul>

@@ -4,13 +4,11 @@
 	/* kinds
 	 ********/
 	&.main {
+		border:none;
 		font-weight: bold;
 		text-transform: uppercase;
 		letter-spacing: .5px;
 		#fontSizes > .nav.main;
-		nav {
-			border:none;
-		}
 		li {
 			a {
 				padding: 10px 12px 19px;
@@ -44,14 +42,9 @@
 			a {
 				display: inline-block;
 				#fontColors > .nav.mini.link;
-
-				.glyphicon {
+				.rb-icon {
+					margin: 0 0 0 5px;
 					#fontSizes > .nav.mini.icon;
-				}
-				.caption {
-					+ .glyphicon {
-						margin: 0 0 0 5px;
-					}
 				}
 				&:focus { outline:none; }
 				&:focus,
