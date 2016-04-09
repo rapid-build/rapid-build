@@ -1,3 +1,12 @@
+## [0.53.2](https://github.com/jyounce/rapid-build/compare/v0.53.1...v0.53.2) (2016-04-09)
+
+
+### Minor Features
+
+* **bump deps:** bower and gulp-template ([d0764f8](https://github.com/jyounce/rapid-build/commit/d0764f8))
+
+
+
 ## [0.53.1](https://github.com/jyounce/rapid-build/compare/v0.53.0...v0.53.1) (2016-04-01)
 
 
