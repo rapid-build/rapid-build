@@ -1,3 +1,12 @@
+# [0.55.0](https://github.com/jyounce/rapid-build/compare/v0.54.0...v0.55.0) (2016-04-09)
+
+
+### Performance Improvements
+
+* **express:** speed up express by setting process.env.NODE_ENV to production on prod builds ([2a6bae0](https://github.com/jyounce/rapid-build/commit/2a6bae0))
+
+
+
 # [0.54.0](https://github.com/jyounce/rapid-build/compare/v0.53.2...v0.54.0) (2016-04-09)
 
 
