@@ -166,11 +166,9 @@ module.exports = (config) ->
 
 			installed:
 				pkg: (pkg, loc='rb') ->
-					_path = path.join(
-								config.src[loc].client.bower.dir
-								pkg
-								config.bower[loc].file
-							)
+					dir   = config.src[loc].client.bower.dir
+					file  = ".#{config.bower[loc].file}"
+					_path = path.join dir, pkg, file
 					fileHelp.exists _path
 		get:
 			json:
@@ -181,13 +179,11 @@ module.exports = (config) ->
 					pkg: (pkg, loc='rb') ->
 						return unless me.has.installed.pkg pkg, loc
 						# console.log pkg, loc
-						require(
-							path.join(
-								config.src[loc].client.bower.dir
-								pkg
-								config.bower[loc].file
-							)
-						)
+						dir   = config.src[loc].client.bower.dir
+						file  = ".#{config.bower[loc].file}"
+						_path = path.join dir, pkg, file
+						bowerJson = require _path
+
 			pkgs:
 				from:
 					appOrRb: (loc='rb') ->
@@ -240,7 +236,7 @@ module.exports = (config) ->
 					for own pkg, version of jPkgs
 						missing = true
 						iPkgs.forEach (v) ->
-							missing = false if v.name is pkg
+							missing = false if v.name.toLowerCase() is pkg.toLowerCase()
 						pkgs.push "#{pkg}##{version}" if missing
 					pkgs
 
