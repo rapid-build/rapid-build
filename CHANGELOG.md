@@ -1,3 +1,16 @@
+# [0.54.0](https://github.com/jyounce/rapid-build/compare/v0.53.2...v0.54.0) (2016-04-09)
+
+
+### Bug Fixes
+
+* **bower:** get installed bower pkg version from pkg's .bower.json ([487de5f](https://github.com/jyounce/rapid-build/commit/487de5f))
+
+### Features
+
+* **option:** add build option minify.html.options for full control over how the html gets minified ([f0ab5a2](https://github.com/jyounce/rapid-build/commit/f0ab5a2))
+
+
+
 ## [0.53.2](https://github.com/jyounce/rapid-build/compare/v0.53.1...v0.53.2) (2016-04-09)
 
 
