@@ -15,6 +15,7 @@ module.exports = (config, options) ->
 	minify.css.splitMinFile   = null unless isType.boolean minify.css.splitMinFile
 	minify.html.views         = null unless isType.boolean minify.html.views
 	minify.html.templateCache = null unless isType.boolean minify.html.templateCache
+	minify.html.options       = {}   unless isType.object minify.html.options
 	minify.js.scripts         = null unless isType.boolean minify.js.scripts
 	minify.js.fileName        = null unless isType.string minify.js.fileName
 	minify.js.mangle          = null unless isType.boolean minify.js.mangle

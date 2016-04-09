@@ -15,8 +15,12 @@ getCommonOptions = ->
 	minify:
 		spa:
 			file: false
-		# html:
-		# 	templateCache: false
+		html:
+			options:
+				ignoreCustomFragments: [
+					/<rb:code(\s*?.*?)*?rb:code>/gi
+					/<rb:pre(\s*?.*?)*?rb:pre>/gi
+				]
 
 	angular:
 		moduleName: 'rapid-build'

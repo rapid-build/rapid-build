@@ -32,7 +32,7 @@ module.exports = (config, options) ->
 		html:
 			views: getOption 'html', 'views'
 			templateCache: getOption 'html', 'templateCache'
-			options: # not configurable
+			options: # configurable
 				collapseWhitespace:    true
 				removeComments:        true # excludes ie conditionals
 				removeEmptyElements:   false
@@ -42,6 +42,18 @@ module.exports = (config, options) ->
 				]
 		spa:
 			file: getOption 'spa', 'file'
+
+	# html minify options
+	# ===================
+	setHtmlMinOpts = ->
+		for opt, val of options.minify.html.options
+			rbOpts = minify.html.options
+			if opt is 'ignoreCustomFragments'
+				[].push.apply rbOpts[opt], val
+				continue
+			rbOpts[opt] = val
+
+	setHtmlMinOpts()
 
 	# cache bust
 	# ==========

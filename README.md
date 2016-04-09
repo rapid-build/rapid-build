@@ -169,6 +169,7 @@ package.json
 # minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
 # minify.html.views                                 = (boolean) defaults to true = for prod build, minify the html
 # minify.html.templateCache                         = (boolean) defaults to true = for prod build, use the template cache
+# minify.html.options                               = (object)  defaults to { collapseWhitespace: true, removeComments: true, removeEmptyElements: false, removeEmptyAttributes: false } for details see: https://git.io/vVyAC
 # minify.js.scripts                                 = (boolean) defaults to true = for prod build, minify the js
 # minify.js.fileName                                = (string)  defaults to 'scripts.min.js'
 # minify.js.mangle                                  = (boolean) defaults to true = for prod build, mangle the names in the js
@@ -185,7 +186,7 @@ package.json
 # exclude.from.dist[client|server]                  = (array of strings) = file paths: exclude client or server files from the dist folder 
 # test.client.browsers                              = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
 # server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
-# httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://www.npmjs.com/package/http-proxy-middleware
+# httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://git.io/vVyA0
 # browser.open                                      = (boolean) defaults to true = open the browser once the build completes, applies to builds: default, dev and prod:server
 # browser.reload                                    = (boolean) defaults to true = reloads the browser once you save your src file, only applies to dev builds
 # extra.copy[client|server]                         = (array of strings) = file paths: additional files to copy to dist/client and or dist/server that the build didn't copy
