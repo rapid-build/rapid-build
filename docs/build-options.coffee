@@ -8,6 +8,7 @@ logBuildMsg = (build, optionsFor) ->
 # Common Build Options
 # ====================
 getCommonOptions = ->
+	browser: open: false
 	minify:
 		spa:
 			file: false
@@ -40,29 +41,40 @@ getCommonOptions = ->
 		copy:
 			client: [
 				'bower_components/Ionicons/fonts/**'
-				'bower_components/bootstrap/dist/fonts/**'
-				'bower_components/bootstrap/dist/css/bootstrap.css'
 				'bower_components/font-awesome/fonts/**'
-				'bower_components/font-awesome/css/font-awesome.css'
+				'bower_components/bootstrap/dist/fonts/**'
 			]
 
 # Dev Build Options
 # =================
-setDevOptions = (options) ->
-	return
+setDevOptions = (options, build) ->
+	return setProdOptions options, build if build.indexOf('prod') isnt -1
+	logBuildMsg build, 'DEV'
+	options.extra.copy.client.push(
+		'bower_components/bootstrap/dist/css/bootstrap.css'
+		'bower_components/font-awesome/css/font-awesome.css'
+	)
+
+# Prod Build Options
+# ==================
+setProdOptions = (options, build) ->
+	logBuildMsg build, 'PROD'
+	options.extra.copy.client.push(
+		'bower_components/bootstrap/dist/css/bootstrap.min.css'
+		'bower_components/font-awesome/css/font-awesome.min.css'
+	)
 
 # CI Build Options
 # =================
-setCiOptions = (options) ->
-	return
+setCiOptions = (options, build) ->
+	logBuildMsg build, 'CI'
 
 # Get Build Options
 # =================
 getOptions = (build, isCiBuild) ->
 	logBuildMsg build, 'common'
 	options = getCommonOptions()
-	if !isCiBuild then logBuildMsg(build, 'dev') else logBuildMsg(build, 'ci')
-	if !isCiBuild then setDevOptions(options) else setCiOptions(options)
+	if !isCiBuild then setDevOptions options, build else setCiOptions options, build
 	options
 
 # Export it!

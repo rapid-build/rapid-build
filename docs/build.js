@@ -1,5 +1,6 @@
 /* Requires
  ***********/
+// process.env.RB_LIB = 'src'
 require('coffee-script/register');
 var path = require('path');
 
