@@ -8,13 +8,16 @@ logBuildMsg = (build, optionsFor) ->
 # Common Build Options
 # ====================
 getCommonOptions = ->
-	browser: open: false
-	minify:
-		spa:
-			file: false
+	# browser: open: false
 	spa:
 		src:
 			filePath: 'spa.html'
+	minify:
+		spa:
+			file: false
+		# html:
+		# 	templateCache: false
+
 	angular:
 		moduleName: 'rapid-build'
 		modules: ['hljs']
