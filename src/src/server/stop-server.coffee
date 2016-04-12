@@ -1,11 +1,13 @@
-module.exports = ->
-	q      = require 'q'
-	server = require('./server').server
-	port   = server.address().port
+# server-info is dynamically populated from:
+# start-server > build-server-info
+# ==========================================
+info = require './server-info'
+msg  = null
 
-	defer = q.defer()
-	server.close ->
-		console.log "Server stopped on port #{port}"
-		defer.resolve()
+try
+	process.kill info.pid
+	msg = "Server stopped on port #{info.port}"
+catch e
+	msg = "Failed to stop the server. #{e.message}"
 
-	defer.promise
+console.log msg

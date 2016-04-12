@@ -1,6 +1,6 @@
 module.exports = (config) ->
 	q            = require 'q'
-	rbServerFile = config.dist.rb.server.scripts.filePath
+	rbServerFile = config.dist.rb.server.scripts.start
 
 	# API
 	# ===

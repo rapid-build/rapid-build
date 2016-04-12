@@ -2,7 +2,7 @@ module.exports = (config) ->
 	q              = require 'q'
 	path           = require 'path'
 	promiseHelp    = require "#{config.req.helpers}/promise"
-	stopServerFile = path.join config.dist.rb.server.scripts.path, 'stop-server.js'
+	stopServerFile = config.dist.rb.server.scripts.stop
 
 	# API
 	# ===
@@ -12,7 +12,7 @@ module.exports = (config) ->
 			return promiseHelp.get() if config.exclude.default.server.files
 			defer      = q.defer()
 			stopServer = require stopServerFile
-			stopServer().done -> defer.resolve()
+			defer.resolve()
 			defer.promise
 
 	# return

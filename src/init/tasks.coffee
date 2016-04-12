@@ -60,6 +60,7 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'copy-js:server',           '/copy/copy-js', loc: 'server'
 	taskHelp.addTask 'copy-libs',                '/copy/copy-libs'
 	taskHelp.addTask 'copy-server-config',       '/copy/copy-server-config'
+	taskHelp.addTask 'copy-server-info',         '/copy/copy-server-info'
 	taskHelp.addTask 'copy-server-node_modules', '/copy/copy-server-node_modules'
 	taskHelp.addTask 'copy-views',               '/copy/copy-views', taskCB: true
 

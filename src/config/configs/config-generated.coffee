@@ -28,6 +28,9 @@ module.exports = (config) ->
 	generated.pkg.files.prodFilesBlueprint = join generated.pkg.files.path, 'prod-files-blueprint.json'
 	generated.pkg.src.dir  = 'src'
 	generated.pkg.src.path = join generated.pkg.path, generated.pkg.src.dir
+	generated.pkg.src.server = {}
+	generated.pkg.src.server.path = join generated.pkg.src.path, 'server'
+	generated.pkg.src.server.info = join generated.pkg.src.server.path, 'server-info.json'
 
 	# add generated to config
 	# =======================

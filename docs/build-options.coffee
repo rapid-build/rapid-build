@@ -15,6 +15,8 @@ getCommonOptions = ->
 	minify:
 		spa:
 			file: false
+		css:
+			splitMinFile: false
 		html:
 			options:
 				ignoreCustomFragments: [

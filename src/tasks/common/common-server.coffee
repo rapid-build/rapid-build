@@ -14,6 +14,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}coffee:server"
 					"#{config.rb.prefix.task}es6:server"
 					"#{config.rb.prefix.task}copy-server-config"
+					"#{config.rb.prefix.task}copy-server-info"
 					"#{config.rb.prefix.task}copy-server-node_modules"
 					"#{config.rb.prefix.task}compile-extra-less:server"
 					"#{config.rb.prefix.task}compile-extra-sass:server"

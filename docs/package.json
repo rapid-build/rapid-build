@@ -6,5 +6,9 @@
 		"name": "Judd Younce",
 		"email": "jyounce@yahoo.com",
 		"url": "https://github.com/jyounce"
+	},
+	"scripts": {
+		"start": "node dist/server/rapid-build/start-server",
+		"stop": "node dist/server/rapid-build/stop-server"
 	}
 }
