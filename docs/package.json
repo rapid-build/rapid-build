@@ -10,6 +10,14 @@
 	},
 	"scripts": {
 		"start": "node dist/server/rapid-build/start-server",
-		"stop": "node dist/server/rapid-build/stop-server"
+		"stop": "node dist/server/rapid-build/stop-server",
+		"build-prod-check": "node scripts/build-prod-check"
+	},
+	"pre-commit": {
+		"silent": true,
+		"run": ["build-prod-check"]
+	},
+	"devDependencies": {
+		"pre-commit": "1.1.2"
 	}
 }
