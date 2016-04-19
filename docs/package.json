@@ -2,6 +2,7 @@
 	"name": "rapid-build-docs",
 	"version": "0.55.0",
 	"description": "Documentation website for rapid-build.",
+	"homepage": "http://rapid-build.io/",
 	"author": {
 		"name": "Judd Younce",
 		"email": "jyounce@yahoo.com",

@@ -1,0 +1,10 @@
+# IGNORE EVERYTHING BESIDES
+# /dist/
+# /.nvmrc
+# /.gitignore
+# /package.json
+# =========================
+/src/
+/*.js
+/*.coffee
+/bower.json
