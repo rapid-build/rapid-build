@@ -8,5 +8,6 @@
 /scripts/
 /src/
 /*.js
+/*.log
 /*.coffee
 /bower.json

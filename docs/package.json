@@ -11,7 +11,9 @@
 	"scripts": {
 		"start": "node dist/server/rapid-build/start-server",
 		"stop": "node dist/server/rapid-build/stop-server",
-		"build-prod-check": "node scripts/build-prod-check"
+		"build-prod-check": "node scripts/build-prod-check",
+		"deploy:master": "node scripts/deploy master",
+		"deploy:tag": "node scripts/deploy tag"
 	},
 	"pre-commit": {
 		"silent": true,
