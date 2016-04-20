@@ -11,3 +11,4 @@
 /*.log
 /*.coffee
 /bower.json
+/deploy-key.enc
