@@ -16,7 +16,9 @@ after_success:
   - openssl aes-256-cbc -K $encrypted_18cf70cd38e2_key -iv $encrypted_18cf70cd38e2_iv
     -in docs/deploy-key.enc -out docs/deploy-key -d
   - cd docs/
-  - git clone -b master --single-branch git+ssh://204265@git.dc1.gpaas.net/default.git .
+  - git clone -b master --single-branch git+ssh://204265@git.dc1.gpaas.net/default.git temp
+  - mv temp/.git .
+  - rm -rf temp && git reset --hard
   - git config user.name 'Judd Younce'
   - git config user.email 'jyounce@yahoo.com'
   - echo -e "Host git.dc1.gpaas.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
