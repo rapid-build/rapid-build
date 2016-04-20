@@ -17,7 +17,11 @@ after_success:
     -in docs/deploy-key.enc -out docs/deploy-key -d
   - cd docs/
   - git clone -b master --single-branch git+ssh://204265@git.dc1.gpaas.net/default.git .
+  - git config user.name 'Judd Younce'
+  - git config user.email 'jyounce@yahoo.com'
+  - echo -e "Host git.dc1.gpaas.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - node build prod
+  - git add .
   - git commit -am "chore(bump) v0.1.5"
   - git push
   - git tag -a v0.1.5 -m "chore(tag) v0.1.5"
