@@ -13,20 +13,4 @@ deploy:
   on:
     tags: true
 after_success:
-  - openssl aes-256-cbc -K $encrypted_18cf70cd38e2_key -iv $encrypted_18cf70cd38e2_iv
-    -in docs/deploy-key.enc -out docs/deploy-key -d
-  - cd docs/
-  - echo -e "Host git.dc1.gpaas.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - git clone -b master --single-branch git+ssh://204265@git.dc1.gpaas.net/default.git temp
-  - mv temp/.git .
-  - rm -rf temp && git reset --hard
-  - git config user.name 'Judd Younce'
-  - git config user.email 'jyounce@yahoo.com'
-  - node build prod
-  - git add .
-  - git commit -am "chore(bump) v0.1.5"
-  - git push
-  - git tag -a v0.1.5 -m "chore(tag) v0.1.5"
-  - git push origin v0.1.5
-  - npm run deploy:tag
-
+  - npm run ci-deploy-docs

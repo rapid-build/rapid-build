@@ -1,20 +1,20 @@
 require('coffee-script/register');
 
-var path   = require('path'),
-	rbRoot = path.resolve(__dirname, '..', '..', '..'),
-	msg    = 'Do you need to build prod before you commit?',
-	skip   = 'Skip this by adding --no-verify.',
-	sep    = '-'.repeat(msg.length);
+var path     = require('path'),
+	docsRoot = path.resolve(__dirname, '..', '..'),
+	helpers  = path.join(docsRoot, 'scripts', 'helpers');
 
-require(`${rbRoot}/extra/tasks/add-colors`)();
+/* Helpers
+ **********/
+require(`${helpers}/add-colors`)();
+var log = require(`${helpers}/log`);
 
 /* Message
  **********/
-console.log(sep.attn);
-console.log(msg.attn);
-console.log(skip.attn);
-console.log(sep.attn);
+var msg =  'Do you need to build prod before you commit?\n';
+	msg += 'Skip this by adding --no-verify.';
 
 /* Exit the Commit
  ******************/
+log(msg);
 process.exit(1);

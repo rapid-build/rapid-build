@@ -1,37 +1,28 @@
 require('coffee-script/register');
 
 var path     = require('path'),
-	rbRoot   = path.resolve(__dirname, '..', '..', '..'),
-	pkgPath  = path.resolve(__dirname, '..', '..', 'package.json'),
+	docsRoot = path.resolve(__dirname, '..', '..'),
+	helpers  = path.join(docsRoot, 'scripts', 'helpers'),
+	pkgPath  = path.join(docsRoot, 'package.json'), // docs package.json
 	pkg      = require(pkgPath),
-	version  = pkg.version,
 	location = process.argv.slice(2)[0], // master or latest tag
-	location = location == 'tag' ? `v${version}` : location,
+	location = location == 'tag' ? `v${pkg.version}` : location,
 	location = 'v0.1.5',
 	deploy   = require('./deploy'),
 	needle   = 'unexpected error', // random gandi error at beginning of deploy
 	cnt      = 1,
-	log,
 	runDeploy;
 
 /* Helpers
  **********/
-require(`${rbRoot}/extra/tasks/add-colors`)();
-
-log = (msg, type) => {
-	type = type || 'attn';
-	var sep    = '-'.repeat(msg.length),
-		method = type == 'attn' ? 'log' : type;
-	console[method](sep[type]);
-	console[method](msg[type]);
-	console[method](sep[type]);
-};
+require(`${helpers}/add-colors`)();
+var log = require(`${helpers}/log`);
 
 /* Deploy Docs
  **************/
 runDeploy = () => {
 	var msg = '';
-	return deploy(location).then(result => {
+	return deploy(docsRoot, location).then(result => {
 		if (cnt == 5) {
 			msg = `Docs Deployment Failed from ${location}. ${needle}`;
 			return log(msg, 'error');
