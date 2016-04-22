@@ -23,13 +23,12 @@ module.exports = (docsRoot) ->
 	# ========
 	runTask = async ->
 		decrypt = await task()
-		decrypt.then (result) ->
-			console.log result
-			log 'Deploy Key Decrypted'
-		.catch (e) ->
-			log 'Failed to Decrypt Deploy Key', 'error'
-			console.error "Error: #{e.message}".error
 
 	# run it!
 	# =======
-	runTask()
+	runTask().then (result) ->
+		console.log result
+		log 'Deploy Key Decrypted'
+	.catch (e) ->
+		log 'Failed to Decrypt Deploy Key', 'error'
+		console.error "Error: #{e.message}".error

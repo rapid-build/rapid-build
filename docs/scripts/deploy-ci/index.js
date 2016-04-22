@@ -24,7 +24,7 @@ var decryptKey = require(`${dir}/decrypt-deploy-key`);
  ************/
 var runTasks = async(() => {
 	await(decryptKey(docsRoot));
-	log('here');
+	log('Docs Deployed');
 });
 
 /* Init
