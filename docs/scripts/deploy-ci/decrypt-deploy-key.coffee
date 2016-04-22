@@ -1,6 +1,5 @@
 module.exports = (docsRoot) ->
 	path    = require 'path'
-	fs      = require 'fs'
 	async   = require 'asyncawait/async'
 	await   = require 'asyncawait/await'
 	exec    = require('child_process').exec
@@ -30,8 +29,6 @@ module.exports = (docsRoot) ->
 	runTask().then (result) ->
 		console.log result
 		log 'Decrypted Deploy Key'
-		files = fs.readdirSync docsRoot
-		console.log files
 	.catch (e) ->
 		log 'Failed to Decrypt Deploy Key', 'error'
 		console.error "Error: #{e.message}".error
