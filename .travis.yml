@@ -14,5 +14,3 @@ deploy:
     tags: true
 after_success:
   - npm run ci-deploy-docs
-before_install:
-  - cat ~/.ssh/config

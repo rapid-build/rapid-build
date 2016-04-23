@@ -1,11 +1,8 @@
 require('coffee-script/register');
 
-var path     = require('path'),
-	async    = require('asyncawait/async'),
-	await    = require('asyncawait/await'),
-	dir      = __dirname,
-	docsRoot = path.resolve(dir, '..', '..'),
-	helpers  = path.join(docsRoot, 'scripts', 'helpers');
+var dir      = __dirname,
+	path     = require('path'),
+	docsRoot = path.resolve(dir, '..', '..');
 
 /* Change Working Dir
  *********************/
@@ -13,23 +10,19 @@ process.chdir(docsRoot);
 
 /* Helpers
  **********/
+var helpers  = path.join(docsRoot, 'scripts', 'helpers');
 require(`${helpers}/add-colors`)();
 var log = require(`${helpers}/log`);
 
 /* Tasks
  ********/
-var decryptKey          = require(`${dir}/decrypt-deploy-key`),
-	disableHostKeyCheck = require(`${dir}/disable-host-key-check`);
-
-
-/* Run Tasks
- ************/
-var runTasks = async(() => {
-	await(decryptKey(docsRoot));
-	// await(disableHostKeyCheck(docsRoot));
+var runTasks = require(`${dir}/run-tasks`);
+runTasks(docsRoot).then(res => {
 	log('Docs Deployed');
+	if (!res || typeof res != 'string') return
+	console.log(res.info);
+}).catch(e => {
+	log('Failed to Deploy Docs', 'error');
+	if (!e || typeof e != 'string') return
+	console.log(e.error)
 });
-
-/* Init
- *******/
-runTasks();
