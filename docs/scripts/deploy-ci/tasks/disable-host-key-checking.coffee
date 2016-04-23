@@ -38,9 +38,11 @@ module.exports = (docsRoot) ->
 				resolve { disabled, addBeginningNewLine }
 
 	disableChecking = (addBeginningNewLine) ->
+		_file = path.join docsRoot, 'deploy-key'
 		new Promise (resolve, reject) ->
 			data  = if addBeginningNewLine then '\n\n' else ''
-			data += "#{needle}\n\tStrictHostKeyChecking no\n\n"
+			# data += "#{needle}\n\tStrictHostKeyChecking no\n\n"
+			data += "#{needle}\n\tStrictHostKeyChecking no\n\tIdentityFile #{_file}\n\n"
 			fse.appendFile sshConfig, data, (e) ->
 				return reject bufMsgs.getE e if e
 				resolve()
