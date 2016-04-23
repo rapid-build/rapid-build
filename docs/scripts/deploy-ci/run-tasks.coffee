@@ -11,6 +11,7 @@ module.exports = (docsRoot) ->
 	decryptKey             = require "#{tasks}/decrypt-deploy-key"
 	disableHostKeyChecking = require "#{tasks}/disable-host-key-checking"
 	setGitConfigUser       = require "#{tasks}/set-git-config-user"
+	gitClone               = require "#{tasks}/git-clone"
 
 	# run tasks
 	# =========
@@ -19,7 +20,8 @@ module.exports = (docsRoot) ->
 		res1 = await decryptKey docsRoot
 		res2 = await disableHostKeyChecking docsRoot
 		res3 = await setGitConfigUser docsRoot
-		[res1, res2, res3].filter(Boolean).join '\n'
+		res4 = await gitClone docsRoot
+		[res1, res2, res3, res4].filter(Boolean).join '\n'
 
 	# run it!
 	# =======

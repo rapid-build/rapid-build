@@ -7,7 +7,7 @@ var path     = require('path'),
 	pkg      = require(pkgPath),
 	location = process.argv.slice(2)[0], // master or latest tag
 	location = location == 'tag' ? `v${pkg.version}` : location,
-	location = 'v0.1.5',
+	location = 'v0.1.6',
 	deploy   = require('./deploy'),
 	needle   = 'unexpected error', // random gandi error at beginning of deploy
 	cnt      = 1,
