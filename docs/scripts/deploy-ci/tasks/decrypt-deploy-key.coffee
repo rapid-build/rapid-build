@@ -12,7 +12,7 @@ module.exports = (docsRoot) ->
 	cmd    += ' && '
 	cmd    += "chmod 600 #{keyDec}"
 	cmd    += ' && '
-	cmd    += "eval 'ssh-agent -s'"
+	cmd    += "eval `ssh-agent -s`"
 	cmd    += ' && '
 	cmd    += "ssh-add #{keyDec}"
 
