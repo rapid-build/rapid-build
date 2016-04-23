@@ -4,11 +4,8 @@ module.exports = (docsRoot) ->
 	await   = require 'asyncawait/await'
 	exec    = require('child_process').exec
 	helpers = path.join docsRoot, 'scripts', 'helpers'
-	keyEnc  = path.join docsRoot, 'deploy-key.enc'
-	key     = path.join docsRoot, 'deploy-key'
 	log     = require "#{helpers}/log"
-	cmd     = 'openssl aes-256-cbc -K $encrypted_18cf70cd38e2_key -iv $encrypted_18cf70cd38e2_iv '
-	cmd    += "-in #{keyEnc} -out #{key} -d"
+	cmd     = 'echo "Host git.dc1.gpaas.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
 
 	# task
 	# ====
@@ -28,7 +25,7 @@ module.exports = (docsRoot) ->
 	# =======
 	runTask().then (result) ->
 		console.log result
-		log 'Decrypted Deploy Key'
+		log 'Disabled Strict Host Key Checking'
 	.catch (e) ->
-		log 'Failed to Decrypt Deploy Key', 'error'
+		log 'Failed to Disable Strict Host Key Checking', 'error'
 		console.error "Error: #{e.message}".error

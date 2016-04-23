@@ -18,12 +18,15 @@ var log = require(`${helpers}/log`);
 
 /* Tasks
  ********/
-var decryptKey = require(`${dir}/decrypt-deploy-key`);
+var decryptKey          = require(`${dir}/decrypt-deploy-key`),
+	disableHostKeyCheck = require(`${dir}/disable-host-key-check`);
+
 
 /* Run Tasks
  ************/
 var runTasks = async(() => {
 	await(decryptKey(docsRoot));
+	// await(disableHostKeyCheck(docsRoot));
 	log('Docs Deployed');
 });
 
