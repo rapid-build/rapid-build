@@ -12,6 +12,15 @@ module.exports = (docsRoot) ->
 
 	# task
 	# ====
+	temp = ->
+		new Promise (resolve, reject) ->
+			_file = path.join docsRoot, 'deploy-key'
+			fse.readFile _file, (e, data) ->
+				return reject bufMsgs.getE e if e
+				contents = data.toString()
+				console.log contents
+				resolve()
+
 	ensureFile = ->
 		new Promise (resolve, reject) ->
 			fse.ensureFile sshConfig, (e) ->
@@ -39,6 +48,7 @@ module.exports = (docsRoot) ->
 	# run task
 	# ========
 	runTask = async ->
+		await temp()
 		await ensureFile()
 		disabled = await isDisabled()
 		await disableChecking disabled.addBeginningNewLine unless disabled.disabled

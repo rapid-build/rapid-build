@@ -20,7 +20,7 @@ module.exports = (docsRoot) ->
 		res1 = await decryptKey docsRoot
 		res2 = await disableHostKeyChecking docsRoot
 		res3 = await setGitConfigUser docsRoot
-		res4 = await gitClone docsRoot
+		# res4 = await gitClone docsRoot
 		[res1, res2, res3, res4].filter(Boolean).join '\n'
 
 	# run it!
