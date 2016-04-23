@@ -48,7 +48,7 @@ module.exports = (docsRoot) ->
 	# run task
 	# ========
 	runTask = async ->
-		await temp()
+		# await temp()
 		await ensureFile()
 		disabled = await isDisabled()
 		await disableChecking disabled.addBeginningNewLine unless disabled.disabled
