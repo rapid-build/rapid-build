@@ -20,7 +20,7 @@ var runTasks = require(`${dir}/run-tasks`);
 runTasks(docsRoot).then(res => {
 	log('Docs Deployed');
 	if (!res || typeof res != 'string') return
-	console.log(res.info);
+	console.log(res.attn);
 }).catch(e => {
 	log('Failed to Deploy Docs', 'error');
 	if (!e || typeof e != 'string') return

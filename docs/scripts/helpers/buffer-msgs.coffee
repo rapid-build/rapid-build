@@ -17,5 +17,5 @@ module.exports =
 
 
 	getStd: (std, type) ->
-		return '' unless typeof std is 'string'
+		return '' unless std and typeof std is 'string'
 		"#{type}: "+std.replace(/\\n/g, '').trim()
