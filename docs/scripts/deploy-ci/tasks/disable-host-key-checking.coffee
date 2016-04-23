@@ -12,15 +12,6 @@ module.exports = (docsRoot) ->
 
 	# task
 	# ====
-	temp = ->
-		new Promise (resolve, reject) ->
-			_file = path.join docsRoot, 'deploy-key'
-			fse.readFile _file, (e, data) ->
-				return reject bufMsgs.getE e if e
-				contents = data.toString()
-				console.log contents
-				resolve()
-
 	ensureFile = ->
 		new Promise (resolve, reject) ->
 			fse.ensureFile sshConfig, (e) ->
@@ -38,11 +29,9 @@ module.exports = (docsRoot) ->
 				resolve { disabled, addBeginningNewLine }
 
 	disableChecking = (addBeginningNewLine) ->
-		_file = path.join docsRoot, 'deploy-key'
 		new Promise (resolve, reject) ->
 			data  = if addBeginningNewLine then '\n\n' else ''
-			# data += "#{needle}\n\tStrictHostKeyChecking no\n\n"
-			data += "#{needle}\n\tStrictHostKeyChecking no\n\tIdentityFile #{_file}\n\n"
+			data += "#{needle}\n\tStrictHostKeyChecking no\n\n"
 			fse.appendFile sshConfig, data, (e) ->
 				return reject bufMsgs.getE e if e
 				resolve()
@@ -50,7 +39,6 @@ module.exports = (docsRoot) ->
 	# run task
 	# ========
 	runTask = async ->
-		# await temp()
 		await ensureFile()
 		disabled = await isDisabled()
 		await disableChecking disabled.addBeginningNewLine unless disabled.disabled

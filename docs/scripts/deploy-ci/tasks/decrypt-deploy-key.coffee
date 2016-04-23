@@ -9,6 +9,12 @@ module.exports = (docsRoot) ->
 	cmd    += '-K $encrypted_18cf70cd38e2_key '
 	cmd    += '-iv $encrypted_18cf70cd38e2_iv '
 	cmd    += "-in #{keyEnc} -out #{keyDec} -d"
+	cmd    += ' && '
+	cmd    += "chmod 600 #{keyDec}"
+	cmd    += ' && '
+	cmd    += "eval 'ssh-agent -s'"
+	cmd    += ' && '
+	cmd    += "ssh-add #{keyDec}"
 
 	# task
 	# ====
