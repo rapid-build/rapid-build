@@ -1,14 +1,12 @@
 module.exports = (docsRoot) ->
+	os      = require 'os'
 	path    = require 'path'
 	exec    = require('child_process').exec
 	helpers = path.join docsRoot, 'scripts', 'helpers'
 	bufMsgs = require "#{helpers}/buffer-msgs"
-	keyEnc  = path.join docsRoot, 'deploy-key.enc'
 	keyDec  = path.join docsRoot, 'deploy-key'
-	cmd     = 'openssl aes-256-cbc '
-	cmd    += '-K $encrypted_18cf70cd38e2_key '
-	cmd    += '-iv $encrypted_18cf70cd38e2_iv '
-	cmd    += "-in #{keyEnc} -out #{keyDec} -d"
+	id_rsa  = path.join os.homedir(), '.ssh', 'id_rsa'
+	cmd     = "mv #{keyDec} #{id_rsa}"
 
 	# task
 	# ====
@@ -17,7 +15,7 @@ module.exports = (docsRoot) ->
 			exec cmd, {}, (e, stdout, stderr) ->
 				msgs = bufMsgs.get e, stdout, stderr
 				return reject "#{msgs.e}" if e
-				res  = msgs.stds or 'Deploy Key Decrypted'
+				res  = msgs.stds or 'Added Deploy Key'
 				resolve res
 
 	# run it!

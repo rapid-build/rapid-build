@@ -9,6 +9,7 @@ module.exports = (docsRoot) ->
 	# tasks
 	# =====
 	decryptKey             = require "#{tasks}/decrypt-deploy-key"
+	addDeployKey           = require "#{tasks}/add-deploy-key"
 	disableHostKeyChecking = require "#{tasks}/disable-host-key-checking"
 	setGitConfigUser       = require "#{tasks}/set-git-config-user"
 	gitClone               = require "#{tasks}/git-clone"
@@ -17,11 +18,14 @@ module.exports = (docsRoot) ->
 	# =========
 	runTasks = async ->
 		# res1 = ''
+		# res2 = ''
+		# res5 = ''
 		res1 = await decryptKey docsRoot
-		res2 = await disableHostKeyChecking docsRoot
-		res3 = await setGitConfigUser docsRoot
-		res4 = await gitClone docsRoot
-		[res1, res2, res3, res4].filter(Boolean).join '\n'
+		res2 = await addDeployKey docsRoot
+		res3 = await disableHostKeyChecking docsRoot
+		res4 = await setGitConfigUser docsRoot
+		res5 = await gitClone docsRoot
+		[res1, res2, res3, res4, res5].filter(Boolean).join '\n'
 
 	# run it!
 	# =======
