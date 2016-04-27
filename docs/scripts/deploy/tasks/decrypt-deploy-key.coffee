@@ -3,10 +3,12 @@ module.exports = (docsRoot) ->
 	exec    = require('child_process').exec
 	helpers = path.join docsRoot, 'scripts', 'helpers'
 	bufMsgs = require "#{helpers}/buffer-msgs"
-	GIT     = require(path.join docsRoot, 'scripts', 'constants').git
-	cmd     = "git config --global user.name '#{GIT.name}' "
-	cmd    += '&& '
-	cmd    += "git config --global user.email '#{GIT.email}'"
+	keyEnc  = path.join docsRoot, 'deploy-key.enc'
+	keyDec  = path.join docsRoot, 'deploy-key'
+	cmd     = 'openssl aes-256-cbc '
+	cmd    += '-K $encrypted_18cf70cd38e2_key '
+	cmd    += '-iv $encrypted_18cf70cd38e2_iv '
+	cmd    += "-in #{keyEnc} -out #{keyDec} -d"
 
 	# task
 	# ====
@@ -14,8 +16,8 @@ module.exports = (docsRoot) ->
 		new Promise (resolve, reject) ->
 			exec cmd, {}, (e, stdout, stderr) ->
 				msgs = bufMsgs.get e, stdout, stderr
-				return reject "#{msgs.e}" if e
-				res  = msgs.stds or 'Git Config User Info Set'
+				return reject msgs.e if e
+				res  = msgs.stds or 'Deploy Key Decrypted'
 				resolve res
 
 	# run it!

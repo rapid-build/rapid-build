@@ -12,9 +12,9 @@
 		"start": "node dist/server/rapid-build/start-server",
 		"stop": "node dist/server/rapid-build/stop-server",
 		"build-prod-check": "node scripts/build-prod-check",
-		"ci-deploy": "node scripts/deploy-ci",
-		"deploy:master": "node scripts/deploy-host master",
-		"deploy:tag": "node scripts/deploy-host tag"
+		"deploy-docs-ci": "node scripts/deploy ci",
+		"deploy-docs-master": "node scripts/deploy master",
+		"deploy-docs-latest": "node scripts/deploy latest"
 	},
 	"pre-commit": {
 		"silent": true,

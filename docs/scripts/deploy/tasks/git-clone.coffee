@@ -1,12 +1,12 @@
 module.exports = (docsRoot) ->
-	os      = require 'os'
 	path    = require 'path'
 	exec    = require('child_process').exec
 	helpers = path.join docsRoot, 'scripts', 'helpers'
 	bufMsgs = require "#{helpers}/buffer-msgs"
-	keyDec  = path.join docsRoot, 'deploy-key'
-	id_rsa  = path.join os.homedir(), '.ssh', 'id_rsa'
-	cmd     = "mv #{keyDec} #{id_rsa}"
+	HOST    = require(path.join docsRoot, 'scripts', 'constants').host
+	cmd     = 'git clone --depth 1 '
+	cmd    += "git+ssh://#{HOST.login}@git.#{HOST.datacenter}.gpaas.net/#{HOST.vhost}.git "
+	cmd    += '_temp'
 
 	# task
 	# ====
@@ -14,8 +14,8 @@ module.exports = (docsRoot) ->
 		new Promise (resolve, reject) ->
 			exec cmd, {}, (e, stdout, stderr) ->
 				msgs = bufMsgs.get e, stdout, stderr
-				return reject "#{msgs.e}" if e
-				res  = msgs.stds or 'Added Deploy Key'
+				return reject msgs.e if e
+				res  = msgs.stds or 'Shallow Cloned Host\'s Docs Repo'
 				resolve res
 
 	# run it!

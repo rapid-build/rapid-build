@@ -10,8 +10,8 @@ module.exports = (docsRoot) ->
 	HOST      = require(path.join docsRoot, 'scripts', 'constants').host
 	needle    = "Host #{HOST.domain}"
 
-	# task
-	# ====
+	# tasks
+	# =====
 	ensureFile = ->
 		new Promise (resolve, reject) ->
 			fse.ensureFile sshConfig, (e) ->
@@ -36,9 +36,9 @@ module.exports = (docsRoot) ->
 				return reject bufMsgs.getE e if e
 				resolve()
 
-	# run task
-	# ========
-	runTask = async ->
+	# run tasks
+	# =========
+	runTasks = async ->
 		await ensureFile()
 		disabled = await isDisabled()
 		await disableChecking disabled.addBeginningNewLine unless disabled.disabled
@@ -46,5 +46,5 @@ module.exports = (docsRoot) ->
 
 	# run it!
 	# =======
-	runTask()
+	runTasks()
 

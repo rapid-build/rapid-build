@@ -31,7 +31,7 @@
 		"create-lib": "node scripts/create-lib",
 		"prepublish": "npm run create-lib",
 		"test": "node test",
-		"ci-deploy-docs": "node scripts/ci-deploy-docs"
+		"deploy-docs-ci": "node scripts/deploy-docs ci"
 	},
 	"devDependencies": {
 		"asyncawait": "1.0.3",
