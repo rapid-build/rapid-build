@@ -29,27 +29,26 @@ module.exports = (docsRoot, deployer, deploy) ->
 				# res  = [resX]
 				# res.filter(Boolean).join '\n'
 
-				res1 = await decryptKey docsRoot
-				res2 = await addDeployKey docsRoot
-				res3 = await disableHostKeyChecking docsRoot
-				res4 = await setGitConfigUser docsRoot
-				resX = await testTravis docsRoot
-				res5 = await gitClone docsRoot
-				res  = [res1, res2, res3, res4, resX, res5]
-				res.filter(Boolean).join '\n'
-
-
 				# res1 = await decryptKey docsRoot
 				# res2 = await addDeployKey docsRoot
 				# res3 = await disableHostKeyChecking docsRoot
 				# res4 = await setGitConfigUser docsRoot
+				# resX = await testTravis docsRoot
 				# res5 = await gitClone docsRoot
-				# res6 = await moveGitAndCleanTemp docsRoot
-				# res7 = await buildProd docsRoot
-				# res8 = await gitCommitPushAndTag docsRoot, deploy
-				# res9 = await deployDocs docsRoot, deploy
-				# res  = [res1, res2, res3, res4, res5, res6, res7, res8, res9]
+				# res  = [res1, res2, res3, res4, resX, res5]
 				# res.filter(Boolean).join '\n'
+
+				res1 = await decryptKey docsRoot
+				res2 = await addDeployKey docsRoot
+				res3 = await disableHostKeyChecking docsRoot
+				res4 = await setGitConfigUser docsRoot
+				res5 = await gitClone docsRoot
+				res6 = await moveGitAndCleanTemp docsRoot
+				res7 = await buildProd docsRoot
+				res8 = await gitCommitPushAndTag docsRoot, deploy
+				res9 = await deployDocs docsRoot, deploy
+				res  = [res1, res2, res3, res4, res5, res6, res7, res8, res9]
+				res.filter(Boolean).join '\n'
 
 		when 'local'
 			runTasks = async ->
