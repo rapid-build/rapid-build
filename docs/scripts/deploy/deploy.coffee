@@ -22,8 +22,10 @@ module.exports = (docsRoot, deployer, deploy) ->
 	switch deployer
 		when 'ci'
 			runTasks = async ->
-				res1 = await testTravis docsRoot
-				res  = [res1]
+				res1 = await decryptKey docsRoot
+				res2 = await addDeployKey docsRoot
+				resX = await testTravis docsRoot
+				res  = [res1, res2, resX]
 				res.filter(Boolean).join '\n'
 
 				# res1 = await decryptKey docsRoot
