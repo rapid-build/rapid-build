@@ -29,7 +29,7 @@ module.exports = (docsRoot) ->
 	# =========
 	runTasks = async ->
 		await testTravis1()
-		await testTravis2()
+		# await testTravis2()
 		'Tested Travis'
 
 	# run it!
