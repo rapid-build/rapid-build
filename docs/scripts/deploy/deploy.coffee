@@ -6,7 +6,6 @@ module.exports = (docsRoot, deployer, deploy) ->
 
 	# tasks
 	# =====
-	testTravis             = require "#{tasks}/test-travis"
 	decryptKey             = require "#{tasks}/decrypt-deploy-key"
 	addDeployKey           = require "#{tasks}/add-deploy-key"
 	disableHostKeyChecking = require "#{tasks}/disable-host-key-checking"
@@ -22,22 +21,6 @@ module.exports = (docsRoot, deployer, deploy) ->
 	switch deployer
 		when 'ci'
 			runTasks = async ->
-				# res1 = await decryptKey docsRoot
-				# res2 = await addDeployKey docsRoot
-				# resX = await testTravis docsRoot
-				# res  = [res1, res2, resX]
-				# res  = [resX]
-				# res.filter(Boolean).join '\n'
-
-				# res1 = await decryptKey docsRoot
-				# res2 = await addDeployKey docsRoot
-				# res3 = await disableHostKeyChecking docsRoot
-				# res4 = await setGitConfigUser docsRoot
-				# resX = await testTravis docsRoot
-				# res5 = await gitClone docsRoot
-				# res  = [res1, res2, res3, res4, resX, res5]
-				# res.filter(Boolean).join '\n'
-
 				res1 = await decryptKey docsRoot
 				res2 = await addDeployKey docsRoot
 				res3 = await disableHostKeyChecking docsRoot

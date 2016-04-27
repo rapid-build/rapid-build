@@ -7,8 +7,8 @@ var argv     = process.argv.slice(2)[0],       // ci | master | latest
 	docsRoot = path.resolve(dir, '..', '..'),
 	version  = require(path.join(docsRoot, 'package.json')).version; // docs version
 
-// deploy = deploy == 'latest' ? `v${version}` : 'master';
-deploy = deploy == 'latest' ? 'v0.1.8' : 'master';
+deploy = deploy == 'latest' ? `v${version}` : 'master';
+// deploy = deploy == 'latest' ? 'v0.1.0' : 'master';
 
 /* Change Working Dir
  *********************/
