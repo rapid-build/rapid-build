@@ -1,3 +1,25 @@
+# [0.56.0](https://github.com/jyounce/rapid-build/compare/v0.55.0...v0.56.0) (2016-04-27)
+
+
+### Features
+
+* **server:** expose dist start and stop server scripts, can be called with package.json scripts ([c1ed95f](https://github.com/jyounce/rapid-build/commit/c1ed95f))
+	* start: dist/server/rapid-build/start-server
+	* stop: dist/server/rapid-build/stop-server
+
+
+### Breaking Changes
+
+The start server file changed.
+
+**Before:**  
+dist/server/rapid-build/init-server.js
+
+**Now:**  
+dist/server/rapid-build/start-server.js
+
+
+
 # [0.55.0](https://github.com/jyounce/rapid-build/compare/v0.54.0...v0.55.0) (2016-04-09)
 
 

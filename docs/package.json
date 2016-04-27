@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build-docs",
-	"version": "0.55.0",
+	"version": "0.56.0",
 	"description": "Documentation website for rapid-build.",
 	"homepage": "http://rapid-build.io/",
 	"author": {
@@ -18,7 +18,9 @@
 	},
 	"pre-commit": {
 		"silent": true,
-		"run": ["build-prod-check"]
+		"run": [
+			"build-prod-check"
+		]
 	},
 	"devDependencies": {
 		"pre-commit": "1.1.2"
