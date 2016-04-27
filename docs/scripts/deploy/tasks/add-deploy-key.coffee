@@ -6,7 +6,7 @@ module.exports = (docsRoot) ->
 	bufMsgs = require "#{helpers}/buffer-msgs"
 	keyDec  = path.join docsRoot, 'deploy-key'
 	id_rsa  = path.join os.homedir(), '.ssh', 'id_rsa'
-	cmd     = "mv #{keyDec} #{id_rsa}"
+	cmd     = "mv #{keyDec} #{id_rsa} && chmod 600 #{id_rsa}"
 
 	# task
 	# ====
