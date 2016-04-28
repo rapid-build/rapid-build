@@ -35,6 +35,7 @@ node_modules/
 extra/temp/**/*
 generated/**/*
 src/src/client/**/*.*
+/docs/dist.zip
 
 # retain empty folder via .gitkeep
 # ================================

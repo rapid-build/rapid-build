@@ -5,11 +5,14 @@
 # /package.json
 # =========================
 .DS_Store
+/dist/
 /node_modules/
-/scripts/
 /src/
 /*.js
 /*.log
 /*.coffee
 /bower.json
 /deploy-key*
+/scripts/constants.js
+/scripts/build-prod-check/
+/scripts/deploy/
