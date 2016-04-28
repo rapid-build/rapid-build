@@ -37,12 +37,11 @@ module.exports = (docsRoot, deployer, deploy) ->
 
 		when 'local'
 			runTasks = async ->
-				# res1 = await buildProd docsRoot
+				res1 = await buildProd docsRoot
 				res2 = await packDist docsRoot
 				res3 = await gitCommitPushAndTag docsRoot, deploy
-				# res4 = await deployDocs docsRoot, deploy
-				res  = [res2, res3]
-				# res  = [res1, res2, res3, res4]
+				res4 = await deployDocs docsRoot, deploy
+				res  = [res1, res2, res3, res4]
 				res.filter(Boolean).join '\n'
 
 		else
