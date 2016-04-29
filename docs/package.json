@@ -12,8 +12,8 @@
 		"start": "node dist/server/rapid-build/start-server",
 		"stop": "node dist/server/rapid-build/stop-server",
 		"deploy-docs-ci": "node scripts/deploy ci",
-		"deploy-docs-master": "node scripts/deploy master",
-		"deploy-docs-latest": "node scripts/deploy latest",
+		"deploy-docs-tag": "node scripts/deploy local tag",
+		"deploy-docs-master": "node scripts/deploy local master",
 		"postinstall": "node scripts/postinstall && node scripts/postinstall/clean-host"
 	},
 	"dependencies": {

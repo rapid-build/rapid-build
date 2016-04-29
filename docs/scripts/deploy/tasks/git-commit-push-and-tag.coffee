@@ -1,19 +1,18 @@
-module.exports = (docsRoot, deploy) ->
+module.exports = (docsRoot, deploy, tag=false) ->
 	path     = require 'path'
 	exec     = require('child_process').exec
 	helpers  = path.join docsRoot, 'scripts', 'helpers'
 	bufMsgs  = require "#{helpers}/buffer-msgs"
-	tag      = deploy if deploy isnt 'master'
 	cmd      = 'git add .'
 	cmd     += ' && '
 	if tag
-		cmd += "git commit -am \"chore(bump): #{tag}\""
+		cmd += "git commit -am \"chore(bump): #{deploy}\""
 		cmd += ' && '
 		cmd += 'git push'
 		cmd += ' && '
-		cmd += "git tag -a #{tag} -m \"chore(tag): #{tag}\""
+		cmd += "git tag -a #{deploy} -m \"chore(tag): #{deploy}\""
 		cmd += ' && '
-		cmd += "git push origin #{tag}"
+		cmd += "git push origin #{deploy}"
 		msg  = 'Git Committed, Pushed and Tagged'
 	else
 		cmd += "git commit -am \"chore(deploy): master\""

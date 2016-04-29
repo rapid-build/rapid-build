@@ -1,6 +1,6 @@
 # DEPLOY DOCS
-# deploy = master | latest tag
-# ============================
+# deploy = master | tag
+# =====================
 module.exports = (docsRoot, deploy) ->
 	path    = require 'path'
 	exec    = require('child_process').exec

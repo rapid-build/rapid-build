@@ -1,4 +1,4 @@
-module.exports = (docsRoot, deployer, deploy) ->
+module.exports = (docsRoot, deployer, deploy, tag=false) ->
 	path  = require 'path'
 	async = require 'asyncawait/async'
 	await = require 'asyncawait/await'
@@ -31,21 +31,22 @@ module.exports = (docsRoot, deployer, deploy) ->
 				res.push await moveGitAndCleanTemp docsRoot
 				res.push await buildProd docsRoot
 				res.push await packDist docsRoot
-				res.push await gitCommitPushAndTag docsRoot, deploy
+				res.push await gitCommitPushAndTag docsRoot, deploy, true
 				res.push await deployDocs docsRoot, deploy
 				res.filter(Boolean).join '\n'
 
 		when 'local'
-			runTasks = async ->
-				res.push await buildProd docsRoot
-				res.push await packDist docsRoot
-				res.push await gitCommitPushAndTag docsRoot, deploy
-				res.push await deployDocs docsRoot, deploy
-				res.filter(Boolean).join '\n'
-
-		else
-			runTasks = async ->
-				throw 'Deployer was not Specified'
+			if tag or deploy is 'master'
+				runTasks = async ->
+					res.push await buildProd docsRoot
+					res.push await packDist docsRoot
+					res.push await gitCommitPushAndTag docsRoot, deploy, tag
+					res.push await deployDocs docsRoot, deploy
+					res.filter(Boolean).join '\n'
+			else
+				runTasks = async ->
+					res.push await deployDocs docsRoot, deploy
+					res.filter(Boolean).join '\n'
 
 	# run it!
 	# =======
