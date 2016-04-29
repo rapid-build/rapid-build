@@ -14,7 +14,7 @@
 		"deploy-docs-ci": "node scripts/deploy ci",
 		"deploy-docs-master": "node scripts/deploy master",
 		"deploy-docs-latest": "node scripts/deploy latest",
-		"postinstall": "node scripts/postinstall"
+		"postinstall": "node scripts/postinstall && node scripts/postinstall/clean-host"
 	},
 	"dependencies": {
 		"asyncawait": "1.0.3",

@@ -11,13 +11,11 @@ var log = require(`${helpers}/log`);
 
 /* postinstall
  **************/
-var postinstall = require(`${dir}/postinstall`);
+var postinstall = require(`${dir}/tasks/clean-host`);
 postinstall(docsRoot).then(res => {
-	log('Installed Docs');
 	if (!res || typeof res != 'string') return
 	console.log(res.attn);
 }).catch(e => {
-	log('Failed to Install Docs', 'error');
-	if (!e || typeof e != 'string') return
-	console.log(e.error)
+	if (!e || typeof e.message != 'string') return
+	console.log(e.message.error)
 })
