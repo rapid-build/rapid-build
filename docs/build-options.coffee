@@ -59,6 +59,11 @@ getCommonOptions = ->
 				less: [
 					'libs/bootstrap/bootstrap.less'
 				]
+		minify:
+			client:
+				css: [
+					'libs/bootstrap/bootstrap.css'
+				]
 
 # Dev Build Options
 # =================
@@ -66,7 +71,6 @@ setDevOptions = (options, build) ->
 	return setProdOptions options, build if build.indexOf('prod') isnt -1
 	logBuildMsg build, 'DEV'
 	options.extra.copy.client.push(
-		# 'bower_components/bootstrap/dist/css/bootstrap.css'
 		'bower_components/font-awesome/css/font-awesome.css'
 	)
 
@@ -75,7 +79,6 @@ setDevOptions = (options, build) ->
 setProdOptions = (options, build) ->
 	logBuildMsg build, 'PROD'
 	options.extra.copy.client.push(
-		# 'bower_components/bootstrap/dist/css/bootstrap.min.css'
 		'bower_components/font-awesome/css/font-awesome.min.css'
 	)
 

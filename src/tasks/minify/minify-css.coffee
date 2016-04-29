@@ -19,6 +19,19 @@ module.exports = (config, gulp) ->
 				defer.resolve()
 		defer.promise
 
+	runExtraTask = (appOrRb) ->
+		defer = q.defer()
+		src   = config.extra.minify[appOrRb].client.css
+		return promiseHelp.get() unless src.length
+		dest  = config.dist[appOrRb].client.dir
+		gulp.src src, base: dest
+			.pipe minifyCss minOpts
+			.pipe gulp.dest dest
+			.on 'end', ->
+				console.log "minified extra #{appOrRb} dist styles".yellow
+				defer.resolve()
+		defer.promise
+
 	# API
 	# ===
 	api =
@@ -28,6 +41,7 @@ module.exports = (config, gulp) ->
 			q.all([
 				runTask 'rb'
 				runTask 'app'
+				runExtraTask 'app'
 			]).done -> defer.resolve()
 			defer.promise
 

@@ -26,6 +26,7 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config.configs}/config-extra")         config
 	config  = require("#{config.req.config.configs}/config-extra-copy")    config, options
 	config  = require("#{config.req.config.configs}/config-extra-compile") config, options
+	config  = require("#{config.req.config.configs}/config-extra-minify")  config, options
 	config  = require("#{config.req.config.configs}/config-templates")     config
 	config  = require("#{config.req.config.configs}/config-temp")          config
 	config  = require("#{config.req.config.configs}/config-http-proxy")    config, options

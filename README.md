@@ -192,7 +192,8 @@ package.json
 # extra.copy[client|server]                         = (array of strings) = file paths: additional files to copy to dist/client and or dist/server that the build didn't copy
 # extra.compile.client[coffee|es6|less|sass]        = (array of strings) = file paths: additional files to compile to dist/client that the build didn't compile
 # extra.compile.server[less|sass]                   = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
-# =============================================================================================================================================================================================================================
+# extra.minify.client[css|js]                       = (array of strings) = file paths: additional files to minify in dist/client that the build didn't minify (by default, the build does not minify files in libs or bower_components)
+# =====================================================================================================================================================================================================================================
 ```
 
 ## Build Modes
