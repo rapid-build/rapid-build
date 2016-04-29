@@ -3,6 +3,7 @@ module.exports = (docsRoot) ->
 	async = require 'asyncawait/async'
 	await = require 'asyncawait/await'
 	tasks = path.join __dirname, 'tasks'
+	res   = []
 
 	# tasks
 	# =====
@@ -13,10 +14,9 @@ module.exports = (docsRoot) ->
 	# run tasks
 	# =========
 	runTasks = async ->
-		res1 = await cleanDist docsRoot
-		res2 = await unpackDist docsRoot
-		res3 = await cleanHost docsRoot
-		res  = [res1, res2, res3]
+		res.push await cleanDist docsRoot
+		res.push await unpackDist docsRoot
+		res.push await cleanHost docsRoot
 		res.filter(Boolean).join '\n'
 
 	# run it!
