@@ -20,7 +20,8 @@ var log = require(`${helpers}/log`);
 var deployer = args[0],
 	deploy   = args[1],
 	tagName  = args[2],
-	tag      = args[3];
+	tag      = args[3],
+	build    = false;
 
 deployer = deployer == 'ci' ? 'ci' : 'local';
 tagName  = tagName == 'latest' ? `v${pkg.version}` : tagName;
@@ -28,17 +29,20 @@ tag      = tag == 'true';
 
 switch (deployer) {
 	case 'ci':
-		deploy = `v${pkg.version}`
-		tag    = true
+		deploy = `v${pkg.version}`;
+		tag    = true;
 		break;
 	case 'local':
 		switch (deploy) {
 			case 'master':
-				tag = false
+				tag   = false;
+				build = true;
 				break;
 			case 'tag':
-				deploy = tagName
-				if (!deploy || deploy.length < 2 || deploy.indexOf('v') != 0) {
+				deploy = tagName;
+				if (!deploy || deploy.length < 2 ||
+					(deploy.indexOf('v') != 0 && deploy != 'master')
+				   ) {
 					log('Failed to Deploy Docs', 'error');
 					console.log(`Invalid Tag: ${deploy}`.error);
 					process.exit();
@@ -55,7 +59,7 @@ switch (deployer) {
 /* Deploy Docs
  **************/
 var deployDocs = require(`${dir}/deploy`);
-deployDocs(docsRoot, deployer, deploy, tag).then(res => {
+deployDocs(docsRoot, deployer, deploy, build, tag).then(res => {
 	log('Docs Deployed');
 	if (!res || typeof res != 'string') return
 	console.log(res.attn);

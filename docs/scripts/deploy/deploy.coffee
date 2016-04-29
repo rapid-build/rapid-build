@@ -1,4 +1,4 @@
-module.exports = (docsRoot, deployer, deploy, tag=false) ->
+module.exports = (docsRoot, deployer, deploy, build=false, tag=false) ->
 	path  = require 'path'
 	async = require 'asyncawait/async'
 	await = require 'asyncawait/await'
@@ -36,7 +36,7 @@ module.exports = (docsRoot, deployer, deploy, tag=false) ->
 				res.filter(Boolean).join '\n'
 
 		when 'local'
-			if tag or deploy is 'master'
+			if tag or build
 				runTasks = async ->
 					res.push await buildProd docsRoot
 					res.push await packDist docsRoot
