@@ -54,7 +54,7 @@
 		"event-stream": "3.3.2",
 		"express": "4.13.4",
 		"find-port": "1.0.1",
-		"fs-extra": "0.26.7",
+		"fs-extra": "0.30.0",
 		"glob-stream": "5.3.2",
 		"gulp": "3.9.1",
 		"gulp-angular-templatecache": "1.8.0",
