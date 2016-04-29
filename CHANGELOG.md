@@ -1,3 +1,12 @@
+## [0.56.1](https://github.com/jyounce/rapid-build/compare/v0.56.0...v0.56.1) (2016-04-29)
+
+
+### Minor Features
+
+* **bump dep:** fs-extra ([d0764f8](https://github.com/jyounce/rapid-build/commit/74195d0))
+
+
+
 # [0.56.0](https://github.com/jyounce/rapid-build/compare/v0.55.0...v0.56.0) (2016-04-27)
 
 
