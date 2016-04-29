@@ -40,6 +40,7 @@ getCommonOptions = ->
 		from:
 			dist:
 				client: [
+					'libs/bootstrap/bootstrap.less'
 					'bower_components/jquery/**'
 					'bower_components/font-awesome/less/**'
 					'bower_components/font-awesome/scss/**'
@@ -53,6 +54,11 @@ getCommonOptions = ->
 				'bower_components/font-awesome/fonts/**'
 				'bower_components/bootstrap/dist/fonts/**'
 			]
+		compile:
+			client:
+				less: [
+					'libs/bootstrap/bootstrap.less'
+				]
 
 # Dev Build Options
 # =================
@@ -60,7 +66,7 @@ setDevOptions = (options, build) ->
 	return setProdOptions options, build if build.indexOf('prod') isnt -1
 	logBuildMsg build, 'DEV'
 	options.extra.copy.client.push(
-		'bower_components/bootstrap/dist/css/bootstrap.css'
+		# 'bower_components/bootstrap/dist/css/bootstrap.css'
 		'bower_components/font-awesome/css/font-awesome.css'
 	)
 
@@ -69,7 +75,7 @@ setDevOptions = (options, build) ->
 setProdOptions = (options, build) ->
 	logBuildMsg build, 'PROD'
 	options.extra.copy.client.push(
-		'bower_components/bootstrap/dist/css/bootstrap.min.css'
+		# 'bower_components/bootstrap/dist/css/bootstrap.min.css'
 		'bower_components/font-awesome/css/font-awesome.min.css'
 	)
 
