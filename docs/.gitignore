@@ -13,6 +13,3 @@
 /*.coffee
 /bower.json
 /deploy-key*
-/scripts/constants.js
-/scripts/build-prod-check/
-/scripts/deploy/
