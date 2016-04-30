@@ -15,6 +15,18 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 		# Link
 		# ====
 		link = (scope, element, attrs, controllers) ->
+			# defaults: valueless attrs
+			scope.responsive = attrs.responsive isnt undefined
+
+			# responsive
+			# ==========
+			resClass       = 'hidden-xs'
+			scope.resClass = resClass if scope.responsive
+			scope.toggle = ->
+				return scope.resClass = '' if scope.resClass is resClass
+				scope.resClass = resClass
+
+
 			# activity helpers
 			# ================
 			getActivity = ->
@@ -111,11 +123,13 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 		replace: true
 		templateUrl: '/views/directives/nav.html'
 		scope:
-			activity: '@'   # disable, path or segment x
+			activity: '@'      # disable, path or segment x
 			caption: '@'
-			kind:  '@'      # main | sub | mini
-			collection: '=' # [ active: bool | 'disable', caption: string, url: string ]
-			separators: '=' # currently styled for: mini
+			kind:  '@'         # main | sub | mini
+			collection: '='    # [ active: bool | 'disable', caption: string, url: string ]
+			separators: '='    # currently styled for: mini
+			# valueless attrs:
+			# responsive: '@'  # currently styled for: main
 ]
 
 

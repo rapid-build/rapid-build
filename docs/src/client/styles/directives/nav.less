@@ -1,29 +1,42 @@
 /* NAV
  ******/
 .rb-nav {
+	position: relative;
+
+	// responsive toggle
+	.toggle {
+		display: none;
+		padding: 0 10px;
+		#fontColors.text;
+		#fontSizes.nav.toggle;
+		&:hover { #fontColors.links.hover; }
+	}
+
 	/* kinds
 	 ********/
 	&.main {
 		font-weight: bold;
 		text-transform: uppercase;
 		letter-spacing: .5px;
-		#fontSizes > .nav.main;
-		.nav { border-bottom: none; }
+		#fontSizes.nav.main;
+
+		nav  { text-align: left; }
+		.nav { border-bottom: none; } // ul
 		li {
 			a {
 				padding: 10px 12px 19px;
 				border-radius: 10px 10px 0 0;
-				#fontColors > .nav.main.link;
+				#fontColors.nav.main.link;
 				&:focus { outline:none; }
 				&:hover {
-					#bg > .nav.main.hover;
-					#borders > .nav.main.hover;
+					#bg.nav.main.hover;
+					#borders.nav.main.hover;
 				}
 			}
 			&.active {
 				a {
-					#borders > .nav.main.active;
-					#fontColors > .nav.main.active;
+					#borders.nav.main.active;
+					#fontColors.nav.main.active;
 				}
 			}
 		}
@@ -36,26 +49,26 @@
 	&.mini {
 		font-weight: bolder;
 		text-transform: uppercase;
-		#fontSizes > .nav.mini;
+		#fontSizes.nav.mini;
 		li {
 			display: inline-block;
 			a {
 				display: inline-block;
-				#fontColors > .nav.mini.link;
+				#fontColors.nav.mini.link;
 				.rb-icon {
 					margin: 0 0 0 5px;
-					#fontSizes > .nav.mini.icon;
+					#fontSizes.nav.mini.icon;
 				}
 				&:focus { outline:none; }
 				&:focus,
 				&:hover {
 					background-color: transparent;
-					#fontColors > .nav.mini.hover;
+					#fontColors.nav.mini.hover;
 				}
 			}
 			&.active {
 				a {
-					#fontColors > .nav.mini.active;
+					#fontColors.nav.mini.active;
 					&:hover { cursor: default; }
 				}
 			}
@@ -65,7 +78,7 @@
 				top: 3px;
 				height: 18px;
 				margin: 0 3px;
-				#borders > .nav.mini.separators;
+				#borders.nav.mini.separators;
 			}
 			&:first-child {
 				.separator {
@@ -75,10 +88,60 @@
 		}
 	}
 
-	/* options
+	/* Options
 	 **********/
 	&[center] {
 		text-align: center;
+	}
+}
+
+/* Responsive
+ *************/
+.rb-nav.responsive {
+	// currently only styled for: main
+	@media (max-width: @screen-xs-max) {
+		.shell {
+			background-color: white;
+			border: 1px solid #cacaca;
+			border-radius: 8px;
+		}
+		.nav {
+			border-top: 1px solid #cacaca;
+			li {
+				margin-bottom: 0;
+				float: none;
+				a {
+					padding: 12px 12px;
+					border: none;
+					background-color: transparent;
+					&:focus,
+					&:hover {
+						#fontColors.links.hover;
+					}
+				}
+				&.active { a { #fontColors.links.hover; } }
+				&:first-child { a { padding-top:    18px; } }
+				&:last-child  { a { padding-bottom: 18px; } }
+			}
+		}
+	}
+}
+
+/* Main Header
+ **************/
+header.main {
+	.rb-nav {
+		text-align: right;
+		.shell {
+			position: absolute;
+			top: 38px;
+			right: -15px;
+		}
+		&.responsive {
+			@media (max-width: @screen-xs-max) {
+				.shell { right: -1px; }
+			}
+		}
 	}
 }
 

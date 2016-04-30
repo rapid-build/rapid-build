@@ -1,25 +1,36 @@
-<nav class="rb-nav" ng-class="kind">
-	<h4 ng-bind="::caption" ng-if="!!caption"></h4>
-	<ul class="nav"
-		ng-class="[
-			kind == 'main' ? 'nav-tabs' : '',
-			kind == 'sub' ? 'nav-pills nav-stacked' : ''
-		].join(' ')">
-		<li ng-repeat="model in ::collection"
-			ng-class="[model.active === true ? 'active' : ''].join(' ')">
-			<b class="separator" ng-if="::separators"></b><a
-				tabindex="0"
-				title="{{model.title}}"
-				ng-click="clickActive(); clickAction(model)"
-				ng-href="{{model.url}}"
-				target="{{model.target}}">
-				<span class="caption"
-					  ng-bind="model.caption"
-					  ng-if="!!model.caption"></span><rb:icon
-					  ng-if="!!model.icon"
-					  kind="{{model.icon}}">
-				</rb:icon>
-			</a>
-		</li>
-	</ul>
-</nav>
+<div class="rb-nav" ng-class="[kind, responsive ? 'responsive' : ''].join(' ')">
+	<div class="shell">
+		<a href
+		   class="toggle"
+		   ng-click="toggle()"
+		   ng-class="[responsive ? 'visible-xs-inline-block' : ''].join(' ')">
+			<rb:icon kind="fa-navicon"></rb:icon>
+		</a>
+
+		<nav ng-class="[responsive ? resClass : ''].join(' ')">
+			<h4 ng-bind="::caption" ng-if="!!caption"></h4>
+			<ul class="nav"
+				ng-class="[
+					kind == 'main' ? 'nav-tabs' : '',
+					kind == 'sub' ? 'nav-pills nav-stacked' : '',
+				].join(' ')">
+				<li ng-repeat="model in ::collection"
+					ng-class="[model.active === true ? 'active' : ''].join(' ')">
+					<b class="separator" ng-if="::separators"></b><a
+						tabindex="0"
+						title="{{model.title}}"
+						ng-click="clickActive(); clickAction(model)"
+						ng-href="{{model.url}}"
+						target="{{model.target}}">
+						<span class="caption"
+							  ng-bind="model.caption"
+							  ng-if="!!model.caption"></span><rb:icon
+							  ng-if="!!model.icon"
+							  kind="{{model.icon}}">
+						</rb:icon>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>

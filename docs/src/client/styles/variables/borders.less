@@ -1,0 +1,29 @@
+/* Borders
+ **********/
+#borders {
+	.layout {
+		@border: 1px solid #e5e5e5;
+		.header { border-bottom: @border; }
+		.footer { border-bottom: @border; border-top: @border; }
+	}
+	.nav {
+		.main {
+			.hover,
+			.active {
+				border: 1px solid #ddd;
+				border-bottom-color: transparent;
+			}
+		}
+		.mini {
+			.separators {
+				border-left:  1px solid #292929;
+				border-right: 1px solid #494949;
+			}
+		}
+	}
+	.img {
+		.bordered { border: 1px solid #999; }
+	}
+	.hr { border-top: 1px dashed #cacaca; }
+	.section { border-bottom: 1px dashed #cacaca; }
+}
