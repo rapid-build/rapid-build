@@ -1,3 +1,12 @@
+# [0.57.0](https://github.com/jyounce/rapid-build/compare/v0.56.1...v0.57.0) (2016-04-30)
+
+
+### Features
+
+* **option:** add build option extra.minify.client[css|js] ([4124999](https://github.com/jyounce/rapid-build/commit/4124999))
+
+
+
 ## [0.56.1](https://github.com/jyounce/rapid-build/compare/v0.56.0...v0.56.1) (2016-04-29)
 
 
