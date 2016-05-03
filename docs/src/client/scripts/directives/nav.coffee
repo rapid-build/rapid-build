@@ -20,11 +20,11 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 
 			# responsive
 			# ==========
-			resClass       = 'hidden-xs'
-			scope.resClass = resClass if scope.responsive
+			resHidden = 'hidden-xs'
+			scope.resHidden = resHidden if scope.responsive
 			scope.toggle = ->
-				return scope.resClass = '' if scope.resClass is resClass
-				scope.resClass = resClass
+				return scope.resHidden = '' if scope.resHidden is resHidden
+				scope.resHidden = resHidden
 
 
 			# activity helpers

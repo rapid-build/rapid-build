@@ -1,4 +1,8 @@
-<div class="rb-nav" ng-class="[kind, responsive ? 'responsive' : ''].join(' ')">
+<div class="rb-nav" ng-class="[
+		kind,
+		responsive ? 'responsive' : '',
+		responsive && !resHidden ? 'nav-open' : ''
+	].join(' ')">
 	<div class="shell">
 		<a href
 		   class="toggle"
@@ -7,7 +11,7 @@
 			<rb:icon kind="fa-navicon"></rb:icon>
 		</a>
 
-		<nav ng-class="[responsive ? resClass : ''].join(' ')">
+		<nav ng-class="[responsive ? resHidden : ''].join(' ')">
 			<h4 ng-bind="::caption" ng-if="!!caption"></h4>
 			<ul class="nav"
 				ng-class="[

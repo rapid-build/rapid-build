@@ -6,10 +6,6 @@
 	// responsive toggle
 	.toggle {
 		display: none;
-		padding: 0 10px;
-		#fontColors.text;
-		#fontSizes.nav.toggle;
-		&:hover { #fontColors.links.hover; }
 	}
 
 	/* kinds
@@ -97,31 +93,61 @@
 
 /* Responsive
  *************/
-.rb-nav.responsive {
-	// currently only styled for: main
-	@media (max-width: @screen-xs-max) {
+@media (max-width: @screen-xs-max) {
+	.rb-nav.responsive.main { // currently only styled for: main
+		@rd: 8px;
+		text-align: right;
+
 		.shell {
-			background-color: white;
-			border: 1px solid #cacaca;
-			border-radius: 8px;
+			position: absolute;
+			top: 0;
+			right: 0;
 		}
+
+		.toggle {
+			padding: 0 10px;
+			border-radius: @rd;
+			#fontColors.text;
+			#bg.nav.responsive.toggle;
+			#borders.nav.responsive.toggle;
+			#fontSizes.nav.responsive.toggle;
+			&:hover { #fontColors.links.hover; }
+		}
+
+		&.nav-open {
+			.toggle {
+				border-bottom: none;
+				border-radius: @rd @rd 0 0;
+			}
+		}
+
 		.nav {
-			border-top: 1px solid #cacaca;
+			border-radius: @rd 0 @rd @rd;
+			#bg.nav.responsive.menu;
+			#borders.nav.responsive.menu;
 			li {
-				margin-bottom: 0;
 				float: none;
+				margin-bottom: 0;
+				#borders.nav.responsive.links;
+				&:first-child { border-top: none; }
 				a {
-					padding: 12px 12px;
+					margin: 0;
+					padding: 15px 12px;
 					border: none;
-					background-color: transparent;
-					&:focus,
+					border-radius: 0;
 					&:hover {
 						#fontColors.links.hover;
+						#bg.nav.responsive.links.hover;
 					}
 				}
-				&.active { a { #fontColors.links.hover; } }
-				&:first-child { a { padding-top:    18px; } }
-				&:last-child  { a { padding-bottom: 18px; } }
+				&.active {
+					a {
+						#fontColors.links.hover;
+						#bg.nav.responsive.links.active;
+					}
+				}
+				&:first-child { a { border-radius: @rd 0 0 0; } }
+				&:last-child  { a { border-radius: 0 0 @rd @rd; } }
 			}
 		}
 	}
@@ -131,16 +157,10 @@
  **************/
 header.main {
 	.rb-nav {
-		text-align: right;
 		.shell {
 			position: absolute;
 			top: 38px;
 			right: -15px;
-		}
-		&.responsive {
-			@media (max-width: @screen-xs-max) {
-				.shell { right: -1px; }
-			}
 		}
 	}
 }
