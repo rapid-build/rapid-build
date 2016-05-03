@@ -3,7 +3,7 @@
 
 ### Features
 
-* **option:** add build option extra.minify.client[css|js] ([4124999](https://github.com/jyounce/rapid-build/commit/4124999))
+* **option:** add build option extra.minify.client\[css|js\] ([4124999](https://github.com/jyounce/rapid-build/commit/4124999))
 
 
 
