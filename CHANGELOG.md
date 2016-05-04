@@ -1,3 +1,12 @@
+# [0.58.0](https://github.com/jyounce/rapid-build/compare/v0.57.0...v0.58.0) (2016-05-04)
+
+
+### Features
+
+* **option:** add ability to disable clickjacking defense script in default spa.html via option security.client.clickjacking ([56b92dc](https://github.com/jyounce/rapid-build/commit/56b92dc))
+
+
+
 # [0.57.0](https://github.com/jyounce/rapid-build/compare/v0.56.1...v0.57.0) (2016-04-30)
 
 
