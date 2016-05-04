@@ -1,0 +1,43 @@
+.main-customize {
+	h2 { .rb-icon { font-size: 18px; top: -5px; } }
+	h3 { .rb-icon { font-size: 13px; top: -4px; } }
+	h4 {
+		.sep {
+			position: relative;
+			top: -1px
+		}
+	}
+
+	dl {
+		margin: 0 10px 0 25px;
+		dt {
+			margin: 12px 0 5px -1px;
+			font-weight: 400;
+			font-size: 14px;
+			color: lightslategrey;
+			text-transform: capitalize;
+			&::after { content: ':'; }
+			&:first-child { margin-top: 0; }
+		}
+		dd {
+			font-size: 13px;
+			color: lightslategrey;
+			.rb-code { margin-top: 7px; }
+		}
+	}
+
+	ul {
+		li {
+			&:last-child {
+				dl {
+					margin-bottom: 0;
+					dd {
+						&:last-child {
+							.rb-code { margin-bottom: 0; }
+						}
+					}
+				}
+			}
+		}
+	}
+}

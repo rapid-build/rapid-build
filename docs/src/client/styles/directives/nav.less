@@ -13,14 +13,14 @@
 	&.main {
 		font-weight: bold;
 		text-transform: uppercase;
-		letter-spacing: .5px;
+		letter-spacing: .1px;
 		#fontSizes.nav.main;
 
 		nav  { text-align: left; }
 		.nav { border-bottom: none; } // ul
 		li {
 			a {
-				padding: 10px 12px 19px;
+				padding: 10px 10px 19px;
 				border-radius: 10px 10px 0 0;
 				#fontColors.nav.main.link;
 				&:focus { outline:none; }
@@ -35,6 +35,7 @@
 					#fontColors.nav.main.active;
 				}
 			}
+			&:last-child  { a { margin-right: 0; } }
 		}
 	}
 
@@ -132,7 +133,7 @@
 				&:first-child { border-top: none; }
 				a {
 					margin: 0;
-					padding: 15px 12px;
+					padding: 15px 15px;
 					border: none;
 					border-radius: 0;
 					&:hover {

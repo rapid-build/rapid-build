@@ -36,6 +36,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 		scope:
 			display: '@'
 			lang: '@'
+			size: '@'
 			# valueless attrs:
 			# interpolate: '@'
 ]

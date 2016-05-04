@@ -1,7 +1,7 @@
 section {
-	margin: 0 0 41px;
-	padding: 0 0 47px;
-	#borders.section;
+	margin: 0 0 35px;
+	padding: 0 0 35px;
+	#borders.section.default;
 
 	&:last-child {
 		border-bottom: none;
@@ -11,5 +11,11 @@ section {
 
 	> *:last-child {
 		margin-bottom: 0;
+	}
+
+	/* Kinds
+	 ********/
+	&.main {
+		#borders.section.main;
 	}
 }

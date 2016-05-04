@@ -10,14 +10,14 @@ angular.module('rapid-build').config ['$routeProvider'
 			.when '/getting-started',
 				templateUrl: '/views/mains/getting-started.html'
 
-			.when '/how-to-use',
-				templateUrl: '/views/mains/how-to-use.html'
-
 			.when '/build-modes',
 				templateUrl: '/views/mains/build-modes.html'
 
 			.when '/customize',
 				templateUrl: '/views/mains/customize.html'
+
+			.when '/examples',
+				templateUrl: '/views/mains/examples.html'
 
 			.otherwise
 				redirectTo: '/'
