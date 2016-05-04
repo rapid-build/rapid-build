@@ -1,5 +1,6 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q           = require 'q'
+	fs          = require 'fs'
 	path        = require 'path'
 	gulpif      = require 'gulp-if'
 	rename      = require 'gulp-rename'
@@ -29,6 +30,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		defer = q.defer()
 		gulp.src src
 			.pipe rename file
+			.pipe runReplace 'clickjacking'
 			.pipe runReplace 'description'
 			.pipe runReplace 'moduleName'
 			.pipe runReplace 'scripts'
@@ -52,14 +54,19 @@ module.exports = (config, gulp, taskOpts={}) ->
 		files.scripts = format.paths.to.html files.scripts, 'scripts', join: true, lineEnding: '\n\t'
 		files
 
+	getClickjackingTpl = ->
+		return '' unless config.security.client.clickjacking
+		fs.readFileSync(config.templates.clickjacking.src.path).toString()
+
 	getData = (jsonEnvFile) ->
 		files = getFilesJson jsonEnvFile
 		data =
-			scripts:     files.scripts
-			styles:      files.styles
-			moduleName:  config.angular.moduleName
-			title:       config.spa.title
-			description: config.spa.description
+			clickjacking: getClickjackingTpl()
+			description:  config.spa.description
+			moduleName:   config.angular.moduleName
+			scripts:      files.scripts
+			styles:       files.styles
+			title:        config.spa.title
 
 	# API
 	# ===

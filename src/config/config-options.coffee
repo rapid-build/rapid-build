@@ -18,6 +18,7 @@ module.exports = (config, options) ->
 	options = require("#{config.req.config.options}/option-http-proxy")   config, options
 	options = require("#{config.req.config.options}/option-browser")      config, options
 	options = require("#{config.req.config.options}/option-extra")        config, options
+	options = require("#{config.req.config.options}/option-security")     config, options
 
 	# logs
 	# ====

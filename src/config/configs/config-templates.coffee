@@ -8,12 +8,15 @@ module.exports = (config) ->
 	# helpers
 	# =======
 	getInfo = (srcFile, destFile, destDir) ->
-		src:
+		info = {}
+		info.src =
 			path: path.join templates.dir, srcFile
-		dest:
+		return info unless destFile
+		info.dest =
 			file: destFile
 			dir:  destDir
 			path: path.join destDir, destFile
+		info
 
 	# init templates
 	# ==============
@@ -27,6 +30,8 @@ module.exports = (config) ->
 		'app.coffee'
 		config.src.rb.client.scripts.dir
 	)
+
+	templates.clickjacking = getInfo 'clickjacking.tpl'
 
 	# add templates to config
 	# =======================

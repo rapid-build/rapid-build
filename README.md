@@ -163,7 +163,7 @@ package.json
 # spa.description                                   = (string)  defaults to package.json description = html meta description tag value
 # spa.src.filePath                                  = (string)  set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
 # spa.dist.fileName                                 = (string)  defaults to file name of spa.src.filePath or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
-# spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['scripts', 'styles', 'description', 'moduleName', 'title'] or ['all']
+# spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['clickjacking', 'description', 'moduleName', 'scripts', 'styles', 'title'] or ['all']
 # minify.css.styles                                 = (boolean) defaults to true = for prod build, minify the css
 # minify.css.fileName                               = (string)  defaults to 'styles.min.css'
 # minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
@@ -193,6 +193,7 @@ package.json
 # extra.compile.client[coffee|es6|less|sass]        = (array of strings) = file paths: additional files to compile to dist/client that the build didn't compile
 # extra.compile.server[less|sass]                   = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
 # extra.minify.client[css|js]                       = (array of strings) = file paths: additional files to minify in dist/client that the build didn't minify (by default, the build does not minify files in libs or bower_components)
+# security.client.clickjacking                      = (boolean) defaults to true = includes a clickjacking defense script in the default spa.html (set to false to disable)
 # =====================================================================================================================================================================================================================================
 ```
 

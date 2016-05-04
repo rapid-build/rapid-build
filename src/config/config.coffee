@@ -19,6 +19,7 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config.configs}/config-browser")       config, options
 	config  = require("#{config.req.config.configs}/config-minify")        config, options
 	config  = require("#{config.req.config.configs}/config-file-names")    config
+	config  = require("#{config.req.config.configs}/config-security")      config, options
 	config  = require("#{config.req.config.configs}/config-dist-and-src")  config, options
 	config  = require("#{config.req.config.configs}/config-angular")       config, options
 	config  = require("#{config.req.config.configs}/config-spa")           config, options
