@@ -22,8 +22,8 @@ getCommonOptions = ->
 				ignoreCustomFragments: [
 					/<rb:code(\s*?.*?)*?rb:code>/gi
 					/<rb:pre(\s*?.*?)*?rb:pre>/gi
+					/\s<rb:icon\s|<\/rb:icon>\s/gi
 				]
-
 	angular:
 		moduleName: 'rapid-build'
 		modules: ['hljs']

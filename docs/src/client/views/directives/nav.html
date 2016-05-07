@@ -28,9 +28,10 @@
 						target="{{model.target}}">
 						<span class="caption"
 							  ng-bind="model.caption"
-							  ng-if="!!model.caption"></span><rb:icon
-							  ng-if="!!model.icon"
-							  kind="{{model.icon}}">
+							  ng-if="!!model.caption"></span>
+						<rb:icon
+							ng-if="!!model.icon"
+							kind="{{model.icon}}">
 						</rb:icon>
 					</a>
 				</li>
