@@ -5,7 +5,7 @@
 		</h1>
 		<p>
 			If the <a href="/build-modes">default builds</a>
-			don't meet your needs, <em>no problem!</em><br>
+			<span title="don't meet your needs">don't suffice</span>, <em>no problem!</em><br>
 			Below are a list of options you can use to customize your builds.
 		</p>
 	</section>
@@ -13,7 +13,6 @@
 	<div class="row flex-wrap">
 		<div class="col-xs-3 col-sm-3 col-md-3 flex-wrap">
 			<aside class="main left flexible">
-				<!-- <h2><rb:icon kind="fa-cogs"></rb:icon> Build Options</h2> -->
 				<rb:nav
 					caption="Build Options"
 					caption-icon="fa-cogs"
@@ -57,16 +56,6 @@
 										</li>
 									</ul>
 								</dd>
-								<dt>example</dt>
-								<dd>
-									<rb:code lang="js" size="small">
-										var opts = {
-											browser: {
-												open: false
-											}
-										}
-									</rb:code>
-								</dd>
 							</dl>
 						</li>
 						<li>
@@ -81,17 +70,18 @@
 										</li>
 									</ul>
 								</dd>
-								<dt>example</dt>
-								<dd>
-									<rb:code lang="js" size="small">
-										var opts = {
-											browser: {
-												reload: false
-											}
-										}
-									</rb:code>
-								</dd>
 							</dl>
+						</li>
+						<li>
+							<h4>example</h4>
+							<rb:code lang="js" size="small">
+								var opts = {
+									browser: {
+										open: false,
+										reload: false
+									}
+								}
+							</rb:code>
 						</li>
 					</ul>
 				</section>
@@ -113,17 +103,17 @@
 										</li>
 									</ul>
 								</dd>
-								<dt>example</dt>
-								<dd>
-									<rb:code lang="js" size="small">
-										var opts = {
-											build: {
-												server: false
-											}
-										}
-									</rb:code>
-								</dd>
 							</dl>
+						</li>
+						<li>
+							<h4>example</h4>
+							<rb:code lang="js" size="small">
+								var opts = {
+									build: {
+										server: false
+									}
+								}
+							</rb:code>
 						</li>
 					</ul>
 				</section>
