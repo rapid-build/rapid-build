@@ -12,11 +12,13 @@
 		.default { border-bottom: 1px dashed #cacaca; }
 		.main    { border-bottom: 1px dashed #999; }
 	}
-	.aside {
-		.main {
-			@color: #ddd;
-			.left  { border-right: 1px solid @color; }
-			.right { border-left:  1px solid @color; }
+	.grid {
+		.sep { // separate
+			.main {
+				@color: #ddd;
+				.left  { border-left:  1px solid @color; }
+				.right { border-right: 1px solid @color; }
+			}
 		}
 	}
 	.nav {

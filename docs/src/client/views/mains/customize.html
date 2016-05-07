@@ -10,9 +10,9 @@
 		</p>
 	</section>
 
-	<div class="row flex-wrap">
-		<div class="col-xs-3 col-sm-3 col-md-3 flex-wrap">
-			<aside class="main left flexible">
+	<div class="row flexible">
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2 col-sep-right">
+			<aside class="main">
 				<rb:nav
 					caption="Build Options"
 					caption-icon="fa-cogs"
@@ -39,13 +39,17 @@
 			</aside>
 		</div>
 
-		<div class="col-xs-9 col-sm-9 col-md-9">
+		<div class="col-xs-9 col-sm-9 col-md-9 col-lg-10">
 			<div class="main-content">
+
+				<!-- BROWSER -->
 				<section id="browser">
 					<h3>browser</h3>
 					<ul>
 						<li>
-							<h4>open <small>(boolean - true)</small></h4>
+							<h4>
+								open <em class="def">@type boolean, @default true</em>
+							</h4>
 							<dl>
 								<dt>description</dt>
 								<dd>
@@ -59,7 +63,9 @@
 							</dl>
 						</li>
 						<li>
-							<h4>reload <small>(boolean - true)</small></h4>
+							<h4>
+								reload <em class="def">@type boolean, @default true</em>
+							</h4>
 							<dl>
 								<dt>description</dt>
 								<dd>
@@ -86,11 +92,15 @@
 					</ul>
 				</section>
 
+				<!-- BUILD -->
 				<section id="build">
 					<h3>build</h3>
 					<ul>
 						<li>
-							<h4>client <small class="sep">|</small> server <small>(boolean - true)</small></h4>
+							<h4>
+								client <small class="sep">|</small> server
+								<em class="def">@type boolean, @default true</em>
+							</h4>
 							<dl>
 								<dt>description</dt>
 								<dd>
@@ -99,7 +109,8 @@
 											Set to false to skip building the client or server.
 										</li>
 										<li>
-											Atleast one is required to be true.
+											<rb:icon kind="fa-exclamation-circle"></rb:icon>
+											Atleast one must be true.
 										</li>
 									</ul>
 								</dd>
@@ -110,9 +121,45 @@
 							<rb:code lang="js" size="small">
 								var opts = {
 									build: {
-										// atleast one must be true
 										client: false,
 										server: false
+									}
+								}
+							</rb:code>
+						</li>
+					</ul>
+				</section>
+
+				<!-- SECURITY -->
+				<section id="security">
+					<h3>security</h3>
+					<ul>
+						<li>
+							<h4>
+								client.clickjacking
+								<em class="def">@type boolean, @default true</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											The build will include a
+											<a target="_blank" href="https://www.owasp.org/index.php/Clickjacking">clickjacking</a>
+											defense script in the default spa.html (set to false to disable).
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li class="example">
+							<h4>example</h4>
+							<rb:code lang="js" size="small">
+								var opts = {
+									security: {
+										client: {
+											clickjacking: false
+										}
 									}
 								}
 							</rb:code>

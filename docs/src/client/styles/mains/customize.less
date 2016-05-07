@@ -13,6 +13,14 @@
 			list-style: none;
 			> li {
 				position: relative;
+				> h4 .def {
+					position: relative;
+					top: -1px;
+					font-size: 12px;
+					font-style: normal;
+					color: lightslategrey;
+					&::before { content: '- '; }
+				}
 				&::before {
 					position: absolute;
 					top: -13px;
