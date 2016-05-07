@@ -20,8 +20,24 @@
 					font-size: 33px;
 					content: '·';
 				}
+				&.example {
+					&::before {
+						top: 1px;
+						left: -16px;
+						font-size: 10px;
+						font-weight: 400;
+						content: '...';
+					}
+					h4 {
+						font-size: 14px;
+						font-weight: 400;
+						color: lightslategrey;
+						text-transform: capitalize;
+						&::after { content: ':'; }
+					}
+				}
 				&:last-child {
-					.rb-code { margin: 12px 0 5px 25px; }
+					.rb-code { margin: 14px 0 5px 25px; }
 				}
 			}
 		}
