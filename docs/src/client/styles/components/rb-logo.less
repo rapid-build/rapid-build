@@ -1,9 +1,13 @@
 /* RB LOGO
  **********/
-a:hover {
-	.rb-logo {
-		#effects.filter.brightness();
+.rb-logo-link {
+	&:focus,
+	&:hover {
+		.rb-logo {
+			#effects.filter.brightness();
+		}
 	}
+	&:focus { outline: none; }
 }
 
 .rb-logo {

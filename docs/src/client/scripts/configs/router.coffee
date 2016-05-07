@@ -13,8 +13,8 @@ angular.module('rapid-build').config ['$routeProvider'
 			.when '/build-modes',
 				templateUrl: '/views/mains/build-modes.html'
 
-			.when '/customize',
-				templateUrl: '/views/mains/customize.html'
+			.when '/build-options',
+				templateUrl: '/views/mains/build-options.html'
 				reloadOnSearch: false
 
 			.when '/examples',

@@ -41,10 +41,13 @@
 	}
 
 	&.sub {
+		nav { text-align: left; }
+
 		h4 {
 			margin: 0;
-			padding: 0 5px 19px 1px;
+			padding: 15px 5px 15px 2px;
 			font-weight: 400;
+			#borders.nav.sub.links.bottom;
 			.rb-icon {
 				top: -1px;
 				margin: 0 1px 0 0;
@@ -54,7 +57,7 @@
 		li {
 			margin: 0;
 			#borders.nav.sub.links.bottom;
-			&:first-child { #borders.nav.sub.links.top; }
+			// &:first-child { #borders.nav.sub.links.top; }
 
 			a {
 				border-radius: 0;
@@ -124,10 +127,12 @@
 	}
 }
 
-/* Responsive
+/* Responsive (currently only styled for: main | sub)
  *************/
 @media (max-width: @screen-xs-max) {
-	.rb-nav.responsive.main { // currently only styled for: main
+	/* main
+	 *******/
+	.rb-nav.responsive.main {
 		@rd: 8px;
 		text-align: right;
 
@@ -183,6 +188,66 @@
 				&:last-child  { a { border-radius: 0 0 @rd @rd; } }
 			}
 		}
+	}
+
+	/* sub
+	 ******/
+	.rb-nav.responsive.sub {
+		@rd: 8px;
+		text-align: center;
+
+		// .shell {
+		// 	position: absolute;
+		// 	top: 0;
+		// 	right: 0;
+		// }
+
+		.toggle {
+			padding: 0 10px;
+			border-radius: @rd;
+			#fontColors.text;
+			#bg.nav.responsive.toggle;
+			#borders.nav.responsive.toggle;
+			#fontSizes.nav.responsive.toggle;
+			&:hover { #fontColors.links.hover; }
+		}
+
+		// &.nav-open {
+		// 	.toggle {
+		// 		border-bottom: none;
+		// 		border-radius: @rd @rd 0 0;
+		// 	}
+		// }
+
+		// .nav {
+		// 	border-radius: @rd 0 @rd @rd;
+		// 	#bg.nav.responsive.menu;
+		// 	#borders.nav.responsive.menu;
+		// 	li {
+		// 		float: none;
+		// 		margin-bottom: 0;
+		// 		#borders.nav.responsive.links;
+		// 		&:first-child { border-top: none; }
+		// 		a {
+		// 			margin: 0;
+		// 			padding: 15px 15px;
+		// 			border: none;
+		// 			border-radius: 0;
+		// 			&:hover {
+		// 				#fontColors.links.hover;
+		// 				#bg.nav.responsive.links.hover;
+		// 			}
+		// 		}
+		// 		&.active {
+		// 			a {
+		// 				#fontColors.links.hover;
+		// 				#bg.nav.responsive.links.active;
+		// 			}
+		// 		}
+		// 		&:first-child { a { border-radius: @rd 0 0 0; } }
+		// 		&:last-child  { a { border-radius: 0 0 @rd @rd; } }
+		// 	}
+		// }
 	}
 }
 

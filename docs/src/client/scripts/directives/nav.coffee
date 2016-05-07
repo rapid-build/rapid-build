@@ -147,7 +147,7 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 			# ---------------
 			# valueless attrs
 			# ---------------
-			# responsive: '@' # currently styled for: main
+			# responsive: '@' # currently styled for: main | sub
 ]
 
 
