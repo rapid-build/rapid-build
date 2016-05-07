@@ -12,7 +12,10 @@
 		</a>
 
 		<nav ng-class="[responsive ? resHidden : ''].join(' ')">
-			<h4 ng-bind="::caption" ng-if="!!caption"></h4>
+			<h4 ng-if="!!caption">
+				<rb:icon kind="{{captionIcon}}" ng-if="!!captionIcon"></rb:icon>
+				{{::caption}}
+			</h4>
 			<ul class="nav"
 				ng-class="[
 					kind == 'main' ? 'nav-tabs' : '',
@@ -28,7 +31,8 @@
 						target="{{model.target}}">
 						<span class="caption"
 							  ng-bind="model.caption"
-							  ng-if="!!model.caption"></span>
+							  ng-if="!!model.caption">
+						</span>
 						<rb:icon
 							ng-if="!!model.icon"
 							kind="{{model.icon}}">

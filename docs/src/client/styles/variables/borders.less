@@ -1,18 +1,23 @@
 /* Borders
  **********/
 #borders {
+	.hr { border-top: 1px dashed #cacaca; }
 	.layout {
-		@border: 1px solid #e5e5e5;
-		.header { border-bottom: @border; }
-		.footer { border-bottom: @border; border-top: @border; }
+		.header { border-bottom: 1px solid #e5e5e5; }
 	}
 	.img {
 		.bordered { border: 1px solid #999; }
 	}
-	.hr { border-top: 1px dashed #cacaca; }
 	.section {
 		.default { border-bottom: 1px dashed #cacaca; }
 		.main    { border-bottom: 1px dashed #999; }
+	}
+	.aside {
+		.main {
+			@color: #ddd;
+			.left  { border-right: 1px solid @color; }
+			.right { border-left:  1px solid @color; }
+		}
 	}
 	.nav {
 		.main {
@@ -20,6 +25,13 @@
 			.active {
 				border: 1px solid #ddd;
 				border-bottom-color: transparent;
+			}
+		}
+		.sub {
+			.links {
+				@color: #ddd;
+				.top    { border-top: 1px solid @color; }
+				.bottom { border-bottom: 1px solid @color; }
 			}
 		}
 		.mini {

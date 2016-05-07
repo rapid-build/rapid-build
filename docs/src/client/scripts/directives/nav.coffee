@@ -2,6 +2,10 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 	($location, $timeout) ->
 		# helpers
 		# =======
+		getHash = (url) ->
+			return if not url
+			url.split('#')[1]
+
 		getPath = (url) ->
 			return if not url
 			url.split('?')[0]
@@ -11,6 +15,9 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 			path = getPath url
 			segs = path.split '/'
 			segs = segs.filter Boolean # removes empty strings
+
+		isActive = (activity, needle) ->
+			activity.indexOf(needle) isnt -1
 
 		# Link
 		# ====
@@ -26,7 +33,6 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 				return scope.resHidden = '' if scope.resHidden is resHidden
 				scope.resHidden = resHidden
 
-
 			# activity helpers
 			# ================
 			getActivity = ->
@@ -39,9 +45,18 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 			hasActivity = ->
 				activity = getActivity()
 				return false unless activity
-				return true if activity.indexOf('segment') isnt -1
+				return true if activity is 'hash'
 				return true if activity is 'path'
+				return true if activity.indexOf('segment') isnt -1
 				false
+
+			setActiveHash = ->
+				activeHash = $location.hash()
+				for model in scope.collection
+					hash = getHash model.url
+					if hash is activeHash
+						setActiveModel model
+						break
 
 			setActivePath = ->
 				activePath = $location.path()
@@ -70,10 +85,10 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 			runActivity = ->
 				return if hasActiveModel()
 				activity = getActivity()
-				if activity is 'path'
-					setActivePath()
-				else if activity.indexOf('segment') isnt -1
-					setActiveSegment()
+				switch true
+					when isActive activity, 'path' then setActivePath()
+					when isActive activity, 'hash' then setActiveHash()
+					when isActive activity, 'segment' then setActiveSegment()
 
 			# active model helpers
 			# ====================
@@ -123,13 +138,16 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 		replace: true
 		templateUrl: '/views/directives/nav.html'
 		scope:
-			activity: '@'      # disable, path or segment x
-			caption: '@'
-			kind:  '@'         # main | sub | mini
-			collection: '='    # [ active: bool | 'disable', caption: string, url: string ]
-			separators: '='    # currently styled for: mini
-			# valueless attrs:
-			# responsive: '@'  # currently styled for: main
+			activity:    '@' # disable | hash | path | segment int
+			caption:     '@'
+			captionIcon: '@'
+			kind:        '@' # main | sub | mini
+			collection:  '=' # [ active: bool | 'disable', caption: string, url: string ]
+			separators:  '=' # currently styled for: mini
+			# ---------------
+			# valueless attrs
+			# ---------------
+			# responsive: '@' # currently styled for: main
 ]
 
 

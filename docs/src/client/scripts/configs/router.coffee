@@ -15,6 +15,7 @@ angular.module('rapid-build').config ['$routeProvider'
 
 			.when '/customize',
 				templateUrl: '/views/mains/customize.html'
+				reloadOnSearch: false
 
 			.when '/examples',
 				templateUrl: '/views/mains/examples.html'

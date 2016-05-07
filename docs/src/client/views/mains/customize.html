@@ -10,112 +10,127 @@
 		</p>
 	</section>
 
-	<section>
-		<h2><rb:icon kind="fa-cogs"></rb:icon> Build Options</h2>
-		<ul>
-			<li><a href="#angular">angular</a></li>
-			<li><a href="#browser">browser</a></li>
-			<li><a href="#build">build</a></li>
-			<li><a href="#dist">dist</a></li>
-			<li><a href="#exclude">exclude</a></li>
-			<li><a href="#extra">extra</a></li>
-			<li><a href="#httpProxy">httpProxy</a></li>
-			<li><a href="#minify">minify</a></li>
-			<li><a href="#order">order</a></li>
-			<li><a href="#ports">ports</a></li>
-			<li><a href="#security">security</a></li>
-			<li><a href="#server">server</a></li>
-			<li><a href="#spa">spa</a></li>
-			<li><a href="#src">src</a></li>
-			<li><a href="#test">test</a></li>
-		</ul>
-	</section>
+	<div class="row flex-wrap">
+		<div class="col-xs-3 col-sm-3 col-md-3 flex-wrap">
+			<aside class="main left flexible">
+				<!-- <h2><rb:icon kind="fa-cogs"></rb:icon> Build Options</h2> -->
+				<rb:nav
+					caption="Build Options"
+					caption-icon="fa-cogs"
+					kind="sub"
+					activity="hash"
+					collection="[
+						{ caption: 'angular', url: '#angular' },
+						{ caption: 'browser', url: '#browser' },
+						{ caption: 'build', url: '#build' },
+						{ caption: 'dist', url: '#dist' },
+						{ caption: 'exclude', url: '#exclude' },
+						{ caption: 'extra', url: '#extra' },
+						{ caption: 'httpProxy', url: '#httpProxy' },
+						{ caption: 'minify', url: '#minify' },
+						{ caption: 'order', url: '#order' },
+						{ caption: 'ports', url: '#ports' },
+						{ caption: 'security', url: '#security' },
+						{ caption: 'server', url: '#server' },
+						{ caption: 'spa', url: '#spa' },
+						{ caption: 'src', url: '#src' },
+						{ caption: 'test', url: '#test' }
+					]">
+				</rb:nav>
+			</aside>
+		</div>
 
-	<section id="browser">
-		<h3>browser</h3>
-		<ul>
-			<li>
-				<h4>open <small>(boolean - true)</small></h4>
-				<dl>
-					<dt>description</dt>
-					<dd>
-						<ul>
-							<li>
-								Open the browser once the build completes,
-								applies to builds: default, dev and prod:server.
-							</li>
-						</ul>
-					</dd>
-					<dt>example</dt>
-					<dd>
-						<rb:code lang="js" size="small">
-							var opts = {
-								browser: {
-									open: false
-								}
-							}
-						</rb:code>
-					</dd>
-				</dl>
-			</li>
-			<li>
-				<h4>reload <small>(boolean - true)</small></h4>
-				<dl>
-					<dt>description</dt>
-					<dd>
-						<ul>
-							<li>
-								Reloads the browser once you save your
-								src file, only applies to dev builds.
-							</li>
-						</ul>
-					</dd>
-					<dt>example</dt>
-					<dd>
-						<rb:code lang="js" size="small">
-							var opts = {
-								browser: {
-									reload: false
-								}
-							}
-						</rb:code>
-					</dd>
-				</dl>
-			</li>
-		</ul>
-	</section>
+		<div class="col-xs-9 col-sm-9 col-md-9">
+			<div class="main-content">
+				<section id="browser">
+					<h3>browser</h3>
+					<ul>
+						<li>
+							<h4>open <small>(boolean - true)</small></h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Open the browser once the build completes,
+											applies to builds: default, dev and prod:server.
+										</li>
+									</ul>
+								</dd>
+								<dt>example</dt>
+								<dd>
+									<rb:code lang="js" size="small">
+										var opts = {
+											browser: {
+												open: false
+											}
+										}
+									</rb:code>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>reload <small>(boolean - true)</small></h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Reloads the browser once you save your
+											src file, only applies to dev builds.
+										</li>
+									</ul>
+								</dd>
+								<dt>example</dt>
+								<dd>
+									<rb:code lang="js" size="small">
+										var opts = {
+											browser: {
+												reload: false
+											}
+										}
+									</rb:code>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</section>
 
-	<section id="build">
-		<h3>build</h3>
-		<ul>
-			<li>
-				<h4>client <small class="sep">|</small> server <small>(boolean - true)</small></h4>
-				<dl>
-					<dt>description</dt>
-					<dd>
-						<ul>
-							<li>
-								Set to false to skip building the client or server.
-							</li>
-							<li>
-								Atleast one is required to be true.
-							</li>
-						</ul>
-					</dd>
-					<dt>example</dt>
-					<dd>
-						<rb:code lang="js" size="small">
-							var opts = {
-								build: {
-									server: false
-								}
-							}
-						</rb:code>
-					</dd>
-				</dl>
-			</li>
-		</ul>
-	</section>
+				<section id="build">
+					<h3>build</h3>
+					<ul>
+						<li>
+							<h4>client <small class="sep">|</small> server <small>(boolean - true)</small></h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Set to false to skip building the client or server.
+										</li>
+										<li>
+											Atleast one is required to be true.
+										</li>
+									</ul>
+								</dd>
+								<dt>example</dt>
+								<dd>
+									<rb:code lang="js" size="small">
+										var opts = {
+											build: {
+												server: false
+											}
+										}
+									</rb:code>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 

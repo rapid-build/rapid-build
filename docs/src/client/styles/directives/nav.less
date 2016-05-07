@@ -18,6 +18,7 @@
 
 		nav  { text-align: left; }
 		.nav { border-bottom: none; } // ul
+
 		li {
 			a {
 				padding: 10px 10px 19px;
@@ -40,7 +41,37 @@
 	}
 
 	&.sub {
-		text-transform: lowercase;
+		h4 {
+			margin: 0 0 19px 1px;
+			font-weight: 400;
+			.rb-icon {
+				top: -1px;
+				margin: 0 1px 0 0;
+				font-size: 16px;
+			}
+		}
+		li {
+			margin: 0;
+			#borders.nav.sub.links.bottom;
+			&:first-child { #borders.nav.sub.links.top; }
+
+			a {
+				border-radius: 0;
+				#fontColors.nav.sub.link;
+				&:focus { outline:none; }
+				&:hover {
+					#bg.nav.sub.hover;
+					#fontColors.links.hover;
+				}
+			}
+			&.active {
+				a {
+					cursor: default;
+					#fontColors.links.hover;
+					#bg.nav.sub.active;
+				}
+			}
+		}
 	}
 
 	&.mini {
@@ -122,7 +153,7 @@
 			}
 		}
 
-		.nav {
+		.nav { // ul
 			border-radius: @rd 0 @rd @rd;
 			#bg.nav.responsive.menu;
 			#borders.nav.responsive.menu;
