@@ -12,6 +12,22 @@
 		border-bottom: 1px solid #ddd;
 	}
 
+	@media (max-width: @screen-xs-max) {
+		section.main {
+			border-bottom: 1px dashed #999;
+		}
+		h2 {
+			margin-left: -10px;
+			padding-left: 10px;
+		}
+		aside.main {
+			padding: 0;
+		}
+		.flexible {
+			display: block;
+		}
+	}
+
 	section {
 		> ul {
 			list-style: none;
