@@ -10,8 +10,8 @@ angular.module('rapid-build').config ['$routeProvider'
 			.when '/getting-started',
 				templateUrl: '/views/mains/getting-started.html'
 
-			.when '/build-modes',
-				templateUrl: '/views/mains/build-modes.html'
+			.when '/build-types',
+				templateUrl: '/views/mains/build-types.html'
 
 			.when '/build-options',
 				templateUrl: '/views/mains/build-options.html'
