@@ -4,14 +4,14 @@ main {
 
 	/* 2 column layout
 	 ******************/
-	@botSpace: 90px;
+	@botSpace: 85px;
 	aside.main    { padding: 0 0 @botSpace; }
 	.main-content { padding: 15px 0 @botSpace 10px; }
 
 	/* main content
 	 ***************/
 	.main-content {
-		h2 {
+		h2.title {
 			margin: -15px 0 22px -25px;
 			padding-left: 22px;
 			border-top: none;
@@ -24,5 +24,13 @@ main {
 @media (max-width: @screen-xs-max) {
 	main {
 		aside.main { padding: 0; }
+
+		/* main content
+		 ***************/
+		.main-content {
+			h2.title {
+				display: none;
+			}
+		}
 	}
 }

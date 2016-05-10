@@ -20,7 +20,7 @@
 
 		li {
 			a {
-				padding: 10px 8px 19px;
+				padding: 10px 10px 19px;
 				border-radius: 10px 10px 0 0;
 				#fontColors.nav.main.link;
 				&:focus { outline:none; }
@@ -121,8 +121,8 @@
 	}
 }
 
-/* Responsive (currently only styled for: main | sub)
- *************/
+/* Responsive - xs
+ ******************/
 @media (max-width: @screen-xs-max) {
 	/* main
 	 *******/
@@ -241,6 +241,22 @@
 				}
 				&:first-child { a { border-radius: @rd 0 0 0; } }
 				&:last-child  { a { border-radius: 0 0 @rd @rd; } }
+			}
+		}
+	}
+}
+
+/* Responsive - sm
+ ******************/
+@media (max-width: @screen-sm-max) {
+	/* main
+	 *******/
+	.rb-nav.responsive.main {
+		li {
+			a { // prevent main nav from line break
+				@pad: 8px;
+				padding-left:  @pad;
+				padding-right: @pad;
 			}
 		}
 	}

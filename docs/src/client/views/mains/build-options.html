@@ -42,7 +42,202 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
 			<div class="main-content">
 				<!-- TITLE -->
-				<h2 class="hidden-xs sub">Options</h2>
+				<h2 class="sub title">Options</h2>
+
+				<!-- ANGULAR -->
+				<section id="angular">
+					<h3>angular</h3>
+					<ul>
+						<li>
+							<h4>
+								moduleName <em class="def">@type string, @default 'app'</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Application module name, value for ng-app.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								modules <em class="def">@type array of strings</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Additional angular modules to load.
+										</li>
+										<li>
+											By default the build loads
+											['ngResource', 'ngRoute', 'ngSanitize']
+											and 'ngMockE2E' based on angular.httpBackend options.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								version <em class="def">@type string, @default '1.x'</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											The version of angular to load.
+										</li>
+										<li>
+											<rb:icon kind="fa-exclamation-circle"></rb:icon>
+											Currently the build does not support angular 2
+											out of the box.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								ngFormify <em class="def">@type boolean, @default false</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Set to true to replace all html form tags with
+											<a target="_blank" href="https://docs.angularjs.org/api/ng/directive/ngForm">ng:form</a>.
+										</li>
+										<li>
+											Useful if your application is wrapped with a global form tag.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								httpBackend[dev|prod] <em class="def">@type boolean, @default false</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Set to true to enable httpBackend.
+										</li>
+										<li>
+											This will load angular module 'ngMockE2E'.
+										</li>
+										<li>
+											Dev option applies to default and dev builds.
+										</li>
+										<li>
+											Prod option applies to prod build.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								httpBackend.dir <em class="def">@type string, @default 'mocks'</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Directory for your client-side mock data.
+										</li>
+										<li>
+											Value must be a path relative to your client directory.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								templateCache.dev <em class="def">@type boolean, @default false</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Set to true to use angular's template cache to serve views.
+										</li>
+										<li>
+											Applies to default and dev builds.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								templateCache.urlPrefix <em class="def">@type string</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Prefix for template urls.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+						<li>
+							<h4>
+								templateCache.useAbsolutePaths <em class="def">@type boolean, @default false</em>
+							</h4>
+							<dl>
+								<dt>description</dt>
+								<dd>
+									<ul>
+										<li>
+											Prefix template urls with a '/'.
+										</li>
+									</ul>
+								</dd>
+							</dl>
+						</li>
+
+						<li class="example">
+							<h4>example</h4>
+							<rb:code lang="js" size="small">
+								var opts = {
+									angular: {
+										modules: ['ngAnimate'],
+										moduleName: 'rapid-build',
+										version: '1.5.x',
+										ngFormify: true,
+										httpBackend: {
+											dev: true,
+											prod: true,
+											dir: 'backendless'
+										},
+										templateCache: {
+											dev: true,
+											urlPrefix: 'rapid-build',
+											useAbsolutePaths: true
+										}
+									}
+								}
+							</rb:code>
+						</li>
+					</ul>
+				</section>
 
 				<!-- BROWSER -->
 				<section id="browser">
@@ -57,8 +252,10 @@
 								<dd>
 									<ul>
 										<li>
-											Open the browser once the build completes,
-											applies to builds: default, dev and prod:server.
+											Open the browser once the build completes.
+										</li>
+										<li>
+											Applies to builds: default, dev and prod:server.
 										</li>
 									</ul>
 								</dd>
@@ -73,8 +270,10 @@
 								<dd>
 									<ul>
 										<li>
-											Reloads the browser once you save your
-											src file, only applies to dev builds.
+											Reloads the browser once you save your src file.
+										</li>
+										<li>
+											Applies to dev build.
 										</li>
 									</ul>
 								</dd>
@@ -168,6 +367,7 @@
 						</li>
 					</ul>
 				</section>
+
 			</div>
 		</div>
 
