@@ -121,12 +121,32 @@
 	}
 }
 
+/* Main Header
+ **************/
+header.main {
+	.rb-nav {
+		.shell {
+			position: absolute;
+			top: 38px;
+			right: -15px;
+		}
+	}
+}
+
+/* Table Adjustments
+ ********************/
+table {
+	.rb-nav {
+		&.mini {
+			margin-top: -4px;
+		}
+	}
+}
+
 /* Responsive - xs
  ******************/
 @media (max-width: @screen-xs-max) {
-	/* main
-	 *******/
-	.rb-nav.responsive.main {
+	.rb-nav.responsive {
 		@rd: 8px;
 		text-align: right;
 
@@ -154,6 +174,8 @@
 		}
 
 		.nav { // ul
+			max-height: 295px;
+			overflow-y: scroll;
 			border-radius: @rd 0 @rd @rd;
 			#bg.nav.responsive.menu;
 			#borders.nav.responsive.menu;
@@ -164,7 +186,7 @@
 				&:first-child { border-top: none; }
 				a {
 					margin: 0;
-					padding: 15px 15px;
+					padding: 15px;
 					border: none;
 					border-radius: 0;
 					&:hover {
@@ -184,63 +206,34 @@
 		}
 	}
 
-	/* sub
+	/* Sub
 	 ******/
 	.rb-nav.responsive.sub {
-		@rd: 8px;
-		text-align: right;
-
-		.shell {
-			position: absolute;
-			top: 13px;
-			right: 22px;
-		}
-
-		.toggle {
-			padding: 0 10px;
-			border-radius: @rd;
-			#fontColors.text;
-			#bg.nav.responsive.toggle;
-			#borders.nav.responsive.toggle;
-			#fontSizes.nav.responsive.toggle;
-			&:hover { #fontColors.links.hover; }
-		}
-
-		&.nav-open {
-			.toggle {
+		.nav {
+			li {
 				border-bottom: none;
-				border-radius: @rd @rd 0 0;
 			}
 		}
+	}
 
-		.nav {
-			border-radius: @rd 0 @rd @rd;
-			#bg.nav.responsive.menu;
-			#borders.nav.responsive.menu;
-			li {
-				float: none;
-				margin-bottom: 0;
-				border-bottom: none;
-				#borders.nav.responsive.links;
-				&:first-child { border-top: none; }
-				a {
-					margin: 0;
-					padding: 15px 15px;
-					border: none;
-					border-radius: 0;
-					&:hover {
-						#fontColors.links.hover;
-						#bg.nav.responsive.links.hover;
-					}
-				}
-				&.active {
-					a {
-						#fontColors.links.hover;
-						#bg.nav.responsive.links.active;
-					}
-				}
-				&:first-child { a { border-radius: @rd 0 0 0; } }
-				&:last-child  { a { border-radius: 0 0 @rd @rd; } }
+	/* Main Header
+	 **************/
+	header.main {
+		.rb-nav.responsive {
+			.shell {
+				top: 0;
+				right: 0;
+			}
+		}
+	}
+
+	/* Main Aside
+	 *************/
+	aside.main {
+		.rb-nav.responsive {
+			.shell {
+				top: 13px;
+				right: 22px;
 			}
 		}
 	}
@@ -251,35 +244,13 @@
 @media (max-width: @screen-sm-max) {
 	/* main
 	 *******/
-	.rb-nav.responsive.main {
+	.rb-nav.main {
 		li {
 			a { // prevent main nav from line break
 				@pad: 8px;
 				padding-left:  @pad;
 				padding-right: @pad;
 			}
-		}
-	}
-}
-
-/* Main Header
- **************/
-header.main {
-	.rb-nav {
-		.shell {
-			position: absolute;
-			top: 38px;
-			right: -15px;
-		}
-	}
-}
-
-/* Table Adjustments
- ********************/
-table {
-	.rb-nav {
-		&.mini {
-			margin-top: -4px;
 		}
 	}
 }
