@@ -9,6 +9,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 				element.attr 'hljs', ''
 				element.attr 'hljs-language', lang if lang
 				element.attr 'hljs-interpolate', true if scope.interpolate
+				element.attr 'hljs-source', scope.src if scope.src
 				$compile(element) scope.$parent
 				element.prepend "<h4 title=\"#{lang}\">#{lang}</h4>" if lang
 
@@ -20,6 +21,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 
 			# transclude
 			transcludeFn (clone) ->
+				return help.compile text, scope, element if scope.src
 				elm  = clone[0]
 				return unless elm
 				text = elm.textContent
@@ -37,6 +39,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 			display: '@'
 			lang: '@'
 			size: '@'
+			src: '@' # = binding
 			# valueless attrs:
 			# interpolate: '@'
 ]

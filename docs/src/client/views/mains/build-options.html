@@ -1,4 +1,4 @@
-<div class="build-options">
+<div class="build-options" ng-controller="buildOptsController">
 	<section class="main">
 		<h1>
 			<rb:icon kind="fa-cogs"></rb:icon>
@@ -44,236 +44,21 @@
 				<!-- TITLE -->
 				<h2 class="sub title">Options</h2>
 
-				<!-- ANGULAR -->
-				<section id="angular">
-					<h3>angular</h3>
+				<!-- BUILD OPTIONS -->
+				<section id="{{opt}}" ng-repeat="(opt, val) in ::buildOpts">
+					<h3 ng-bind="opt"></h3>
 					<ul>
-						<li>
+						<li ng-repeat="opts in val.opts">
 							<h4>
-								moduleName <em class="def">@type string, @default 'app'</em>
+								<span ng-bind-html="opts.name"></span>
+								<em class="def" ng-bind="opts.define"></em>
 							</h4>
 							<dl>
 								<dt>description</dt>
 								<dd>
 									<ul>
-										<li>
-											Application module name, value for ng-app.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								modules <em class="def">@type array of strings</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Additional angular modules to load.
-										</li>
-										<li>
-											By default the build loads
-											['ngResource', 'ngRoute', 'ngSanitize']
-											and 'ngMockE2E' based on angular.httpBackend options.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								version <em class="def">@type string, @default '1.x'</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											The version of angular to load.
-										</li>
-										<li>
-											<rb:icon kind="fa-exclamation-circle"></rb:icon>
-											Currently the build does not support angular 2
-											out of the box.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								ngFormify <em class="def">@type boolean, @default false</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Set to true to replace all html form tags with
-											<a target="_blank" href="https://docs.angularjs.org/api/ng/directive/ngForm">ng:form</a>.
-										</li>
-										<li>
-											Useful if your application is wrapped with a global form tag.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								httpBackend[dev|prod] <em class="def">@type boolean, @default false</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Set to true to enable httpBackend.
-										</li>
-										<li>
-											This will load angular module 'ngMockE2E'.
-										</li>
-										<li>
-											Dev option applies to default and dev builds.
-										</li>
-										<li>
-											Prod option applies to prod build.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								httpBackend.dir <em class="def">@type string, @default 'mocks'</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Directory for your client-side mock data.
-										</li>
-										<li>
-											Value must be a path relative to your client directory.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								templateCache.dev <em class="def">@type boolean, @default false</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Set to true to use angular's template cache to serve views.
-										</li>
-										<li>
-											Applies to default and dev builds.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								templateCache.urlPrefix <em class="def">@type string</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Prefix for template urls.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								templateCache.useAbsolutePaths <em class="def">@type boolean, @default false</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Prefix template urls with a '/'.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-
-						<li class="example">
-							<h4>example</h4>
-							<rb:code lang="js" size="small">
-								var opts = {
-									angular: {
-										modules: ['ngAnimate'],
-										moduleName: 'rapid-build',
-										version: '1.5.x',
-										ngFormify: true,
-										httpBackend: {
-											dev: true,
-											prod: true,
-											dir: 'backendless'
-										},
-										templateCache: {
-											dev: true,
-											urlPrefix: 'rapid-build',
-											useAbsolutePaths: true
-										}
-									}
-								}
-							</rb:code>
-						</li>
-					</ul>
-				</section>
-
-				<!-- BROWSER -->
-				<section id="browser">
-					<h3>browser</h3>
-					<ul>
-						<li>
-							<h4>
-								open <em class="def">@type boolean, @default true</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Open the browser once the build completes.
-										</li>
-										<li>
-											Applies to builds: default, dev and prod:server.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<h4>
-								reload <em class="def">@type boolean, @default true</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Reloads the browser once you save your src file.
-										</li>
-										<li>
-											Applies to dev build.
+										<li bind-html-compile="desc"
+											ng-repeat="desc in opts.description">
 										</li>
 									</ul>
 								</dd>
@@ -281,96 +66,13 @@
 						</li>
 						<li class="example">
 							<h4>example</h4>
-							<rb:code lang="js" size="small">
-								var opts = {
-									browser: {
-										open: false,
-										reload: false
-									}
-								}
-							</rb:code>
-						</li>
-					</ul>
-				</section>
-
-				<!-- BUILD -->
-				<section id="build">
-					<h3>build</h3>
-					<ul>
-						<li>
-							<h4>
-								client <small class="sep">|</small> server
-								<em class="def">@type boolean, @default true</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											Set to false to skip building the client or server.
-										</li>
-										<li>
-											<rb:icon kind="fa-exclamation-circle"></rb:icon>
-											Atleast one must be true.
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li class="example">
-							<h4>example</h4>
-							<rb:code lang="js" size="small">
-								var opts = {
-									build: {
-										client: false,
-										server: false
-									}
-								}
-							</rb:code>
-						</li>
-					</ul>
-				</section>
-
-				<!-- SECURITY -->
-				<section id="security">
-					<h3>security</h3>
-					<ul>
-						<li>
-							<h4>
-								client.clickjacking
-								<em class="def">@type boolean, @default true</em>
-							</h4>
-							<dl>
-								<dt>description</dt>
-								<dd>
-									<ul>
-										<li>
-											The build will include a
-											<a  target="_blank" href="https://www.owasp.org/index.php/Clickjacking">clickjacking</a>
-											defense script in the default spa.html (set to false to disable).
-										</li>
-									</ul>
-								</dd>
-							</dl>
-						</li>
-						<li class="example">
-							<h4>example</h4>
-							<rb:code lang="js" size="small">
-								var opts = {
-									security: {
-										client: {
-											clickjacking: false
-										}
-									}
-								}
-							</rb:code>
+							<rb:code lang="js" size="small" src="val.example"></rb:code>
 						</li>
 					</ul>
 				</section>
 
 			</div>
 		</div>
-
 	</div>
 </div>
 

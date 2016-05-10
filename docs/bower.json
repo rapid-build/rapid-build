@@ -5,6 +5,7 @@
 		"ionicons": "2.0.1",
 		"bootstrap": "3.3.6",
 		"font-awesome": "4.5.0",
-		"angular-highlightjs": "0.6.1"
+		"angular-highlightjs": "0.6.1",
+		"angular-bind-html-compile": "1.2.1"
 	}
 }
