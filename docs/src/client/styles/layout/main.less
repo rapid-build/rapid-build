@@ -2,7 +2,27 @@ main {
 	margin: 0;
 	min-height: 450px;
 
-	aside.main    { padding: 0 0 100px; } // padding: 18px 0 100px;
-	.main-content { padding: 15px 0 100px 10px; }
+	/* 2 column layout
+	 ******************/
+	@botSpace: 90px;
+	aside.main    { padding: 0 0 @botSpace; }
+	.main-content { padding: 15px 0 @botSpace 10px; }
 
+	/* main content
+	 ***************/
+	.main-content {
+		h2 {
+			margin: -15px 0 22px -25px;
+			padding-left: 22px;
+			border-top: none;
+		}
+	}
+}
+
+/* Responsive
+ *************/
+@media (max-width: @screen-xs-max) {
+	main {
+		aside.main { padding: 0; }
+	}
 }
