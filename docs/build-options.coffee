@@ -26,7 +26,7 @@ getCommonOptions = ->
 				]
 	angular:
 		moduleName: 'rapid-build'
-		modules: ['angular-bind-html-compile', 'hljs']
+		modules: ['angular-bind-html-compile', 'duScroll', 'hljs']
 		templateCache:
 			dev: true
 			useAbsolutePaths: true

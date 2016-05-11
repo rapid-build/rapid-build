@@ -1,5 +1,5 @@
-angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
-	($location, $timeout) ->
+angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout', 'anchorService',
+	($location, $timeout, anchorService) ->
 		# helpers
 		# =======
 		getHash = (url) ->
@@ -22,16 +22,20 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 		# Link
 		# ====
 		link = (scope, element, attrs, controllers) ->
-			# defaults: valueless attrs
-			scope.responsive = attrs.responsive isnt undefined
-
 			# responsive
 			# ==========
-			resHidden = 'hidden-xs'
-			scope.resHidden = resHidden if scope.responsive
-			scope.toggle = ->
+			resHidden          = 'hidden-xs'
+			scope.isResponsive = attrs.responsive isnt undefined # valueless attr
+			scope.resHidden    = resHidden if scope.isResponsive
+
+			scope.respToggle = ->
 				return scope.resHidden = '' if scope.resHidden is resHidden
 				scope.resHidden = resHidden
+
+			scope.respAction = ->
+				return unless scope.isResponsive
+				return unless scope.respOpts
+				scope.respToggle() if scope.respOpts.postAction is 'close'
 
 			# activity helpers
 			# ================
@@ -118,6 +122,12 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 				return unless model.action
 				model.action?(model)
 
+			# anchor scrolling
+			# ================
+			scope.anchorScroll = (url) ->
+				return unless getActivity() is 'hash'
+				anchorService.scroll url
+
 			# destroy (for performance)
 			# =========================
 			scope.$on '$destroy', ->
@@ -143,11 +153,8 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout',
 			captionIcon: '@'
 			kind:        '@' # main | sub | mini
 			collection:  '=' # [ active: bool | 'disable', caption: string, url: string ]
+			respOpts:    '=responsive'
 			separators:  '=' # currently styled for: mini
-			# ---------------
-			# valueless attrs
-			# ---------------
-			# responsive: '@' # currently styled for: main | sub
 ]
 
 

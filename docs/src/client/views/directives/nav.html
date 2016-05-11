@@ -1,17 +1,17 @@
 <div class="rb-nav" ng-class="[
 		kind,
-		responsive ? 'responsive' : '',
-		responsive && !resHidden ? 'nav-open' : ''
+		isResponsive ? 'responsive' : '',
+		isResponsive && !resHidden ? 'nav-open' : ''
 	].join(' ')">
 	<div class="shell">
 		<a href
 		   class="toggle"
-		   ng-click="toggle()"
-		   ng-class="[responsive ? 'visible-xs-inline-block' : ''].join(' ')">
+		   ng-click="respToggle()"
+		   ng-class="[isResponsive ? 'visible-xs-inline-block' : ''].join(' ')">
 			<rb:icon kind="fa-navicon"></rb:icon>
 		</a>
 
-		<nav ng-class="[responsive ? resHidden : ''].join(' ')">
+		<nav ng-class="[isResponsive ? resHidden : ''].join(' ')">
 			<h4 ng-if="!!caption">
 				<rb:icon kind="{{captionIcon}}" ng-if="!!captionIcon"></rb:icon>
 				{{::caption}}
@@ -23,12 +23,12 @@
 				].join(' ')">
 				<li ng-repeat="model in ::collection"
 					ng-class="[model.active === true ? 'active' : ''].join(' ')">
-					<b class="separator" ng-if="::separators"></b><a
-						tabindex="0"
-						title="{{model.title}}"
-						ng-click="clickActive(); clickAction(model)"
-						ng-href="{{model.url}}"
-						target="{{model.target}}">
+					<b class="separator" ng-if="::separators"></b>
+					<a tabindex="0"
+					   title="{{model.title}}"
+					   ng-click="clickActive(); clickAction(model); respAction(); anchorScroll(model.url)"
+					   ng-href="{{model.url}}"
+					   target="{{model.target}}">
 						<span class="caption"
 							  ng-bind="model.caption"
 							  ng-if="!!model.caption">
