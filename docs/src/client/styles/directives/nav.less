@@ -176,6 +176,7 @@ table {
 		.nav { // ul
 			max-height: 348px;
 			overflow-y: auto;
+			overflow-x: hidden;
 			border-radius: @rd 0 @rd @rd;
 			#bg.nav.responsive.menu;
 			#borders.nav.responsive.menu;
@@ -186,7 +187,7 @@ table {
 				&:first-child { border-top: none; }
 				a {
 					margin: 0;
-					padding: 15px;
+					padding: 15px 20px 15px 15px;
 					border: none;
 					border-radius: 0;
 					&:hover {
