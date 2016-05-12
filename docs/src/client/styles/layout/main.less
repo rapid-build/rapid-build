@@ -1,20 +1,20 @@
 main {
-	margin: 0;
 	min-height: 450px;
 
-	/* 2 column layout
-	 ******************/
+	/* 2 columns
+	 ************/
 	@botSpace: 85px;
 	aside.main    { padding: 0 0 @botSpace; }
-	.main-content { padding: 15px 0 @botSpace 10px; }
+	.main-content { padding: 15px 5px @botSpace; }
 
 	/* main content
 	 ***************/
-	.main-content {
-		h2.title {
-			margin: -15px 0 22px -25px;
-			padding-left: 22px;
-			border-top: none;
+	h2.title {
+		margin-bottom: 0;
+		&+ .main-content {
+			padding-left: 0;
+			padding-right: 0;
+			margin: 0 15px 0 20px;
 		}
 	}
 }
@@ -27,9 +27,12 @@ main {
 
 		/* main content
 		 ***************/
-		.main-content {
-			h2.title {
-				display: none;
+		h2.title {
+			display: none;
+			&+ .main-content {
+				margin: 0;
+				padding-left: 5px;
+				padding-right: 5px;
 			}
 		}
 	}
