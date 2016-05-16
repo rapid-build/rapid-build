@@ -23,7 +23,8 @@ module.exports = (config, options) ->
 	exclude =
 		spa: !!options.exclude.spa
 		angular:
-			files: get.opt.deep2 'angular', 'files', false
+			files:   get.opt.deep2 'angular', 'files',   false
+			modules: get.opt.deep2 'angular', 'modules', false
 		default:
 			client:
 				files: get.opt.deep3 'default', 'client', 'files', false
@@ -53,6 +54,14 @@ module.exports = (config, options) ->
 				dist:
 					client: get.opt.deep3 'from', 'dist', 'client', []
 					server: get.opt.deep3 'from', 'dist', 'server', []
+
+	# update spa val
+	# ==============
+	updateExcludeSpa = ->
+		return if config.spa.custom
+		exclude.spa = true if exclude.default.client.files
+
+	updateExcludeSpa()
 
 	# format options
 	# ==============

@@ -41,6 +41,8 @@ module.exports = (config, gulp) ->
 	api =
 		runTask: ->
 			return promiseHelp.get() if config.angular.httpBackend.enabled
+			return promiseHelp.get() if config.exclude.default.client.files
+
 			src  = bowerHelper.get.src 'rb', pkg:'angular-mocks', test:true
 			dest = config.src.rb.client.test.dir
 			# console.log src

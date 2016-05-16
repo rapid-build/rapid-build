@@ -28,6 +28,8 @@ module.exports = (config, gulp) ->
 	api =
 		runTask: ->
 			return promiseHelp.get() if config.angular.httpBackend.enabled
+			return promiseHelp.get() if config.exclude.default.client.files
+
 			data = getData()
 			src  = path.join config.templates.dir, 'inject-angular-mocks.tpl'
 			dest = config.src.rb.client.test.dir

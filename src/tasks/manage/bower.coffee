@@ -4,7 +4,9 @@ module.exports = (config) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
-	runTask = (appOrRb) ->
+	runTask = (appOrRb, exclude) ->
+		return promiseHelp.get() if exclude
+
 		defer     = q.defer()
 		bowerPkgs = bowerHelper.get.pkgs.to.install appOrRb
 		return promiseHelp.get defer if not bowerPkgs or not bowerPkgs.length
@@ -27,9 +29,10 @@ module.exports = (config) ->
 	# ===
 	api =
 		runTask: ->
-			defer = q.defer()
+			defer     = q.defer()
+			rbExclude = true if config.exclude.default.client.files
 			q.all([
-				runTask 'rb'
+				runTask 'rb', rbExclude
 				runTask 'app'
 			]).done -> defer.resolve()
 			defer.promise

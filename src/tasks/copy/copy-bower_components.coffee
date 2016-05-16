@@ -53,9 +53,11 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: ->
-			defer = q.defer()
+			defer     = q.defer()
+			rbExclude = true if config.exclude.default.client.files
+			rbExclude = true if config.exclude.angular.files
 			q.all([
-				getComponents 'rb', config.exclude.angular.files
+				getComponents 'rb', rbExclude
 				getComponents 'app'
 			]).done -> defer.resolve()
 			defer.promise
