@@ -159,16 +159,126 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			}
 		"""
 
+	exclude:
+		opts: [
+			name: 'spa'
+			define: "@type boolean, @default false"
+			description: [
+				"Set to true to exclude spa.html from dist/client/"
+			]
+		,
+			name: 'angular.files'
+			define: "@type boolean, @default false"
+			description: [
+				"Set to true to exclude the angular files
+				from dist/client/ that come with rapid-build."
+				"Includes: angular lib
+				and angular modules (see option angular.modules)."
+			]
+		,
+			name: 'angular.modules'
+			define: "@type boolean, @default false"
+			description: [
+				"Set to true to exclude injecting the
+				angular modules that come with rapid-build
+				(see option angular.modules)."
+			]
+		,
+			name: 'default[client|server].files'
+			define: "@type boolean, @default false"
+			description: [
+				"Set to true to exclude the
+				client or server files rapid-build
+				sends to the dist/client/ or dist/server/
+				directory."
+			]
+		,
+			name: 'from.cacheBust'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Files to exclude from the client-side cache bust."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the dist/client/ directory."
+			]
+		,
+			name: 'from.dist[client|server]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Client or server files to exclude
+				from dist/client/ or dist/server/
+				directory."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the src/client/
+				 or src/server/ directory."
+			]
+		,
+			name: 'from.minFile[scripts|styles]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Script or style files to exclude from
+				scripts.min.js or styles.min.css file."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the dist/client/ directory."
+			]
+		,
+			name: 'from.spaFile[scripts|styles]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Script or style files to exclude from
+				the spa.html file."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the dist/client/ directory."
+			]
+		]
+		example: """
+			var opts = {
+				exclude: {
+					spa: true,
+					angular: {
+						files: true,
+						modules: true
+					},
+					default: {
+						client: {
+							files: true
+						},
+						server: {
+							files: true
+						}
+					},
+					from: {
+						cacheBust: ['images/superheroes/*'],
+						dist: {
+							client: ['bower_components/bootstrap/less/bootstrap.less'],
+							server: ['data/superheroes.json']
+						},
+						minFile: {
+							scripts: ['ie/ie10.js'],
+							styles: ['ie/ie10.css']
+						}
+						spa: {
+							scripts: ['ie/ie10.js'],
+							styles: ['ie/ie10.css']
+						}
+					}
+				}
+			}
+		"""
+
 	order:
 		opts: [
 			name: '[scripts|styles][first|last]'
 			define: "@type array of strings"
 			description: [
 				"Array of file paths to css or js files."
-				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
-				 File paths must be relative to your dist/client/ directory."
 				"Use first to load specific scripts or styles first."
 				"Use last to load specific scripts or styles last."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the dist/client/ directory."
 			]
 		]
 		example: """
@@ -304,9 +414,9 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 				"Provide to use your own spa.html
 				file and not the build's default spa.html."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
-				 File must be located in your src/client/ directory."
+				 File must be located in the src/client/ directory."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
-				 File path must be relative to your src/client/ directory."
+				 File path must be relative to the src/client/ directory."
 			]
 		]
 		example: """

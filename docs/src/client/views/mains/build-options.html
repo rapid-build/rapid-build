@@ -53,7 +53,7 @@
 					</h3>
 					<ul>
 						<li ng-repeat="opts in val.opts">
-							<h4>
+							<h4 id="{{opt}}.{{opts.name}}">
 								<span ng-bind-html="opts.name"></span>
 								<em class="def" ng-bind="opts.define"></em>
 							</h4>
