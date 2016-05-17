@@ -159,6 +159,33 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			}
 		"""
 
+	order:
+		opts: [
+			name: '[scripts|styles][first|last]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths to css or js files."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to your dist/client/ directory."
+				"Use first to load specific scripts or styles first."
+				"Use last to load specific scripts or styles last."
+			]
+		]
+		example: """
+			var opts = {
+				order: {
+					scripts: {
+						first: ['scripts/bootstrap.js'],
+						last: ['scripts/init.js']
+					},
+					styles: {
+						first: ['styles/reset.css'],
+						last: ['styles/utilities.css']
+					}
+				}
+			}
+		"""
+
 	ports:
 		opts: [
 			name: 'reload'
@@ -293,6 +320,24 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 					},
 					src: {
 						filePath: 'spa.html'
+					}
+				}
+			}
+		"""
+
+	test:
+		opts: [
+			name: 'client.browsers'
+			define: "@type array of strings (browser names)"
+			description: [
+				"Phantomjs will run by default."
+			]
+		]
+		example: """
+			var opts = {
+				test: {
+					client: {
+						browsers: ['chrome', 'firefox', 'ie', 'safari']
 					}
 				}
 			}
