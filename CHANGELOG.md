@@ -1,3 +1,12 @@
+## [0.58.1](https://github.com/jyounce/rapid-build/compare/v0.58.0...v0.58.1) (2016-05-17)
+
+
+### Bug Fixes
+
+* **bower:** do not download the build's default bower files when option exclude.default.client.files is true ([d73f353](https://github.com/jyounce/rapid-build/commit/d73f353))
+
+
+
 # [0.58.0](https://github.com/jyounce/rapid-build/compare/v0.57.0...v0.58.0) (2016-05-04)
 
 
