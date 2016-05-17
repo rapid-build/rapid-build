@@ -39,6 +39,7 @@
 						content: '...';
 					}
 					> h4 {
+						margin-bottom: 15px;
 						font-size: 14px;
 						font-weight: 400;
 						color: lightslategrey;
@@ -66,8 +67,23 @@
 			dd {
 				font-size: 13px;
 				color: lightslategrey;
-				ul { margin: 0 0 15px; }
-
+				ul {
+					margin: 0 0 16px;
+					ul {
+						list-style: none;
+						margin: 3px 0 -5px;
+						> li {
+							position: relative;
+							&::before {
+								position: absolute;
+								top: -12px;
+								left: -17px;
+								font-size: 28px;
+								content: '·';
+							}
+						}
+					}
+				}
 			}
 		}
 	}

@@ -51,10 +51,10 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'templateCache.dev'
+			builds: 'default and dev'
 			define: "@type boolean, @default false"
 			description: [
 				"Set to true to use angular's template cache to serve views."
-				"Applies to default and dev builds."
 			]
 		,
 			name: 'templateCache.urlPrefix'
@@ -94,16 +94,16 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 		opts: [
 			name: 'open'
 			define: "@type boolean, @default true"
+			builds: 'default, dev and prod:server'
 			description: [
 				"Open the browser once the build completes."
-				"Applies to builds: default, dev and prod:server."
 			]
 		,
 			name: 'reload'
 			define: "@type boolean, @default true"
+			builds: 'dev'
 			description: [
 				"Reloads the browser once you save your src file."
-				"Applies to dev build."
 			]
 		]
 		example: """
@@ -134,6 +134,71 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			}
 		"""
 
+	browser:
+		opts: [
+			name: 'open'
+			define: "@type boolean, @default true"
+			builds: 'default, dev and prod:server'
+			description: [
+				"Open the browser once the build completes."
+			]
+		,
+			name: 'reload'
+			define: "@type boolean, @default true"
+			builds: 'dev'
+			description: [
+				"Reloads the browser once you save your src file."
+			]
+		]
+		example: """
+			var opts = {
+				browser: {
+					open: false,
+					reload: false
+				}
+			}
+		"""
+
+	ports:
+		opts: [
+			name: 'reload'
+			define: "@type int, @default 3001"
+			builds: 'dev'
+			description: [
+				"Browsersync server port."
+			]
+		,
+			name: 'reloadUI'
+			define: "@type int, @default 3002"
+			builds: 'dev'
+			description: [
+				"Browsersync's user-interface server port."
+			]
+		,
+			name: 'server'
+			define: "@type int, @default 3000"
+			description: [
+				"Web server port."
+			]
+		,
+			name: 'test'
+			define: "@type int, @default 9876"
+			builds: 'test'
+			description: [
+				"Karma server port."
+			]
+		]
+		example: """
+			var opts = {
+				ports: {
+					reload: 5002,
+					reloadUI: 5003,
+					server: 5000,
+					test: 5004
+				}
+			}
+		"""
+
 	security:
 		opts: [
 			name: 'client.clickjacking'
@@ -153,6 +218,89 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 				}
 			}
 		"""
+
+	server:
+		opts: [
+			name: 'node_modules'
+			define: "@type array of strings"
+			description: [
+				"Node modules to copy to dist/server/node_modules/"
+			]
+		]
+		example: """
+			var opts = {
+				server: {
+					node_modules: ['cors']
+				}
+			}
+		"""
+
+	spa:
+		opts: [
+			name: 'description'
+			define: "@type string, @default package.json description"
+			description: [
+				"Default spa.html meta description tag value."
+			]
+		,
+			name: 'placeholders'
+			define: "@type array of strings"
+			description: [
+				"Retain spa.html file placeholders.",
+				"Options include:
+				<ul>
+					<li>
+						all or
+					</li>
+					<li>
+						clickjacking, description, moduleName, scripts, styles and title
+					</li>
+				</ul>"
+			]
+		,
+			name: 'title'
+			define: "@type string, @default package.json name or 'Application'"
+			description: [
+				"Default spa.html title tag value."
+			]
+		,
+			name: 'dist.fileName'
+			define: "@type string, @default file name of spa.src.filePath or 'spa.html'"
+			description: [
+				"Provide to name dist/client/spa.html file differently."
+				"Example: 'index.html'"
+			]
+		,
+			name: 'src.filePath'
+			define: "@type string"
+			description: [
+				"Provide to use your own spa.html
+				file and not the build's default spa.html."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File must be located in your src/client/ directory."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File path must be relative to your src/client/ directory."
+			]
+		]
+		example: """
+			var opts = {
+				spa: {
+					description: 'Documentation website for rapid-build.',
+					placeholders: ['all'],
+					title: 'Rapid Build',
+					dist: {
+						fileName: 'index.html'
+					},
+					src: {
+						filePath: 'spa.html'
+					}
+				}
+			}
+		"""
+
+
+
+
 
 
 
