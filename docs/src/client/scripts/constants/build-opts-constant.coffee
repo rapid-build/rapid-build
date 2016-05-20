@@ -653,8 +653,9 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	test:
 		opts: [
 			name: 'client.browsers'
-			define: "@type array of strings (browser names)"
+			define: "@type array of strings"
 			description: [
+				"Array of browser names."
 				"Phantomjs will run by default."
 			]
 		]
