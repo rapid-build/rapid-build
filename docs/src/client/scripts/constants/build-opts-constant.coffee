@@ -12,9 +12,9 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Additional angular modules to load."
 				"By default the build loads
-				['ngResource', 'ngRoute', 'ngSanitize']
-				and 'ngMockE2E' based on angular.httpBackend
-				options."
+				 ['ngResource', 'ngRoute', 'ngSanitize']
+				 and 'ngMockE2E' based on angular.httpBackend
+				 options."
 			]
 		,
 			name: 'version'
@@ -22,15 +22,15 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"The version of angular to load."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
-				Currently the build does not support angular 2
-				out of the box."
+				 Currently the build does not support angular 2
+				 out of the box."
 			]
 		,
 			name: 'ngFormify'
 			define: "@type boolean, @default false"
 			description: [
 				"Set to true to replace all html form tags with
-				<a target=\"_blank\" href=\"https://docs.angularjs.org/api/ng/directive/ngForm\">ng:form</a>."
+				 <a target=\"_blank\" href=\"https://docs.angularjs.org/api/ng/directive/ngForm\">ng:form</a>."
 				"Useful if your application is wrapped with a global form tag."
 			]
 		,
@@ -72,8 +72,8 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 		example: """
 			var opts = {
 				angular: {
-					modules: ['ngAnimate'],
 					moduleName: 'rapid-build',
+					modules: ['ngAnimate'],
 					version: '1.5.x',
 					ngFormify: true,
 					httpBackend: {
@@ -122,7 +122,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Set to false to skip building the client or server."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
-				Atleast one must be true."
+				 Atleast one must be true."
 			]
 		]
 		example: """
@@ -171,26 +171,26 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			define: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude the angular files
-				from dist/client/ that come with rapid-build."
+				 from dist/client/ that come with rapid-build."
 				"Includes: angular lib
-				and angular modules (see option angular.modules)."
+				 and angular modules (see option angular.modules)."
 			]
 		,
 			name: 'angular.modules'
 			define: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude injecting the
-				angular modules that come with rapid-build
-				(see option angular.modules)."
+				 angular modules that come with rapid-build
+				 (see option angular.modules)."
 			]
 		,
 			name: 'default[client|server].files'
 			define: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude the
-				client or server files rapid-build
-				sends to the dist/client/ or dist/server/
-				directory."
+				 client or server files rapid-build
+				 sends to the dist/client/ or dist/server/
+				 directory."
 			]
 		,
 			name: 'from.cacheBust'
@@ -207,8 +207,8 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Array of file paths."
 				"Client or server files to exclude
-				from dist/client/ or dist/server/
-				directory."
+				 from dist/client/ or dist/server/
+				 directory."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
 				 File paths must be relative to the src/client/
 				 or src/server/ directory."
@@ -219,7 +219,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Array of file paths."
 				"Script or style files to exclude from
-				scripts.min.js or styles.min.css file."
+				 scripts.min.js or styles.min.css file."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
 				 File paths must be relative to the dist/client/ directory."
 			]
@@ -229,7 +229,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Array of file paths."
 				"Script or style files to exclude from
-				the spa.html file."
+				 the spa.html file."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
 				 File paths must be relative to the dist/client/ directory."
 			]
@@ -266,6 +266,107 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 						}
 					}
 				}
+			}
+		"""
+
+	extra:
+		opts: [
+			name: 'compile.client[coffee|es6|less|sass]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Additional files to compile to dist/client/
+				 directory that the build didn't compile."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the
+				 src/client/ directory."
+			]
+		,
+			name: 'compile.server[less|sass]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Additional files to compile to dist/server/
+				 directory that the build didn't compile."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the
+				 src/server/ directory."
+			]
+		,
+			name: 'copy[client|server]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Additional files to copy to
+				 dist/client/ and or dist/server/
+				 directory that the build didn't copy."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the
+				 src/client/ or src/server/ directory."
+			]
+		,
+			name: 'minify.client[css|js]'
+			define: "@type array of strings"
+			description: [
+				"Array of file paths."
+				"Additional files to minify in dist/client/
+				 directory that the build didn't minify."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 By default, the build does not minify
+				 files in libs or bower_components directories."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 File paths must be relative to the
+				 dist/client/ or dist/server/ directory."
+			]
+		]
+		example: """
+			var opts = {
+				extra: {
+					compile: {
+						client: {
+							coffee: ['libs/coffee/utilities.coffee'],
+							es6: ['libs/es6/utilities.es6'],
+							less: ['bower_components/bootstrap/less/bootstrap.less'],
+							sass: ['libs/sass/utilities.scss']
+						},
+						server: {
+							less: ['misc/styles.less'],
+							sass: ['misc/styles.scss']
+						}
+					},
+					copy: {
+						client: ['bower_components/bootstrap/dist/fonts/**'],
+						server: ['notes.txt']
+					},
+					minify: {
+						client: {
+							css: ['bower_components/bootstrap/less/bootstrap.css'],
+							js: ['libs/utilities/strings.js']
+						}
+					}
+				}
+			}
+		"""
+
+	httpProxy:
+		opts: [
+			define: "@type array of objects"
+			description: [
+				"Object format:
+				 { context: array or string, options: object }"
+				"Useful for testing real api data instead of fake data."
+				"For details
+				 <a target=\"_blank\" href=\"https://git.io/vVyA0\">click here</a>."
+			]
+		]
+		example: """
+			var opts = {
+				httpProxy: [{
+					context: '/api',
+					options: {
+						target: 'http://localhost:3003/'
+					}
+				}]
 			}
 		"""
 
@@ -342,8 +443,8 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			define: "@type boolean, @default true"
 			description: [
 				"The build will include a
-				<a target=\"_blank\" href=\"https://www.owasp.org/index.php/Clickjacking\">clickjacking</a>
-				defense script in the default spa.html (set to false to disable)."
+				 <a target=\"_blank\" href=\"https://www.owasp.org/index.php/Clickjacking\">clickjacking</a>
+				 defense script in the default spa.html (set to false to disable)."
 			]
 		]
 		example: """
@@ -412,7 +513,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			define: "@type string"
 			description: [
 				"Provide to use your own spa.html
-				file and not the build's default spa.html."
+				 file and not the build's default spa.html."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
 				 File must be located in the src/client/ directory."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
