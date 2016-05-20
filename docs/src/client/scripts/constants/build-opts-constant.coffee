@@ -731,6 +731,79 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			}
 		"""
 
+	src:
+		opts: [
+			name: 'dir'
+			define: "@type string, @default 'src'"
+			description: [
+				"Provide to name the src/ directory differently."
+			]
+		,
+			name: 'client.dir'
+			define: "@type string, @default 'client'"
+			description: [
+				"Provide to name the src/client/ directory differently."
+			]
+		,
+			name: 'client.bower.dir'
+			define: "@type string, @default 'bower_components'"
+			description: [
+				"Provide to name the src/client/bower_components/
+				 directory differently."
+			]
+		,
+			name: 'client.libs.dir'
+			define: "@type string, @default 'libs'"
+			description: [
+				"Provide to name the src/client/libs/
+				 directory differently."
+				"Directory for 3rd party libraries
+				 that aren't bower components."
+			]
+		,
+			name: 'client[images|scripts|styles|test|views].dir'
+			define: "@type string, @default property name"
+			description: [
+				"Provide to name the src/client/property name/
+				 directory differently."
+				"Property name example, 'scripts'"
+			]
+		,
+			name: 'server.dir'
+			define: "@type string, @default 'server'"
+			description: [
+				"Provide to name the src/server/ directory differently."
+			]
+		,
+			name: 'server.test.dir'
+			define: "@type string, @default 'test'"
+			description: [
+				"Provide to name the src/server/test/
+				 directory differently."
+			]
+		]
+		example: """
+			var opts = {
+				dist: {
+					dir: 'source',
+					client: {
+						dir: 'frontend',
+						bower:   { dir: 'bower' },
+						libs:    { dir: 'libraries' },
+						images:  { dir: 'img' },
+						scripts: { dir: 'js' },
+						styles:  { dir: 'css' },
+						test:    { dir: 'tests' },
+						views:   { dir: 'html' }
+					},
+					server: {
+						dir: 'backend',
+						test: { dir: 'tests' }
+					}
+				}
+			}
+		"""
+
 	test:
 		opts: [
 			name: 'client.browsers'
