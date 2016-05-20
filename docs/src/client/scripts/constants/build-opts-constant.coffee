@@ -370,6 +370,120 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			}
 		"""
 
+	minify:
+		opts: [
+			name: 'cacheBust'
+			define: "@type boolean, @default true"
+			description: [
+				"Ensures viewers of your app
+				 will always receive the latest client files."
+				"Adds an md5 checksum to the client files
+				 before their extension."
+				"Cache busted file types are: css, js, gif, jpg, jpeg and png"
+			]
+		,
+			name: 'css.fileName'
+			define: "@type string, @default 'styles.min.css'"
+			description: [
+				"Provide to name the minified css file differently."
+			]
+		,
+			name: 'css.splitMinFile'
+			define: "@type boolean, @default true"
+			description: [
+				"Split styles.min.css into multiple files
+				 if the selector count > 4,095"
+				"Useful if you have many css selectors
+				 and have to support ie 8 and 9."
+				"For details
+				 <a target=\"_blank\" href=\"http://blesscss.com/\">click here</a>."
+			]
+		,
+			name: 'css.styles'
+			define: "@type boolean, @default true"
+			description: [
+				"Set to false to not minify your css files."
+			]
+		,
+			name: 'html.options'
+			define: "@type object, @default see below"
+			description: [
+				"Defaults to:
+				 { collapseWhitespace: true,
+				   removeComments: true,
+				   removeEmptyElements: false,
+				   removeEmptyAttributes: false }"
+				"For details
+				 <a target=\"_blank\" href=\"https://git.io/vVyAC\">click here</a>."
+			]
+		,
+			name: 'html.views'
+			define: "@type boolean, @default true"
+			description: [
+				"Set to false to not minify your html files."
+			]
+		,
+			name: 'html.templateCache'
+			define: "@type boolean, @default true"
+			description: [
+				"Set to false to not use angular's
+				 template cache for your html files."
+			]
+		,
+			name: 'js.fileName'
+			define: "@type string, @default 'scripts.min.js'"
+			description: [
+				"Provide to name the minified js file differently."
+			]
+		,
+			name: 'js.mangle'
+			define: "@type boolean, @default true"
+			description: [
+				"Set to false to not mangle your js files."
+				"For details
+				 <a target=\"_blank\" href=\"http://lisperator.net/uglifyjs/mangle\">click here</a>."
+			]
+		,
+			name: 'js.scripts'
+			define: "@type boolean, @default true"
+			description: [
+				"Set to false to not minify your js files."
+			]
+		,
+			name: 'spa.file'
+			define: "@type boolean, @default true"
+			description: [
+				"Set to false to not minify your spa.html file."
+			]
+		]
+		example: """
+			var opts = {
+				minify: {
+					cacheBust: false,
+					css: {
+						fileName: 'rapid-build.min.css',
+						splitMinFile: false,
+						styles: false
+					},
+					html: {
+						templateCache: false,
+						views: false,
+						options: {
+							removeComments: true
+						}
+					},
+					js: {
+						fileName: 'rapid-build.min.js',
+						mangle: false,
+						scripts: false
+					},
+					spa: {
+						file: false
+					}
+				}
+			}
+		"""
+
 	order:
 		opts: [
 			name: '[scripts|styles][first|last]'
