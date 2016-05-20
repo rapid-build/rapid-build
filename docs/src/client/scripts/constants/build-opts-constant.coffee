@@ -4,7 +4,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			name: 'moduleName'
 			define: "@type string, @default 'app'"
 			description: [
-				"Application module name, value for ng-app."
+				"Application module name, value for ng-app in spa.html file."
 			]
 		,
 			name: 'modules'
@@ -13,7 +13,8 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 				"Additional angular modules to load."
 				"By default the build loads
 				 ['ngResource', 'ngRoute', 'ngSanitize']
-				 and 'ngMockE2E' based on angular.httpBackend
+				 and 'ngMockE2E' based on
+				 angular.<a href=\"#angular.httpBackend[dev|prod]\" rb-scroll>httpBackend</a>
 				 options."
 			]
 		,
@@ -253,16 +254,16 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Set to true to exclude the angular files
 				 from dist/client/ that come with rapid-build."
-				"Includes: angular lib
-				 and angular modules (see option angular.modules)."
+				"Includes: angular lib and angular
+				 <a href=\"#angular.modules\" rb-scroll>modules</a>."
 			]
 		,
 			name: 'angular.modules'
 			define: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude injecting the
-				 angular modules that come with rapid-build
-				 (see option angular.modules)."
+				 angular <a href=\"#angular.modules\" rb-scroll>modules</a>
+				 that come with rapid-build."
 			]
 		,
 			name: 'default[client|server].files'

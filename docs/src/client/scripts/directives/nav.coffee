@@ -126,7 +126,7 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout', 'anch
 			# ================
 			scope.anchorScroll = (url) ->
 				return unless getActivity() is 'hash'
-				anchorService.scroll url
+				anchorService.scroll url, getId: true
 
 			# destroy (for performance)
 			# =========================
