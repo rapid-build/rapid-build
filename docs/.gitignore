@@ -7,7 +7,7 @@
 .DS_Store
 /dist/
 /node_modules/
-# /src/
+/src/
 /*.js
 /*.log
 /*.coffee
