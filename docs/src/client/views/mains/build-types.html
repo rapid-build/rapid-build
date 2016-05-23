@@ -1,9 +1,80 @@
-<div>
-	<section>
+<div class="build-types" ng-controller="buildTypesController">
+	<section class="main">
 		<h1>
+			<rb:icon kind="ion-settings"></rb:icon>
 			Build Types
 		</h1>
+		<p>
+			Rapid Build has 4 different build types.<br>
+
+			Each has it's own variations and can be
+			<a href="/build-options">customized</a>.<br>
+
+			Builds execute tasks against your
+			source code to create a distributable
+			package/folder.<br>
+
+			Below are a list of available builds and what they do.
+		</p>
 	</section>
 
-	<p>Coming Soon...</p>
+	<div class="row grid-row grid-sep-left">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 main-col-aside">
+			<aside class="main">
+				<rb:nav
+					responsive
+					kind="sub"
+					activity="hash"
+					rb-scroller="main-content"
+					collection="[
+						{ caption: 'common tasks', url: '#common-tasks' },
+						{ caption: 'default build', url: '#default-build' },
+						{ caption: 'dev build', url: '#dev-build' },
+						{ caption: 'prod build', url: '#prod-build' },
+						{ caption: 'test build', url: '#test-build' }
+					]">
+				</rb:nav>
+			</aside>
+		</div>
+
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 main-col-content" id="main-content">
+			<!-- TITLE -->
+			<h2 class="sub title">Builds</h2>
+
+			<div class="main-content">
+				<!-- BUILD TYPES -->
+				<section id="{{type | spinalize}}" ng-repeat="(type, build) in ::buildTypes">
+					<h3 class="type-name">
+						<rb:icon kind="{{type.indexOf('common') != -1 ? 'fa-tasks' : 'fa-wrench'}}"></rb:icon>
+						<span ng-bind-html="type"></span>
+						<em ng-if="!!build.info" ng-bind-html="build.info" class="sub sep"></em>
+					</h3>
+					<ol>
+						<li ng-repeat="task in build.tasks">
+							<span ng-bind-html="task.label"></span>
+							<em ng-if="!!task.info" bind-html-compile="task.info" class="sub sep"></em>
+							<ul ng-if="!!task.subtasks">
+								<li ng-repeat="subtask in task.subtasks">
+									<span bind-html-compile="subtask.label"></span>
+									<em ng-if="!!subtask.info" ng-bind-html="subtask.info" class="sub sep"></em>
+								</li>
+							</ul>
+						</li>
+					</ol>
+				</section>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
