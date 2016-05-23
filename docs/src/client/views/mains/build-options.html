@@ -55,9 +55,9 @@
 						<li ng-repeat="opts in val.opts">
 							<h4 id="{{opt}}.{{opts.name}}">
 								<span ng-bind-html="opts.name"></span>
-								<em class="def"
-									ng-bind="opts.define"
-									ng-class="!opts.name ? 'single': ''"></em>
+								<em class="sub sep small"
+									ng-bind="opts.info"
+									ng-class="!opts.name ? 'normal': ''"></em>
 							</h4>
 							<ul>
 								<li bind-html-compile="desc"

@@ -2,13 +2,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	angular:
 		opts: [
 			name: 'moduleName'
-			define: "@type string, @default 'app'"
+			info: "@type string, @default 'app'"
 			description: [
 				"Application module name, value for ng-app in spa.html file."
 			]
 		,
 			name: 'modules'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Additional angular modules to load."
 				"By default the build loads
@@ -19,7 +19,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'version'
-			define: "@type string, @default '1.x'"
+			info: "@type string, @default '1.x'"
 			description: [
 				"The version of angular to load."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
@@ -28,7 +28,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'ngFormify'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to replace all html form tags with
 				 <a target=\"_blank\" href=\"https://docs.angularjs.org/api/ng/directive/ngForm\">ng:form</a>."
@@ -36,7 +36,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'httpBackend[dev|prod]'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to enable httpBackend."
 				"This will load angular module 'ngMockE2E'."
@@ -45,7 +45,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'httpBackend.dir'
-			define: "@type string, @default 'mocks'"
+			info: "@type string, @default 'mocks'"
 			description: [
 				"Directory for your client-side mock data."
 				"Value must be a path relative to your client directory."
@@ -53,19 +53,19 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 		,
 			name: 'templateCache.dev'
 			builds: 'default and dev'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to use angular's template cache to serve views."
 			]
 		,
 			name: 'templateCache.urlPrefix'
-			define: "@type string"
+			info: "@type string"
 			description: [
 				"Prefix for template urls."
 			]
 		,
 			name: 'templateCache.useAbsolutePaths'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Prefix template urls with a '/'."
 			]
@@ -94,14 +94,14 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	browser:
 		opts: [
 			name: 'open'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			builds: 'default, dev and prod:server'
 			description: [
 				"Open the browser once the build completes."
 			]
 		,
 			name: 'reload'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			builds: 'dev'
 			description: [
 				"Reloads the browser once you save your src file."
@@ -119,7 +119,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	build:
 		opts: [
 			name: 'client <small class="sep">|</small> server'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to skip building the client or server."
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
@@ -138,14 +138,14 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	browser:
 		opts: [
 			name: 'open'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			builds: 'default, dev and prod:server'
 			description: [
 				"Open the browser once the build completes."
 			]
 		,
 			name: 'reload'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			builds: 'dev'
 			description: [
 				"Reloads the browser once you save your src file."
@@ -163,26 +163,26 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	dist:
 		opts: [
 			name: 'dir'
-			define: "@type string, @default 'dist'"
+			info: "@type string, @default 'dist'"
 			description: [
 				"Provide to name the dist/ directory differently."
 			]
 		,
 			name: 'client.dir'
-			define: "@type string, @default 'client'"
+			info: "@type string, @default 'client'"
 			description: [
 				"Provide to name the dist/client/ directory differently."
 			]
 		,
 			name: 'client.bower.dir'
-			define: "@type string, @default 'bower_components'"
+			info: "@type string, @default 'bower_components'"
 			description: [
 				"Provide to name the dist/client/bower_components/
 				 directory differently."
 			]
 		,
 			name: 'client.libs.dir'
-			define: "@type string, @default 'libs'"
+			info: "@type string, @default 'libs'"
 			description: [
 				"Provide to name the dist/client/libs/
 				 directory differently."
@@ -191,7 +191,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'client[images|scripts|styles|test|views].dir'
-			define: "@type string, @default property name"
+			info: "@type string, @default property name"
 			description: [
 				"Provide to name the dist/client/property name/
 				 directory differently."
@@ -199,20 +199,20 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'server.dir'
-			define: "@type string, @default 'server'"
+			info: "@type string, @default 'server'"
 			description: [
 				"Provide to name the dist/server/ directory differently."
 			]
 		,
 			name: 'server.test.dir'
-			define: "@type string, @default 'test'"
+			info: "@type string, @default 'test'"
 			description: [
 				"Provide to name the dist/server/test/
 				 directory differently."
 			]
 		,
 			name: 'server.fileName'
-			define: "@type string, @default 'routes.js'"
+			info: "@type string, @default 'routes.js'"
 			description: [
 				"This is the server's entry script."
 				"Provide if your server's entry script isn't 'routes.js'"
@@ -244,13 +244,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	exclude:
 		opts: [
 			name: 'spa'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude spa.html from dist/client/"
 			]
 		,
 			name: 'angular.files'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude the angular files
 				 from dist/client/ that come with rapid-build."
@@ -259,7 +259,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'angular.modules'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude injecting the
 				 angular <a href=\"#angular.modules\" rb-scroll>modules</a>
@@ -267,7 +267,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'default[client|server].files'
-			define: "@type boolean, @default false"
+			info: "@type boolean, @default false"
 			description: [
 				"Set to true to exclude the
 				 client or server files rapid-build
@@ -276,7 +276,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'from.cacheBust'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Files to exclude from the client-side cache bust."
@@ -285,7 +285,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'from.dist[client|server]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Client or server files to exclude
@@ -297,7 +297,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'from.minFile[scripts|styles]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Script or style files to exclude from
@@ -307,7 +307,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'from.spaFile[scripts|styles]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Script or style files to exclude from
@@ -354,7 +354,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	extra:
 		opts: [
 			name: 'compile.client[coffee|es6|less|sass]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Additional files to compile to dist/client/
@@ -365,7 +365,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'compile.server[less|sass]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Additional files to compile to dist/server/
@@ -376,7 +376,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'copy[client|server]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Additional files to copy to
@@ -388,7 +388,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'minify.client[css|js]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths."
 				"Additional files to minify in dist/client/
@@ -432,7 +432,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 
 	httpProxy:
 		opts: [
-			define: "@type array of objects"
+			info: "@type array of objects"
 			description: [
 				"Object format:
 				 { context: array or string, options: object }"
@@ -455,7 +455,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	minify:
 		opts: [
 			name: 'cacheBust'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Ensures viewers of your app
 				 will always receive the latest client files."
@@ -465,13 +465,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'css.fileName'
-			define: "@type string, @default 'styles.min.css'"
+			info: "@type string, @default 'styles.min.css'"
 			description: [
 				"Provide to name the minified css file differently."
 			]
 		,
 			name: 'css.splitMinFile'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Split styles.min.css into multiple files
 				 if the selector count > 4,095"
@@ -482,13 +482,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'css.styles'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to not minify your css files."
 			]
 		,
 			name: 'html.options'
-			define: "@type object, @default see below"
+			info: "@type object, @default see below"
 			description: [
 				"Defaults to:
 				 { collapseWhitespace: true,
@@ -500,26 +500,26 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'html.views'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to not minify your html files."
 			]
 		,
 			name: 'html.templateCache'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to not use angular's
 				 template cache for your html files."
 			]
 		,
 			name: 'js.fileName'
-			define: "@type string, @default 'scripts.min.js'"
+			info: "@type string, @default 'scripts.min.js'"
 			description: [
 				"Provide to name the minified js file differently."
 			]
 		,
 			name: 'js.mangle'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to not mangle your js files."
 				"For details
@@ -527,13 +527,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'js.scripts'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to not minify your js files."
 			]
 		,
 			name: 'spa.file'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"Set to false to not minify your spa.html file."
 			]
@@ -569,7 +569,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	order:
 		opts: [
 			name: '[scripts|styles][first|last]'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of file paths to css or js files."
 				"Use first to load specific scripts or styles first."
@@ -596,27 +596,27 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	ports:
 		opts: [
 			name: 'reload'
-			define: "@type int, @default 3001"
+			info: "@type int, @default 3001"
 			builds: 'dev'
 			description: [
 				"Browsersync server port."
 			]
 		,
 			name: 'reloadUI'
-			define: "@type int, @default 3002"
+			info: "@type int, @default 3002"
 			builds: 'dev'
 			description: [
 				"Browsersync's user-interface server port."
 			]
 		,
 			name: 'server'
-			define: "@type int, @default 3000"
+			info: "@type int, @default 3000"
 			description: [
 				"Web server port."
 			]
 		,
 			name: 'test'
-			define: "@type int, @default 9876"
+			info: "@type int, @default 9876"
 			builds: 'test'
 			description: [
 				"Karma server port."
@@ -636,7 +636,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	security:
 		opts: [
 			name: 'client.clickjacking'
-			define: "@type boolean, @default true"
+			info: "@type boolean, @default true"
 			description: [
 				"The build will include a
 				 <a target=\"_blank\" href=\"https://www.owasp.org/index.php/Clickjacking\">clickjacking</a>
@@ -656,7 +656,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	server:
 		opts: [
 			name: 'node_modules'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Node modules to copy to dist/server/node_modules/"
 			]
@@ -672,13 +672,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	spa:
 		opts: [
 			name: 'description'
-			define: "@type string, @default package.json description"
+			info: "@type string, @default package.json description"
 			description: [
 				"Default spa.html meta description tag value."
 			]
 		,
 			name: 'placeholders'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Retain spa.html file placeholders.",
 				"Options include:
@@ -693,20 +693,20 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'title'
-			define: "@type string, @default package.json name or 'Application'"
+			info: "@type string, @default package.json name or 'Application'"
 			description: [
 				"Default spa.html title tag value."
 			]
 		,
 			name: 'dist.fileName'
-			define: "@type string, @default file name of spa.src.filePath or 'spa.html'"
+			info: "@type string, @default file name of spa.src.filePath or 'spa.html'"
 			description: [
 				"Provide to name dist/client/spa.html file differently."
 				"Example: 'index.html'"
 			]
 		,
 			name: 'src.filePath'
-			define: "@type string"
+			info: "@type string"
 			description: [
 				"Provide to use your own spa.html
 				 file and not the build's default spa.html."
@@ -735,26 +735,26 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	src:
 		opts: [
 			name: 'dir'
-			define: "@type string, @default 'src'"
+			info: "@type string, @default 'src'"
 			description: [
 				"Provide to name the src/ directory differently."
 			]
 		,
 			name: 'client.dir'
-			define: "@type string, @default 'client'"
+			info: "@type string, @default 'client'"
 			description: [
 				"Provide to name the src/client/ directory differently."
 			]
 		,
 			name: 'client.bower.dir'
-			define: "@type string, @default 'bower_components'"
+			info: "@type string, @default 'bower_components'"
 			description: [
 				"Provide to name the src/client/bower_components/
 				 directory differently."
 			]
 		,
 			name: 'client.libs.dir'
-			define: "@type string, @default 'libs'"
+			info: "@type string, @default 'libs'"
 			description: [
 				"Provide to name the src/client/libs/
 				 directory differently."
@@ -763,7 +763,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'client[images|scripts|styles|test|views].dir'
-			define: "@type string, @default property name"
+			info: "@type string, @default property name"
 			description: [
 				"Provide to name the src/client/property name/
 				 directory differently."
@@ -771,13 +771,13 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		,
 			name: 'server.dir'
-			define: "@type string, @default 'server'"
+			info: "@type string, @default 'server'"
 			description: [
 				"Provide to name the src/server/ directory differently."
 			]
 		,
 			name: 'server.test.dir'
-			define: "@type string, @default 'test'"
+			info: "@type string, @default 'test'"
 			description: [
 				"Provide to name the src/server/test/
 				 directory differently."
@@ -808,7 +808,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 	test:
 		opts: [
 			name: 'client.browsers'
-			define: "@type array of strings"
+			info: "@type array of strings"
 			description: [
 				"Array of browser names."
 				"Phantomjs will run by default."

@@ -1,0 +1,51 @@
+/* LISTS
+ ********/
+.list {
+	font-size: 15px;
+	color: lightslategrey;
+	li {
+		position: relative;
+	}
+	> li {
+		margin: 0 0 18px;
+		&:last-child { margin-bottom: 0; }
+	}
+}
+
+ul.list {
+	list-style: none;
+	> li { // 1st level
+		&::before {
+			position: absolute;
+			top: -13px;
+			left: -17px;
+			font-size: 33px;
+			content: '·';
+		}
+	}
+}
+
+.list {
+	> li {
+		ol, ul {
+			> li {
+				ul { // 3rd level
+					list-style: none;
+					margin: 6px 0;
+					> li {
+						&::before {
+							position: absolute;
+							top: -9px;
+							left: -17px;
+							font-size: 28px;
+							content: '·';
+						}
+					}
+				}
+				&:last-child {
+				 	ul { margin-bottom: -8px; }
+				}
+			}
+		}
+	}
+}

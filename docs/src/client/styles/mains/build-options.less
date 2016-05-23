@@ -5,21 +5,6 @@
 		list-style: none;
 		> li {
 			position: relative;
-			> h4 {
-				.sep {
-					position: relative;
-					top: -1px
-				}
-				.def {
-					position: relative;
-					top: -1px;
-					font-size: 12px;
-					font-style: normal;
-					color: lightslategrey;
-					&::before { content: '- '; }
-					&.single { &::before { content: normal; } }
-				}
-			}
 			&::before {
 				position: absolute;
 				top: -13px;
