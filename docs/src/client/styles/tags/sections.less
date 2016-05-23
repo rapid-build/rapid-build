@@ -1,6 +1,10 @@
+/* SECTIONS
+ ***********/
 section {
-	margin: 0 0 35px;
-	padding: 0 0 35px;
+	@spacing: 35px;
+
+	margin: 0 0 @spacing;
+	padding: 0 0 @spacing;
 	#borders.section.default;
 
 	&:last-child {
@@ -17,6 +21,7 @@ section {
 	 ********/
 	&.main {
 		margin-bottom: 0;
+		padding-bottom: @spacing;
 		#borders.section.main;
 	}
 }

@@ -1,11 +1,21 @@
+/* MAINS
+ ********/
 main {
 	min-height: 450px;
 
+	/* 1 column
+	 ***********/
+	.main-content {
+		&.single-column {
+			padding: 0 0 100px;
+		}
+	}
+
 	/* 2 columns
 	 ************/
-	@botSpace: 85px;
-	aside.main    { padding: 0 0 @botSpace; }
-	.main-content { padding: 15px 5px @botSpace; }
+	@botSpace2Col: 85px;
+	aside.main    { padding: 0 0 @botSpace2Col; }
+	.main-content { padding: 15px 5px @botSpace2Col; }
 
 	/* main content
 	 ***************/

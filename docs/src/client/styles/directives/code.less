@@ -5,23 +5,6 @@
 	margin-bottom: 25px;
 	text-align: left;
 
-	pre {
-		padding: 0;
-		margin: 0;
-		border: none;
-		border-radius: 0;
-		background-color: transparent;
-		word-wrap: normal;
-		word-break: normal;
-	}
-
-	code {
-		font-size: 13px;
-		border-radius: 5px;
-		padding: 15px 16px;
-		white-space: pre;
-	}
-
 	// for zenbum color scheme
 	> h4 {
 		cursor: default;
@@ -40,8 +23,25 @@
 		border: 1px solid #888;
 		border-top: none;
 		border-right: none;
-		border-radius: 0 5px 0 7px;
+		border-radius: 0 5px 0 6px;
 		background-color: #3f3f3f; // zenburn | transparent
+	}
+
+	pre {
+		padding: 0;
+		margin: 0;
+		border: none;
+		border-radius: 0;
+		background-color: transparent;
+		word-wrap: normal;
+		word-break: normal;
+	}
+
+	code {
+		font-size: 13px;
+		border-radius: 5px;
+		padding: 15px 16px;
+		white-space: pre;
 	}
 
 	/* Sizes
@@ -61,8 +61,7 @@
 	&.large {
 		margin-bottom: 30px;
 		> h4 {
-			padding: 4px 7px 5px;
-			font-size: 10px;
+			padding: 4px 7px;
 		}
 		code {
 			padding: 21px 25px 22px;

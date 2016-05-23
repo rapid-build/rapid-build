@@ -1,4 +1,4 @@
-<div class="build-types" ng-controller="buildTypesController">
+<div class="main-build-types" ng-controller="buildTypesController">
 	<section class="main">
 		<h1>
 			<rb:icon kind="ion-settings"></rb:icon>
@@ -44,7 +44,7 @@
 			<div class="main-content">
 				<!-- BUILD TYPES -->
 				<section id="{{type | spinalize}}" ng-repeat="(type, build) in ::buildTypes">
-					<h3 class="type-name">
+					<h3>
 						<rb:icon kind="{{type.indexOf('common') != -1 ? 'fa-tasks' : 'fa-wrench'}}"></rb:icon>
 						<span ng-bind-html="type"></span>
 						<em ng-if="!!build.info" ng-bind-html="build.info" class="sub sep"></em>

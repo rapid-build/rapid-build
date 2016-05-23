@@ -1,4 +1,4 @@
-<div class="build-options" ng-controller="buildOptsController">
+<div class="main-build-options" ng-controller="buildOptsController">
 	<section class="main">
 		<h1>
 			<rb:icon kind="fa-cogs"></rb:icon>
@@ -47,11 +47,11 @@
 			<div class="main-content">
 				<!-- BUILD OPTIONS -->
 				<section id="{{opt}}" ng-repeat="(opt, val) in ::buildOpts">
-					<h3 class="option-name">
+					<h3>
 						<rb:icon kind="fa-cog"></rb:icon>
 						<span ng-bind="opt"></span>
 					</h3>
-					<ul>
+					<ul class="list-options">
 						<li ng-repeat="opts in val.opts">
 							<h4 id="{{opt}}.{{opts.name}}">
 								<span ng-bind-html="opts.name"></span>
@@ -59,15 +59,11 @@
 									ng-bind="opts.define"
 									ng-class="!opts.name ? 'single': ''"></em>
 							</h4>
-							<dl>
-								<dd>
-									<ul>
-										<li bind-html-compile="desc"
-											ng-repeat="desc in opts.description">
-										</li>
-									</ul>
-								</dd>
-							</dl>
+							<ul>
+								<li bind-html-compile="desc"
+									ng-repeat="desc in opts.description">
+								</li>
+							</ul>
 						</li>
 						<li class="example">
 							<h4>example</h4>

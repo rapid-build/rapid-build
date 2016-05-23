@@ -1,5 +1,5 @@
-/* IMPORTS
- **********/
+/* APPLICATION STYLES
+ *********************/
 // Variables and Mixins
 @import (reference) 'variables.less';
 @import (reference) 'mixins.less';
@@ -10,6 +10,7 @@
 @import 'tags/deprecated.less';
 @import 'tags/headings.less';
 @import 'tags/hr.less';
+@import 'tags/html.less';
 @import 'tags/images.less';
 @import 'tags/links.less';
 @import 'tags/pre.less';
@@ -27,21 +28,27 @@
 @import 'directives/sort.less';
 @import 'directives/version.less';
 
-// Components
-@import 'components/grid.less';
-@import 'components/rb-logo.less';
+// Styling
+@import 'styling/sub-msgs.less';
+
+// Items
+@import 'items/rb-logo.less';
+
+// Manage
+@import 'manage/z-indexes.less';
 
 // Layout
+@import 'layout/grid.less';
 @import 'layout/main-header.less';
 @import 'layout/main.less';
 @import 'layout/main-footer.less';
 @import 'layout/shared-layout.less';
-@import 'layout/z-indexes.less';
 
 // Mains
-@import 'mains/home.less';
+@import 'mains/about.less';
 @import 'mains/build-options.less';
 @import 'mains/build-types.less';
+@import 'mains/home.less';
 
 // Utilities
 @import 'utilities.less';
