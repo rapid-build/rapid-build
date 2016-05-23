@@ -4,7 +4,7 @@
 	"dependencies": {
 		"ionicons": "2.0.1",
 		"bootstrap": "3.3.6",
-		"font-awesome": "4.5.0",
+		"font-awesome": "4.6.3",
 		"angular-highlightjs": "0.6.1",
 		"angular-bind-html-compile": "1.2.1",
 		"angular-scroll": "1.0.0"
