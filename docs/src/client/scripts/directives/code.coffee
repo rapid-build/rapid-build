@@ -11,12 +11,15 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 				element.attr 'hljs-interpolate', true if scope.interpolate
 				element.attr 'hljs-source', scope.src if scope.src
 				$compile(element) scope.$parent
-				element.prepend "<h4 title=\"#{lang}\">#{lang}</h4>" if lang
+				return unless lang
+				return if scope.hideLang
+				element.prepend "<h4 title=\"#{lang}\">#{lang}</h4>"
 
 		# link
 		# ====
 		link = (scope, element, attrs, controller, transcludeFn) ->
 			# defaults
+			scope.hideLang    = attrs.hideLang isnt undefined
 			scope.interpolate = attrs.interpolate isnt undefined
 
 			# transclude
@@ -41,6 +44,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 			size: '@'
 			src: '@' # = binding
 			# valueless attrs:
+			# hideLang:    '@'
 			# interpolate: '@'
 ]
 

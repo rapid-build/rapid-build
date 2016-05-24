@@ -1,17 +1,36 @@
 /* LISTS
  ********/
 .list {
+	margin: 0 0 18px;
 	font-size: 15px;
 	color: lightslategrey;
+
 	li {
 		position: relative;
+		&:last-child {
+			margin-bottom: 0;
+			> *:last-child { margin-bottom: 0; }
+		}
 	}
-	> li {
-		margin: 0 0 18px;
-		&:last-child { margin-bottom: 0; }
+
+	> li { // 1st level
+		margin: 0 0 5px;
+		> ol, ul { margin: 0 0 18px; }
 	}
 }
 
+/* Example Code
+ ***************/
+.list {
+	li.example {
+		margin-top: 18px;
+		&::before { content: normal; }
+		.rb-code  { margin-left: -15px; }
+	}
+}
+
+/* Unordered
+ ************/
 ul.list {
 	list-style: none;
 	> li { // 1st level
@@ -41,9 +60,6 @@ ul.list {
 							content: '·';
 						}
 					}
-				}
-				&:last-child {
-				 	ul { margin-bottom: -8px; }
 				}
 			}
 		}
