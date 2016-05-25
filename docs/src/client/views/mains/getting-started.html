@@ -1,100 +1,63 @@
 <div class="main-getting-started" ng-controller="gettingStartedController">
-	<section>
+	<section class="main">
 		<h1>Getting Started</h1>
+		<p>
+			This page will have you up
+			and running with Rapid Build.
+		</p>
 	</section>
 
-	<div class="main-content single-column">
-		<!-- REQUIREMENTS -->
-		<section>
-			<h3>
-				Requirements
-				<em class="sub parens">these must be installed</em>
-			</h3>
-			<ul class="list">
-				<li>
-					<a target="_blank" href="https://git-scm.com/downloads">
-						<rb:icon kind="fa-code-fork"></rb:icon> Git
-					</a>
-				</li>
-				<li>
-					<a target="_blank" href="https://nodejs.org/">
-						<rb:icon kind="ion-social-nodejs"></rb:icon> Node.js
-					</a>
-					<em class="sub parens">version >= 4.0.0</em>
-				</li>
-			</ul>
-		</section>
+	<div class="row grid-row grid-sep-left">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 main-col-aside">
+			<aside class="main">
+				<rb:nav
+					responsive
+					kind="sub"
+					activity="hash"
+					rb-scroller="main-content"
+					collection="[
+						{ caption: 'Dependencies', url: '#dependencies' },
+						{ caption: 'Installation', url: '#installation' },
+						{ caption: 'Directory Structure', url: '#directory-structure' },
+						{ caption: 'build.js', url: '#build.js' }
+					]">
+				</rb:nav>
+			</aside>
+		</div>
 
-		<!-- INSTALLATION -->
-		<section>
-			<h3>Installation</h3>
-			<h4>Global Install Benefits</h4>
-			<ul class="list">
-				<li>
-					One time install.
-					<em class="sub parens">the install is fairly big</em>
-				</li>
-				<li>
-					Can be used for multiple projects.
-				</li>
-				<li>
-					<rb:icon kind="fa-exclamation-circle"></rb:icon>
-					If installing globally you may need to set your
-					<a target="_blank" href="https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders">NODE_PATH</a>
-				</li>
-				<li class="example">
-					<rb:code lang="bash">
-						$ npm install rapid-build
-						# or
-						$ npm install rapid-build -g # recommended
-					</rb:code>
-				</li>
-			</ul>
-		</section>
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 main-col-content" id="main-content">
+			<!-- TITLE -->
+			<!-- <h2 class="sub title">How To Use</h2> -->
 
-		<!-- DIRECTORY STRUCTURE -->
-		<section>
-			<h3>Directory Structure</h3>
-			<ul class="list">
-				<li>
-					Everthing is optional besides
-					nodes_modules, build.js and package.json
-				</li>
-				<li>
-					The directory names can be configured,
-					see build option <a href="/build-options#src">src</a>
-				</li>
-				<li class="example">
-					<rb:code lang="coffee" hide-lang>
-						dist/ # (generated distributable folder created by rapid-build)
-						src/
-						├── client/
-						│   ├── bower_components/ # (generated folder via bower.json)
-						│   ├── images/
-						│   │   └── **/*.{gif,jpg,jpeg,png}
-						│   ├── libs/
-						│   │   └── **/*.*
-						│   ├── scripts/
-						│   │   └── **/*.{coffee,es6,js}
-						│   ├── styles/
-						│   │   └── **/*.{css,less,sass,scss}
-						│   ├── test/
-						│   │   └── **/*.{coffee,es6,js}
-						│   ├── views/
-						│   │   └── **/*.html
-						│   └── spa.html # (optional, see options.spa.src.filePath)
-						└── server/
-						    ├── test/
-						    │   └── **/*.{coffee,es6,js}
-						    └── routes.{coffee,es6,js} # (see options.dist.server.fileName)
-						nodes_modules/ # (generated folder via package.json)
-						bower.json
-						build.js # (see how to use)
-						package.json
-					</rb:code>
-				</li>
-			</ul>
-		</section>
+			<div class="main-content">
+				<section id="{{key | lowercase | spinalize}}" ng-repeat="(key, val) in ::gettingStarted">
+					<h3>
+						<rb:icon ng-if="!!val.icon" kind="{{val.icon}}"></rb:icon>
+						<span ng-bind="key"></span>
+						<em ng-if="!!val.info" ng-bind-html="val.info" class="sub parens"></em>
+					</h3>
+					<ul class="list">
+						<li ng-repeat="item in val.items" ng-class="item.class">
+							<span bind-html-compile="item.label"></span>
+							<em ng-if="!!item.info" bind-html-compile="item.info" class="sub parens"></em>
+
+							<ul ng-if="item.items">
+								<li ng-repeat="item2 in item.items">
+									<span bind-html-compile="item2.label"></span>
+									<em ng-if="!!item2.info" ng-bind-html="item2.info" class="sub parens"></em>
+								</li>
+							</ul>
+						</li>
+						<li ng-if="!!val.example" class="example">
+							<rb:code
+								src="val.example.code"
+								lang="{{val.example.lang}}"
+								hide-lang="{{!!val.example.hideLang}}"></rb:code>
+						</li>
+					</ul>
+				</section>
+			</div>
+		</div>
 	</div>
 </div>
 

@@ -20,6 +20,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 		link = (scope, element, attrs, controller, transcludeFn) ->
 			# defaults
 			scope.hideLang    = attrs.hideLang isnt undefined
+			scope.hideLang    = false if attrs.hideLang is 'false'
 			scope.interpolate = attrs.interpolate isnt undefined
 
 			# transclude
