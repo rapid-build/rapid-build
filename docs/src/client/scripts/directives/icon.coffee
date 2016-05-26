@@ -19,6 +19,7 @@ angular.module('rapid-build').directive 'rbIcon', [->
 	templateUrl: '/views/directives/icon.html'
 	scope:
 		kind: '@'
+		size: '@'
 ]
 
 

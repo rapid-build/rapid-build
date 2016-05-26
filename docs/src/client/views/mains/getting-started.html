@@ -19,20 +19,19 @@
 						{ caption: 'Dependencies', url: '#dependencies' },
 						{ caption: 'Installation', url: '#installation' },
 						{ caption: 'Directory Structure', url: '#directory-structure' },
-						{ caption: 'build.js', url: '#build.js' }
+						{ caption: 'build.js', url: '#build.js' },
+						{ caption: 'build-options.js', url: '#build-options.js' }
 					]">
 				</rb:nav>
 			</aside>
 		</div>
 
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 main-col-content" id="main-content">
-			<!-- TITLE -->
-			<!-- <h2 class="sub title">How To Use</h2> -->
-
+			<!-- GETTING STARTED -->
 			<div class="main-content">
 				<section id="{{key | lowercase | spinalize}}" ng-repeat="(key, val) in ::gettingStarted">
 					<h3>
-						<rb:icon ng-if="!!val.icon" kind="{{val.icon}}"></rb:icon>
+						<rb:icon ng-if="!!val.icon" kind="{{val.icon}}" size="{{val.iconSize}}"></rb:icon>
 						<span ng-bind="key"></span>
 						<em ng-if="!!val.info" ng-bind-html="val.info" class="sub parens"></em>
 					</h3>

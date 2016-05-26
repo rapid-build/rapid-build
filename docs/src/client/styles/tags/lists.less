@@ -7,15 +7,14 @@
 
 	li {
 		position: relative;
+		margin: 0 0 5px;
 		&:last-child {
 			margin-bottom: 0;
 			> *:last-child { margin-bottom: 0; }
 		}
-	}
-
-	> li { // 1st level
-		margin: 0 0 5px;
-		> ol, ul { margin: 6px 0 18px; }
+		> ol, ul {
+			margin: 6px 0 18px;
+		}
 	}
 }
 

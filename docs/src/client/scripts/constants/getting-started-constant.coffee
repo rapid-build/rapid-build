@@ -80,17 +80,16 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 
 	'build.js':
 		icon: 'ion-settings'
+		iconSize: 'large'
 		info: 'required'
 		items: [
 			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
 					build.js is required to run the build.'
 		,
-			label: 'Copy it and save it in the root of your project.'
-		,
-			label: 'More than likely you will need to customize your builds.'
+			label: 'Copy this and save it to the root of your project.'
 			items: [
 				label: 'See <a href="#build-options.js" rb-scroll>build-options.js</a>
-						to customize your builds..'
+						for customizing your builds.'
 			]
 		]
 		example:
@@ -102,6 +101,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 					if (typeof type !== 'string') return 'default';
 					return type.toLowerCase();
 				};
+
 				var getBuildOptions = type => {
 					try { return require('./build-options.js')(type); }
 					catch(e) { return {}; }
@@ -120,6 +120,57 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 				build(buildType).then(() => {
 					console.log('Build Complete!');
 				});
+			"""
+
+	'build-options.js':
+		icon: 'fa-cogs'
+		items: [
+			label: 'More than likely you will need to customize your builds.'
+			info: 'No problem!'
+		,
+			label: 'There are many options available for you, see
+					<a href="/build-options">build options</a>.'
+		,
+			label: 'Copy this and save it to the root of your project.'
+			items: [
+				label: 'build-options.js gets required from
+						<a href="#build.js" rb-scroll>build.js</a>'
+			,
+				label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
+						This is where you will add your
+						<a href="/build-options">build options</a>.'
+			]
+		]
+		example:
+			lang: 'js'
+			code: """
+				/* build-options.js
+				 *******************/
+				var getCommonOptions = () => {
+					// Add shared dev and prod build options here:
+					return {
+						// spa: { src: { filePath: 'spa.html' } } // example
+					};
+				};
+
+				var setDevOptions = options => {
+					// Add dev specific build options here:
+					// options.angular = { templateCache: dev: { true } }; // example
+				};
+
+				var setProdOptions = options => {
+					// Add dev specific build options here:
+					// options.minify = { css: splitMinFile: false } }; // example
+				};
+
+				var getOptions = buildType => {
+					var options = getCommonOptions();
+					if (buildType.indexOf('prod')) setProdOptions(options);
+					else setDevOptions(options);
+					return options;
+				}
+
+				module.exports = getOptions
 			"""
 
 
