@@ -40,8 +40,9 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 	'Directory Structure':
 		icon: 'fa-folder-open'
 		items: [
-			label: 'Everthing is optional besides
-					build.js and package.json'
+			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
+					Everthing is optional besides package.json and
+					<a href="#build.js" rb-scroll>build.js</a>'
 		,
 			label: 'The directory names can be configured,
 					see build option <a href="/build-options#src">src</a>.'
@@ -155,17 +156,17 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 
 				var setDevOptions = options => {
 					// Add dev specific build options here:
-					// options.angular = { templateCache: dev: { true } }; // example
+					// options.angular = { templateCache: { dev: true } }; // example
 				};
 
 				var setProdOptions = options => {
 					// Add dev specific build options here:
-					// options.minify = { css: splitMinFile: false } }; // example
+					// options.minify = { css: { splitMinFile: false } }; // example
 				};
 
 				var getOptions = buildType => {
 					var options = getCommonOptions();
-					if (buildType.indexOf('prod')) setProdOptions(options);
+					if (buildType.indexOf('prod') != -1) setProdOptions(options);
 					else setDevOptions(options);
 					return options;
 				}
