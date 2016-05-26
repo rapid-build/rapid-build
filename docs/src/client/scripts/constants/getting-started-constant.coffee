@@ -33,8 +33,9 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		]
 		example:
 			lang: 'bash'
+			clipboard: 'true'
 			code: """
-				$ npm install rapid-build -g
+				npm install rapid-build -g
 			"""
 
 	'Directory Structure':
@@ -95,6 +96,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		]
 		example:
 			lang: 'js'
+			clipboard: 'true'
 			code: """
 				/* build.js
 				 ***********/
@@ -144,6 +146,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		]
 		example:
 			lang: 'js'
+			clipboard: 'true'
 			code: """
 				/* build-options.js
 				 *******************/

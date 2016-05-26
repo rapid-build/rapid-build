@@ -69,6 +69,26 @@
 		}
 	}
 
+	/* Actions
+	 **********/
+	a {
+		position: absolute;
+		top: 18px;
+		right: 0;
+		padding: 5px 8px;
+		font-size: 16px;
+		color: #999;
+		opacity: 0;
+		#effects.fade();
+		&:hover  { color: #c9c9c9; }
+		&:active { color: #888; }
+		// border: 1px solid #888;
+		// border-right: none;
+		// border-radius: 5px 0 0 5px;
+	}
+	&:hover { a { opacity: 1; } }
+	&.large { a { top: 33px; } }
+
 	/* Options
 	 ********/
 	&[inline] {
