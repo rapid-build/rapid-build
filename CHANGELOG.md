@@ -1,3 +1,12 @@
+## [0.58.2](https://github.com/jyounce/rapid-build/compare/v0.58.1...v0.58.2) (2016-05-27)
+
+
+### Bug Fixes
+
+* **test builds:** fix non dev test builds, ensure the server stops and the build completes ([9f8059d](https://github.com/jyounce/rapid-build/commit/9f8059d))
+
+
+
 ## [0.58.1](https://github.com/jyounce/rapid-build/compare/v0.58.0...v0.58.1) (2016-05-17)
 
 
