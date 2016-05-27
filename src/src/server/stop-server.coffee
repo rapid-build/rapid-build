@@ -6,8 +6,8 @@ msg  = null
 
 try
 	process.kill info.pid
-	msg = "Server stopped on port #{info.port}"
+	msg = "Server Stopped on Port #{info.port}"
 catch e
-	msg = "Failed to stop the server. #{e.message}"
+	msg = "Failed to Stop the Server: #{e.message}"
 
 console.log msg

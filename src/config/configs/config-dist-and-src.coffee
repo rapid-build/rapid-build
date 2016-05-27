@@ -20,6 +20,7 @@ module.exports = (config, options) ->
 	file =
 		appServer: 'routes.js' # app server dist entry file
 		rbServer: # rb server dist
+			info:  'server-info.json'
 			start: 'start-server.js'
 			stop:  'stop-server.js'
 
@@ -160,6 +161,7 @@ module.exports = (config, options) ->
 		config.dist.rb.server.scripts.stopFile  = file.rbServer.stop
 
 		_path = config.dist.rb.server.scripts.path
+		config.dist.rb.server.scripts.info  = path.join _path, file.rbServer.info
 		config.dist.rb.server.scripts.start = path.join _path, file.rbServer.start
 		config.dist.rb.server.scripts.stop  = path.join _path, file.rbServer.stop
 
