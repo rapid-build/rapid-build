@@ -1,3 +1,17 @@
+# [0.59.0](https://github.com/jyounce/rapid-build/compare/v0.58.2...v0.59.0) (2016-06-03)
+
+
+### Features
+
+* **spa auto inject:** the build will automatically inject scripts and styles into your spa.html ([2b5a556](https://github.com/jyounce/rapid-build/commit/2b5a556))
+* **documentation site:** [http://rapid-build.io/](http://rapid-build.io/)
+
+### Breaking Changes
+
+* spa auto inject: The build will now automatically inject scripts and styles into your spa.html unless you are using build placeholders in your spa.html. You can disable this feature by providing option spa.autoInject false.
+
+
+
 ## [0.58.2](https://github.com/jyounce/rapid-build/compare/v0.58.1...v0.58.2) (2016-05-27)
 
 
