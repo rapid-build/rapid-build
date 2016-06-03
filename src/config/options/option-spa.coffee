@@ -5,6 +5,7 @@ module.exports = (config, options) ->
 	# ================
 	spa = options.spa
 	spa = {} unless isType.object spa
+	spa.autoInject    = null if not isType.array(spa.autoInject) and spa.autoInject isnt false
 	spa.title         = null unless isType.string spa.title
 	spa.description   = null unless isType.string spa.description
 	spa.src           = {}   unless isType.object spa.src

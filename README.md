@@ -2,7 +2,7 @@
 **Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 4.0.0  
 
 Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
-More and better documentation *coming real soon*!
+Documentation: [http://rapid-build.io/](http://rapid-build.io/)
 
 ## Installation
 If installing globally you may need to set your [NODE_PATH](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
@@ -159,11 +159,12 @@ package.json
 # angular.templateCache.urlPrefix                   = (string)  prefix for template urls
 # angular.templateCache.useAbsolutePaths            = (boolean) defaults to false = prefix template urls with a '/'
 # angular.ngFormify                                 = (boolean) defaults to false = set to true to replace all html form tags with ng:form in client dist, useful if your application is going to be wrapped in a global form
+# spa.autoInject                                    = (array of strings) defaults to ['all'] = the build will automatically inject the following into your spa.html: ['clickjacking', 'moduleName', 'ngCloakStyles', 'scripts', 'styles'], set to false to disable or provide options you want injected
 # spa.title                                         = (string)  defaults to package.json name or 'Application' = html title tag value
 # spa.description                                   = (string)  defaults to package.json description = html meta description tag value
 # spa.src.filePath                                  = (string)  set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
 # spa.dist.fileName                                 = (string)  defaults to file name of spa.src.filePath or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
-# spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['clickjacking', 'description', 'moduleName', 'scripts', 'styles', 'title'] or ['all']
+# spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['clickjacking', 'description', 'moduleName', 'ngCloakStyles', 'scripts', 'styles', 'title'] or ['all']
 # minify.css.styles                                 = (boolean) defaults to true = for prod build, minify the css
 # minify.css.fileName                               = (string)  defaults to 'styles.min.css'
 # minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
@@ -194,7 +195,7 @@ package.json
 # extra.compile.server[less|sass]                   = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
 # extra.minify.client[css|js]                       = (array of strings) = file paths: additional files to minify in dist/client that the build didn't minify (by default, the build does not minify files in libs or bower_components)
 # security.client.clickjacking                      = (boolean) defaults to true = includes a clickjacking defense script in the default spa.html (set to false to disable)
-# =====================================================================================================================================================================================================================================
+# ======================================================================================================================================================================================================================================================================================================
 ```
 
 ## Build Modes

@@ -640,7 +640,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"The build will include a
 				 <a target=\"_blank\" href=\"https://www.owasp.org/index.php/Clickjacking\">clickjacking</a>
-				 defense script in the default spa.html (set to false to disable)."
+				 defense script in the your spa.html (set to false to disable)."
 			]
 		]
 		example: """
@@ -671,6 +671,35 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 
 	spa:
 		opts: [
+			name: 'autoInject'
+			info: "@type array of strings, @default ['all']"
+			description: [
+				"The build will automatically
+				 inject the following into your spa.html:
+				 <ul>
+					<li>
+						<a href=\"#security.client.clickjacking\" rb-scroll>clickjacking</a>
+					</li>
+					<li>
+						<a href=\"#angular.moduleName\" rb-scroll>moduleName</a>
+						<em class=\"sub sep parens\">ng-app attribute</em>
+					</li>
+					<li>
+						<a target=\"_blank\" href=\"https://docs.angularjs.org/api/ng/directive/ngCloak\">ngCloakStyles</a>
+					</li>
+					<li>
+						scripts <em class=\"sub sep parens\">all your js files</em>
+					</li>
+					<li>
+						styles <em class=\"sub sep parens\">all your css files</em>
+					</li>
+				 </ul>
+				"
+				"Or provide to the array the options you want."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 Disable auto injection by setting to false <em class=\"sub parens\">boolean</em>."
+			]
+		,
 			name: 'description'
 			info: "@type string, @default package.json description"
 			description: [
@@ -687,7 +716,8 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 						all or
 					</li>
 					<li>
-						clickjacking, description, moduleName, scripts, styles and title
+						clickjacking, description, moduleName,
+						ngCloakStyles, scripts, styles and title
 					</li>
 				</ul>"
 			]
@@ -719,6 +749,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 		example: """
 			var opts = {
 				spa: {
+					autoInject: false,
 					description: 'Documentation website for rapid-build.',
 					placeholders: ['all'],
 					title: 'Rapid Build',

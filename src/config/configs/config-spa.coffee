@@ -18,18 +18,23 @@ module.exports = (config, options) ->
 
 	# defaults
 	# ========
-	customSrcPath = options.spa.src.filePath
-	isCustom      = !!customSrcPath
-	srcFilePath   = getSrcFilePath isCustom, customSrcPath
-	srcFile       = path.basename srcFilePath
-	srcDir        = path.dirname srcFilePath
-	distFile      = options.spa.dist.fileName or srcFile
-	distFilePath  = path.join config.dist.app.client.dir, distFile
+	customSrcPath   = options.spa.src.filePath
+	isCustom        = !!customSrcPath
+	srcFilePath     = getSrcFilePath isCustom, customSrcPath
+	srcFile         = path.basename srcFilePath
+	srcDir          = path.dirname srcFilePath
+	distFile        = options.spa.dist.fileName or srcFile
+	distFilePath    = path.join config.dist.app.client.dir, distFile
+	distFileAbsPath = path.join config.app.dir, distFilePath
 
 	# init spa
 	# ========
 	spa = {}
 	spa.custom = isCustom
+
+	# autoInject
+	# ==========
+	spa.autoInject = if options.spa.autoInject is null then ['all'] else options.spa.autoInject
 
 	# placeholders
 	# ============
@@ -39,8 +44,9 @@ module.exports = (config, options) ->
 	# dist
 	# ====
 	spa.dist =
-		file: distFile
-		path: distFilePath
+		file:    distFile
+		path:    distFilePath
+		absPath: distFileAbsPath
 
 	# src
 	# ===

@@ -40,7 +40,7 @@ module.exports = (config, options) ->
 		angular: getAngularFiles()
 
 	# init order
-	# =========
+	# ==========
 	order =
 		rb:
 			scripts: first: [], last: []

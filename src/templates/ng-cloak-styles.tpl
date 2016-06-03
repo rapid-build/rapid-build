@@ -1,0 +1,2 @@
+<!-- When you load angular at the bottom, you need to create the "ng-cloak" rules yourself -->
+	<style>[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\:form{display:block;}</style>

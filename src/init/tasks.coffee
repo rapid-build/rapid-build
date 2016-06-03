@@ -17,8 +17,11 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'build-files',                '/build/build-files',  deps: ['clean-files']
 	taskHelp.addTask 'build-prod-files',           '/build/build-prod-files'
 	taskHelp.addTask 'build-prod-files-blueprint', '/build/build-prod-files-blueprint'
-	taskHelp.addTask 'build-spa',                  '/build/build-spa'
-	taskHelp.addTask 'build-spa:prod',             '/build/build-spa', env: 'prod'
+	taskHelp.addTask 'build-spa',                  '/build/build-spa', taskCB: true
+	taskHelp.addTask 'build-spa:prod',             '/build/build-spa', taskCB: true, env: 'prod'
+	taskHelp.addTask 'build-spa-file',             '/build/build-spa-file'
+	taskHelp.addTask 'build-spa-file:prod',        '/build/build-spa-file', env: 'prod'
+	taskHelp.addTask 'build-spa-placeholders',     '/build/build-spa-placeholders'
 
 	# clean
 	# =====
@@ -62,6 +65,7 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'copy-server-config',       '/copy/copy-server-config'
 	taskHelp.addTask 'copy-server-info',         '/copy/copy-server-info'
 	taskHelp.addTask 'copy-server-node_modules', '/copy/copy-server-node_modules'
+	taskHelp.addTask 'copy-spa',                 '/copy/copy-spa'
 	taskHelp.addTask 'copy-views',               '/copy/copy-views', taskCB: true
 
 	# extra
