@@ -26,6 +26,7 @@ module.exports = (config, options) ->
 	distFile        = options.spa.dist.fileName or srcFile
 	distFilePath    = path.join config.dist.app.client.dir, distFile
 	distFileAbsPath = path.join config.app.dir, distFilePath
+	tempFilePath    = path.join config.generated.pkg.temp.path, distFilePath
 
 	# init spa
 	# ========
@@ -54,6 +55,11 @@ module.exports = (config, options) ->
 		file: srcFile
 		dir:  srcDir
 		path: srcFilePath
+
+	# temp
+	# ====
+	spa.temp =
+		path: tempFilePath
 
 	# placeholders
 	# ============

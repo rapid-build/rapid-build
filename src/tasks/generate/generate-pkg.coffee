@@ -25,6 +25,14 @@ module.exports = (config) ->
 			defer.resolve()
 		defer.promise
 
+	createDir = (dir) ->
+		defer = q.defer()
+		_path = config.generated.pkg[dir].path
+		fse.mkdirs _path, (e) ->
+			# console.log "generated #{dir} directory".yellow
+			defer.resolve()
+		defer.promise
+
 	# private
 	# =======
 	_api =
@@ -41,21 +49,22 @@ module.exports = (config) ->
 			pkg: ->
 				root   = path.join config.generated.pkg.path, '*.*'
 				files  = config.generated.pkg.files.path
+				temp   = config.generated.pkg.temp.path
 				server = path.join config.src.rb.server.dir
 				client = path.join config.src.rb.client.dir, '*'
 				bower  = "!#{config.src.rb.client.bower.dir}"
-				paths  = [root, files, server, client, bower]
+				paths  = [root, files, temp, server, client, bower]
 				delDir paths, config.generated.pkg.dir
 
 		create:
 			dirs: ->
-				defer = q.defer()
-				_path = config.generated.pkg.files.path
-				fse.mkdirs _path, (e) ->
+				q.all([
+					createDir 'files'
+					createDir 'temp'
+				])
+				.done ->
 					dir = config.generated.pkg.dir
 					console.log "generated #{dir} directory".yellow
-					defer.resolve()
-				defer.promise
 
 			jsonFiles: ->
 				pkg   = config.generated.pkg

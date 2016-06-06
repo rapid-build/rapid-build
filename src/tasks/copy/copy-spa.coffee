@@ -1,6 +1,6 @@
 module.exports = (config, gulp) ->
-	q      = require 'q'
-	rename = require 'gulp-rename'
+	q   = require 'q'
+	fse = require 'fs-extra'
 
 	# API
 	# ===
@@ -8,13 +8,10 @@ module.exports = (config, gulp) ->
 		runTask: ->
 			defer = q.defer()
 			src   = config.spa.src.path
-			dest  = config.dist.app.client.dir
-			file  = config.spa.dist.file
-			gulp.src src
-				.pipe rename file    # if options.spa.dist.fileName
-				.pipe gulp.dest dest
-				.on 'end', ->
-					defer.resolve()
+			dest  = config.spa.temp.path
+			opts  = clobber: true
+			fse.copy src, dest, opts, (e) ->
+				defer.resolve()
 			defer.promise
 
 	# return

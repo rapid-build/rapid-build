@@ -14,12 +14,14 @@ module.exports = (config) ->
 	generated.dir  = 'generated'
 	generated.path = join config.rb.root, generated.dir
 	generated.pkg  = {}
-	generated.pkg.dir    = config.app.name
-	generated.pkg.path   = join generated.path, generated.pkg.dir
-	generated.pkg.bower  = join generated.pkg.path, 'bower.json'
-	generated.pkg.config = join generated.pkg.path, 'config.json'
-	generated.pkg.files  = {}
-	generated.pkg.src    = {}
+	generated.pkg.dir     = config.app.name
+	generated.pkg.relPath = join generated.dir, generated.pkg.dir
+	generated.pkg.path    = join generated.path, generated.pkg.dir
+	generated.pkg.bower   = join generated.pkg.path, 'bower.json'
+	generated.pkg.config  = join generated.pkg.path, 'config.json'
+	generated.pkg.files   = {}
+	generated.pkg.src     = {}
+	generated.pkg.temp    = {}
 	generated.pkg.files.dir                = 'files'
 	generated.pkg.files.path               = join generated.pkg.path, generated.pkg.files.dir
 	generated.pkg.files.files              = join generated.pkg.files.path, 'files.json'
@@ -31,6 +33,9 @@ module.exports = (config) ->
 	generated.pkg.src.server = {}
 	generated.pkg.src.server.path = join generated.pkg.src.path, 'server'
 	generated.pkg.src.server.info = join generated.pkg.src.server.path, 'server-info.json'
+	generated.pkg.temp.dir     = 'temp'
+	generated.pkg.temp.relPath = join generated.pkg.relPath, generated.pkg.temp.dir
+	generated.pkg.temp.path    = join generated.pkg.path, generated.pkg.temp.dir
 
 	# add generated to config
 	# =======================

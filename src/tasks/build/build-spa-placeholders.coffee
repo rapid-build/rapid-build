@@ -174,7 +174,7 @@ module.exports = (config, gulp) ->
 
 	# return
 	# ======
-	api.runTask config.spa.dist.absPath
+	api.runTask config.spa.temp.path
 
 
 

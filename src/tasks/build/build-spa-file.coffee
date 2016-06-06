@@ -79,7 +79,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			data  = getData json
 			tasks = [
 				-> buildTask(
-					config.spa.dist.absPath
+					config.spa.temp.path
 					config.dist.app.client.dir
 					config.spa.dist.file
 					data
