@@ -1,8 +1,8 @@
 # rapid-build
-**Requirements**: [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 4.0.0  
+**Requirements**: [git](https://git-scm.com/downloads), [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 4.0.0  
 
-Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
-Documentation: [http://rapid-build.io/](http://rapid-build.io/)
+Documentation: [http://rapid-build.io/](http://rapid-build.io/)  
+Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).
 
 ## Installation
 If installing globally you may need to set your [NODE_PATH](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
