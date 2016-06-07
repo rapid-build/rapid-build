@@ -3,52 +3,54 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 		info: '(all 4 builds do the following tasks first)'
 		tasks: [
 			label: 'Install bower components.'
-			info: '(if they aren\'t installed)'
+			info: 'if they aren\'t installed'
 		,
 			label: 'Copy files to the dist directory:'
 			subtasks: [
 				label: 'css'
-				info: '@dir client'
+				type: '@dir client'
 			,
 				label: 'images'
-				info: '@dir client'
+				type: '@dir client'
 			,
 				label: 'js'
-				info: '@dir client and server'
+				type: '@dir client and server'
 			,
 				label: 'html'
-				info: '@dir client'
+				type: '@dir client'
 			,
 				label: 'libs'
-				info: '@dir client (everything in the libs directory)'
+				type: '@dir client'
+				info: 'everything in the libs directory'
 			,
 				label: 'bower components'
-				info: '@dir client (files in bower.json\'s main prop)'
+				type: '@dir client'
+				info: 'files in bower.json\'s main prop'
 			,
 				label: 'html'
-				info: '@dir client'
+				type: '@dir client'
 			]
 		,
 			label: 'Compile files to the dist directory:'
 			subtasks: [
 				label: 'coffee &#8594; js'
-				info: '@dir client and server'
+				type: '@dir client and server'
 			,
 				label: 'es6 &#8594; js'
-				info: '@dir client and server'
+				type: '@dir client and server'
 			,
 				label: 'less &#8594; css'
-				info: '@dir client'
+				type: '@dir client'
 			,
 				label: 'sass &#8594; css'
-				info: '@dir client'
+				type: '@dir client'
 			]
 		]
 
 	'default build':
 		tasks: [
 			label: 'Run common tasks.'
-			info: '(<a href="#common-tasks" rb-scroll>see common tasks</a>)'
+			info: '<a href="#common-tasks" rb-scroll>see common tasks</a>'
 		,
 			label: 'Build spa.html then copy to dist/client/.'
 		,
@@ -69,10 +71,10 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 	'dev build':
 		tasks: [
 			label: 'Run default build.'
-			info: '(<a href="#default-build" rb-scroll>see default build</a>)'
+			info: '<a href="#default-build" rb-scroll>see default build</a>'
 		,
 			label: 'Fireup the file watchers.'
-			info: '(on saving a file, the browser will refresh)'
+			info: 'on saving a file, the browser will refresh'
 		]
 		example:
 			lang: 'bash'
@@ -84,18 +86,18 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 	'prod build':
 		tasks: [
 			label: 'Run common tasks.'
-			info: '(<a href="#common-tasks" rb-scroll>see common tasks</a>)'
+			info: '<a href="#common-tasks" rb-scroll>see common tasks</a>'
 		,
 			label: 'Minify dist/client/ files:'
-			info: '(css, html and js)'
+			info: 'css, html and js'
 		,
 			label: 'Concatenate dist/client/ files:'
 			subtasks: [
 				label: 'css'
-				info: '(create styles.min.css)'
+				info: 'create styles.min.css'
 			,
 				label: 'js'
-				info: '(create scripts.min.css)'
+				info: 'create scripts.min.css'
 			]
 		,
 			label: 'Build spa.html then copy to dist/client/.'
@@ -103,7 +105,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			label: 'Minify spa.html.'
 		,
 			label: 'Cache bust dist/client/ files.'
-			info: '(css, js, gif, jpg, jpeg and png)'
+			info: 'css, js, gif, jpg, jpeg and png'
 		,
 			label: 'Minify dist/server/ js files.'
 		]
@@ -117,7 +119,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 	'test build':
 		tasks: [
 			label: 'Run common tasks.'
-			info: '(<a href="#common-tasks" rb-scroll>see common tasks</a>)'
+			info: '<a href="#common-tasks" rb-scroll>see common tasks</a>'
 		,
 			label: 'Copy client test scripts to dist/client/.'
 		,

@@ -55,13 +55,11 @@
 			padding: 9px 10px;
 			font-size: 11px;
 		}
-		&[clipboard] {
-			&:not([clipboard="false"]) {
-				code {
-					@pad: 14px;
-					padding-top: @pad;
-					padding-bottom: @pad;
-				}
+		&[spacing="large"] {
+			code {
+				@pad: 14px;
+				padding-top: @pad;
+				padding-bottom: @pad;
 			}
 		}
 	}

@@ -6,8 +6,11 @@
 		</h1>
 		<p>
 			<a href="/build-types">Default builds</a>
-			<span title="don't meet your needs">don't suffice</span>, <em>no problem!</em><br>
-			Below are a list of options you can use to customize your builds.
+			<span title="don't meet your needs">don't suffice</span>,
+			<em>no problem!</em><br>
+			Below are a list of options you can use to
+			customize your builds
+			<em class="sub parens"><a href="/getting-started#build-options.js">for build-options.js</a></em>.
 		</p>
 	</section>
 
@@ -51,7 +54,7 @@
 						<rb:icon kind="fa-cog"></rb:icon>
 						<span ng-bind="opt"></span>
 					</h3>
-					<ul class="list-options">
+					<ul class="list small">
 						<li ng-repeat="opts in val.opts">
 							<h4 id="{{opt}}.{{opts.name}}">
 								<span ng-bind-html="opts.name"></span>
@@ -66,8 +69,11 @@
 							</ul>
 						</li>
 						<li class="example">
-							<h4>Example</h4>
-							<rb:code lang="js" size="small" src="val.example"></rb:code>
+							<h4>
+								<span>Example</span>
+								<em class="sub parens"><a href="/getting-started#build-options.js" title="for build-options.js">build-options.js</a></em>
+							</h4>
+							<rb:code lang="js" size="small" src="val.example" clipboard></rb:code>
 						</li>
 					</ul>
 				</section>

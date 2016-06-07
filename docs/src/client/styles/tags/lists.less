@@ -4,7 +4,6 @@
 	margin: 0 0 18px;
 	font-size: 15px;
 	color: lightslategrey;
-
 	li {
 		position: relative;
 		margin: 0 0 5px;
@@ -39,6 +38,9 @@
 			font-weight: 400;
 			color: lightslategrey;
 			span { &::after { content: ':'; } }
+		}
+		> .rb-code {
+			&:last-child { margin-bottom: 5px; }
 		}
 		.rb-code { margin-left: -15px; }
 	}
@@ -86,3 +88,19 @@ ul.list {
 		}
 	}
 }
+
+/* Small Option
+ ***************/
+.list.small {
+	font-size: 81.2%; // 13px
+	> ol, ul {
+		margin-bottom: 16px;
+		li {
+			margin-bottom: 4px;
+		}
+	}
+}
+
+
+
+

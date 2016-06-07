@@ -136,7 +136,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		,
 			label: 'Copy this and save it to the root of your project.'
 			items: [
-				label: 'build-options.js gets required from
+				label: 'build-options.js gets required by
 						<a href="#build.js" rb-scroll>build.js</a>'
 			,
 				label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
@@ -163,7 +163,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 				};
 
 				var setProdOptions = options => {
-					// Add dev specific build options here:
+					// Add prod specific build options here:
 					// options.minify = { css: { splitMinFile: false } }; // example
 				};
 

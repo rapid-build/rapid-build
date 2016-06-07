@@ -71,7 +71,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				angular: {
 					moduleName: 'rapid-build',
 					modules: ['ngAnimate'],
@@ -127,7 +127,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				build: {
 					client: false,
 					server: false
@@ -152,7 +152,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				browser: {
 					open: false,
 					reload: false
@@ -219,7 +219,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				dist: {
 					dir: 'pkg',
 					client: {
@@ -317,7 +317,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				exclude: {
 					spa: true,
 					angular: {
@@ -402,7 +402,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				extra: {
 					compile: {
 						client: {
@@ -442,7 +442,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				httpProxy: [{
 					context: '/api',
 					options: {
@@ -539,7 +539,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				minify: {
 					cacheBust: false,
 					css: {
@@ -579,7 +579,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				order: {
 					scripts: {
 						first: ['scripts/bootstrap.js'],
@@ -623,7 +623,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				ports: {
 					reload: 5002,
 					reloadUI: 5003,
@@ -644,7 +644,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				security: {
 					client: {
 						clickjacking: false
@@ -662,7 +662,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				server: {
 					node_modules: ['cors']
 				}
@@ -710,10 +710,10 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			info: "@type array of strings"
 			description: [
 				"Retain spa.html file placeholders.",
-				"Options include:
+				"Options include <em class=\"sub parens\">all or individuals</em>:
 				<ul>
 					<li>
-						all or
+						all
 					</li>
 					<li>
 						clickjacking, description, moduleName,
@@ -747,7 +747,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				spa: {
 					autoInject: false,
 					description: 'Documentation website for rapid-build.',
@@ -815,7 +815,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				dist: {
 					dir: 'source',
 					client: {
@@ -846,7 +846,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			]
 		]
 		example: """
-			var opts = {
+			{
 				test: {
 					client: {
 						browsers: ['chrome', 'firefox', 'ie', 'safari']
