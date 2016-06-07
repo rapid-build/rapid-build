@@ -5,7 +5,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			label: 'Install bower components.'
 			info: 'if they aren\'t installed'
 		,
-			label: 'Copy files to the dist directory:'
+			label: 'Copy src files to the dist directory:'
 			subtasks: [
 				label: 'css'
 				type: '@dir client'
@@ -31,7 +31,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 				type: '@dir client'
 			]
 		,
-			label: 'Compile files to the dist directory:'
+			label: 'Compile src files to the dist directory:'
 			subtasks: [
 				label: 'coffee &#8594; js'
 				type: '@dir client and server'
@@ -47,7 +47,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 		]
 
-	'default build':
+	'default':
 		tasks: [
 			label: 'Run common tasks.'
 			info: '<a href="#common-tasks" rb-scroll>see common tasks</a>'
@@ -59,16 +59,14 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			label: 'Open the browser.'
 		]
 		example:
-			caption:
-				label: 'Run in terminal from root of project'
-				info: '<a href="/getting-started#build.js">see build.js</a>'
 			lang: 'bash'
 			clipboard: 'true'
 			code: """
 				node build
 			"""
 
-	'dev build':
+	'dev':
+		info: 'run when developing'
 		tasks: [
 			label: 'Run default build.'
 			info: '<a href="#default-build" rb-scroll>see default build</a>'
@@ -83,7 +81,8 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 				node build dev
 			"""
 
-	'prod build':
+	'prod':
+		info: 'creates your distributable production folder'
 		tasks: [
 			label: 'Run common tasks.'
 			info: '<a href="#common-tasks" rb-scroll>see common tasks</a>'
@@ -116,7 +115,25 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 				node build prod
 			"""
 
-	'test build':
+	'prod:server':
+		info: 'see your prod build in the browser'
+		tasks: [
+			label: 'Run prod build.'
+			info: '<a href="#prod-build" rb-scroll>see prod build</a>'
+		,
+			label: 'Start the server.'
+		,
+			label: 'Open the browser.'
+		]
+		example:
+			lang: 'bash'
+			clipboard: 'true'
+			code: """
+				node build prod:server
+			"""
+
+	'test':
+		info: 'run to execute your tests'
 		tasks: [
 			label: 'Run common tasks.'
 			info: '<a href="#common-tasks" rb-scroll>see common tasks</a>'

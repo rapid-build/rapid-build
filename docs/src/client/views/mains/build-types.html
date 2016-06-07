@@ -11,6 +11,10 @@
 			Builds execute tasks against your source
 			code to create a distributable package/folder.
 		</p>
+		<p>
+			Make sure to add <a href="/getting-started#build.js">build.js</a>
+			to the root of your project.
+		</p>
 	</section>
 
 	<!-- COMMON TASKS -->
@@ -31,10 +35,11 @@
 					activity="hash"
 					rb-scroller="main-content"
 					collection="[
-						{ caption: 'default build', url: '#default-build' },
-						{ caption: 'dev build', url: '#dev-build' },
-						{ caption: 'prod build', url: '#prod-build' },
-						{ caption: 'test build', url: '#test-build' }
+						{ caption: 'default', url: '#default' },
+						{ caption: 'dev', url: '#dev' },
+						{ caption: 'prod', url: '#prod' },
+						{ caption: 'prod:server', url: '#prod:server' },
+						{ caption: 'test', url: '#test' }
 					]">
 				</rb:nav>
 			</aside>
@@ -42,7 +47,10 @@
 
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 main-col-content" id="main-content">
 			<!-- TITLE -->
-			<h2 class="sub title">Builds</h2>
+			<h2 class="sub title">
+				Builds
+				<em class="sub parens">run builds in terminal from root of project</em>
+			</h2>
 
 			<div class="main-content">
 				<!-- BUILD TYPES -->

@@ -61,16 +61,19 @@ angular.module('rapid-build').directive 'rbScroller', ['$window', '$timeout', 'c
 				elm              = elms.scroll.elm
 
 				if elmY >= winY
+					# console.log 'start'
 					elm.removeClass(fixed).css width: '', top: ''
 				else
 					stop      = elms.scroll.stop
 					scrollTop = winY - elmY
 
 					if scrollTop >= stop
+						# console.log 'stop'
 						top = "#{stop}px"
 						elm.removeClass(fixed).css { width: '', top }
 
 					else if elmY <= winY
+						# console.log 'middle'
 						width = "#{elms.scroll.wdt}px"
 						elm.addClass(fixed).css { width, top: '' }
 

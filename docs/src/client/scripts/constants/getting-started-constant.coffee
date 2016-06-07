@@ -16,20 +16,15 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 	'Installation':
 		icon: 'fa-download'
 		items: [
-			class: 'nomark'
-			label: '<h6>
-						global install recommended
-						<em class="sub sep parens">global install benefits</em>
-					</h6>'
-		,
 			label: 'One time install.'
 			info: 'the install is fairly big'
 		,
-			label: 'Can be used for multiple projects.'
+			label: 'Use it for building multiple projects.'
 		,
 			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
-					If installing globally you may need to set your
-					<a target="_blank" href="https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders">NODE_PATH</a>'
+					For global installs, make sure your
+					<a target="_blank" href="https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders">NODE_PATH</a>
+					is set.'
 		]
 		example:
 			lang: 'bash'
@@ -176,6 +171,12 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 
 				module.exports = getOptions
 			"""
+
+	'Got it now what?':
+		icon: 'fa-thumbs-o-up'
+		items: [
+			label: 'Time to start developing, <a href="/build-types">see build types</a>.'
+		]
 
 
 

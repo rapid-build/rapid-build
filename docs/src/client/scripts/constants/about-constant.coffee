@@ -3,6 +3,7 @@ angular.module('rapid-build').constant 'ABOUT',
 		info: 'supported'
 		items: [
 			label: 'Languages'
+			info: 'your choice'
 			items: [
 				label: 'html'
 				info: 'client'
@@ -18,7 +19,7 @@ angular.module('rapid-build').constant 'ABOUT',
 			info: 'included'
 			items: [
 				label: '<a target="_blank" href="https://angularjs.org/">angular 1.x</a>'
-				info: 'client'
+				info: 'client, angular 2 support is coming'
 			,
 				label: '<a target="_blank" href="http://karma-runner.github.io/">karma</a>'
 				info: 'client testing'
@@ -82,6 +83,11 @@ angular.module('rapid-build').constant 'ABOUT',
 	'Features':
 		items: [
 			label: '<a href="/build-types">See Build Types</a>'
+		]
+
+	'Where do I start?':
+		items: [
+			label: '<a href="/getting-started">See Getting Started</a>'
 		]
 
 
