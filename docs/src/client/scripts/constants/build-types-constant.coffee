@@ -56,6 +56,15 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 		,
 			label: 'Open the browser.'
 		]
+		example:
+			caption:
+				label: 'Run in terminal from root of project'
+				info: '<a href="/getting-started#build.js">see build.js</a>'
+			lang: 'bash'
+			clipboard: 'true'
+			code: """
+				node build
+			"""
 
 	'dev build':
 		tasks: [
@@ -65,6 +74,12 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			label: 'Fireup the file watchers.'
 			info: '(on saving a file, the browser will refresh)'
 		]
+		example:
+			lang: 'bash'
+			clipboard: 'true'
+			code: """
+				node build dev
+			"""
 
 	'prod build':
 		tasks: [
@@ -92,6 +107,12 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 		,
 			label: 'Minify dist/server/ js files.'
 		]
+		example:
+			lang: 'bash'
+			clipboard: 'true'
+			code: """
+				node build prod
+			"""
 
 	'test build':
 		tasks: [
@@ -108,6 +129,12 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			label: 'Run client tests in
 					<a target="_blank" href="http://jasmine.github.io/">jasmine</a>.'
 		]
+		example:
+			lang: 'bash'
+			clipboard: 'true'
+			code: """
+				node build test
+			"""
 
 
 

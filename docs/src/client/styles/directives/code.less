@@ -2,7 +2,7 @@
  *******/
 .rb-code {
 	position: relative;
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 	text-align: left;
 
 	// for zenbum color scheme
@@ -47,21 +47,29 @@
 	/* Sizes
 	 ********/
 	&.small {
-		margin-bottom: 25px;
 		> h4 {
-			padding: 3px 6px;
+			padding: 3px 6px 2px;
 			font-size: 8px;
 		}
 		code {
-			padding: 8px 10px;
+			padding: 9px 10px;
 			font-size: 11px;
+		}
+		&[clipboard] {
+			&:not([clipboard="false"]) {
+				code {
+					@pad: 14px;
+					padding-top: @pad;
+					padding-bottom: @pad;
+				}
+			}
 		}
 	}
 
 	&.large {
 		margin-bottom: 30px;
 		> h4 {
-			padding: 4px 7px;
+			padding: 4px 7px 3px;
 		}
 		code {
 			padding: 21px 25px 22px;
@@ -73,7 +81,7 @@
 	 **********/
 	a {
 		position: absolute;
-		top: 18px;
+		top: 15px;
 		right: 0;
 		padding: 5px 8px;
 		font-size: 16px;
@@ -87,7 +95,8 @@
 		// border-radius: 5px 0 0 5px;
 	}
 	&:hover { a { opacity: 1; } }
-	&.large { a { top: 33px; } }
+	&.large { a { top: 32px; } }
+	&.small { a { top: 12px; } }
 
 	/* Options
 	 ********/
