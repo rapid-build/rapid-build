@@ -3,25 +3,25 @@ angular.module('rapid-build').service 'coordsService', ['$window', '$document',
 		# methods
 		# =======
 		@position = (elm) ->
+			# http://javascript.info/tutorial/coordinates
 			return unless elm
-			elm = elm[0] if elm.scope
-			doc = $document[0]
-			xPos = 0
-			yPos = 0
-			while elm
-				if elm.tagName and elm.tagName.toLowerCase() is 'BODY'
-					# deal with browser quirks with body/window/document and page scroll
-					xScroll = elm.scrollLeft or doc.documentElement.scrollLeft
-					yScroll = elm.scrollTop  or doc.documentElement.scrollTop
-					xPos   += elm.offsetLeft - xScroll + elm.clientLeft
-					yPos   += elm.offsetTop  - yScroll + elm.clientTop
-				else
-					# for all other non-BODY elements
-					xPos += elm.offsetLeft - elm.scrollLeft + elm.clientLeft
-					yPos += elm.offsetTop  - elm.scrollTop  + elm.clientTop
-				elm = elm.offsetParent
+			elm     = elm[0] if elm.scope
+			box     = elm.getBoundingClientRect()
+			doc     = $document[0]
+			body    = doc.body
+			docElem = doc.documentElement
 
-			coords = x: xPos, y: yPos
+			scrollTop  = $window.pageYOffset or docElem.scrollTop  or body.scrollTop
+			scrollLeft = $window.pageXOffset or docElem.scrollLeft or body.scrollLeft
+			clientTop  = docElem.clientTop   or body.clientTop     or 0
+			clientLeft = docElem.clientLeft  or body.clientLeft    or 0
+
+			y = box.top  + scrollTop  - clientTop
+			x = box.left + scrollLeft - clientLeft
+			y = Math.round y
+			x = Math.round x
+
+			coords = { x, y }
 
 		@windowScroll = ->
 			xScroll = $window.scrollX or $window.pageXOffset

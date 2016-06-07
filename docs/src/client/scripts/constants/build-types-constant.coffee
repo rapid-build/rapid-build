@@ -1,6 +1,6 @@
 angular.module('rapid-build').constant 'BUILD_TYPES',
 	'common tasks':
-		info: '(all 4 builds do the following tasks first)'
+		info: 'all builds do the following tasks first'
 		tasks: [
 			label: 'Install bower components.'
 			info: 'if they aren\'t installed'

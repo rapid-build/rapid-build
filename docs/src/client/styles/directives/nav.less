@@ -212,6 +212,13 @@ table {
 	/* Sub
 	 ******/
 	.rb-nav.responsive.sub {
+		.toggle {
+			opacity: .5;
+			#effects.fade();
+		}
+		&.nav-open {
+			.toggle { opacity: 1; }
+		}
 		.nav {
 			li {
 				border-bottom: none;

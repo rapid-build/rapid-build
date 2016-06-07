@@ -1,5 +1,5 @@
 <div class="main-build-types" ng-controller="buildTypesController">
-	<section class="main">
+	<section>
 		<h1>
 			<rb:icon kind="ion-settings" size="large"></rb:icon>
 			Build Types
@@ -13,6 +13,15 @@
 		</p>
 	</section>
 
+	<!-- COMMON TASKS -->
+	<section
+		class="main"
+		id="{{type | spinalize}}"
+		ng-if="type.indexOf('common') != -1"
+		ng-repeat="(type, build) in ::buildTypes"
+		ng-include="'/views/sections/build-types.html'">
+	</section>
+
 	<div class="row grid-row grid-sep-left">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 main-col-aside">
 			<aside class="main">
@@ -22,7 +31,6 @@
 					activity="hash"
 					rb-scroller="main-content"
 					collection="[
-						{ caption: 'common tasks', url: '#common-tasks' },
 						{ caption: 'default build', url: '#default-build' },
 						{ caption: 'dev build', url: '#dev-build' },
 						{ caption: 'prod build', url: '#prod-build' },
@@ -38,44 +46,11 @@
 
 			<div class="main-content">
 				<!-- BUILD TYPES -->
-				<section id="{{type | spinalize}}" ng-repeat="(type, build) in ::buildTypes">
-					<h3>
-						<rb:icon kind="{{type.indexOf('common') != -1 ? 'fa-tasks' : 'fa-wrench'}}"></rb:icon>
-						<span ng-bind-html="type"></span>
-						<em ng-if="!!build.info" ng-bind-html="build.info" class="sub sep"></em>
-					</h3>
-					<ol class="list">
-						<li ng-repeat="task in build.tasks">
-							<span ng-bind-html="task.label"></span>
-							<em ng-if="!!task.info" bind-html-compile="task.info" class="sub parens"></em>
-							<ul ng-if="!!task.subtasks">
-								<li ng-repeat="subtask in task.subtasks">
-									<span bind-html-compile="subtask.label"></span>
-									<em ng-if="!!subtask.type" ng-bind-html="subtask.type" class="sub sep"></em>
-									<em ng-if="!!subtask.info" ng-bind-html="subtask.info" class="sub parens"></em>
-								</li>
-							</ul>
-						</li>
-						<li ng-if="!!build.example" class="example">
-							<h4 ng-if="!!build.example.caption">
-								<span ng-bind-html="build.example.caption.label"></span>
-								<em class="sub parens"
-									ng-if="!!build.example.caption.info"
-									ng-bind-html="build.example.caption.info"></em>
-							</h4>
-							<div class="row">
-								<div class="col-xs-12 col-sm-10 col-md-8 col-lg-7">
-									<rb:code
-										size="small"
-										spacing="large"
-										src="build.example.code"
-										lang="{{build.example.lang}}"
-										clipboard="{{!!build.example.clipboard}}"
-										hide-lang="{{!!build.example.hideLang}}"></rb:code>
-								</div>
-							</div>
-						</li>
-					</ol>
+				<section
+					id="{{type | spinalize}}"
+					ng-if="type.indexOf('common') == -1"
+					ng-repeat="(type, build) in ::buildTypes"
+					ng-include="'/views/sections/build-types.html'">
 				</section>
 			</div>
 		</div>

@@ -7,7 +7,8 @@ angular.module('rapid-build').directive 'rbScroller', ['$window', '$timeout', 'c
 			return unless spy
 			spy = $window.document.getElementById spy
 			return unless spy
-			$win = angular.element $window
+			fixed = 'fixed'
+			$win  = angular.element $window
 			element.addClass 'rb-scroller'
 
 			# elms
@@ -17,8 +18,8 @@ angular.module('rapid-build').directive 'rbScroller', ['$window', '$timeout', 'c
 					elm:  element
 					stop: 0 # y stop position
 					hgt:  0
-					top:  0
-					yPos: coordsService.position(element).y
+					wdt:  0
+					yPos: 0 # set in init()
 				spy:
 					elm: spy
 					hgt: 0
@@ -31,48 +32,68 @@ angular.module('rapid-build').directive 'rbScroller', ['$window', '$timeout', 'c
 				init: null
 				populateElms: null
 
+			# helpers
+			# =======
+			getDimensions = (elm) ->
+				dim = elm.getBoundingClientRect()
+				width  = Math.floor dim.width
+				height = Math.floor dim.height
+				{ width, height }
+
 			# methods
 			# =======
-			populateElms = ->
+			populateElms = (resize) ->
 				timeouts.populateElms = $timeout ->
-					elms.scroll.hgt  = elms.scroll.elm[0].clientHeight
-					elms.spy.hgt     = elms.spy.elm.clientHeight
+					elm = elms.scroll.elm
+					elm.removeClass(fixed).css width: '' if resize and elm.hasClass fixed
+					elmDim = getDimensions elm[0]
+					spyDim = getDimensions elms.spy.elm
+					elms.scroll.wdt  = elmDim.width  # was clientWidth
+					elms.scroll.hgt  = elmDim.height
+					elms.spy.hgt     = spyDim.height
 					elms.scroll.stop = elms.spy.hgt - elms.scroll.hgt
-				, 100
+				, 200
 
 			setScrollTop = ->
 				elms.win.scrollY = coordsService.windowScroll().y
+				winY             = elms.win.scrollY
+				elmY             = elms.scroll.yPos
+				elm              = elms.scroll.elm
 
-				if elms.win.scrollY <= elms.scroll.yPos
-					return elms.scroll.elm.css top: "#{elms.scroll.top}px"
+				if elmY >= winY
+					elm.removeClass(fixed).css width: '', top: ''
+				else
+					stop      = elms.scroll.stop
+					scrollTop = winY - elmY
 
-				scrollTop = elms.win.scrollY - elms.scroll.yPos
+					if scrollTop >= stop
+						top = "#{stop}px"
+						elm.removeClass(fixed).css { width: '', top }
 
-				return if elms.scroll.stop <= scrollTop
-				elms.scroll.elm.css top: "#{scrollTop}px"
+					else if elmY <= winY
+						width = "#{elms.scroll.wdt}px"
+						elm.addClass(fixed).css { width, top: '' }
 
 			# events
 			# ======
 			init = ->
 				timeouts.init = $timeout ->
-					elms.scroll.top = styleService.get elms.scroll.elm, 'top'
-					elms.scroll.top = elms.scroll.top.replace 'px', ''
-					elms.scroll.top = parseInt elms.scroll.top
+					elms.scroll.yPos = coordsService.position(element[0]).y
+					setScrollTop()
 				, 100
 
 			winResize = ->
-				populateElms().then -> setScrollTop()
+				populateElms('resize').then -> setScrollTop()
 
 			winScroll = ->
 				setScrollTop()
 
 			# init
 			# ====
-			init().then ->
-				populateElms().then ->
-					setScrollTop()
+			populateElms().then ->
+				init().then ->
 					$win.on 'scroll', winScroll
-				$win.on 'resize', winResize
+					$win.on 'resize', winResize
 
 			# destroy (for performance)
 			# =========================
