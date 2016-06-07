@@ -1,3 +1,12 @@
+## [0.59.1](https://github.com/jyounce/rapid-build/compare/v0.59.0...v0.59.1) (2016-06-07)
+
+
+### Bug Fixes
+
+* **spa watch:** fix the watch on the custom spa.html ([3df516a](https://github.com/jyounce/rapid-build/commit/3df516a))
+
+
+
 # [0.59.0](https://github.com/jyounce/rapid-build/compare/v0.58.2...v0.59.0) (2016-06-03)
 
 
