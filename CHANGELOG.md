@@ -1,3 +1,12 @@
+# [0.60.0](https://github.com/jyounce/rapid-build/compare/v0.59.1...v0.60.0) (2016-06-08)
+
+
+### Features
+
+* **option:** add option angular.bootstrap to bootstrap angular instead of using ng-app in spa ([fd43076](https://github.com/jyounce/rapid-build/commit/fd43076))
+
+
+
 ## [0.59.1](https://github.com/jyounce/rapid-build/compare/v0.59.0...v0.59.1) (2016-06-07)
 
 
