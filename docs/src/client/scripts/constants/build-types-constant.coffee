@@ -69,7 +69,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 		info: 'run when developing'
 		tasks: [
 			label: 'Run default build.'
-			info: '<a href="#default-build" rb-scroll>see default build</a>'
+			info: '<a href="#default" rb-scroll>see default build</a>'
 		,
 			label: 'Fireup the file watchers.'
 			info: 'on saving a file, the browser will refresh'
@@ -119,7 +119,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 		info: 'see your prod build in the browser'
 		tasks: [
 			label: 'Run prod build.'
-			info: '<a href="#prod-build" rb-scroll>see prod build</a>'
+			info: '<a href="#prod" rb-scroll>see prod build</a>'
 		,
 			label: 'Start the server.'
 		,
@@ -145,7 +145,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 		,
 			label: 'Copy server test scripts to dist/server/.'
 		,
-			label: 'Run client tests in
+			label: 'Run server tests in
 					<a target="_blank" href="http://jasmine.github.io/">jasmine</a>.'
 		]
 		example:
