@@ -145,6 +145,7 @@ module.exports = (config, gulp) ->
 				)
 
 			moduleName: (content, ph) ->
+				return content if config.angular.bootstrap.enabled
 				get.content.attr(
 					ph
 					'ng-app'

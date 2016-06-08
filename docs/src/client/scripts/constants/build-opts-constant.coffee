@@ -1,10 +1,24 @@
 angular.module('rapid-build').constant 'BUILD_OPTS',
 	angular:
+		info: 'for angular 1.x'
 		opts: [
+			name: 'version'
+			info: "@type string, @default '1.x'"
+			description: [
+				"The version of angular to load."
+				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
+				 Currently the build does not support angular 2
+				 out of the box."
+			]
+		,
 			name: 'moduleName'
 			info: "@type string, @default 'app'"
 			description: [
-				"Application module name, value for ng-app in spa.html file."
+				'Application module name.'
+			,
+				'Value for ng-app in
+				<a href="#spa" rb-scroll>spa.html</a> or angular\'s
+				<a href="#angular.bootstrap" rb-scroll> bootstrap</a>.'
 			]
 		,
 			name: 'modules'
@@ -18,13 +32,24 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 				 options."
 			]
 		,
-			name: 'version'
-			info: "@type string, @default '1.x'"
+			name: 'bootstrap'
+			info: "@type boolean or string, @default false"
 			description: [
-				"The version of angular to load."
-				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
-				 Currently the build does not support angular 2
-				 out of the box."
+				'By default the build initializes angular via
+				 <a target="_blank" href="https://docs.angularjs.org/guide/bootstrap">ng-app</a>
+				 in <a href="#spa" rb-scroll>spa.html</a>.'
+				'Provide true to use angular\'s
+				 <a target="_blank" href="https://docs.angularjs.org/guide/bootstrap#manual-initialization">bootstrap</a>
+				 method instead.
+				 <ul>
+					<li>
+						The build will bootstrap on the document.
+					</li>
+				 </ul>'
+				'Or provide a
+				 <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector">css selector</a>
+				 <em class="sub parens">string</em> to the dom element to bootstrap.'
+				'The bootstrap script will load last.'
 			]
 		,
 			name: 'ngFormify'
@@ -73,9 +98,10 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 		example: """
 			{
 				angular: {
+					version: '1.5.x',
 					moduleName: 'rapid-build',
 					modules: ['ngAnimate'],
-					version: '1.5.x',
+					bootstrap: true,
 					ngFormify: true,
 					httpBackend: {
 						dev: true,
@@ -254,8 +280,10 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 			description: [
 				"Set to true to exclude the angular files
 				 from dist/client/ that come with rapid-build."
-				"Includes: angular lib and angular
-				 <a href=\"#angular.modules\" rb-scroll>modules</a>."
+				"Includes: angular lib, angular
+				 <a href=\"#angular.modules\" rb-scroll>modules</a>
+				 and angular <a href=\"#angular.bootstrap\" rb-scroll>bootstrap</a>
+				 <em class=\"sub parens\">if set</em>."
 			]
 		,
 			name: 'angular.modules'

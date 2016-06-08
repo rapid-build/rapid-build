@@ -31,6 +31,12 @@ module.exports = (config) ->
 		config.src.rb.client.scripts.dir
 	)
 
+	templates.angularBootstrap = getInfo(
+		'angular-bootstrap.tpl'
+		'bootstrap.coffee'
+		config.src.rb.client.scripts.dir
+	)
+
 	templates.clickjacking  = getInfo 'clickjacking.tpl'
 	templates.ngCloakStyles = getInfo 'ng-cloak-styles.tpl'
 

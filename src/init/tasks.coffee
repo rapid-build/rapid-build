@@ -11,6 +11,7 @@ module.exports = (gulp, config) ->
 
 	# build
 	# =====
+	taskHelp.addTask 'build-angular-bootstrap',    '/build/build-angular-bootstrap'
 	taskHelp.addTask 'build-angular-modules',      '/build/build-angular-modules'
 	taskHelp.addTask 'build-bower-json',           '/build/build-bower-json'
 	taskHelp.addTask 'build-config',               '/build/build-config'

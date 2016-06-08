@@ -5,6 +5,10 @@ module.exports = (config, options) ->
 	pathHelp = require "#{config.req.helpers}/path"
 	test     = require("#{config.req.helpers}/test")()
 
+	# exclude rb files
+	# ================
+	angularBootstrap = path.join 'scripts', 'bootstrap.js'
+
 	# options helpers
 	# ===============
 	get =
@@ -37,7 +41,7 @@ module.exports = (config, options) ->
 					scripts: []
 					styles:  []
 				spaFile:
-					scripts: []
+					scripts: [angularBootstrap]
 					styles:  []
 				dist:
 					client: []

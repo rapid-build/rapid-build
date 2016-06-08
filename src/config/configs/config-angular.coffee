@@ -1,7 +1,8 @@
 module.exports = (config, options) ->
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
-	test = require("#{config.req.helpers}/test")()
+	path   = require 'path'
+	log    = require "#{config.req.helpers}/log"
+	isType = require "#{config.req.helpers}/isType"
+	test   = require("#{config.req.helpers}/test")()
 
 	# default modules
 	# order matters because of 'ngMockE2E'
@@ -12,6 +13,12 @@ module.exports = (config, options) ->
 	# init angular
 	# ============
 	angular = {}
+
+	# bootstrap
+	# =========
+	angular.bootstrap = {}
+	angular.bootstrap.enabled = if options.angular.bootstrap is null then false else !!options.angular.bootstrap
+	angular.bootstrap.elm     = if isType.string options.angular.bootstrap then options.angular.bootstrap else null
 
 	# ng-formify
 	# ==========

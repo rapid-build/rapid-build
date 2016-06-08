@@ -8,6 +8,7 @@ module.exports = (config, options) ->
 	angular.modules       = null unless isType.array angular.modules
 	angular.version       = null unless isType.string angular.version
 	angular.moduleName    = null unless isType.string angular.moduleName
+	angular.bootstrap     = null if not isType.boolean(angular.bootstrap) and not isType.string angular.bootstrap
 	angular.ngFormify     = null unless isType.boolean angular.ngFormify
 	angular.httpBackend   = {}   unless isType.object angular.httpBackend
 	angular.httpBackend.dev  = null unless isType.boolean angular.httpBackend.dev

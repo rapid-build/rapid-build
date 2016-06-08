@@ -12,6 +12,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 				"#{config.rb.prefix.task}build-bower-json"
 				"#{config.rb.prefix.task}bower"
 				"#{config.rb.prefix.task}build-angular-modules"
+				"#{config.rb.prefix.task}build-angular-bootstrap"
 				[
 					"#{config.rb.prefix.task}copy-bower_components"
 					"#{config.rb.prefix.task}copy-css"

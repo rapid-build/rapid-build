@@ -110,6 +110,14 @@ module.exports = (config, gulp) ->
 		]).done -> defer.resolve()
 		defer.promise
 
+	addAngularBootstrap = ->
+		return if config.exclude.default.client.files
+		return if config.exclude.angular.files
+		return unless config.angular.bootstrap.enabled
+		_path = path.join config.dist.rb.client.dir, 'scripts', 'bootstrap.js'
+		_path = pathHelp.format _path
+		data.client.scripts.push _path # add last
+
 	# API
 	# ===
 	api =
@@ -117,6 +125,7 @@ module.exports = (config, gulp) ->
 			defer = q.defer()
 			tasks = [
 				-> buildData()
+				-> addAngularBootstrap()
 				-> buildFile data
 			]
 			tasks.reduce(q.when, q()).done -> defer.resolve()

@@ -53,6 +53,7 @@
 					<h3>
 						<rb:icon kind="fa-cog"></rb:icon>
 						<span ng-bind="opt"></span>
+						<em ng-if="!!val.info" ng-bind-html="val.info" class="sub parens"></em>
 					</h3>
 					<ul class="list small">
 						<li ng-repeat="opts in val.opts">

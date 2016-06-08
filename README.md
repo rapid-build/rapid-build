@@ -152,6 +152,7 @@ package.json
 # angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
 # angular.moduleName                                = (string)  defaults to 'app' = application module name, value for ng-app
 # angular.version                                   = (string)  defaults to '1.x' = semver version required
+# angular.bootstrap                                 = (boolean or string) defaults to false = bootstrap angular instead of using ng-app in spa.html, provide true to bootstrap on document or provide a css selector to bootstrap on a dom element
 # angular.httpBackend.dev                           = (boolean) defaults to false = set to true to enable httpBackend for dev and default build
 # angular.httpBackend.prod                          = (boolean) defaults to false = set to true to enable httpBackend for prod build
 # angular.httpBackend.dir                           = (string)  defaults to 'mocks' = directory inside your client scripts directory
