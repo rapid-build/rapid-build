@@ -3,7 +3,7 @@
 
 ### Features
 
-* **option:** add option angular.bootstrap to bootstrap angular instead of using ng-app in spa ([fd43076](https://github.com/jyounce/rapid-build/commit/fd43076))
+* **option:** add option angular.bootstrap to bootstrap angular instead of using ng-app in spa.html, defaults to false ([fd43076](https://github.com/jyounce/rapid-build/commit/fd43076))
 
 
 
