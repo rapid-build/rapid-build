@@ -4,7 +4,6 @@ module.exports = (config, gulp) ->
 	fse          = require 'fs-extra'
 	path         = require 'path'
 	promiseHelp  = require "#{config.req.helpers}/promise"
-	needle       = left: '<!--#include ', right: '-->'
 	placeholders = {
 		'scripts'
 		'styles'
@@ -12,6 +11,11 @@ module.exports = (config, gulp) ->
 		'ngCloakStyles'
 		'clickjacking'
 	}
+	needle =
+		comments:
+			'BUILD_TEMP_PLACEHOLDER_COMMENT'
+		placeholders:
+			left: '<!--#include ', right: '-->'
 
 	# helpers
 	# =======
@@ -25,7 +29,7 @@ module.exports = (config, gulp) ->
 	format =
 		phs: (phs) ->
 			for key, val of phs
-				phs[key] = "#{needle.left}#{val}#{needle.right}"
+				phs[key] = "#{needle.placeholders.left}#{val}#{needle.placeholders.right}"
 			phs
 
 		closing: # last closing tag
@@ -71,6 +75,12 @@ module.exports = (config, gulp) ->
 			tag: (tag) ->
 				pats.opening.tag tag
 
+		comments:
+			html:
+				new RegExp '<!--(.|\\s)*?-->', 'ig'
+			needle:
+				new RegExp needle.comments, 'g'
+
 	get =
 		content:
 			tag: (ph, content, tags) ->
@@ -87,12 +97,35 @@ module.exports = (config, gulp) ->
 				return content if has.ph content, ph
 				return content if has.attr attr, content
 				for tag in tags
-					pat  = pats.opening.tag tag
-					oTag = get.attr pat, ph, attr, content # o = opening tag
-					continue unless oTag
-					content = content.replace pat, oTag
+					method  = if tag is '*' then 'anyAttr' else 'indAttr'
+					info    = get.content[method] ph, attr, content, tag
+					continue unless info.oTag
+					content = info.content
 					break
 				content
+
+			indAttr: (ph, attr, content, tag) -> # specific tag
+				info = { oTag: null, content }
+				pat  = pats.opening.tag tag
+				info.oTag = get.attr pat, ph, attr, content # o = opening tag
+				return info unless info.oTag
+				info.content = info.content.replace pat, info.oTag
+				info
+
+			anyAttr: (ph, attr, content, tag) -> # any tag
+				info        = { oTag: null, content }
+				comments    = []
+				pat         = pats.opening.tag tag
+				patCmtsHtml = pats.comments.html
+				content     = content.replace patCmtsHtml, (cmt) -> comments.push cmt; needle.comments
+				info.oTag   = get.attr pat, ph, attr, content # o = opening tag
+				return info unless info.oTag
+				patCmtsNeedle = pats.comments.needle
+				info.content  = content.replace pat, info.oTag
+				return info unless comments.length
+				cmtCnt = -1
+				info.content = info.content.replace patCmtsNeedle, -> cmtCnt++; comments[cmtCnt]
+				info
 
 		tag: (pat, ph, loc, content) ->
 			match = pat.exec content
@@ -150,7 +183,7 @@ module.exports = (config, gulp) ->
 					ph
 					'ng-app'
 					content
-					[ 'html', 'body', '*' ]
+					['html', 'body', '*']
 				)
 
 	autoInject = (type) ->
