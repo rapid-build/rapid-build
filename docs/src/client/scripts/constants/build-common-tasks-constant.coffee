@@ -30,9 +30,6 @@ angular.module('rapid-build').constant 'BUILD_COMMON_TASKS',
 				info: 'files listed in
 					   <a target="_blank" href="https://github.com/bower/spec/blob/master/json.md">bower.json</a>
 					   main property'
-			,
-				label: 'html'
-				type: '@dir client'
 			]
 		,
 			label: 'Compile src files to the dist directory:'
