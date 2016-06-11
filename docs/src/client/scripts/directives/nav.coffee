@@ -22,6 +22,10 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout', 'anch
 		# Link
 		# ====
 		link = (scope, element, attrs, controllers) ->
+			# valueless attrs
+			# ===============
+			scope.separators = attrs.separators isnt undefined
+
 			# responsive
 			# ==========
 			resHidden          = 'hidden-xs'
@@ -153,8 +157,9 @@ angular.module('rapid-build').directive 'rbNav', ['$location', '$timeout', 'anch
 			captionIcon: '@'
 			kind:        '@' # main | sub | mini
 			collection:  '=' # [ active: bool | 'disable', caption: string, url: string ]
-			respOpts:    '=responsive'
-			separators:  '=' # currently styled for: mini
+			respOpts:    '=responsive' # can be valueless | { postAction: 'close' }
+			# valueless attrs:
+			# separators: '@' # currently styled for: mini
 ]
 
 
