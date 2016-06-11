@@ -14,7 +14,7 @@
 					responsive
 					kind="sub"
 					activity="hash"
-					rb-scroller="main-content"
+					rb-scroller="#main-content"
 					collection="[
 						{ caption: 'Dependencies', url: '#dependencies' },
 						{ caption: 'Installation', url: '#installation' },
@@ -28,34 +28,12 @@
 		</div>
 
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 main-col-content" id="main-content">
-			<!-- GETTING STARTED -->
 			<div class="main-content">
-				<section id="{{key | lowercase | spinalize}}" ng-repeat="(key, val) in ::gettingStarted">
-					<h3>
-						<rb:icon ng-if="!!val.icon" kind="{{val.icon}}" size="{{val.iconSize}}"></rb:icon>
-						<span ng-bind="key"></span>
-						<em ng-if="!!val.info" ng-bind-html="val.info" class="sub parens"></em>
-					</h3>
-					<ul class="list">
-						<li ng-repeat="item in val.items" ng-class="item.class">
-							<span bind-html-compile="item.label"></span>
-							<em ng-if="!!item.info" bind-html-compile="item.info" class="sub parens"></em>
-
-							<ul ng-if="item.items">
-								<li ng-repeat="item2 in item.items">
-									<span bind-html-compile="item2.label"></span>
-									<em ng-if="!!item2.info" ng-bind-html="item2.info" class="sub parens"></em>
-								</li>
-							</ul>
-						</li>
-						<li ng-if="!!val.example" class="example">
-							<rb:code
-								src="val.example.code"
-								lang="{{val.example.lang}}"
-								clipboard="{{!!val.example.clipboard}}"
-								hide-lang="{{!!val.example.hideLang}}"></rb:code>
-						</li>
-					</ul>
+				<!-- GETTING STARTED -->
+				<section
+					id="{{key | lowercase | spinalize}}"
+					ng-repeat="(key, val) in ::gettingStarted"
+					ng-include="'/views/sections/getting-started.html'">
 				</section>
 			</div>
 		</div>

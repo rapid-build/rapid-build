@@ -1,0 +1,19 @@
+<!-- ABOUT -->
+<h3>
+	<span ng-bind="key"></span>
+	<em ng-if="!!val.info" ng-bind-html="val.info" class="sub sep parens"></em>
+</h3>
+<ul class="list">
+	<li ng-repeat="item in val.items">
+		<h4>
+			<span ng-bind-html="item.label"></span>
+			<em ng-if="!!item.info" bind-html-compile="item.info" class="sub sep parens"></em>
+		</h4>
+		<ul>
+			<li ng-repeat="item2 in item.items">
+				<span bind-html-compile="item2.label"></span>
+				<em ng-if="!!item2.info" ng-bind-html="item2.info" class="sub sep parens"></em>
+			</li>
+		</ul>
+	</li>
+</ul>

@@ -1,11 +1,11 @@
-angular.module('rapid-build').directive 'rbScroller', ['$window', '$timeout', 'coordsService', 'styleService',
-	($window, $timeout, coordsService, styleService) ->
+angular.module('rapid-build').directive 'rbScroller', ['$window', '$document', '$timeout', 'coordsService', 'styleService',
+	($window, $document, $timeout, coordsService, styleService) ->
 		# Link
 		# ====
 		link = (scope, element, attrs, controllers) ->
-			spy = attrs.rbScroller # currently needs to be id
+			spy = attrs.rbScroller # query selector
 			return unless spy
-			spy = $window.document.getElementById spy
+			spy = $document[0].querySelector spy
 			return unless spy
 			fixed = 'fixed'
 			$win  = angular.element $window

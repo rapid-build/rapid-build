@@ -17,13 +17,12 @@
 		</p>
 	</section>
 
-	<!-- COMMON TASKS -->
+	<!-- BUILD COMMON TASKS -->
 	<section
 		class="main"
 		id="{{type | spinalize}}"
-		ng-if="type.indexOf('common') != -1"
-		ng-repeat="(type, build) in ::buildTypes"
-		ng-include="'/views/sections/build-types.html'">
+		ng-repeat="(type, build) in ::buildCommonTasks"
+		ng-include="'/views/sections/build-common-tasks.html'">
 	</section>
 
 	<div class="row grid-row grid-sep-left">
@@ -33,7 +32,7 @@
 					responsive
 					kind="sub"
 					activity="hash"
-					rb-scroller="main-content"
+					rb-scroller="#main-content"
 					collection="[
 						{ caption: 'default', url: '#default' },
 						{ caption: 'dev', url: '#dev' },
@@ -56,7 +55,6 @@
 				<!-- BUILD TYPES -->
 				<section
 					id="{{type | spinalize}}"
-					ng-if="type.indexOf('common') == -1"
 					ng-repeat="(type, build) in ::buildTypes"
 					ng-include="'/views/sections/build-types.html'">
 				</section>

@@ -1,0 +1,28 @@
+<!-- BUILD OPTIONS -->
+<h3>
+	<rb:icon kind="fa-cog"></rb:icon>
+	<span ng-bind="opt"></span>
+	<em ng-if="!!val.info" ng-bind-html="val.info" class="sub parens"></em>
+</h3>
+<ul class="list small">
+	<li ng-repeat="opts in val.opts">
+		<h4 id="{{opt}}.{{opts.name}}">
+			<span ng-bind-html="opts.name"></span>
+			<em class="sub sep small"
+				ng-bind="opts.info"
+				ng-class="!opts.name ? 'normal': ''"></em>
+		</h4>
+		<ul>
+			<li bind-html-compile="desc"
+				ng-repeat="desc in opts.description">
+			</li>
+		</ul>
+	</li>
+	<li class="example">
+		<h4>
+			<span>Example</span>
+			<em class="sub parens"><a href="/getting-started#build-options.js" title="for build-options.js">build-options.js</a></em>
+		</h4>
+		<rb:code lang="js" size="small" src="val.example" clipboard></rb:code>
+	</li>
+</ul>
