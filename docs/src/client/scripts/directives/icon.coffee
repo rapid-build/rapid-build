@@ -10,8 +10,12 @@ angular.module('rapid-build').directive 'rbIcon', [->
 			when kind.indexOf('ion-') is 0 then scope.icon = 'icon '
 			else scope.icon = 'glyphicon glyphicon-'
 
-		scope.icon    += kind
-		scope.iconSize = attrs.size
+		# options
+		# =======
+		scope.icon  += kind
+		scope.size   = attrs.size
+		strong       = attrs.strong # valueless attr and accepts false
+		scope.weight = 'strong' if strong isnt undefined and strong isnt 'false'
 
 	# API
 	# ===

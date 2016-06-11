@@ -1,5 +1,6 @@
 <!-- ABOUT -->
 <h3>
+	<rb:icon ng-if="!!val.icon" kind="{{val.icon}}" size="{{val.iconSize}}" strong="{{!!val.iconWeight}}"></rb:icon>
 	<span ng-bind="key"></span>
 	<em ng-if="!!val.info" ng-bind-html="val.info" class="sub sep parens"></em>
 </h3>

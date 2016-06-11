@@ -1,5 +1,7 @@
 angular.module('rapid-build').constant 'ABOUT',
 	'Technologies':
+		icon: 'fa-laptop'
+		iconSize: 'large'
 		info: 'supported'
 		items: [
 			label: 'Languages'
@@ -40,6 +42,8 @@ angular.module('rapid-build').constant 'ABOUT',
 		]
 
 	'Key Concepts':
+		icon: 'fa-lightbulb-o'
+		iconSize: 'large'
 		items: [
 			label: 'Src'
 			info: 'source'
@@ -67,6 +71,7 @@ angular.module('rapid-build').constant 'ABOUT',
 		]
 
 	'Benefits':
+		icon: 'fa-line-chart'
 		items: [
 			label: 'Decoupled Build System'
 			items: [
@@ -82,11 +87,13 @@ angular.module('rapid-build').constant 'ABOUT',
 		]
 
 	'Features':
+		icon: 'fa-star-o'
+		iconSize: 'large'
 		items: [
 			label: '<a href="/build-types">See Build Types</a>'
 		]
 
-	'Where do I start?':
+	'How do I start?':
 		items: [
 			label: '<a href="/getting-started">See Getting Started</a>'
 		]
