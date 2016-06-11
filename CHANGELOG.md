@@ -1,3 +1,12 @@
+## [0.60.1](https://github.com/jyounce/rapid-build/compare/v0.60.0...v0.60.1) (2016-06-11)
+
+
+### Bug Fixes
+
+* **spa.html:** make sure auto inject places ng-app on an uncommented html tag ([8bc70fb](https://github.com/jyounce/rapid-build/commit/8bc70fb))
+
+
+
 # [0.60.0](https://github.com/jyounce/rapid-build/compare/v0.59.1...v0.60.0) (2016-06-08)
 
 
