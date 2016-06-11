@@ -6,7 +6,7 @@
 </h3>
 <ol class="list">
 	<li ng-repeat="task in build.tasks">
-		<span ng-bind-html="task.label"></span>
+		<span bind-html-compile="task.label"></span>
 		<em ng-if="!!task.info" bind-html-compile="task.info" class="sub parens"></em>
 		<ul ng-if="!!task.subtasks">
 			<li ng-repeat="subtask in task.subtasks">
@@ -26,11 +26,11 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-10 col-md-8 col-lg-7">
 				<rb:code
+					clipboard
+					lang="bash"
 					size="small"
 					spacing="large"
 					src="build.example.code"
-					lang="{{build.example.lang}}"
-					clipboard="{{!!build.example.clipboard}}"
 					hide-lang="{{!!build.example.hideLang}}"></rb:code>
 			</div>
 		</div>

@@ -26,6 +26,7 @@
 					ng-class="[model.active === true ? 'active' : ''].join(' ')">
 					<b class="separator" ng-if="::separators"></b>
 					<a tabindex="0"
+					   ng-if="model.url"
 					   title="{{model.title}}"
 					   ng-click="clickActive(); clickAction(model); respAction(); anchorScroll(model.url)"
 					   ng-href="{{model.url}}"
@@ -39,6 +40,9 @@
 							kind="{{model.icon}}">
 						</rb:icon>
 					</a>
+					<h5 ng-if="!!model.caption && !model.url">
+						<span class="caption" ng-bind="model.caption"></span>
+					</h5>
 				</li>
 			</ul>
 		</nav>

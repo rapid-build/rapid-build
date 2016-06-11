@@ -39,7 +39,21 @@ h2.sub.title {
 	#borders.h2.sub;
 }
 .main-col-content {
-	h2.sub.title { border-top: none; }
+	h2.sub.title {
+		&:first-child {
+			border-top: none;
+		}
+	}
+}
+
+@media (max-width: @screen-xs-max) {
+	.main-col-content {
+		h2.sub.title {
+			&:first-child {
+				#borders.h2.sub;
+			}
+		}
+	}
 }
 
 

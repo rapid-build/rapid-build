@@ -18,6 +18,7 @@ angular.module('rapid-build').directive 'rbIcon', [->
 	link: link
 	replace: true
 	templateUrl: '/views/directives/icon.html'
+	scope: {}
 ]
 
 

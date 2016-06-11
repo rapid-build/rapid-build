@@ -11,7 +11,8 @@ angular.module('rapid-build').constant 'ABOUT',
 				label: 'css, less and sass'
 				info: 'client'
 			,
-				label: 'js, es6 and coffeescript'
+				label: 'js, <a target="_blank" href="http://babeljs.io/">es6</a>
+						and coffeescript'
 				info: 'client and server'
 			]
 		,
@@ -24,7 +25,7 @@ angular.module('rapid-build').constant 'ABOUT',
 				label: '<a target="_blank" href="http://karma-runner.github.io/">karma</a>'
 				info: 'client testing'
 			,
-				label: '<a target="_blank" href="http://jasmine.github.io/">jasmine</a>'
+				label: '<a target="_blank" href="http://jasmine.github.io/2.4/introduction.html">jasmine</a>'
 				info: 'client and server testing'
 			,
 				label: '<a target="_blank" href="http://expressjs.com/">express</a>'

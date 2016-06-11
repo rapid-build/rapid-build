@@ -21,11 +21,15 @@ angular.module('rapid-build').constant 'BUILD_COMMON_TASKS',
 			,
 				label: 'libs'
 				type: '@dir client'
-				info: 'everything in the libs directory'
+				info: 'everything in the
+					   <a href="/getting-started#directory-structure">libs</a>
+					   directory'
 			,
 				label: 'bower components'
 				type: '@dir client'
-				info: 'files in bower.json\'s main prop'
+				info: 'files listed in
+					   <a target="_blank" href="https://github.com/bower/spec/blob/master/json.md">bower.json</a>
+					   main property'
 			,
 				label: 'html'
 				type: '@dir client'
@@ -36,7 +40,7 @@ angular.module('rapid-build').constant 'BUILD_COMMON_TASKS',
 				label: 'coffee &#8594; js'
 				type: '@dir client and server'
 			,
-				label: 'es6 &#8594; js'
+				label: '<a target="_blank" href="http://babeljs.io/">es6</a> &#8594; js'
 				type: '@dir client and server'
 			,
 				label: 'less &#8594; css'

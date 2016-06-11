@@ -51,11 +51,11 @@
 		li {
 			margin: 0;
 			#borders.nav.sub.links.bottom;
-			// &:first-child { #borders.nav.sub.links.top; }
 
 			a {
 				border-radius: 0;
 				#fontColors.nav.sub.link;
+
 				&:focus { outline:none; }
 				&:hover {
 					#bg.nav.sub.hover;
@@ -65,9 +65,18 @@
 			&.active {
 				a {
 					cursor: default;
-					#fontColors.links.hover;
 					#bg.nav.sub.active;
+					#fontColors.links.hover;
 				}
+			}
+			h5 { // not links, just captions
+				margin: 0;
+				padding: 15px 15px 13px;
+				font-weight: 500;
+				letter-spacing: 1px;
+				#bg.nav.sub.caption;
+				#fontSizes.nav.sub.caption;
+				#fontColors.nav.sub.caption;
 			}
 		}
 	}
