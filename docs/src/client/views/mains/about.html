@@ -1,5 +1,5 @@
 <div class="main-about" ng-controller="aboutController">
-	<section>
+	<section class="main">
 		<h1>
 			What is Rapid Build?
 		</h1>
@@ -11,13 +11,35 @@
 		</p>
 	</section>
 
-	<div class="main-content single-column">
-		<!-- ABOUT -->
-		<section
-			id="{{key | lowercase | spinalize}}"
-			ng-repeat="(key, val) in ::about"
-			ng-include="'/views/sections/about.html'">
-		</section>
+	<div class="row grid-row grid-sep-left">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 main-col-aside">
+			<aside class="main">
+				<rb:nav
+					responsive
+					kind="sub"
+					activity="hash"
+					rb-scroller="#main-content"
+					collection="[
+						{ caption: 'Technologies', url: '#technologies' },
+						{ caption: 'Key Concepts', url: '#key-concepts' },
+						{ caption: 'Benefits', url: '#benefits' },
+						{ caption: 'Features', url: '#features' },
+						{ caption: 'Where do I start?', url: '#where-do-i-start?' }
+					]">
+				</rb:nav>
+			</aside>
+		</div>
+
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 main-col-content" id="main-content">
+			<div class="main-content">
+				<!-- ABOUT -->
+				<section
+					id="{{key | lowercase | spinalize}}"
+					ng-repeat="(key, val) in ::about"
+					ng-include="'/views/sections/about.html'">
+				</section>
+			</div>
+		</div>
 	</div>
 </div>
 

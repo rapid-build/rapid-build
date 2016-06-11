@@ -6,6 +6,7 @@ angular.module('rapid-build').config ['$routeProvider'
 
 			.when '/about',
 				templateUrl: '/views/mains/about.html'
+				reloadOnSearch: false
 
 			.when '/getting-started',
 				templateUrl: '/views/mains/getting-started.html'
