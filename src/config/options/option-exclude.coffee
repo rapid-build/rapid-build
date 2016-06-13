@@ -25,6 +25,8 @@ module.exports = (config, options) ->
 	exclude.from.dist.server     = null unless isType.array exclude.from.dist.server
 	exclude.default.client.files = null unless isType.boolean exclude.default.client.files
 	exclude.default.server.files = null unless isType.boolean exclude.default.server.files
+	exclude.from.spaFile.angular = {}   unless isType.object exclude.from.spaFile.angular
+	exclude.from.spaFile.angular.files = null unless isType.boolean exclude.from.spaFile.angular.files
 
 	# add exclude options
 	# ===================

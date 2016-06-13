@@ -185,6 +185,7 @@ package.json
 # exclude.from.cacheBust                            = (array of strings) = file paths: exclude files from the cache bust
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
+# exclude.from.spaFile.angular.files                = (boolean) defaults to false = set to true to exclude the angular files from spa.html the build includes (angular library and modules ngResource, ngRoute and ngSanitize)
 # exclude.from.dist[client|server]                  = (array of strings) = file paths: exclude client or server files from the dist folder 
 # test.client.browsers                              = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
 # server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']

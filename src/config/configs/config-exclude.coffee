@@ -7,7 +7,10 @@ module.exports = (config, options) ->
 
 	# exclude rb files
 	# ================
+	angularFiles     = path.join 'bower_components', 'angular**'
 	angularBootstrap = path.join 'scripts', 'bootstrap.js'
+	rbSpaScripts     = [ angularBootstrap ]
+	rbSpaScripts.unshift angularFiles if options.exclude.from.spaFile.angular.files is true
 
 	# options helpers
 	# ===============
@@ -41,7 +44,7 @@ module.exports = (config, options) ->
 					scripts: []
 					styles:  []
 				spaFile:
-					scripts: [angularBootstrap]
+					scripts: rbSpaScripts
 					styles:  []
 				dist:
 					client: []
