@@ -343,7 +343,17 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 				"<rb:icon kind=\"fa-exclamation-circle\"></rb:icon>
 				 File paths must be relative to the dist/client/ directory."
 			]
+		,
+			name: 'from.spaFile.angular.files'
+			info: "@type boolean, @default false"
+			description: [
+				"Set to true to exclude the angular files
+				 from spa.html that come with rapid-build."
+				"Includes: angular lib and angular
+				 <a href=\"#angular.modules\" rb-scroll>modules</a>."
+			]
 		]
+		,
 		example: """
 			{
 				exclude: {
@@ -370,9 +380,12 @@ angular.module('rapid-build').constant 'BUILD_OPTS',
 							scripts: ['ie/ie10.js'],
 							styles: ['ie/ie10.css']
 						}
-						spa: {
+						spaFile: {
 							scripts: ['ie/ie10.js'],
-							styles: ['ie/ie10.css']
+							styles: ['ie/ie10.css'],
+							angular: {
+								files: true
+							}
 						}
 					}
 				}
