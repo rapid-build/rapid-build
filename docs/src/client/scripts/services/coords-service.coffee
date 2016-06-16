@@ -3,6 +3,7 @@ angular.module('rapid-build').service 'coordsService', ['$window', '$document',
 		# methods
 		# =======
 		@position = (elm) ->
+			# relative to document
 			# http://javascript.info/tutorial/coordinates
 			return unless elm
 			elm     = elm[0] if elm.scope

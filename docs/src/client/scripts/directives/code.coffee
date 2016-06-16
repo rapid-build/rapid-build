@@ -25,14 +25,16 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 					clipboard = attrs.clipboard # valueless attr and accepts false
 					clipboard = clipboard isnt undefined and clipboard isnt 'false'
 					return unless clipboard
-					id = "code-#{scope.$id}"
+					id    = "code-#{scope.$id}"
+					title = help.getClipboardMsg()
 					element[0].querySelector('code').id = id
 
 					scope.copySuccess = (e) ->
 						e.clearSelection()
 
 					element.prepend "
-						<a href ngclipboard title=\"copy\"
+						<a href ngclipboard title=\"#{title}\"
+						   rb-tooltip=\"{action:'click', position:'bottom'}\"
 						   ngclipboard-success=\"copySuccess(e);\"
 						   data-clipboard-target=\"##{id}\">
 							<rb:icon kind=\"copy\"></rb:icon>
@@ -41,6 +43,10 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 					trigger = element[0].querySelector '[ngclipboard]'
 					$compile(trigger) scope
 
+			getClipboardMsg: ->
+				key     = if navigator.appVersion.indexOf('Mac') == -1 then '⌘' else 'Ctrl'
+				canCopy = document.queryCommandSupported 'copy' # can browser copy?
+				title   = if canCopy then 'Copied!' else "Press #{key}-C to copy"
 
 			compile: (text, scope, element, attrs) ->
 				@add.highlight text, scope, element, attrs

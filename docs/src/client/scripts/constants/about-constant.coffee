@@ -2,6 +2,7 @@ angular.module('rapid-build').constant 'ABOUT',
 	'Technologies':
 		icon: 'fa-laptop'
 		iconSize: 'large'
+		iconWeight: 'strong'
 		info: 'supported'
 		items: [
 			label: 'Languages'
