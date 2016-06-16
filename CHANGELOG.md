@@ -1,3 +1,12 @@
+# [0.61.0](https://github.com/jyounce/rapid-build/compare/v0.60.1...v0.61.0) (2016-06-16)
+
+
+### Features
+
+* **option:** exclude.from.spaFile.angular.files, set to true to exclude the angular files from spa.html that come with rapid-build ([fadbb16](https://github.com/jyounce/rapid-build/commit/fadbb16))
+
+
+
 ## [0.60.1](https://github.com/jyounce/rapid-build/compare/v0.60.0...v0.60.1) (2016-06-11)
 
 
