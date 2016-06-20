@@ -43,6 +43,7 @@ catch e
 
 # load default app configuration
 # ==============================
+require('./defaults/app-static-files-dir') server, config
 require('./defaults/app-routes') server, config
 
 # run tasks
