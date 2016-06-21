@@ -3,7 +3,7 @@
 	"version": "0.61.2",
 	"tasksPrefix": "rb-",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
-	"homepage": "https://github.com/jyounce/rapid-build",
+	"homepage": "http://rapid-build.io/",
 	"author": {
 		"name": "Judd Younce",
 		"email": "jyounce@yahoo.com",
@@ -20,7 +20,11 @@
 	"engines": {
 		"node": ">=4.0.0"
 	},
+	"preferGlobal": true,
 	"main": "./",
+	"bin": {
+		"rapid-build": "bin/build.js"
+	},
 	"directories": {
 		"lib": "./lib",
 		"src": "./src",
@@ -49,6 +53,8 @@
 		"browser-sync": "2.13.0",
 		"coffee-script": "1.10.0",
 		"colors": "1.1.2",
+		"cson": "3.0.2",
+		"deepmerge": "0.2.10",
 		"del": "2.2.0",
 		"event-stream": "3.3.3",
 		"express": "4.14.0",

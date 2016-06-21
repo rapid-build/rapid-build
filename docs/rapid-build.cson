@@ -1,0 +1,75 @@
+common:
+	# browser: open: false
+	spa:
+		src:
+			filePath: 'spa.html'
+	minify:
+		spa:
+			file: false
+		css:
+			splitMinFile: false
+		html:
+			options:
+				ignoreCustomFragments: [
+					/<rb:code(\s*?.*?)*?rb:code>/gi
+					/<rb:pre(\s*?.*?)*?rb:pre>/gi
+					/\s?<rb:icon\s|<\/rb:icon>\s?/gi
+				]
+	angular:
+		moduleName: 'rapid-build'
+		modules: ['angular-bind-html-compile', 'duScroll', 'hljs', 'ngclipboard']
+		templateCache:
+			dev: true
+			useAbsolutePaths: true
+	order:
+		scripts:
+			first: [
+				'scripts/prototypes/*.*'
+				'libs/highlight/highlight.pack.js'
+			]
+	exclude:
+		from:
+			dist:
+				client: [
+					'libs/bootstrap/bootstrap.less'
+					'bower_components/jquery/**'
+					'bower_components/font-awesome/less/**'
+					'bower_components/font-awesome/scss/**'
+					'bower_components/bootstrap/less/**'
+					'bower_components/bootstrap/dist/js/**'
+				]
+	extra:
+		copy:
+			client: [
+				'bower_components/Ionicons/fonts/**'
+				'bower_components/font-awesome/fonts/**'
+				'bower_components/bootstrap/dist/fonts/**'
+			]
+		compile:
+			client:
+				less: [
+					'libs/bootstrap/bootstrap.less'
+				]
+		minify:
+			client:
+				css: [
+					'libs/bootstrap/bootstrap.css'
+				]
+
+dev:
+	extra:
+		copy:
+			client: [
+				'bower_components/font-awesome/css/font-awesome.css'
+			]
+
+prod:
+	extra:
+		copy:
+			client: [
+				'bower_components/font-awesome/css/font-awesome.min.css'
+			]
+
+
+
+
