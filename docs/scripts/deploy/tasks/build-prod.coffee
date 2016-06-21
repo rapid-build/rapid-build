@@ -3,7 +3,7 @@ module.exports = (docsRoot) ->
 	exec    = require('child_process').exec
 	helpers = path.join docsRoot, 'scripts', 'helpers'
 	bufMsgs = require "#{helpers}/buffer-msgs"
-	cmd     = 'node build prod'
+	cmd     = 'rapid-build prod'
 
 	# task
 	# ====
