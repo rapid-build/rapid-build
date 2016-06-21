@@ -17,8 +17,11 @@ angular.module('rapid-build').directive 'rbTooltip',
 			$tip    = null
 			$body   = $document.find 'body'
 
-			# api
-			# ===
+			# api options
+			# delay:    1500
+			# action:   hover | click | mouseout
+			# position: top | bottom | left | right
+			# =====================================
 			api = $parse(attrs.rbTooltip)() or {}
 			api.delay    = api.delay    or 1500 # for click action
 			api.actions  = api.action   or 'hover'
@@ -34,7 +37,7 @@ angular.module('rapid-build').directive 'rbTooltip',
 
 				formatActions: -> # turn into array
 					actions    = api.actions.split ' '
-					opts       = ['click', 'hover']
+					opts       = ['click', 'hover', 'mouseout']
 					apiActions = []
 					for action, i in actions
 						action = action.toLowerCase()

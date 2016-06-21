@@ -22,6 +22,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 					element.prepend "<h4 title=\"#{lang}\">#{lang}</h4>"
 
 				clipboard: (scope, element, attrs) ->
+					return if help.isMobile()
 					clipboard = attrs.clipboard # valueless attr and accepts false
 					clipboard = clipboard isnt undefined and clipboard isnt 'false'
 					return unless clipboard
@@ -34,7 +35,7 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 
 					element.prepend "
 						<a href ngclipboard title=\"#{title}\"
-						   rb-tooltip=\"{action:'click', position:'bottom'}\"
+						   rb-tooltip=\"{action:'click mouseout', position:'bottom'}\"
 						   ngclipboard-success=\"copySuccess(e);\"
 						   data-clipboard-target=\"##{id}\">
 							<rb:icon kind=\"copy\"></rb:icon>
@@ -42,6 +43,10 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 
 					trigger = element[0].querySelector '[ngclipboard]'
 					$compile(trigger) scope
+
+			isMobile: ->
+				userAgent = navigator.userAgent.toLowerCase()
+				userAgent.indexOf('mobile') isnt -1
 
 			getClipboardMsg: ->
 				key     = if navigator.appVersion.indexOf('Mac') == -1 then '⌘' else 'Ctrl'
