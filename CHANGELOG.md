@@ -1,3 +1,13 @@
+## [0.61.1](https://github.com/jyounce/rapid-build/compare/v0.61.0...v0.61.1) (2016-06-21)
+
+
+### Bug Fixes
+
+* **dep:** bump gulp-angular-templatecache to v1.9.1, it fixes it's gulp-header dependency ([39f7d5a](https://github.com/jyounce/rapid-build/commit/39f7d5a))
+* **server:** set express's static directory after running user's routes.js so middleware can be applied to static files ([1de65b1](https://github.com/jyounce/rapid-build/commit/1de65b1))
+
+
+
 # [0.61.0](https://github.com/jyounce/rapid-build/compare/v0.60.1...v0.61.0) (2016-06-16)
 
 
