@@ -1,3 +1,15 @@
+## [0.61.2](https://github.com/jyounce/rapid-build/compare/v0.61.1...v0.61.2) (2016-06-21)
+
+
+### Minor Features
+* **bump deps:**
+	* spring cleaning, updated many dependency packages notable updates include:
+		* express from 4.13.4 to 4.14.0 ([868049f](https://github.com/jyounce/rapid-build/commit/868049f))
+		* babel-preset-es2015 from 6.6.0 to 6.9.0 ([c8f4919](https://github.com/jyounce/rapid-build/commit/c8f4919))
+		* gulp-less from 3.0.5 to 3.1.0 and gulp-sass from 2.2.0 to 2.3.2 ([ee0dc6b](https://github.com/jyounce/rapid-build/commit/ee0dc6b))
+
+
+
 ## [0.61.1](https://github.com/jyounce/rapid-build/compare/v0.61.0...v0.61.1) (2016-06-21)
 
 
