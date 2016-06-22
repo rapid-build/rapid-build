@@ -13,7 +13,7 @@ angular.module('rapid-build').directive 'rbIcon', [->
 		# options
 		# =======
 		scope.icon  += kind
-		scope.size   = attrs.size
+		scope.size   = attrs.size # currently only large
 		strong       = attrs.strong # valueless attr and accepts false
 		scope.weight = 'strong' if strong isnt undefined and strong isnt 'false'
 

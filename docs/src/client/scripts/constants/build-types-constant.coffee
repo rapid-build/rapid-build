@@ -11,11 +11,11 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			,
 				label: 'Start web server.'
 			,
-				label: 'Open the browser.'
+				label: 'Open browser.'
 			]
 			example:
 				code: """
-					node build
+					rapid-build
 				"""
 
 		'dev':
@@ -29,7 +29,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build dev
+					rapid-build dev
 				"""
 
 		'prod':
@@ -62,7 +62,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build prod
+					rapid-build prod
 				"""
 
 		'prod:server':
@@ -73,11 +73,11 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			,
 				label: 'Start web server.'
 			,
-				label: 'Open the browser.'
+				label: 'Open browser.'
 			]
 			example:
 				code: """
-					node build prod:server
+					rapid-build prod:server
 				"""
 
 		'test':
@@ -117,7 +117,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build test
+					rapid-build test
 				"""
 
 	# VARIATIONS
@@ -130,7 +130,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build test:client
+					rapid-build test:client
 				"""
 
 		'test:server':
@@ -140,7 +140,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build test:server
+					rapid-build test:server
 				"""
 
 		'dev:test':
@@ -158,7 +158,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build dev:test
+					rapid-build dev:test
 				"""
 
 		'dev:test:client':
@@ -170,7 +170,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build dev:test:client
+					rapid-build dev:test:client
 				"""
 
 		'dev:test:server':
@@ -180,7 +180,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build dev:test:server
+					rapid-build dev:test:server
 				"""
 
 		'prod:test':
@@ -213,7 +213,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build prod:test
+					rapid-build prod:test
 				"""
 
 		'prod:test:client':
@@ -223,7 +223,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build prod:test:client
+					rapid-build prod:test:client
 				"""
 
 		'prod:test:server':
@@ -233,7 +233,7 @@ angular.module('rapid-build').constant 'BUILD_TYPES',
 			]
 			example:
 				code: """
-					node build prod:test:server
+					rapid-build prod:test:server
 				"""
 
 

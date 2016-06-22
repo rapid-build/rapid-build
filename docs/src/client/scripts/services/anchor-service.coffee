@@ -13,7 +13,7 @@ angular.module('rapid-build').service 'anchorService', ['$window', '$document',
 			return unless id
 			elm = $document[0].getElementById id
 			return unless elm
-			opts.offset = 5 if opts.offset is undefined
+			opts.offset = 8 if opts.offset is undefined
 			$document.scrollToElementAnimated elm, opts.offset
 			return unless opts.updateUrl
 			$window.location.hash = id

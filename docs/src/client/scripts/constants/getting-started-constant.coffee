@@ -20,11 +20,6 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 			info: 'the install is fairly big'
 		,
 			label: 'Use it for building multiple projects.'
-		,
-			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
-					For global installs, make sure your
-					<a target="_blank" href="https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders">NODE_PATH</a>
-					is set.'
 		]
 		example:
 			lang: 'bash'
@@ -37,11 +32,12 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		icon: 'fa-folder-open'
 		items: [
 			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
-					Everthing is optional besides package.json and
-					<a href="#build.js" rb-scroll>build.js</a>'
+					Everthing is optional.'
 		,
-			label: 'The directory names can be configured,
-					see build option <a href="/build-options#src">src</a>.'
+			label: 'Rapid build will be expecting this directory structure.'
+		,
+			label: 'If you like, you can change the directory names
+					see build <a href="/build-options#src">option src</a>.'
 		]
 		example:
 			hideLang: 'true'
@@ -70,106 +66,46 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 				    └── routes.{coffee,es6,js} # (optional, see build options dist.server.fileName)
 				nodes_modules/ # (generated folder via package.json)
 				bower.json
-				build.js
-				build-options.js
 				package.json
+				rapid-build.json # (build options - can be cson, json or js file)
 			"""
 
-	'build.js':
-		icon: 'ion-settings'
-		iconSize: 'large'
-		info: 'required'
-		items: [
-			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
-					build.js is required to run the build.'
-		,
-			label: 'Copy this and save it to the root of your project.'
-			items: [
-				label: 'See <a href="#build-options.js" rb-scroll>build-options.js</a>
-						for customizing your builds.'
-			]
-		]
-		example:
-			lang: 'js'
-			clipboard: 'true'
-			code: """
-				/* build.js
-				 ***********/
-				var getBuildType = type => {
-					if (typeof type !== 'string') return 'default';
-					return type.toLowerCase();
-				};
-
-				var getBuildOptions = type => {
-					try { return require('./build-options.js')(type); }
-					catch(e) { return {}; }
-				};
-
-				var buildType = getBuildType(process.argv[2]),
-					options   = getBuildOptions(buildType),
-					build     = require('rapid-build')(options);
-
-				/* Run build by typing one of the following in the console:
-				 * node build
-				 * node build dev  | dev:test    | dev:test:client  | dev:test:server
-				 * node build prod | prod:test   | prod:test:client | prod:test:server | prod:server
-				 * node build test | test:client | test:server
-				 ************************************************************************************/
-				build(buildType).then(() => {
-					console.log('Build Complete!');
-				});
-			"""
-
-	'build-options.js':
+	'rapid-build.json':
 		icon: 'fa-cogs'
+		info: 'example in cson'
 		items: [
 			label: 'More than likely you will need to customize your builds.'
 			info: 'No problem!'
 		,
-			label: 'There are many options available for you, see
-					<a href="/build-options">build options</a>.'
+			label: 'There are many <a href="/build-options">build options</a> available for you.'
+			info: 'options go in this file'
 		,
-			label: 'Copy this and save it to the root of your project.'
-			items: [
-				label: 'build-options.js gets required by
-						<a href="#build.js" rb-scroll>build.js</a>'
-			,
-				label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
-						This is where you will add your
-						<a href="/build-options">build options</a>.'
-			]
+			label: 'Copy rapid-build.cson and save it to the root of your project.'
+		,
+			label: 'Change it to json or js if you like.'
+		,
+			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
+					File name must be rapid-build and can be
+					<a target="_blank" href="https://github.com/bevry/cson/blob/master/README.md">cson</a>,
+					json or js file.'
+		,
+			label: '<a target="_blank" href="https://github.com/jyounce/rapid-build/blob/master/docs/rapid-build.cson">Example</a>
+					build options used to create this site.'
 		]
 		example:
-			lang: 'js'
+			lang: 'cson'
 			clipboard: 'true'
 			code: """
-				/* build-options.js
-				 *******************/
-				var getCommonOptions = () => {
-					// Add shared dev and prod build options here:
-					return {
-						// spa: { src: { filePath: 'spa.html' } } // example
-					};
-				};
+				# rapid-build.cson
+				# ================
+				# common options for all build types
+				common: {}
 
-				var setDevOptions = options => {
-					// Add dev specific build options here:
-					// options.angular = { templateCache: { dev: true } }; // example
-				};
+				# options for default, dev and test builds
+				dev: {}
 
-				var setProdOptions = options => {
-					// Add prod specific build options here:
-					// options.minify = { css: { splitMinFile: false } }; // example
-				};
-
-				var getOptions = buildType => {
-					var options = getCommonOptions();
-					if (buildType.indexOf('prod') != -1) setProdOptions(options);
-					else setDevOptions(options);
-					return options;
-				}
-
-				module.exports = getOptions
+				# options for prod build
+				prod: {}
 			"""
 
 	'Got it now what?':
@@ -177,7 +113,5 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		items: [
 			label: 'Time to start developing, <a href="/build-types">see build types</a>.'
 		]
-
-
 
 

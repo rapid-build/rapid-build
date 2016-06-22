@@ -1,5 +1,4 @@
 common:
-	# browser: open: false
 	spa:
 		src:
 			filePath: 'spa.html'

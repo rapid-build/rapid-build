@@ -17,8 +17,14 @@ const APP_OPTS   = path.join(APP_PATH, BUILD_PKG.name);
 /* Helpers
  **********/
 var help = {
+	_throw: e => {
+		throw e
+	},
 	isEmptyObj: obj => {
 		return Object.keys(obj).length === 0 && obj.constructor === Object;
+	},
+	isError: obj => {
+		return obj instanceof Error
 	},
 	getBuildType: type => {
 		if (typeof type !== 'string') return 'default';
@@ -41,7 +47,10 @@ var help = {
 		return types;
 	},
 	getBuildOpts: () => {
-		try { return CSON.requireFile(`${APP_OPTS}.cson`); }
+		try {
+			var opts = CSON.requireCSONFile(`${APP_OPTS}.cson`);
+			return help.isError(opts) ? help._throw(opts.message) : opts;
+		}
 		catch(e) {
 			try { return require(`${APP_OPTS}.json`); }
 			catch(e) {
