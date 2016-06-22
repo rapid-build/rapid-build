@@ -1,13 +1,11 @@
 # rapid-build
-**Requirements**: [git](https://git-scm.com/downloads), [npm](http://npmjs.org/) and [Node.js](http://nodejs.org/) version >= 4.0.0  
-
-Documentation: [http://rapid-build.io/](http://rapid-build.io/)  
-Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).
+**[http://rapid-build.io/](http://rapid-build.io/)**  
+Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
+Requirements: [git](https://git-scm.com/downloads) and [Node.js](http://nodejs.org/) version >= 4.0.0
 
 ## Installation
-If installing globally you may need to set your [NODE_PATH](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
 ```bash
-$ npm install rapid-build
+$ npm install rapid-build -g
 ```
 
 ## Description
@@ -47,56 +45,39 @@ rapid-build currently supports the following technologies:
 
 
 ## How To Use
-##### As a function:
-
-```javascript
-/**
- * build.js
- * Init rapid-build.
- * Rapid uses smart defaults.
- * Pass in options if you need customization.
- * *******************************************/
-var options = {}
-var rapid = require('rapid-build')(options) // init rapid, pass in options here
-
-/**
- * After initializing rapid, execute it to kick off the build.
- * 1 optional param (the build mode), values are: nothing, 'dev', 'prod' or 'test'.
- * Rapid has 4 build modes: default, dev, prod and test (see build modes).
- */
-rapid().then(function() {
-	console.log('whatever you want') // probably won't need to do anything
-})
+Run in terminal from the root of your project.
+```bash
+# Run build by executing one of the following in terminal from root of your project:
+# rapid-build
+# rapid-build dev  | dev:test    | dev:test:client  | dev:test:server
+# rapid-build prod | prod:test   | prod:test:client | prod:test:server | prod:server
+# rapid-build test | test:client | test:server
+# ----------------------------------------------------------------------------------
+$ rapid-build
 ```
 
-##### Or as a gulp task: ([gulp required](http://gulpjs.com/))
+##### Customizing Your Builds:
+* More than likely you will need to customize your builds. (No problem!)
+* There are many build options available for you. (see options api)
+* Create **rapid-build.json** in the root of your project.
+* File name must be rapid-build and can be [cson](https://github.com/bevry/cson/blob/master/README.md), json or js file.
+* Below is the basic structure for your rapid-build.json (place build options here).
+	* Common options are for all build types.
+	* Dev options are for default, dev and test builds.
+	* Prod options are for prod build.
 
-```javascript
-/**
- * gulpfile.js - steps if you are using gulp.
- * Init rapid-build and pass in gulp (pass in options too if you need customization).
- * 4 build tasks become available after initializing rapid (see build modes).
- * Build tasks are: 'rapid-build', 'rapid-build:dev', 'rapid-build:prod' and 'rapid-build:test'
- * *********************************************************************************************/
-var gulp = require('gulp')
-var options = {}
-require('rapid-build')(gulp, options)
-
-// execute rapid via a gulp task dependency
-gulp.task('default', ['rapid-build'])
-
-// or from the terminal type one of the 6:
-gulp rapid-build
-gulp rapid-build:test
-gulp rapid-build:dev
-gulp rapid-build:prod
-gulp rapid-build:prod:server
-gulp rapid-build:prod:test
+```json
+{
+	"common": {},
+	"dev": {},
+	"prod": {}
+}
 ```
 
 ## Directory Structure
-Everthing is optional besides nodes_modules/, build.js and package.json.
+Everthing is optional. Rapid build will be expecting this directory structure.
 ```
+dist/ (generated distributable folder created by rapid-build)
 src/ 
 ├── client/
 │   ├── bower_components/ (generated folder via bower.json)
@@ -119,8 +100,8 @@ src/
     └── routes.{coffee,es6,js} (see options.dist.server.fileName)
 nodes_modules/ (generated folder via package.json)
 bower.json
-build.js (see how to use)
 package.json
+rapid-build.json (build options - can be cson, json or js file)
 ```
 
 ## Options API
