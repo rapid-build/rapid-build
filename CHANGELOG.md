@@ -1,3 +1,12 @@
+# [0.62.0](https://github.com/jyounce/rapid-build/compare/v0.61.2...v0.62.0) (2016-06-22)
+
+
+### Features
+
+* **rapid-build cli:** create the rapid-build cli, build.js is no longer required instead run rapid-build from terminal ([16322a7](https://github.com/jyounce/rapid-build/commit/16322a7))
+
+
+
 ## [0.61.2](https://github.com/jyounce/rapid-build/compare/v0.61.1...v0.61.2) (2016-06-21)
 
 
