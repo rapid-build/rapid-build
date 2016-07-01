@@ -4,6 +4,8 @@ node_js:
 notifications:
   email:
     on_success: always
+before_script:
+  - npm link
 deploy:
   - provider: npm
     skip_cleanup: true
