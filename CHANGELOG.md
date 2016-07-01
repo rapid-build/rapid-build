@@ -1,3 +1,12 @@
+# [0.63.0](https://github.com/jyounce/rapid-build/compare/v0.62.0...v0.63.0) (2016-07-01)
+
+
+### Features
+
+* **build options:** add ability to skip build option(s) when running a build via --skip-options optX ([f0804d2](https://github.com/jyounce/rapid-build/commit/f0804d2))
+
+
+
 # [0.62.0](https://github.com/jyounce/rapid-build/compare/v0.61.2...v0.62.0) (2016-06-22)
 
 
