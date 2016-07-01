@@ -1,3 +1,12 @@
+# [0.64.0](https://github.com/jyounce/rapid-build/compare/v0.63.0...v0.64.0) (2016-07-01)
+
+
+### Features
+
+* **quick start:** add ability to create a quick application structure fast via running rapid-build --quick-start ([986e476](https://github.com/jyounce/rapid-build/commit/986e476))
+
+
+
 # [0.63.0](https://github.com/jyounce/rapid-build/compare/v0.62.0...v0.63.0) (2016-07-01)
 
 
