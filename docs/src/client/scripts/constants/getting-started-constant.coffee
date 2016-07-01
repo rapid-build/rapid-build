@@ -32,7 +32,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 		icon: 'fa-folder-open'
 		items: [
 			label: '<rb:icon kind="fa-exclamation-circle"></rb:icon>
-					Everthing is optional.'
+					Must have package.json, everthing else is optional.'
 		,
 			label: 'Rapid build will be expecting this directory structure.'
 		,
@@ -66,8 +66,30 @@ angular.module('rapid-build').constant 'GETTING_STARTED',
 				    └── routes.{coffee,es6,js} # (optional, see build options dist.server.fileName)
 				nodes_modules/ # (generated folder via package.json)
 				bower.json
-				package.json
+				package.json # (required)
 				rapid-build.json # (build options - can be cson, json or js file)
+			"""
+
+	'Quick Start':
+		icon: 'ion-ios-redo'
+		iconSize: 'large'
+		info: 'option'
+		items: [
+			label: 'Want a quick application structure fast?'
+		,
+			label: 'Then run the following:'
+			items: [
+				label: 'It will create the above <a href="#directory-structure" rb-scroll>directory</a> structure'
+			,
+				label: 'with a couple simple files.'
+				info: 'will not override your files or dirs'
+			]
+		]
+		example:
+			lang: 'bash'
+			clipboard: 'true'
+			code: """
+				rapid-build --quick-start
 			"""
 
 	'rapid-build.json':

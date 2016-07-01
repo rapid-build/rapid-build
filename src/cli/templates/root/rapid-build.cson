@@ -1,0 +1,8 @@
+# common options for all build types
+common: {}
+
+# options for default, dev and test builds
+dev: {}
+
+# options for prod build
+prod: {}

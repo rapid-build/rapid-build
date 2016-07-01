@@ -75,7 +75,8 @@ $ rapid-build
 ```
 
 ## Directory Structure
-Everthing is optional. Rapid build will be expecting this directory structure.
+Must have package.json, everthing else is optional.  
+Rapid build will be expecting this directory structure.
 ```
 dist/ (generated distributable folder created by rapid-build)
 src/ 
@@ -100,7 +101,7 @@ src/
     └── routes.{coffee,es6,js} (see options.dist.server.fileName)
 nodes_modules/ (generated folder via package.json)
 bower.json
-package.json
+package.json (required)
 rapid-build.json (build options - can be cson, json or js file)
 ```
 

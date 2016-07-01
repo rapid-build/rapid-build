@@ -26,10 +26,16 @@ config.app.build.opts = path.join(config.app.path, config.build.pkg.name);
 config.build.cli  = {};
 config.build.cli.path = path.join(LIB_PATH, 'cli');
 config.build.cli.opts = require(path.join(config.build.cli.path, 'get-cli-opts'))(config);
+config.build.cli.templates = {}
+config.build.cli.templates.path   = path.join(config.build.cli.path, 'templates');
+config.build.cli.templates.client = path.join(config.build.cli.templates.path, 'client');
+config.build.cli.templates.root   = path.join(config.build.cli.templates.path, 'root');
+config.build.cli.templates.server = path.join(config.build.cli.templates.path, 'server');
 
 /* Bootstrap
  ************/
 require(path.join(config.build.cli.path, 'add-colors'))();
+if (config.build.cli.opts.quickStart.length) return require(path.join(config.build.cli.path, 'quick-start'))(config);
 var build = require(path.join(config.build.cli.path, 'get-build'))(config);
 
 /**
