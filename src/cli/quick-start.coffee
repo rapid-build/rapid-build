@@ -26,7 +26,7 @@ module.exports = (config) ->
 	# ==========
 	# root files
 	try	fse.copySync "#{config.build.cli.templates.root}/gitignore.sh", "#{appPath}/.gitignore", opts
-	for file, i in ['rapid-build.cson']
+	for file, i in ["#{config.build.pkg.name}.cson"]
 		try	fse.copySync "#{config.build.cli.templates.root}/#{file}", "#{appPath}/#{file}", opts
 
 	if mkClient
@@ -39,4 +39,4 @@ module.exports = (config) ->
 
 	# message
 	# =======
-	console.log 'Quick start complete! Now run: rapid-build dev'.attn
+	console.log "Quick start complete! Now run: #{config.build.pkg.name} dev".attn
