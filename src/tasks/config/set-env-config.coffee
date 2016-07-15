@@ -1,6 +1,7 @@
 # Task is only called from the common task.
 # =========================================
 module.exports = (config, gulp) ->
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# helpers
@@ -18,6 +19,7 @@ module.exports = (config, gulp) ->
 			mode = gulp.seq[3] if gulp.seq[3] is config.rb.tasks['prod:server'] # one off
 			mode = getMode mode
 			config.env.set mode
+			log.task "running #{config.env.name} build"
 			promiseHelp.get()
 
 	# return

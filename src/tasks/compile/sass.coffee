@@ -5,6 +5,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	gulpif       = require 'gulp-if'
 	sass         = require 'gulp-sass'
 	plumber      = require 'gulp-plumber'
+	log          = require "#{config.req.helpers}/log"
 	sassHelper   = require("#{config.req.helpers}/Sass") config, gulp
 	forWatchFile = !!taskOpts.watchFile
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
@@ -93,7 +94,9 @@ module.exports = (config, gulp, taskOpts={}) ->
 			q.all([
 				run 'app'
 				run 'rb'
-			]).done -> defer.resolve()
+			]).done ->
+				log.task "compiled sass to: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

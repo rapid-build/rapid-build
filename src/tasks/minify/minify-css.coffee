@@ -1,6 +1,7 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
 	minifyCss   = require 'gulp-cssnano'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	minOpts =
 		safe: true
@@ -15,7 +16,6 @@ module.exports = (config, gulp) ->
 			.pipe minifyCss minOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified #{appOrRb} dist styles".yellow
 				defer.resolve()
 		defer.promise
 
@@ -28,7 +28,7 @@ module.exports = (config, gulp) ->
 			.pipe minifyCss minOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified extra #{appOrRb} dist styles".yellow
+				log.task "minified extra css in: #{config.dist.app.client.dir}"
 				defer.resolve()
 		defer.promise
 
@@ -42,7 +42,9 @@ module.exports = (config, gulp) ->
 				runTask 'rb'
 				runTask 'app'
 				runExtraTask 'app'
-			]).done -> defer.resolve()
+			]).done ->
+				log.task "minified css in: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

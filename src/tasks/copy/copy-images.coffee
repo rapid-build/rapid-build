@@ -1,5 +1,6 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
+	log          = require "#{config.req.helpers}/log"
 	tasks        = require("#{config.req.helpers}/tasks") config
 	forWatchFile = !!taskOpts.watchFile
 
@@ -19,7 +20,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
 
 		runMulti: ->
-			tasks.run.async runTask, 'images', 'all', ['client']
+			promise = tasks.run.async runTask, 'images', 'all', ['client']
+			promise.done ->
+				log.task "copied images to: #{config.dist.app.client.dir}"
+			promise
 
 	# return
 	# ======

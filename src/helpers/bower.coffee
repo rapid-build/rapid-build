@@ -133,7 +133,7 @@ module.exports = (config) ->
 					force = true
 				if force
 					del.sync dir, force:true
-					console.log "#{loc} bower_components directory cleaned".yellow
+					log.task "cleaned #{loc} bower_components directory"
 
 			fse.mkdirsSync dir
 			fileHelp.write.json _path, bowerJson if force

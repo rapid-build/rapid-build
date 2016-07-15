@@ -2,6 +2,7 @@
 # =========================================
 module.exports = (config) ->
 	q           = require 'q'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	configHelp  = require("#{config.req.helpers}/config") config
 
@@ -21,7 +22,9 @@ module.exports = (config) ->
 				-> updateConfig()
 				-> configHelp.buildFile true, 'rebuild'
 			]
-			tasks.reduce(q.when, q()).done -> defer.resolve()
+			tasks.reduce(q.when, q()).done ->
+				# log.task 'updated angular mocks config', 'info'
+				defer.resolve()
 			defer.promise
 
 	# return

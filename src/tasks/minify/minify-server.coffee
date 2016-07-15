@@ -2,6 +2,7 @@ module.exports = (config, gulp) ->
 	q           = require 'q'
 	minifyJs    = require 'gulp-uglify'
 	minifyJson  = require 'gulp-jsonminify'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	minJsTask = (src, dest) ->
@@ -11,7 +12,7 @@ module.exports = (config, gulp) ->
 			.pipe minifyJs()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified server js".yellow
+				log.task "minified js in: #{config.dist.app.server.dir}"
 				defer.resolve()
 		defer.promise
 
@@ -21,7 +22,7 @@ module.exports = (config, gulp) ->
 			.pipe minifyJson()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified server json".yellow
+				log.task "minified json in: #{config.dist.app.server.dir}"
 				defer.resolve()
 		defer.promise
 

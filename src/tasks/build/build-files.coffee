@@ -20,7 +20,7 @@ module.exports = (config, gulp) ->
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.files
 		fse.writeJson jsonFile, json, format, (e) ->
-			console.log 'built files.json'.yellow
+			# log.task 'built files.json', 'minor'
 			clearData() # todo, optimize this
 			defer.resolve()
 		defer.promise

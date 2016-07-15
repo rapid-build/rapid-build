@@ -1,6 +1,7 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	gulpif       = require 'gulp-if'
+	log          = require "#{config.req.helpers}/log"
 	ngFormify    = require "#{config.req.plugins}/gulp-ng-formify"
 	tasks        = require("#{config.req.helpers}/tasks") config
 	runNgFormify = config.angular.ngFormify
@@ -23,7 +24,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
 
 		runMulti: ->
-			tasks.run.async runTask, 'views', 'html', ['client']
+			promise = tasks.run.async runTask, 'views', 'html', ['client']
+			promise.done ->
+				log.task "copied views to: #{config.dist.app.client.dir}"
+			promise
 
 	# return
 	# ======

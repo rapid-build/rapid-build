@@ -1,32 +1,33 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
-	gulpif      = require 'gulp-if'
 	minifyJs    = require 'gulp-uglify'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
-	runTask = (appOrRb, minify, opts) ->
+	runTask = (appOrRb, opts) ->
 		defer = q.defer()
 		src   = config.glob.dist[appOrRb].client.scripts.all
 		dest  = config.dist[appOrRb].client.scripts.dir
 		src.push '!**/*.json' # do not minify json files, uglify has issues with quoted keys
 		gulp.src src
-			.pipe gulpif minify, minifyJs opts
+			.pipe minifyJs opts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified #{appOrRb} dist scripts".yellow
+				# console.log "minified #{appOrRb} dist scripts".yellow
 				defer.resolve()
 		defer.promise
 
-	runExtraTask = (appOrRb, minify, opts) ->
+	runExtraTask = (appOrRb, opts) ->
 		defer = q.defer()
 		src   = config.extra.minify[appOrRb].client.js
 		return promiseHelp.get() unless src.length
 		dest  = config.dist[appOrRb].client.dir
 		gulp.src src, base: dest
-			.pipe gulpif minify, minifyJs opts
+			.pipe minifyJs opts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified extra #{appOrRb} dist scripts".yellow
+				log.task "minified extra js in: #{config.dist.app.client.dir}"
+				# console.log "minified extra #{appOrRb} dist scripts".yellow
 				defer.resolve()
 		defer.promise
 
@@ -34,14 +35,16 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: ->
+			return promiseHelp.get() unless config.minify.js.scripts
 			defer  = q.defer()
-			minify = config.minify.js.scripts
 			opts   = mangle: config.minify.js.mangle
 			q.all([
-				runTask 'rb', minify, opts
-				runTask 'app', minify, opts
-				runExtraTask 'app', minify, opts
-			]).done -> defer.resolve()
+				runTask 'rb', opts
+				runTask 'app', opts
+				runExtraTask 'app', opts
+			]).done ->
+				log.task "minified js in: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

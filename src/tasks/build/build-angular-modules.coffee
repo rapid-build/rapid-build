@@ -1,5 +1,6 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
+	log         = require "#{config.req.helpers}/log"
 	rename      = require 'gulp-rename'
 	template    = require 'gulp-template'
 	promiseHelp = require "#{config.req.helpers}/promise"
@@ -22,7 +23,8 @@ module.exports = (config, gulp) ->
 				.pipe template data
 				.pipe gulp.dest dest
 				.on 'end', ->
-					# console.log 'app.coffee built'.yellow
+					_file = "#{file.split('.')[0]}.js"
+					log.task "built angular modules file: #{_file}"
 					defer.resolve()
 			defer.promise
 

@@ -1,5 +1,6 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
+	log         = require "#{config.req.helpers}/log"
 	minifyHtml  = require 'gulp-htmlmin'
 	promiseHelp = require "#{config.req.helpers}/promise"
 
@@ -12,7 +13,7 @@ module.exports = (config, gulp) ->
 			.pipe minifyHtml minOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "minified #{file}".yellow
+				log.task "minified #{file}"
 				defer.resolve()
 		defer.promise
 

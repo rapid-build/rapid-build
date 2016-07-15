@@ -2,6 +2,7 @@ module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
 	es          = require 'event-stream'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
@@ -59,7 +60,9 @@ module.exports = (config, gulp) ->
 			q.all([
 				getComponents 'rb', rbExclude
 				getComponents 'app'
-			]).done -> defer.resolve()
+			]).done ->
+				log.task "copied bower components to: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

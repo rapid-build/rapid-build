@@ -1,6 +1,7 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	del          = require 'del'
+	log          = require "#{config.req.helpers}/log"
 	forWatchFile = !!taskOpts.watchFile
 
 	# API
@@ -16,6 +17,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		runMulti: ->
 			defer = q.defer()
 			del(config.dist.dir, force:true).then (paths) ->
+				# log.task "cleaned #{config.dist.dir} directory", 'minor'
 				defer.resolve()
 			defer.promise
 

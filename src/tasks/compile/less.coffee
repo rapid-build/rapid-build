@@ -5,6 +5,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	gulpif       = require 'gulp-if'
 	less         = require 'gulp-less'
 	plumber      = require 'gulp-plumber'
+	log          = require "#{config.req.helpers}/log"
 	lessHelper   = require("#{config.req.helpers}/Less") config, gulp
 	forWatchFile = !!taskOpts.watchFile
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
@@ -89,7 +90,9 @@ module.exports = (config, gulp, taskOpts={}) ->
 			q.all([
 				runLess 'app'
 				runLess 'rb'
-			]).done -> defer.resolve()
+			]).done ->
+				log.task "compiled less to: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

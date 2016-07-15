@@ -1,5 +1,6 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
+	log          = require "#{config.req.helpers}/log"
 	tasks        = require("#{config.req.helpers}/tasks") config
 	forWatchFile = !!taskOpts.watchFile
 	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
@@ -26,7 +27,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 			defer.promise
 
 		runMulti: ->
-			tasks.run.async runTask, 'styles', 'css', ['client']
+			promise = tasks.run.async runTask, 'styles', 'css', ['client']
+			promise.done ->
+				log.task "copied css to: #{config.dist.app.client.dir}"
+			promise
 
 	# return
 	# ======

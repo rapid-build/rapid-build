@@ -5,6 +5,10 @@ module.exports =
 		else
 			console.log JSON.stringify v, null, '\t'
 
+	task: (msg, type='attn') -> # see /src/bootstrap.coffee for types
+		return unless msg
+		console.log msg[type]
+
 	watch: (taskName, file, opts={}) ->
 		taskName = opts.logTaskName or taskName
-		console.log "#{taskName} #{file.event}: #{file.path}".yellow
+		@task "#{taskName} #{file.event}: #{file.path}", 'minor'

@@ -1,5 +1,6 @@
 module.exports = (config, gulp) ->
-	q = require 'q'
+	q   = require 'q'
+	log = require "#{config.req.helpers}/log"
 
 	runTask = (src, dest, appOrRb) ->
 		defer = q.defer()
@@ -26,7 +27,9 @@ module.exports = (config, gulp) ->
 					config.dist.app.client.libs.dir
 					'app'
 				)
-			]).done -> defer.resolve()
+			]).done ->
+				log.task "copied libs to: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

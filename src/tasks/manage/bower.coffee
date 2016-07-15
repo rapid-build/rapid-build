@@ -1,5 +1,6 @@
 module.exports = (config) ->
 	q           = require 'q'
+	log         = require "#{config.req.helpers}/log"
 	bower       = require 'bower'
 	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
@@ -16,12 +17,12 @@ module.exports = (config) ->
 			forceLatest: true
 			cwd: config.src[appOrRb].client.bower.dir
 		.on 'log', (result) ->
-			console.log "bower: #{result.id.cyan} #{result.message.cyan}"
+			log.task "bower: #{result.id} #{result.message}", 'minor'
 		.on 'error', (e) ->
-			console.log e
-			defer.resolve()
+			log.task "bower error: #{e.message}", 'error'
+			defer.resolve 'error'
 		.on 'end', ->
-			defer.resolve()
+			defer.resolve 'success'
 
 		defer.promise
 
@@ -34,7 +35,13 @@ module.exports = (config) ->
 			q.all([
 				runTask 'rb', rbExclude
 				runTask 'app'
-			]).done -> defer.resolve()
+			]).done (result) ->
+				switch true
+					when result.indexOf('error') != -1
+						log.task 'failed to install all bower components', 'error'
+					when result.indexOf('success') != -1
+						log.task 'installed bower components'
+				defer.resolve()
 			defer.promise
 
 	# return

@@ -1,6 +1,7 @@
 module.exports = (config) ->
 	q    = require 'q'
 	del  = require 'del'
+	log  = require "#{config.req.helpers}/log"
 	path = require 'path'
 	fse  = require 'fs-extra'
 
@@ -11,7 +12,7 @@ module.exports = (config) ->
 		del(_path, force:true).then (paths) ->
 			dirMsg = 'generated'
 			dirMsg += " #{dir}" if dir
-			console.log "cleaned #{dirMsg} directory".yellow
+			# log.task "cleaned #{dirMsg} directory", 'minor'
 			defer.resolve()
 		defer.promise
 
@@ -21,7 +22,7 @@ module.exports = (config) ->
 		fse.writeJson _path, {}, format, (e) ->
 			dir  = config.generated.pkg.dir
 			file = path.basename _path
-			# console.log "generated #{dir}: #{file}".yellow
+			# log.task "generated #{dir}: #{file}", 'minor'
 			defer.resolve()
 		defer.promise
 
@@ -29,7 +30,7 @@ module.exports = (config) ->
 		defer = q.defer()
 		_path = config.generated.pkg[dir].path
 		fse.mkdirs _path, (e) ->
-			# console.log "generated #{dir} directory".yellow
+			# log.task "generated #{dir} directory", 'minor'
 			defer.resolve()
 		defer.promise
 
@@ -64,7 +65,7 @@ module.exports = (config) ->
 				])
 				.done ->
 					dir = config.generated.pkg.dir
-					console.log "generated #{dir} directory".yellow
+					# log.task "generated #{dir} directory", 'minor'
 
 			jsonFiles: ->
 				pkg   = config.generated.pkg
@@ -77,7 +78,7 @@ module.exports = (config) ->
 					createJson files.prodFiles
 					createJson files.prodFilesBlueprint
 				])
-				# .done -> console.log "generated #{config.generated.pkg.dir} json files".yellow
+				# .done -> log.task "generated #{config.generated.pkg.dir} json files", 'minor'
 
 		copy:
 			src: ->
@@ -87,7 +88,7 @@ module.exports = (config) ->
 				opts  = clobber: true, filter: (s) -> not /\.gitkeep$/ig.test s
 				fse.copy src, dest, opts, (e) ->
 					dir = config.generated.pkg.dir
-					# console.log "generated #{dir} src directory".yellow
+					# log.task "generated #{dir} src directory", 'minor'
 					defer.resolve()
 				defer.promise
 

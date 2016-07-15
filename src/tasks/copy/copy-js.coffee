@@ -1,5 +1,6 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
+	log          = require "#{config.req.helpers}/log"
 	tasks        = require("#{config.req.helpers}/tasks") config
 	forWatchFile = !!taskOpts.watchFile
 
@@ -19,7 +20,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
 
 		runMulti: (loc) ->
-			tasks.run.async runTask, 'scripts', 'js', [loc]
+			promise = tasks.run.async runTask, 'scripts', 'js', [loc]
+			promise.done ->
+				log.task "copied js to: #{config.dist.app[loc].dir}"
+			promise
 
 	# return
 	# ======

@@ -36,7 +36,7 @@ module.exports = (config, gulp) ->
 			cleanTask 'scripts'
 			cleanTask 'styles'
 		]).done ->
-			console.log msg.yellow if msg
+			# log.task msg, 'minor' if msg
 			defer.resolve()
 		defer.promise
 
@@ -46,7 +46,7 @@ module.exports = (config, gulp) ->
 			delTask config.internal.getImportsAppOrRb 'rb'
 			delTask config.internal.getImportsAppOrRb 'app'
 		]).done ->
-			console.log msg.yellow if msg
+			# log.task msg, 'minor' if msg
 			defer.resolve()
 		defer.promise
 
@@ -57,14 +57,14 @@ module.exports = (config, gulp) ->
 		gulp.src src
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log msg.yellow if msg
+				# log.task msg, 'minor' if msg
 				defer.resolve()
 		defer.promise
 
 	delTask = (src, msg) ->
 		defer = q.defer()
 		del(src, force:true).then (paths) ->
-			console.log msg.yellow if msg
+			# log.task msg, 'minor' if msg
 			defer.resolve()
 		defer.promise
 

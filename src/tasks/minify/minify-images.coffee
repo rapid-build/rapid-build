@@ -9,7 +9,7 @@ module.exports = (config, gulp) ->
 		gulp.src src
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "copied rb images".yellow
+				# console.log "copied rb images".yellow
 				defer.resolve()
 		defer.promise
 

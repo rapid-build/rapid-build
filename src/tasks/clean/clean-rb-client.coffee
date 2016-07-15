@@ -1,6 +1,7 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q           = require 'q'
 	del         = require 'del'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	configHelp  = require("#{config.req.helpers}/config") config
 
@@ -10,7 +11,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		defer = q.defer()
 		src   = config.dist.rb.client.dir
 		del(src, force:true).then (paths) ->
-			# console.log 'removed rb client dist dir'.yellow
+			# log.task 'removed rb client dist dir', 'minor'
 			defer.resolve()
 		defer.promise
 
@@ -30,7 +31,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 				cleanRbClient()
 				rebuildConfig env
 			]).done ->
-				# console.log 'cleaned rb client dist'.yellow
+				# log.task 'cleaned rb client dist', 'minor'
 				defer.resolve()
 			defer.promise
 

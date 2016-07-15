@@ -5,6 +5,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	gulpif        = require 'gulp-if'
 	minifyHtml    = require 'gulp-htmlmin'
 	templateCache = require 'gulp-angular-templatecache'
+	log           = require "#{config.req.helpers}/log"
 	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
 	dirHelper     = require("#{config.req.helpers}/dir") config, gulp
 	runNgFormify  = config.angular.ngFormify
@@ -61,7 +62,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.pipe templateCache file, opts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "created #{file}".yellow
+				log.task "created and copied #{file} to: #{config.dist.app.client.dir}"
+				log.task "minified html in #{file}" if minify
 				defer.resolve()
 		defer.promise
 

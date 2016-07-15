@@ -3,6 +3,7 @@ module.exports = (config, gulp) ->
 	path     = require 'path'
 	postcss  = require 'postcss'
 	atImport = require 'postcss-import'
+	log      = require "#{config.req.helpers}/log"
 
 	# API
 	# ===
@@ -30,7 +31,7 @@ module.exports = (config, gulp) ->
 					file.contents = new Buffer output
 				.pipe gulp.dest dest
 				.on 'end', ->
-					console.log "inlined css imports in #{minFile}".yellow
+					log.task "inlined css imports in #{minFile}"
 					defer.resolve()
 			defer.promise
 

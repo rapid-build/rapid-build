@@ -2,6 +2,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	q         = require 'q'
 	babel     = require 'gulp-babel'
 	plumber   = require 'gulp-plumber'
+	log       = require "#{config.req.helpers}/log"
 	extraHelp = require("#{config.req.helpers}/extra") config
 
 	runTask = (src, dest, base, appOrRb, loc) ->
@@ -11,7 +12,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.pipe babel()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "compiled extra es6 to #{appOrRb} #{loc}".yellow
+				log.task "compiled extra es6 to: #{config.dist.app[loc].dir}"
 				defer.resolve()
 		defer.promise
 

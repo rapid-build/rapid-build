@@ -19,7 +19,7 @@ module.exports = (config, gulp) ->
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.prodFilesBlueprint
 		fse.writeJson jsonFile, MinFiles, format, (e) ->
-			console.log 'built prod-files-blueprint.json'.yellow
+			# log.task 'built prod-files-blueprint.json', 'minor'
 			defer.resolve()
 		defer.promise
 

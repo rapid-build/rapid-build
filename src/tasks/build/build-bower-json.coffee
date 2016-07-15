@@ -1,6 +1,7 @@
 module.exports = (config, gulp) ->
 	q   = require 'q'
 	fse = require 'fs-extra'
+	log = require "#{config.req.helpers}/log"
 
 	# helpers
 	# =======
@@ -19,7 +20,7 @@ module.exports = (config, gulp) ->
 			json     = getData()
 			jsonFile = config.generated.pkg.bower
 			fse.writeJson jsonFile, json, format, (e) ->
-				console.log 'built bower.json'.yellow
+				# log.task 'built bower.json', 'minor'
 				defer.resolve()
 			defer.promise
 

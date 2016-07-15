@@ -9,6 +9,7 @@ module.exports = (config, gulp) ->
 	fse         = require 'fs-extra'
 	path        = require 'path'
 	bless       = require 'gulp-bless'
+	log         = require "#{config.req.helpers}/log"
 	pathHelp    = require "#{config.req.helpers}/path"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
@@ -50,7 +51,7 @@ module.exports = (config, gulp) ->
 				for file in files
 					if file.cnt
 						SplitFiles.push file
-						console.log "#{file.name} split into #{file.cnt} files".yellow
+						log.task "split #{file.name} into #{file.cnt} files"
 				defer.resolve()
 		defer.promise
 
@@ -83,7 +84,7 @@ module.exports = (config, gulp) ->
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.prodFiles
 		fse.writeJson jsonFile, ProdFiles, format, (e) ->
-			console.log 'rebuilt prod-files.json because of css file split'.yellow
+			# log.task 'rebuilt prod-files.json because of css file split', 'minor'
 			defer.resolve()
 		defer.promise
 

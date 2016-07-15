@@ -11,7 +11,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 				[
 					"#{config.rb.prefix.task}minify-css"
 					"#{config.rb.prefix.task}minify-html"
-					"#{config.rb.prefix.task}minify-images"
+					"#{config.rb.prefix.task}minify-images" # todo
 					"#{config.rb.prefix.task}minify-js"
 				]
 				"#{config.rb.prefix.task}build-prod-files-blueprint"

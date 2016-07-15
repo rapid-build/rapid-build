@@ -3,6 +3,7 @@ module.exports = (config, gulp) ->
 	del            = require 'del'
 	path           = require 'path'
 	Bust           = require 'gulp-cachebust' # might try gulp-bust
+	log            = require "#{config.req.helpers}/log"
 	promiseHelp    = require "#{config.req.helpers}/promise"
 	unstampedPaths = []
 	bustOpts =
@@ -28,7 +29,7 @@ module.exports = (config, gulp) ->
 				unstampedPaths.push getUnstampedPath file.path
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log 'file names busted'.yellow
+				# log.task 'file names busted', 'minor'
 				defer.resolve()
 		defer.promise
 
@@ -36,7 +37,7 @@ module.exports = (config, gulp) ->
 		defer = q.defer()
 		return promiseHelp.get defer unless unstampedPaths.length
 		del(unstampedPaths, force:true).then (paths) ->
-			# console.log 'unstamped files deleted'.yellow
+			# log.task 'unstamped files deleted', 'minor'
 			defer.resolve()
 		defer.promise
 
@@ -46,7 +47,7 @@ module.exports = (config, gulp) ->
 			.pipe bust.references()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log 'file references busted'.yellow
+				# log.task 'file references busted', 'minor'
 				defer.resolve()
 		defer.promise
 
@@ -68,7 +69,9 @@ module.exports = (config, gulp) ->
 				-> runStampRefs prodFilesSrc, prodFilesDest, bust
 				-> runDelUnstampedPaths()
 			]
-			tasks.reduce(q.when, q()).done -> defer.resolve()
+			tasks.reduce(q.when, q()).done ->
+				log.task "cache busted files in: #{config.dist.app.client.dir}"
+				defer.resolve()
 			defer.promise
 
 	# return

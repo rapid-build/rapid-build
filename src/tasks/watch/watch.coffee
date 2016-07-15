@@ -116,7 +116,7 @@ module.exports = (config, gulp) ->
 			loc = opts.loc or 'client'
 			loc = "#{loc} test" if opts.isTest
 			msg = if opts.lang.indexOf('.') isnt -1 then 'file' else 'files'
-			console.log "watching #{loc} #{opts.lang} #{msg}".yellow
+			log.task "watching #{loc} #{opts.lang} #{msg}", 'minor'
 			defer.resolve()
 		defer.promise
 

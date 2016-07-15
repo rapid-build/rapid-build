@@ -2,6 +2,7 @@ module.exports = (config, gulp) ->
 	q           = require 'q'
 	path        = require 'path'
 	minifyHtml  = require 'gulp-htmlmin'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	minifyTask = (appOrRb) ->
@@ -13,7 +14,7 @@ module.exports = (config, gulp) ->
 			.pipe minifyHtml minOpts
 			.pipe gulp.dest config.dist[appOrRb].client.views.dir
 			.on 'end', ->
-				console.log "minified #{appOrRb} dist views".yellow
+				# console.log "minified #{appOrRb} dist views".yellow
 				defer.resolve()
 		defer.promise
 
@@ -22,7 +23,9 @@ module.exports = (config, gulp) ->
 		q.all([
 			minifyTask 'rb'
 			minifyTask 'app'
-		]).done -> defer.resolve()
+		]).done ->
+			log.task "minified html in: #{config.dist.app.client.dir}"
+			defer.resolve()
 		defer.promise
 
 	moveTask = -> # move to rb .temp folder
@@ -36,7 +39,7 @@ module.exports = (config, gulp) ->
 		gulp.src src
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "copied rb views".yellow
+				# console.log "copied rb views".yellow
 				defer.resolve()
 		defer.promise
 

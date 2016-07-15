@@ -18,7 +18,7 @@ module.exports = (config, gulp) ->
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.prodFiles
 		fse.writeJson jsonFile, ProdFiles, format, (e) ->
-			console.log 'built prod-files.json'.yellow
+			# log.task 'built prod-files.json', 'minor'
 			defer.resolve()
 		defer.promise
 

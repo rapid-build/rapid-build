@@ -5,6 +5,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	gulpif      = require 'gulp-if'
 	replace     = require 'gulp-replace'
 	template    = require 'gulp-template'
+	log         = require "#{config.req.helpers}/log"
 	pathHelp    = require "#{config.req.helpers}/path"
 	moduleHelp  = require "#{config.req.helpers}/module"
 	format      = require("#{config.req.helpers}/format")()
@@ -37,7 +38,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.pipe template data
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log "built #{file}".yellow
+				log.task "built and copied #{file} to: #{config.dist.app.client.dir}"
 				defer.resolve()
 		defer.promise
 

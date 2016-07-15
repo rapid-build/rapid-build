@@ -1,6 +1,7 @@
 module.exports = (config) ->
 	q           = require 'q'
 	fse         = require 'fs-extra'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	buildFile: (build=true, msg='built') ->
@@ -10,7 +11,7 @@ module.exports = (config) ->
 		format     = spaces: '\t'
 		configFile = config.generated.pkg.config
 		fse.writeJson configFile, config, format, (e) ->
-			console.log "#{msg} config.json".yellow
+			# log.task "#{msg} config.json", 'minor'
 			defer.resolve()
 		defer.promise
 

@@ -51,7 +51,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 
 	hasTestsCheck = (cnt) ->
 		return true if cnt
-		console.log 'no test scripts to run'.yellow
+		console.log 'no client test scripts to run'
 		false
 
 	startKarmaServer = (karmaConfig, defer) ->

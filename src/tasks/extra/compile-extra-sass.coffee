@@ -3,6 +3,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	path      = require 'path'
 	sass      = require 'gulp-sass'
 	plumber   = require 'gulp-plumber'
+	log       = require "#{config.req.helpers}/log"
 	extraHelp = require("#{config.req.helpers}/extra") config
 	extCss    = '.css'
 
@@ -16,7 +17,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 				file.path = file.path.replace ext, extCss if ext isnt extCss
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "compiled extra sass to #{appOrRb} #{loc}".yellow
+				log.task "compiled extra sass to: #{config.dist.app[loc].dir}"
 				defer.resolve()
 		defer.promise
 

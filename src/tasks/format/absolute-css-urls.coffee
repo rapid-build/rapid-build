@@ -1,5 +1,6 @@
 module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
+	log          = require "#{config.req.helpers}/log"
 	absCssUrls   = require "#{config.req.plugins}/gulp-absolute-css-urls"
 	arrayHelp    = require "#{config.req.helpers}/array"
 	promiseHelp  = require "#{config.req.helpers}/promise"
@@ -49,7 +50,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			runTask 'app', 'libs'
 			runTask 'app', 'styles', prependPath: false, glob: 'all'
 		]).done ->
-			console.log 'changed all css urls to absolute'.yellow
+			log.task 'changed all css urls to absolute'
 			defer.resolve()
 		defer.promise
 

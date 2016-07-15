@@ -2,6 +2,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	q         = require 'q'
 	coffee    = require 'gulp-coffee'
 	plumber   = require 'gulp-plumber'
+	log       = require "#{config.req.helpers}/log"
 	extraHelp = require("#{config.req.helpers}/extra") config
 
 	runTask = (src, dest, base, appOrRb, loc) ->
@@ -11,7 +12,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.pipe coffee bare: true
 			.pipe gulp.dest dest
 			.on 'end', ->
-				console.log "compiled extra coffee to #{appOrRb} #{loc}".yellow
+				log.task "compiled extra coffee to: #{config.dist.app[loc].dir}"
 				defer.resolve()
 		defer.promise
 

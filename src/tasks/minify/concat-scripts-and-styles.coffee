@@ -26,7 +26,8 @@ module.exports = (config, gulp) ->
 						.pipe concat file.name
 						.pipe gulp.dest dest
 						.on 'end', ->
-							console.log "created #{file.name}".yellow
+							fileType = if type is 'styles' then 'css' else 'js'
+							log.task "concatenated #{fileType} files to create #{file.name} in: #{config.dist.app.client.dir}"
 							defer.resolve()
 					defer.promise
 		tasks.reduce(q.when, q()).done -> defer1.resolve()
@@ -46,7 +47,7 @@ module.exports = (config, gulp) ->
 			config.temp.client['styles'].dir
 		]
 		del(src, force:true).then (paths) ->
-			# console.log 'cleaned temp scripts and styles'.yellow
+			# log.task 'cleaned temp scripts and styles', 'minor'
 			defer.resolve()
 		defer.promise
 
