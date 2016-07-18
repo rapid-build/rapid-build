@@ -31,9 +31,9 @@
 			<div class="main-content">
 				<!-- GETTING STARTED -->
 				<section
-					id="{{key | lowercase | spinalize}}"
-					ng-repeat="(key, val) in ::gettingStarted"
-					ng-include="'/views/sections/getting-started.html'">
+					id="{{item.label | lowercase | spinalize}}"
+					ng-repeat="item in ::gettingStarted"
+					ng-include="'/views/sections/list.html'">
 				</section>
 			</div>
 		</div>

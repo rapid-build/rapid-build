@@ -1,0 +1,56 @@
+<!-- SECTION LIST -->
+<h3>
+	<rb:icon ng-if="!!item.icon" kind="{{item.icon}}" size="{{item.iconSize}}" strong="{{!!item.iconWeight}}"></rb:icon>
+	<span bind-html-compile="item.label"></span>
+	<em ng-if="!!item.info" bind-html-compile="item.info" class="sub"
+		ng-class="[item.html.class.items1.info ? item.html.class.items1.info : 'parens'].join(' ')"></em>
+</h3>
+<ul class="list" ng-class="item.html.class.items2.list">
+	<li ng-repeat="item2 in item.items" id="{{item.label}}.{{item2.label}}" ng-switch="item.html.headings.items2">
+		<span ng-switch-when="false">
+			<rb:icon ng-if="!!item2.icon" kind="{{item2.icon}}" size="{{item2.iconSize}}" strong="{{!!item2.iconWeight}}"></rb:icon>
+			<span bind-html-compile="item2.label"></span>
+			<em ng-if="!!item2.info" bind-html-compile="item2.info" class="sub"
+				ng-class="[item.html.class.items2.info ? item.html.class.items2.info : 'sep',
+						   !item2.label ? 'normal' : '', item.html.class.items2.list == 'small' ? 'small' : ''
+						  ].join(' ')"></em>
+		</span>
+		<h4 ng-switch-default>
+			<rb:icon ng-if="!!item2.icon" kind="{{item2.icon}}" size="{{item2.iconSize}}" strong="{{!!item2.iconWeight}}"></rb:icon>
+			<span bind-html-compile="item2.label"></span>
+			<em ng-if="!!item2.info" bind-html-compile="item2.info" class="sub"
+				ng-class="[item.html.class.items2.info ? item.html.class.items2.info : 'sep',
+						   !item2.label ? 'normal' : '', item.html.class.items2.list == 'small' ? 'small' : ''
+						  ].join(' ')"></em>
+		</h4>
+		<ul ng-if="item2.items">
+			<li ng-repeat="item3 in item2.items">
+				<rb:icon ng-if="!!item3.icon" kind="{{item3.icon}}" size="{{item3.iconSize}}" strong="{{!!item3.iconWeight}}"></rb:icon>
+				<span bind-html-compile="item3.label"></span>
+				<em ng-if="!!item3.info" bind-html-compile="item3.info" class="sub"
+					ng-class="[item.html.class.items3.info ? item.html.class.items3.info : 'parens'].join(' ')"></em>
+				<ul ng-if="item3.items">
+					<li ng-repeat="item4 in item3.items">
+						<rb:icon ng-if="!!item4.icon" kind="{{item4.icon}}" size="{{item4.iconSize}}" strong="{{!!item4.iconWeight}}"></rb:icon>
+						<span bind-html-compile="item4.label"></span>
+						<em ng-if="!!item4.info" bind-html-compile="item4.info" class="sub"
+							ng-class="[item.html.class.items4.info ? item.html.class.items4.info : 'parens'].join(' ')"></em>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li ng-if="!!item.example" class="example">
+		<h4 ng-if="!!item.example.label">
+			<span bind-html-compile="item.example.label"></span>
+			<em ng-if="!!item.example.info" bind-html-compile="item.example.info" class="sub parens"></em>
+		</h4>
+		<rb:code
+			src="item.example.code"
+			lang="{{item.example.lang}}"
+			size="{{item.example.size}}"
+			spacing="{{item.example.spacing}}"
+			clipboard="{{item.example.clipboard !== false}}"
+			hide-lang="{{!!item.example.hideLang}}"></rb:code>
+	</li>
+</ul>

@@ -79,9 +79,10 @@ angular.module('rapid-build').directive 'rbCode', ['$compile', 'preService',
 		templateUrl: '/views/directives/code.html'
 		scope:
 			display: '@'
-			lang: '@'
-			size: '@'
-			src: '@' # = binding
+			lang:    '@'
+			size:    '@'
+			spacing: '@'
+			src:     '@' # = binding
 			# valueless attrs:
 			# clipboard:   '@' # accepts false too
 			# hideLang:    '@' # accepts false too

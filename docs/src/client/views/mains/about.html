@@ -34,9 +34,9 @@
 			<div class="main-content">
 				<!-- ABOUT -->
 				<section
-					id="{{key | lowercase | spinalize}}"
-					ng-repeat="(key, val) in ::about"
-					ng-include="'/views/sections/about.html'">
+					id="{{item.label | lowercase | spinalize}}"
+					ng-repeat="item in ::about"
+					ng-include="'/views/sections/list.html'">
 				</section>
 			</div>
 		</div>

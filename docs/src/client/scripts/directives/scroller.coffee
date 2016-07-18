@@ -52,7 +52,7 @@ angular.module('rapid-build').directive 'rbScroller', ['$window', '$document', '
 					elms.scroll.hgt  = elmDim.height
 					elms.spy.hgt     = spyDim.height
 					elms.scroll.stop = elms.spy.hgt - elms.scroll.hgt
-				, 200
+				, 500 # was 200
 
 			setScrollTop = ->
 				elms.win.scrollY = coordsService.windowScroll().y

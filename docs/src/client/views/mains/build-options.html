@@ -29,7 +29,7 @@
 						{ caption: 'dist', url: '#dist' },
 						{ caption: 'exclude', url: '#exclude' },
 						{ caption: 'extra', url: '#extra' },
-						{ caption: 'httpProxy', url: '#httpProxy' },
+						{ caption: 'httpProxy', url: '#httpproxy' },
 						{ caption: 'minify', url: '#minify' },
 						{ caption: 'order', url: '#order' },
 						{ caption: 'ports', url: '#ports' },
@@ -50,9 +50,9 @@
 			<div class="main-content">
 				<!-- BUILD OPTIONS -->
 				<section
-					id="{{opt | spinalize}}"
-					ng-repeat="(opt, val) in ::buildOpts"
-					ng-include="'/views/sections/build-options.html'">
+					id="{{item.label | lowercase | spinalize}}"
+					ng-repeat="item in ::buildOpts"
+					ng-include="'/views/sections/list.html'">
 				</section>
 			</div>
 		</div>

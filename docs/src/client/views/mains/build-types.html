@@ -16,9 +16,9 @@
 	<!-- BUILD COMMON TASKS -->
 	<section
 		class="main sub"
-		id="{{type | spinalize}}"
-		ng-repeat="(type, build) in ::buildCommonTasks"
-		ng-include="'/views/sections/build-common-tasks.html'">
+		id="{{item.label | lowercase | spinalize}}"
+		ng-repeat="item in ::buildCommonTasks"
+		ng-include="'/views/sections/list.html'">
 	</section>
 
 	<div class="row grid-row grid-sep-left">
@@ -61,9 +61,9 @@
 			</h2>
 			<div class="main-content">
 				<section
-					id="{{type | spinalize}}"
-					ng-repeat="(type, build) in ::buildTypes.main"
-					ng-include="'/views/sections/build-types.html'">
+					id="{{item.label | lowercase | spinalize}}"
+					ng-repeat="item in ::buildTypes.main"
+					ng-include="'/views/sections/list.html'">
 				</section>
 			</div>
 
@@ -73,9 +73,9 @@
 			</h2>
 			<div class="main-content">
 				<section
-					id="{{type | spinalize}}"
-					ng-repeat="(type, build) in ::buildTypes.variations"
-					ng-include="'/views/sections/build-types.html'">
+					id="{{item.label | lowercase | spinalize}}"
+					ng-repeat="item in ::buildTypes.variations"
+					ng-include="'/views/sections/list.html'">
 				</section>
 			</div>
 		</div>

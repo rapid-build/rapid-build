@@ -37,7 +37,7 @@
 			font-size: 13.5px;
 			font-weight: 400;
 			color: lightslategrey;
-			span { &::after { content: ':'; } }
+			> span { &::after { content: ':'; } }
 		}
 		> .rb-code {
 			&:last-child { margin-bottom: 5px; }
@@ -63,6 +63,17 @@ ul.list {
 			&::before {
 				content: normal;
 			}
+		}
+	}
+}
+
+/* Ordered (when you can't use ol)
+ **********************************/
+ul.ordered {
+	list-style: decimal;
+	> li { // 1st level
+		&::before {
+			content: normal;
 		}
 	}
 }
@@ -103,7 +114,5 @@ ul.list {
 		}
 	}
 }
-
-
 
 
