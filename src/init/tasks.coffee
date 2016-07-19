@@ -82,7 +82,8 @@ module.exports = (gulp, config) ->
 
 	# format
 	# ======
-	taskHelp.addTask 'absolute-css-urls', '/format/absolute-css-urls'
+	taskHelp.addTask 'update-css-urls',      '/format/update-css-urls'
+	taskHelp.addTask 'update-css-urls:prod', '/format/update-css-urls', calledFrom: 'minify-task'
 
 	# generate
 	# ========

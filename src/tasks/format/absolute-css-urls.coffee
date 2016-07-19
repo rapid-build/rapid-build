@@ -19,7 +19,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		promiseHelp.get()
 
 	buildSpa = ->
-		taskHelp.startTask 'watch-build-spa'
+		taskHelp.startTask '/watch/watch-build-spa'
 
 	# tasks
 	# =====
@@ -32,6 +32,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		clientDist = config.dist.app.client.dir
 		urlOpts    = {}
 		urlOpts.rbDistDir   = config.rb.prefix.distDir
+		urlOpts.rbDistPath  = config.dist.rb.client.styles.dir
 		urlOpts.prependPath = opts.prependPath
 		gulp.src src, { base }
 			.pipe absCssUrls clientDist, config, urlOpts
@@ -58,12 +59,14 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runSingle: ->
-			clone = config.internal.getImports()
-			opts  = prependPath: false, src: taskOpts.watchFilePath, watchFileBase: true
-			runTask('app', 'styles', opts).done ->
+			clone   = config.internal.getImports()
+			opts    = prependPath: false, src: taskOpts.watchFilePath, watchFileBase: true
+			promise = runTask 'app', 'styles', opts
+			promise.done ->
 				imports  = config.internal.getImports()
 				areEqual = arrayHelp.areEqual clone, imports, true
 				buildSpa() unless areEqual
+			promise
 
 		runTask: -> # synchronously
 			defer = q.defer()

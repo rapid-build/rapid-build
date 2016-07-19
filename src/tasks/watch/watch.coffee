@@ -24,7 +24,7 @@ module.exports = (config, gulp) ->
 
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
-			taskHelp.startTask 'watch-build-spa'
+			taskHelp.startTask '/watch/watch-build-spa'
 
 		browserSync: ->
 			return unless config.build.server

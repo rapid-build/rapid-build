@@ -230,12 +230,24 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 		,
 			label: 'Property name example, \'scripts\''
 		]
-	# ,
-	# 	label: 'client.paths.absolute'
-	# 	info:  '@type boolean, @default true'
-	# 	items: [
-	# 		label: 'By default, the build creates urls absolute to the root of the domain for:'
-	# 	]
+	,
+		label: 'client.paths.absolute'
+		info:  '@type boolean, @default true'
+		items: [
+			label: 'Set to false to create relative urls.'
+		,
+			label: 'By default, the build creates
+					<a target="_blank" href="https://goo.gl/jK1i0L">urls absolute</a>
+					to the root of your domain for:'
+			items: [
+				label: 'link tag\'s href attribute'
+				info: 'for stylesheets'
+			,
+				label: 'script tag\'s src attribute'
+			,
+				label: 'and changes urls in css to absolute'
+			]
+		]
 	,
 		label: 'server.dir'
 		info:  '@type string, @default \'server\''
@@ -274,7 +286,8 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 						scripts: { dir: 'js' },
 						styles:  { dir: 'css' },
 						test:    { dir: 'tests' },
-						views:   { dir: 'html' }
+						views:   { dir: 'html' },
+						paths:   { absolute: false }
 					},
 					server: {
 						dir: 'backend',

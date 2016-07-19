@@ -45,9 +45,10 @@ module.exports = (config, gulp={}) ->
 		# console.log "was called from task #{taskName} = #{calledFromTask}".yellow
 		calledFromTask
 
-	startTask: (taskName) ->
-		# ALERT: gulp.start is supposedly going away in gulp 4
-		gulp.start "#{config.rb.prefix.task}#{taskName}"
+	startTask: (taskPath, taskOpts={}) ->
+		task = require "#{config.req.tasks}#{taskPath}"
+		taskOpts.taskCB = taskOpts.taskCB or ->
+		task config, gulp, taskOpts
 
 	addTask: (taskName, _path, opts={}) -> # very important method
 		deps = getTaskDeps opts.deps

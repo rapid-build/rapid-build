@@ -126,14 +126,15 @@ findAndReplace = (css, config, paths, opts, imports, formatTask, regX) ->
 # Main (replace relative urls with absolute urls)
 # ===============================================
 replaceCssUrls = (file, root, config, opts={}) ->
-	css      = file.contents.toString()
-	_root    = format.root root
-	abs      = format.absPath file, _root
-	base     = pathHelp.format file.base
-	rel      = pathHelp.format file.relative
-	isRbPath = base.indexOf(opts.rbDistDir) isnt -1
-	paths    = { root, abs, base, rel, isRbPath }
-	imports  = []
+	css        = file.contents.toString()
+	_root      = format.root root
+	abs        = format.absPath file, _root
+	base       = pathHelp.format file.base
+	rel        = pathHelp.format file.relative
+	rbDistPath = pathHelp.format opts.rbDistPath
+	isRbPath   = base.indexOf(rbDistPath) isnt -1
+	paths      = { root, abs, base, rel, isRbPath }
+	imports    = []
 
 	# urlPath = ../images/superheroes.png | /images/superheroes.png
 	css = findAndReplace css, config, paths, opts, imports, 'getCssUrl', urlRegX            # match = url('../images/x.png')

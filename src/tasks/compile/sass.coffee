@@ -7,8 +7,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 	plumber      = require 'gulp-plumber'
 	log          = require "#{config.req.helpers}/log"
 	sassHelper   = require("#{config.req.helpers}/Sass") config, gulp
+	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
 	forWatchFile = !!taskOpts.watchFile
-	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
 	extCss       = '.css'
 
 	# streams
@@ -39,7 +39,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.on 'data', (file) ->
 				return unless forWatchFile
 				watchFilePath = path.relative file.cwd, file.path
-				absCssUrls config, gulp, { watchFilePath }
+				taskHelp.startTask '/format/update-css-urls', { watchFilePath }
 			.on 'end', ->
 				# console.log dest
 				defer.resolve()

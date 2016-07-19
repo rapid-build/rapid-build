@@ -24,6 +24,11 @@ module.exports = (config, options) ->
 	# ==========================
 	options.dist.server.fileName = null unless isType.string options.dist.server.fileName
 
+	# absolute client paths
+	# =====================
+	options.dist.client.paths = {} unless isType.object options.dist.client.paths
+	options.dist.client.paths.absolute = null unless isType.boolean options.dist.client.paths.absolute
+
 	# return
 	# ======
 	options

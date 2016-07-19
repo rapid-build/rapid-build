@@ -20,6 +20,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 				"#{config.rb.prefix.task}inline-css-imports"
 				"#{config.rb.prefix.task}cleanup-client"
 				"#{config.rb.prefix.task}css-file-split"
+				"#{config.rb.prefix.task}update-css-urls:prod"
 				"#{config.rb.prefix.task}build-spa:prod"
 				"#{config.rb.prefix.task}minify-spa"
 				"#{config.rb.prefix.task}cache-bust"

@@ -47,8 +47,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 	getFilesJson = (jsonEnvFile) ->
 		jsonEnvFile = path.join config.generated.pkg.files.path, jsonEnvFile
 		moduleHelp.cache.delete jsonEnvFile
+		removePathSection  = config.dist.app.client.dir
+		removePathSection += '/' unless config.dist.client.paths.absolute
 		files = require(jsonEnvFile).client
-		files = pathHelp.removeLocPartial files, config.dist.app.client.dir
+		files = pathHelp.removeLocPartial files, removePathSection
 		files.styles  = format.paths.to.html files.styles, 'styles', join: true, lineEnding: '\n\t'
 		files.scripts = format.paths.to.html files.scripts, 'scripts', join: true, lineEnding: '\n\t'
 		files

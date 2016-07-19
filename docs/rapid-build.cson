@@ -53,6 +53,7 @@ common:
 			client:
 				css: [
 					'libs/bootstrap/bootstrap.css'
+					'libs/highlight/**/*.css'
 				]
 
 dev:

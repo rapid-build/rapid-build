@@ -116,6 +116,7 @@ rapid-build.json (build options - can be cson, json or js file)
 # dist.client[images|scripts|styles|test|views].dir = (string)  defaults to property name
 # dist.client.bower.dir                             = (string)  defaults to 'bower_components'
 # dist.client.libs.dir                              = (string)  defaults to 'libs' = 3rd party libraries that aren't bower components
+# dist.paths.absolute                               = (boolean) defaults to true = set to false to create relative urls instead of absolute for link tag's href, script tag's src and urls in css
 # dist.server.dir                                   = (string)  defaults to 'server'
 # dist.server.test.dir                              = (string)  defaults to 'test'
 # dist.server.fileName                              = (string)  defaults to 'routes.js': this is the server's entry script

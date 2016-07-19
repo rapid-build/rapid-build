@@ -2,8 +2,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 	q            = require 'q'
 	log          = require "#{config.req.helpers}/log"
 	tasks        = require("#{config.req.helpers}/tasks") config
+	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
 	forWatchFile = !!taskOpts.watchFile
-	absCssUrls   = require "#{config.req.tasks}/format/absolute-css-urls" if forWatchFile
 
 	runTask = (src, dest) ->
 		defer = q.defer()
@@ -18,10 +18,11 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runSingle: -> # synchronously
-			defer  = q.defer()
+			defer         = q.defer()
+			watchFilePath = taskOpts.watchFile.rbDistPath
 			_tasks = [
 				-> runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
-				-> absCssUrls config, gulp, watchFilePath: taskOpts.watchFile.rbDistPath
+				-> taskHelp.startTask '/format/update-css-urls', { watchFilePath }
 			]
 			_tasks.reduce(q.when, q()).done -> defer.resolve()
 			defer.promise

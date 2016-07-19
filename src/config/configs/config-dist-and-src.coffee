@@ -184,6 +184,12 @@ module.exports = (config, options) ->
 
 	formatDist() # only one dist.dir
 
+	# absolute client paths
+	# =====================
+	config.dist.client = {}
+	config.dist.client.paths = {}
+	config.dist.client.paths.absolute = if options.dist.client.paths.absolute is null then true else !!options.dist.client.paths.absolute
+
 	# logs
 	# ====
 	# log.json config.dist, 'config.dist ='
