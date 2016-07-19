@@ -1,3 +1,13 @@
+# [0.65.0](https://github.com/jyounce/rapid-build/compare/v0.64.0...v0.65.0) (2016-07-19)
+
+
+### Features
+
+* **build option:** add build option dist.paths.absolute (defaults to true) set to false to create relative urls, see build options doc for more info ([f0961b4](https://github.com/jyounce/rapid-build/commit/f0961b4))
+* **messaging:** improve console messaging when running builds ([5b7f092](https://github.com/jyounce/rapid-build/commit/5b7f092))
+
+
+
 # [0.64.0](https://github.com/jyounce/rapid-build/compare/v0.63.0...v0.64.0) (2016-07-01)
 
 
