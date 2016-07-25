@@ -31,11 +31,14 @@ config.build.cli.templates.path   = path.join(config.build.cli.path, 'templates'
 config.build.cli.templates.client = path.join(config.build.cli.templates.path, 'client');
 config.build.cli.templates.root   = path.join(config.build.cli.templates.path, 'root');
 config.build.cli.templates.server = path.join(config.build.cli.templates.path, 'server');
+config.build.generated = {};
+config.build.generated.path = path.join(BUILD_PATH, 'generated');
 
 /* Bootstrap
  ************/
 require(path.join(config.build.cli.path, 'add-colors'))();
 if (config.build.cli.opts.quickStart.length) return require(path.join(config.build.cli.path, 'quick-start'))(config);
+if (!!config.build.cli.opts.cacheClean) return require(path.join(config.build.cli.path, 'cache-clean'))(config);
 var build = require(path.join(config.build.cli.path, 'get-build'))(config);
 
 /**
