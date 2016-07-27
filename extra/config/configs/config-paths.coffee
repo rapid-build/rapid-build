@@ -31,11 +31,12 @@ module.exports = (config) ->
 		root:         rootPath
 		node_modules: path.join rootPath, 'node_modules'
 		extra:
-			path:   extraPath
-			config: path.join extraPath, 'config'
-			tasks:  path.join extraPath, 'tasks'
-			temp:   path.join extraPath, 'temp'
-			tools:  path.join extraPath, 'tools'
+			path:    extraPath
+			config:  path.join extraPath, 'config'
+			helpers: path.join extraPath, 'helpers'
+			tasks:   path.join extraPath, 'tasks'
+			temp:    path.join extraPath, 'temp'
+			tools:   path.join extraPath, 'tools'
 		generated:
 			path:    generatedPath
 			testApp: path.join generatedPath, testAppName
@@ -82,6 +83,11 @@ module.exports = (config) ->
 					server:
 						path: testPathAppSrcServer
 						test: path.join testPathAppSrcServer, 'test'
+
+	# add hash to generated test app
+	# ==============================
+	hashHelp = require "#{paths.abs.extra.helpers}/hash"
+	paths.abs.generated.testApp += hashHelp.getPathHash paths.abs.generated.testApp
 
 	# add rel
 	# =======

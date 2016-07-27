@@ -11,7 +11,6 @@ module.exports = (config) ->
 	# ========
 	del  = require 'del'
 	fs   = require 'fs'
-	fse  = require 'fs-extra'
 	path = require 'path'
 
 	# helpers (gen = generated)
@@ -28,8 +27,12 @@ module.exports = (config) ->
 		catch e
 
 	getGenDir = (_path) ->
-		appPkg = require path.join config.app.path, 'package.json'
-		path.join _path, appPkg.name
+		hashHelp    = require "#{config.build.helpers.path}/hash"
+		appPkg      = require path.join config.app.path, 'package.json'
+		genPkgPath  = path.join _path, appPkg.name
+		hash        = hashHelp.getPathHash genPkgPath
+		genPkgPath += hash
+		genPkgPath
 
 	# vars
 	# ====

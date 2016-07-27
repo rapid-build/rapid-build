@@ -1,12 +1,18 @@
 module.exports = (config) ->
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
-	test = require("#{config.req.helpers}/test")()
+	path     = require 'path'
+	log      = require "#{config.req.helpers}/log"
+	hashHelp = require "#{config.req.helpers}/hash"
+	test     = require("#{config.req.helpers}/test")()
 
 	# helpers
 	# =======
 	join = (p1, p2) ->
 		path.join p1, p2
+
+	addHashToDir = (pkg) -> # update the reference, hash created from generated app path
+		hash = hashHelp.getPathHash pkg.path
+		for prop in ['dir', 'relPath', 'path']
+			pkg[prop] += hash
 
 	# init generated
 	# ==============
@@ -17,6 +23,7 @@ module.exports = (config) ->
 	generated.pkg.dir     = config.app.name
 	generated.pkg.relPath = join generated.dir, generated.pkg.dir
 	generated.pkg.path    = join generated.path, generated.pkg.dir
+	addHashToDir generated.pkg # avoid naming collisions, ensure unique dir name
 	generated.pkg.bower   = join generated.pkg.path, 'bower.json'
 	generated.pkg.config  = join generated.pkg.path, 'config.json'
 	generated.pkg.files   = {}
