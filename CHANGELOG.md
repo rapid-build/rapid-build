@@ -1,3 +1,16 @@
+# [0.66.0](https://github.com/jyounce/rapid-build/compare/v0.65.0...v0.66.0) (2016-08-02)
+
+
+### Bug Fixes
+
+* **internal:** suffix a hash to internally generated package directory names to avoid naming collisions ([f31d0bf](https://github.com/jyounce/rapid-build/commit/f31d0bf))
+
+### Features
+
+* **cli option:** add cli option --cache-clean to clean the build's internal application(s) cache ([96ed51e](https://github.com/jyounce/rapid-build/commit/96ed51e))
+
+
+
 # [0.65.0](https://github.com/jyounce/rapid-build/compare/v0.64.0...v0.65.0) (2016-07-19)
 
 
