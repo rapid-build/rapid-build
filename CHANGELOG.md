@@ -1,3 +1,12 @@
+# [0.67.0](https://github.com/jyounce/rapid-build/compare/v0.66.0...v0.67.0) (2016-08-08)
+
+
+### Features
+
+* **typescript:** add typescript support, must be enabled via build option compile.typescript\[client|server\].enable ([1a94a60](https://github.com/jyounce/rapid-build/commit/1a94a60))
+
+
+
 # [0.66.0](https://github.com/jyounce/rapid-build/compare/v0.65.0...v0.66.0) (2016-08-02)
 
 
