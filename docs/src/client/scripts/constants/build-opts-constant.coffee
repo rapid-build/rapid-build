@@ -192,6 +192,62 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 			}
 		"""
 , # =================================================================
+	label: 'compile'
+	icon:  'fa-cog'
+	html:
+		class: items2: list: 'small'
+	items: [
+		label: 'typescript[client|server].enable'
+		info:  '@type boolean, @default false'
+		items: [
+			label: 'Set to true to enable client and or server typescript compiler.'
+		,
+			label: 'Place client typescript files in src/client/scripts/ directory.'
+			icon:  'fa-exclamation-circle'
+		,
+			label: 'Place server typescript files in src/server/ directory.'
+			icon:  'fa-exclamation-circle'
+		]
+	,
+		label: 'typescript.client.entries'
+		info:  '@type array of strings, @default [\'main.ts\']'
+		items: [
+			label: 'Entry point(s) of your app.'
+			icon:  'fa-exclamation-circle'
+			items: [
+				label: 'This file(s) is required.'
+			,
+				label: 'File path(s) must be relative to scripts directory.'
+			]
+		,
+			label: '<a target="_blank" href="http://browserify.org/">Browserify</a>
+					is used for module loading.'
+		,
+			label: 'Must use commonjs for typescript\'s
+					<a target="_blank" href="https://www.typescriptlang.org/docs/handbook/compiler-options.html">module code generation</a>.'
+		]
+	]
+	example:
+		label: 'Example'
+		info:  '<a href="/getting-started#rapid-build.json">for rapid-build.json</a>'
+		lang:  'js'
+		size:  'small'
+		code:  """
+			{
+				compile: {
+					typescript: {
+						client: {
+							enable: true,
+							entries: ['init.ts']
+						},
+						server: {
+							enable: true
+						}
+					}
+				}
+			}
+		"""
+, # =================================================================
 	label: 'dist'
 	icon:  'fa-cog'
 	html:

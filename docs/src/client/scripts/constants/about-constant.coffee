@@ -18,8 +18,9 @@ angular.module('rapid-build').constant 'ABOUT', [
 			label: 'css, less and sass'
 			info:  'client'
 		,
-			label: 'js, <a target="_blank" href="http://babeljs.io/">es6</a>
-					and coffeescript'
+			label: 'js, <a target="_blank" href="http://babeljs.io/">es6</a>,
+					coffeescript and
+					<a href="/build-options#compile.typescript[client|server].enable">typescript</a>'
 			info:  'client and server'
 		]
 	,

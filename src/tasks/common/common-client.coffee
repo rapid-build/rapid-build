@@ -22,6 +22,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}copy-views"
 					"#{config.rb.prefix.task}coffee:client"
 					"#{config.rb.prefix.task}es6:client"
+					"#{config.rb.prefix.task}typescript:client"
 					"#{config.rb.prefix.task}less"
 					"#{config.rb.prefix.task}sass"
 					"#{config.rb.prefix.task}compile-extra-coffee:client"

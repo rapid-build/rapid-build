@@ -180,6 +180,8 @@ rapid-build.json (build options - can be cson, json or js file)
 # extra.compile.server[less|sass]                   = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
 # extra.minify.client[css|js]                       = (array of strings) = file paths: additional files to minify in dist/client that the build didn't minify (by default, the build does not minify files in libs or bower_components)
 # security.client.clickjacking                      = (boolean) defaults to true = includes a clickjacking defense script in the default spa.html (set to false to disable)
+# compile.typescript[client|server].enable          = (boolean) defaults to false = Set to true to enable client and or server typescript compiler.
+# compile.typescript.client.entries                 = (array of strings) defaults to ['main.ts'] = Entry point(s) of your app. This file(s) is required. Browserify is used for module loading. Must use commonjs for typescript's module code generation.
 # ======================================================================================================================================================================================================================================================================================================
 ```
 

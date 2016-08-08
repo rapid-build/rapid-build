@@ -12,3 +12,6 @@ module.exports =
 	watch: (taskName, file, opts={}) ->
 		taskName = opts.logTaskName or taskName
 		@task "#{taskName} #{file.event}: #{file.path}", 'minor'
+
+	watchTS: (paths) ->
+		@task "typescript changed: #{_path}", 'minor' for _path in paths

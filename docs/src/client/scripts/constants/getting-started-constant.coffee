@@ -61,7 +61,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED', [
 			│   ├── libs/
 			│   │   └── # (3rd party libraries that aren't bower components)
 			│   ├── scripts/
-			│   │   └── coffee, es6 or js
+			│   │   └── coffee, es6, js or typescript
 			│   ├── styles/
 			│   │   └── css, less, sass or scss
 			│   ├── test/
@@ -72,7 +72,7 @@ angular.module('rapid-build').constant 'GETTING_STARTED', [
 			└── server/
 			    ├── test/
 			    │   └── coffee, es6 or js
-			    └── routes.{coffee,es6,js} # (optional, see build options dist.server.fileName)
+			    └── routes.{coffee,es6,js,ts} # (optional, see build options dist.server.fileName)
 			nodes_modules/ # (generated folder via package.json)
 			bower.json
 			package.json # (required)

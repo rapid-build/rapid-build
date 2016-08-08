@@ -6,6 +6,7 @@ module.exports = (config, options) ->
 	# format options
 	# ==============
 	options = require("#{config.req.config.options}/option-build")        config, options
+	options = require("#{config.req.config.options}/option-compile")      config, options
 	options = require("#{config.req.config.options}/option-dist-and-src") config, options
 	options = require("#{config.req.config.options}/option-ports")        config, options
 	options = require("#{config.req.config.options}/option-order")        config, options

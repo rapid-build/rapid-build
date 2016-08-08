@@ -13,6 +13,7 @@ module.exports = (config, gulp) ->
 		coffee:     require "#{config.req.tasks}/compile/coffee"
 		css:        require "#{config.req.tasks}/copy/copy-css"
 		es6:        require "#{config.req.tasks}/compile/es6"
+		ts:         require "#{config.req.tasks}/compile/typescript-server"
 		html:       require "#{config.req.tasks}/copy/copy-html"
 		image:      require "#{config.req.tasks}/copy/copy-images"
 		js:         require "#{config.req.tasks}/copy/copy-js"
@@ -159,9 +160,12 @@ module.exports = (config, gulp) ->
 				-> spaWatch config.spa.src.path
 			]
 			serverWatches = [ # server watch: scripts
-				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server', bsReload:true
-				-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js', loc:'server', bsReload:true
-				-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js', loc:'server', bsReload:true
+				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',         srcType:'scripts', loc:'server', bsReload:true
+				-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',        srcType:'scripts', extDist:'js', loc:'server', bsReload:true
+				-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee',     srcType:'scripts', extDist:'js', loc:'server', bsReload:true
+				->
+					return promiseHelp.get() unless config.compile.typescript.server.enable
+					createWatch config.glob.src.app.server.scripts.ts,     'ts',     lang:'typescript', srcType:'scripts', extDist:'js', loc:'server', bsReload:true, logTaskName:'typescript'
 			]
 			clientTestWatches = [
 				-> createWatch config.glob.src.app.client.test.js,     'clientTest', lang:'js',     srcType:'test', isTest:true, logTaskName:'client test'

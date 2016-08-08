@@ -42,12 +42,14 @@ module.exports = (gulp, config) ->
 
 	# compile
 	# =======
-	taskHelp.addTask 'coffee:client', '/compile/coffee', loc: 'client'
-	taskHelp.addTask 'coffee:server', '/compile/coffee', loc: 'server'
-	taskHelp.addTask 'es6:client',    '/compile/es6',    loc: 'client'
-	taskHelp.addTask 'es6:server',    '/compile/es6',    loc: 'server'
-	taskHelp.addTask 'less',          '/compile/less'
-	taskHelp.addTask 'sass',          '/compile/sass'
+	taskHelp.addTask 'coffee:client',     '/compile/coffee',     loc: 'client'
+	taskHelp.addTask 'coffee:server',     '/compile/coffee',     loc: 'server'
+	taskHelp.addTask 'es6:client',        '/compile/es6',        loc: 'client'
+	taskHelp.addTask 'es6:server',        '/compile/es6',        loc: 'server'
+	taskHelp.addTask 'typescript:client', '/compile/typescript-client'
+	taskHelp.addTask 'typescript:server', '/compile/typescript-server'
+	taskHelp.addTask 'less',              '/compile/less'
+	taskHelp.addTask 'sass',              '/compile/sass'
 
 	# config
 	# ======

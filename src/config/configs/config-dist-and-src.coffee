@@ -15,6 +15,7 @@ module.exports = (config, options) ->
 		scripts: 'scripts'
 		styles:  'styles'
 		test:    'test'
+		typings: 'typings'
 		views:   'views'
 
 	file =
@@ -67,6 +68,8 @@ module.exports = (config, options) ->
 					dir: o.clientStyles or dir.styles
 				test:
 					dir: o.clientTest or dir.test
+				typings:
+					dir: dir.typings
 				views:
 					dir: o.clientViews or dir.views
 			server:
@@ -76,7 +79,11 @@ module.exports = (config, options) ->
 					dir: o.serverDir or dir.scripts
 				test:
 					dir: o.serverTest or dir.test
+				typings:
+					dir: dir.typings
 		if loc is 'dist'
+			delete info.client.typings
+			delete info.server.typings
 			unless isApp
 				info.client.dirName = config.rb.prefix.distDir
 				info.server.dirName = config.rb.prefix.distDir

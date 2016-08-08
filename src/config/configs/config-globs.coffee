@@ -17,6 +17,8 @@ module.exports = (config) ->
 		js:     'js'
 		less:   'less'
 		sass:   'sass,scss'
+		ts:     'ts'   # typescript src files
+		defs:   'd.ts' # typescript definition files
 
 	getExts = (_exts) -> # _exts = string array
 		_exts = _exts.split ','
@@ -40,6 +42,8 @@ module.exports = (config) ->
 		js:        "/**/*.#{exts.js}"
 		less:      "/**/*.#{exts.less}"
 		sass:      "/**/*.{#{exts.sass}}"
+		ts:        "/**/*.#{exts.ts}"
+		defs:      "/**/*.#{exts.defs}"
 		bustFiles: "/**/*.{#{getExts 'css,js,images'}}"
 		bustRefs:  "/**/*.{#{getExts 'html,css,js'}}"
 
@@ -60,7 +64,7 @@ module.exports = (config) ->
 	addGlob = (loc, type, langs, includeBower, includeLibs) ->
 		for own k1, v1 of glob[loc]
 			for own k2, v2 of v1
-				continue if k2 is 'server' and ['scripts','test'].indexOf(type) is -1
+				continue if k2 is 'server' and ['scripts','test','typings'].indexOf(type) is -1
 				continue if k2 is 'server' and (includeBower or includeLibs)
 				v2[type] = {} unless isType.object v2[type]
 				for v3 in langs
@@ -88,11 +92,14 @@ module.exports = (config) ->
 	addGlob 'src', 'scripts', ['js']
 	addGlob 'src', 'scripts', ['coffee']
 	addGlob 'src', 'scripts', ['es6']
+	addGlob 'src', 'scripts', ['ts']
+	addGlob 'src', 'typings', ['defs']
 	addGlob 'src', 'styles',  ['css']
 	addGlob 'src', 'styles',  ['less']
 	addGlob 'src', 'styles',  ['sass']
 	addGlob 'src', 'test',    ['css', 'js']
 	addGlob 'src', 'test',    ['coffee']
+	addGlob 'src', 'test',    ['ts']
 	addGlob 'src', 'test',    ['es6']
 	addGlob 'src', 'views',   ['html']
 

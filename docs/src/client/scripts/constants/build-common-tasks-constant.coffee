@@ -45,6 +45,9 @@ angular.module('rapid-build').constant 'BUILD_COMMON_TASKS', [
 			label: '<a target="_blank" href="http://babeljs.io/">es6</a> &#8594; js'
 			info:  '@dir client and server'
 		,
+			label: '<a href="/build-options#compile.typescript[client|server].enable">typescript</a> &#8594; js'
+			info:  '@dir client and server'
+		,
 			label: 'less &#8594; css'
 			info:  '@dir client'
 		,
