@@ -116,7 +116,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 				angular: {
 					version: '1.5.x',
 					modulelabel: 'rapid-build',
-					module s: ['ngAnimate'],
+					modules: ['ngAnimate'],
 					bootstrap: true,
 					ngFormify: true,
 					httpBackend: {
@@ -348,7 +348,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 					server: {
 						dir: 'backend',
 						test: { dir: 'tests' },
-						filelabel: 'app.js'
+						fileName: 'app.js'
 					}
 				}
 			}
@@ -730,7 +730,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 				minify: {
 					cacheBust: false,
 					css: {
-						filelabel: 'rapid-build.min.css',
+						fileName: 'rapid-build.min.css',
 						splitM inFile: false,
 						styles: false
 					},
@@ -742,7 +742,7 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 						}
 					},
 					js: {
-						filelabel: 'rapid-build.min.js',
+						fileName: 'rapid-build.min.js',
 						mangle : false,
 						scripts: false
 					},
@@ -979,9 +979,9 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 					placeholders: ['all'],
 					title: 'Rapid Build',
 					dist: {
-						filelabel: 'index.html'
+						fileName: 'index.html'
 					},
-							src: {
+					src: {
 						filePath: 'spa.html'
 					}
 				}

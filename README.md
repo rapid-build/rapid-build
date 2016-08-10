@@ -14,7 +14,10 @@ rapid-build currently supports the following technologies:
 * languages
 	* [css](https://developer.mozilla.org/en-US/docs/Web/CSS), [less](http://lesscss.org/) and [sass](http://sass-lang.com/) (client)
 	* [html](https://developer.mozilla.org/en-US/docs/Web/HTML) (client)
-	* [js](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [es6](https://babeljs.io/) and [coffeescript](http://coffeescript.org/) (client and server)
+	* [js](https://developer.mozilla.org/en-US/docs/Web/JavaScript),
+	  [es6](https://babeljs.io/),
+	  [coffeescript](http://coffeescript.org/) and
+	  [typescript](https://www.typescriptlang.org/) (client and server)
 * frameworks
 	* [angular](https://angularjs.org/) (client)
 	* [karma](http://karma-runner.github.io/) (client testing)
@@ -87,7 +90,7 @@ src/
 │   ├── libs/
 │   │   └── **/*.*
 │   ├── scripts/
-│   │   └── **/*.{coffee,es6,js}
+│   │   └── **/*.{coffee,es6,js,ts}
 │   ├── styles/
 │   │   └── **/*.{css,less,sass,scss}
 │   ├── test/
@@ -98,7 +101,7 @@ src/
 └── server/
     ├── test/
     │   └── **/*.{coffee,es6,js}
-    └── routes.{coffee,es6,js} (see options.dist.server.fileName)
+    └── routes.{coffee,es6,js,ts} (see options.dist.server.fileName)
 nodes_modules/ (generated folder via package.json)
 bower.json
 package.json (required)
@@ -198,6 +201,7 @@ rapid-build.json (build options - can be cson, json or js file)
 	* compile then copy to dist
 		* coffee -> js - (client and server)
 		* es6 -> js - (client and server)
+		* typescript -> js - (client and server)
 		* less -> css - (client)
 		* sass -> css - (client)
 
