@@ -1,3 +1,12 @@
+## [0.67.1](https://github.com/jyounce/rapid-build/compare/v0.67.0...v0.67.1) (2016-08-10)
+
+
+### Minor Features
+
+* **bump deps:** babel-preset-es2015, browser-sync, event-stream, gulp-watch, karma, phantomjs-prebuilt and postcss ([8e551c6](https://github.com/jyounce/rapid-build/commit/8e551c6))
+
+
+
 # [0.67.0](https://github.com/jyounce/rapid-build/compare/v0.66.0...v0.67.0) (2016-08-08)
 
 
