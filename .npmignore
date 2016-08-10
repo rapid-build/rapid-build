@@ -35,13 +35,7 @@ dist/
 # files
 # =====
 generated/**/*
-lib/src/client/**/*.*
 
 # retain empty folder via .gitkeep
 # ================================
 !generated/.gitkeep
-!lib/src/client/**/.gitkeep
-
-# file negation
-# =============
-!lib/src/client/spa.html
