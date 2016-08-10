@@ -2,9 +2,9 @@ module.exports = (config, gulp) ->
 	q           = require 'q'
 	del         = require 'del'
 	path        = require 'path'
+	deleteEmpty = require 'delete-empty'
 	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
-	dirHelper   = require("#{config.req.helpers}/dir") config, gulp
 
 	# Global Objects
 	# ==============
@@ -69,12 +69,11 @@ module.exports = (config, gulp) ->
 		defer.promise
 
 	delEmptyDirsTask = (msg) ->
-		emptyDirs = dirHelper.get.emptyDirs(
-						config.dist.app.client.dir
-						[], 'reverse'
-					)
-		return promiseHelp.get() unless emptyDirs.length
-		delTask emptyDirs, msg
+		defer = q.defer()
+		deleteEmpty config.dist.app.client.dir, (err, deleted) ->
+			# log.task msg, 'minor' if msg
+			defer.resolve()
+		defer.promise
 
 	# API
 	# ===
