@@ -249,9 +249,18 @@ module.exports = (config) ->
 	addNodeModulesDistAndSrc()
 	addNodeModules 'src'
 
-	# browser sync
-	# ============
-	glob.browserSync = pathHelp.format path.join pathHelp.format(config.dist.app.client.dir), lang.all
+	# browsersync
+	# ===========
+	addBrowserSync = -> # relative app dist client paths
+		distGlob     = glob.dist.app.client.all
+		buildGlob    = glob.dist.rb.client.all
+		bowerGlob    = pathHelp.format path.join config.dist.app.client.bower.dir, '**'
+		nodeModsGlob = pathHelp.format path.join config.dist.app.client.dir, 'node_modules', '**'
+		glob.browserSync =
+			files:  [distGlob]
+			ignore: [buildGlob, bowerGlob, nodeModsGlob]
+
+	addBrowserSync()
 
 	# exclude rb server files
 	# =======================

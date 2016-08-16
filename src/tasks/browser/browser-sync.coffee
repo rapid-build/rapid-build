@@ -49,12 +49,15 @@ module.exports =
 
 	setBsConfig: (config) ->
 		@bsConfig =
-			files:   config.glob.browserSync
-			proxy:   "http://localhost:#{config.ports.server}/"
-			port:    config.ports.reload
 			ui:      port: config.ports.reloadUI
-			browser: 'google chrome'
+			port:    config.ports.reload
 			open:    config.browser.open
+			files:   config.glob.browserSync.files
+			proxy:   "http://localhost:#{config.ports.server}/"
+			browser: 'google chrome'
+			reloadDebounce: 150 # windows fix for bundle reload
+			watchOptions:
+				ignored: config.glob.browserSync.ignore
 		@
 
 	# getters
