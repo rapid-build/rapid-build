@@ -482,12 +482,12 @@ angular.module('rapid-build').constant 'BUILD_OPTS', [
 							server: ['data/superheroes.json']
 						},
 						minFile: {
-							scripts: ['ie/ie10.js'],
-							styles: ['ie/ie10.css']
+							scripts: ['scripts/ie/ie10.js'],
+							styles: ['styles/ie/ie10.css']
 						}
 						spaFile: {
-							scripts: ['ie/ie10.js'],
-							styles: ['ie/ie10.css'],
+							scripts: ['scripts/ie/ie10.js'],
+							styles: ['styles/ie/ie10.css'],
 							angular: {
 								files: true
 							}
