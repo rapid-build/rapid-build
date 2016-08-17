@@ -108,6 +108,7 @@
 		"sha1": "1.1.1",
 		"through2": "2.0.1",
 		"tsify": "1.0.3",
+		"typescript": "1.8.10",
 		"vinyl-source-stream": "1.1.0",
 		"watchify": "3.7.0"
 	},
