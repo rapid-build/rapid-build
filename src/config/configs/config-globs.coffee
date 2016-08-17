@@ -252,13 +252,17 @@ module.exports = (config) ->
 	# browsersync
 	# ===========
 	addBrowserSync = -> # relative app dist client paths
-		distGlob     = glob.dist.app.client.all
-		buildGlob    = glob.dist.rb.client.all
-		bowerGlob    = pathHelp.format path.join config.dist.app.client.bower.dir, '**'
-		nodeModsGlob = pathHelp.format path.join config.dist.app.client.dir, 'node_modules', '**'
+		distGlob        = glob.dist.app.client.all
+		rbBowerDirName  = config.dist.rb.client.bower.dirName
+		appBowerDirName = config.dist.app.client.bower.dirName
+		nodeModsGlob    = '**/node_modules/**'
+		rbBowerGlob     = "**/#{rbBowerDirName}/**"
+		appBowerGlob    = "**/#{appBowerDirName}/**"
+		ignoreGlobs     = [nodeModsGlob, rbBowerGlob]
+		ignoreGlobs.push appBowerGlob if appBowerDirName isnt rbBowerDirName
 		glob.browserSync =
 			files:  [distGlob]
-			ignore: [buildGlob, bowerGlob, nodeModsGlob]
+			ignore: ignoreGlobs
 
 	addBrowserSync()
 
