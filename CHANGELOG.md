@@ -1,3 +1,12 @@
+## [0.67.3](https://github.com/jyounce/rapid-build/compare/v0.67.2...v0.67.3) (2016-08-17)
+
+
+### Bug Fixes
+
+* **templateCache watch:** fix dev build template cache watch ([c30e38f](https://github.com/jyounce/rapid-build/commit/c30e38f))
+
+
+
 ## [0.67.2](https://github.com/jyounce/rapid-build/compare/v0.67.1...v0.67.2) (2016-08-17)
 
 
