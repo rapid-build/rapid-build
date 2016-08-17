@@ -1,3 +1,13 @@
+## [0.67.2](https://github.com/jyounce/rapid-build/compare/v0.67.1...v0.67.2) (2016-08-17)
+
+
+### Bug Fixes
+
+* **reload:** windows fix for browser reload when creating a typescript bundle ([563a32b](https://github.com/jyounce/rapid-build/commit/563a32b))
+* **typescript prod build:** windows fix for client typescript prod build ([e7536a4](https://github.com/jyounce/rapid-build/commit/e7536a4))
+
+
+
 ## [0.67.1](https://github.com/jyounce/rapid-build/compare/v0.67.0...v0.67.1) (2016-08-10)
 
 
