@@ -1,3 +1,16 @@
+# [0.68.0](https://github.com/jyounce/rapid-build/compare/v0.67.3...v0.68.0) (2016-08-30)
+
+
+### Bug Fixes
+
+* **css watch:** fix watch for lazy loaded css files, don't try to inject css changes, just do a page refresh ([f5f20f0](https://github.com/jyounce/rapid-build/commit/f5f20f0))
+
+### Features
+
+* **cli option:** add cli option --cache-list to display the build's internal cache ([164ddc4](https://github.com/jyounce/rapid-build/commit/164ddc4))
+
+
+
 ## [0.67.3](https://github.com/jyounce/rapid-build/compare/v0.67.2...v0.67.3) (2016-08-17)
 
 
