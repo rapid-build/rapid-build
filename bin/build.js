@@ -40,9 +40,10 @@ config.build.generated.path = path.join(BUILD_PATH, 'generated');
  ************/
 require(path.join(config.build.cli.path, 'add-colors'))();
 if (config.build.cli.opts.quickStart.length) return require(path.join(config.build.cli.path, 'quick-start'))(config);
-if (!!config.build.cli.opts.cacheClean) return require(path.join(config.build.cli.path, 'cache-clean'))(config);
-var build = require(path.join(config.build.cli.path, 'get-build'))(config);
+if (!!config.build.cli.opts.cacheClean)      return require(path.join(config.build.cli.path, 'cache-clean'))(config);
+if (!!config.build.cli.opts.cacheList)       return require(path.join(config.build.cli.path, 'cache-list'))(config);
 
+var build = require(path.join(config.build.cli.path, 'get-build'))(config);
 /**
  * Run Build - in the console type one of the following:
  * build
