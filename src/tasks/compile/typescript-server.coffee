@@ -31,7 +31,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		fileBase  = paths.src
 		tsProject = TsProject.get 'server', ts, paths.tsconfig
 		gulp.src src
-			.pipe(ts tsProject.project).js
+			.pipe(ts tsProject).js
 			.pipe updateFileBase fileBase
 			.pipe gulp.dest paths.dest
 			.on 'end', -> defer.resolve()

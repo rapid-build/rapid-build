@@ -27,7 +27,7 @@ class TsProject
 	# ===========================================
 	class Typescript
 		constructor: (@id, @ts, @tsconfig, @opts={}) ->
-			@setProject()
+			return @setProject().getProject()
 
 		setProject: ->
 			if help.hasTsConfig @tsconfig
@@ -36,6 +36,9 @@ class TsProject
 				@project = @ts.createProject @opts
 			@
 
+		getProject: ->
+			@project
+
 	# static method to retrieve an
 	# instance or create a new one
 	# ============================
@@ -43,8 +46,10 @@ class TsProject
 		if not instances[id] # create new instance
 			# console.log "TS INSTANCE ID: #{id}".alert
 			instances[id] = new Typescript id, ts, tsconfig, opts
-		instances[id]
+		instances[id].project
 
 # Export Class!
 # =============
 module.exports = TsProject
+
+
