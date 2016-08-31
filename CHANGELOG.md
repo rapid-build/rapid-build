@@ -1,3 +1,12 @@
+## [0.68.1](https://github.com/jyounce/rapid-build/compare/v0.68.0...v0.68.1) (2016-08-31)
+
+
+### Bug Fixes
+
+* **server:** typescript watch ([3a6791d](https://github.com/jyounce/rapid-build/commit/3a6791d))
+
+
+
 # [0.68.0](https://github.com/jyounce/rapid-build/compare/v0.67.3...v0.68.0) (2016-08-30)
 
 
