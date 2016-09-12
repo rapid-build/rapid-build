@@ -1,7 +1,8 @@
 # TYPESCRIPT PROJECT FACTORY
 # needed for watch to use same ts project
 # =======================================
-fs = require 'fs'
+fs         = require 'fs'
+typescript = require 'typescript' # use build's ts version
 
 class TsProject
 	# typescript instance locations
@@ -27,6 +28,7 @@ class TsProject
 	# ===========================================
 	class Typescript
 		constructor: (@id, @ts, @tsconfig, @opts={}) ->
+			@opts.typescript = typescript
 			return @setProject().getProject()
 
 		setProject: ->
@@ -46,7 +48,7 @@ class TsProject
 		if not instances[id] # create new instance
 			# console.log "TS INSTANCE ID: #{id}".alert
 			instances[id] = new Typescript id, ts, tsconfig, opts
-		instances[id].project
+		instances[id]
 
 # Export Class!
 # =============

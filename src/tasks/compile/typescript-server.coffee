@@ -30,9 +30,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 		src       = help.getSrc paths
 		fileBase  = paths.src
 		tsProject = TsProject.get 'server', ts, paths.tsconfig
-		gulp.src src
-			.pipe(ts tsProject).js
-			.pipe updateFileBase fileBase
+		tsResult  = tsProject.src(src).pipe ts tsProject
+		reference = if paths.watchFile then [src[0]] else undefined
+		tsResult.js
+			.pipe ts.filter tsProject, { referencedFrom: reference }
 			.pipe gulp.dest paths.dest
 			.on 'end', -> defer.resolve()
 		defer.promise
