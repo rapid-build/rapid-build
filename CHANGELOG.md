@@ -1,3 +1,16 @@
+# [0.69.0](https://github.com/jyounce/rapid-build/compare/v0.68.1...v0.69.0) (2016-09-12)
+
+
+### Features
+
+* **typescript 2:** use typescript 2.0.2 for the builds ([6fad123](https://github.com/jyounce/rapid-build/commit/6fad123))
+
+### Performance Improvements
+
+* **typescript:** improve watch for typescript server ([7730ad7](https://github.com/jyounce/rapid-build/commit/7730ad7))
+
+
+
 ## [0.68.1](https://github.com/jyounce/rapid-build/compare/v0.68.0...v0.68.1) (2016-08-31)
 
 
