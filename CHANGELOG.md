@@ -1,3 +1,12 @@
+## [0.69.1](https://github.com/jyounce/rapid-build/compare/v0.69.0...v0.69.1) (2016-09-14)
+
+
+### Bug Fixes
+
+* **typescript:** fix the build from breaking when typescript server has no tsconfig.json ([e278de0](https://github.com/jyounce/rapid-build/commit/e278de0))
+
+
+
 # [0.69.0](https://github.com/jyounce/rapid-build/compare/v0.68.1...v0.69.0) (2016-09-12)
 
 
