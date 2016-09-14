@@ -28,14 +28,23 @@ class TsProject
 	# ===========================================
 	class Typescript
 		constructor: (@id, @ts, @tsconfig, @opts={}) ->
+			@hasTsConfig     = help.hasTsConfig @tsconfig
 			@opts.typescript = typescript
-			return @setProject().getProject()
+			return @setProject().setProjectConfig().getProject()
 
 		setProject: ->
-			if help.hasTsConfig @tsconfig
+			if @hasTsConfig
 				@project = @ts.createProject @tsconfig, @opts
 			else
 				@project = @ts.createProject @opts
+			@
+
+		setProjectConfig: ->
+			return @ if @hasTsConfig
+			# gulp-typescript needs these set if no tsconfig.json
+			@project.config = {}
+			@project.configFileName  = @tsconfig
+			@project.options.rootDir = './'
 			@
 
 		getProject: ->

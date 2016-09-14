@@ -1,12 +1,11 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	q              = require 'q'
-	path           = require 'path'
-	ts             = require 'gulp-typescript'
-	log            = require "#{config.req.helpers}/log"
-	promiseHelp    = require "#{config.req.helpers}/promise"
-	TsProject      = require "#{config.req.helpers}/TsProject"
-	updateFileBase = require "#{config.req.plugins}/gulp-update-file-base"
-	forWatchFile   = !!taskOpts.watchFile
+	q            = require 'q'
+	path         = require 'path'
+	ts           = require 'gulp-typescript'
+	log          = require "#{config.req.helpers}/log"
+	promiseHelp  = require "#{config.req.helpers}/promise"
+	TsProject    = require "#{config.req.helpers}/TsProject"
+	forWatchFile = !!taskOpts.watchFile
 
 	# helpers
 	# =======
@@ -28,9 +27,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 	runTask = (paths) ->
 		defer     = q.defer()
 		src       = help.getSrc paths
-		fileBase  = paths.src
 		tsProject = TsProject.get 'server', ts, paths.tsconfig
-		tsResult  = tsProject.src(src).pipe ts tsProject
+		tsResult  = tsProject.src().pipe ts tsProject
 		reference = if paths.watchFile then [src[0]] else undefined
 		tsResult.js
 			.pipe ts.filter tsProject, { referencedFrom: reference }
