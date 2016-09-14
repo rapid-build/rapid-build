@@ -2,6 +2,7 @@
 # =======
 bower_components/
 dist/
+typings/
 
 # dot files
 # =========
@@ -34,6 +35,8 @@ dist/
 
 # files
 # =====
+tsconfig.json
+typings.json
 generated/**/*
 
 # retain empty folder via .gitkeep
