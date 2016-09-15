@@ -1,25 +1,22 @@
-/* BUILDER SINGLETON
- ********************/
+/* Singleton
+ * @class Builder
+ * @static
+ *****************/
 import './bootstrap';
-import buildDev from './builds/build-dev';
+import DevBuild from './builds/DevBuild';
 
 class Builder {
-	private root: string;
 	private static instance: Builder;
 
-	private constructor() {
-		this.root = process.cwd()
-	}
+	private constructor() {}
 
 	static getInstance() {
-		if (!Builder.instance) {
-			Builder.instance = new Builder()
-		}
-		return Builder.instance
+		if (this.instance) return this.instance;
+		return this.instance = new Builder()
 	}
 
-	build() { // returns promise
-		return buildDev(this.root)
+	build() {
+		return DevBuild.run()
 	}
 }
 
