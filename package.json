@@ -31,8 +31,7 @@
 		"test": "./test"
 	},
 	"scripts": {
-		"builder": "node scripts/builder",
-		"builder-dev": "watch 'npm run builder' 'scripts/builder/'",
+		"build": "node scripts/build",
 		"bump": "node scripts/bump",
 		"create-lib": "node scripts/create-lib",
 		"prepublish": "npm run create-lib",

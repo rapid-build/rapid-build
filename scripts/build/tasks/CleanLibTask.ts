@@ -16,7 +16,7 @@ class CleanLibTask extends Task {
 	run() {
 		var promise = this.fse.removeAsync(this.paths.dist);
 		promise.then(() => {
-			console.log('dist cleaned')
+			console.log('dist cleaned'.info)
 		})
 		return promise;
 	}
