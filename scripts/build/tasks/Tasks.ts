@@ -3,10 +3,12 @@
  * @static
  **********************/
 import CleanLibTask from './CleanLibTask';
+import WatchTask    from './WatchTask';
 
 class Tasks {
-	CleanLibTask = CleanLibTask;
 	private static instance: Tasks;
+	CleanLibTask = CleanLibTask;
+	WatchTask    = WatchTask;
 
 	protected constructor() {}
 

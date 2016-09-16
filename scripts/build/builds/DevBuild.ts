@@ -17,6 +17,7 @@ class DevBuild {
 
 	private runTasks = async(() => {
 		await(Tasks.CleanLibTask.run());
+		Tasks.WatchTask.run()
 	})
 
 	run() {

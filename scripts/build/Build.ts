@@ -18,7 +18,7 @@ class Build {
 	 * Only have Dev right now
 	 **************************/
 	run(): Promise<void> {
-		console.log(`Running ${Env.env} Build`.attn);
+		console.log(`Running ${Env.env} Build`.attn)
 		console.log(`---------------------`.attn)
 
 		switch (true) {
