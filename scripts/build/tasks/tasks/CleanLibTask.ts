@@ -2,7 +2,7 @@
  * @class CleanLibTask
  * @static
  **********************/
-import Task from './Task';
+import Task from './../Task';
 
 class CleanLibTask extends Task {
 	private static instance: CleanLibTask;

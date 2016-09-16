@@ -2,8 +2,8 @@
  * @class Tasks
  * @static
  **********************/
-import CleanLibTask from './CleanLibTask';
-import WatchTask    from './WatchTask';
+import CleanLibTask from './tasks/CleanLibTask';
+import WatchTask    from './tasks/WatchTask';
 
 class Tasks {
 	private static instance: Tasks;

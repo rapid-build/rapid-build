@@ -15,13 +15,13 @@ class DevBuild {
 		return this.instance = new DevBuild()
 	}
 
-	private runTasks = async(() => {
+	private runTasks = async((watch) => {
 		await(Tasks.CleanLibTask.run());
-		Tasks.WatchTask.run()
+		if (watch) Tasks.WatchTask.run()
 	})
 
-	run() {
-		return this.runTasks();
+	run(watch?: boolean) {
+		return this.runTasks(watch);
 	}
 
 }

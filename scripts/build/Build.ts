@@ -23,13 +23,13 @@ class Build {
 
 		switch (true) {
 			case Env.isProd():
-				return DevBuild.run()
+				return DevBuild.run(true)
 
 			case Env.isDev():
-				return DevBuild.run()
+				return DevBuild.run(true)
 
 			default:
-				return DevBuild.run()
+				return DevBuild.run(true)
 		}
 	}
 }

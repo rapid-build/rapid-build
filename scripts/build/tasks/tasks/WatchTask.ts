@@ -2,11 +2,14 @@
  * @class WatchTask
  * @static
  *******************/
-import Task       from './Task';
-import * as watch from 'watch';
+import path  = require('path')
+import watch = require('node-watch')
+import Task     from './../Task';
+import DevBuild from './../../builds/DevBuild';
 
 class WatchTask extends Task {
 	private static instance: WatchTask;
+
 	protected constructor() { super() }
 
 	static getInstance() {
@@ -15,11 +18,11 @@ class WatchTask extends Task {
 	}
 
 	run() {
-		watch.createMonitor(this.paths.build, (monitor) => {
-			monitor.on('changed', (f, curr, prev) => {
-				console.log(`changed: ${f}`.minor)
-			})
-		})
+		// watcher.close()
+		var watcher = watch(this.paths.build, file => {
+			// watcher.close()
+			DevBuild.run()
+		});
 
 		console.log('watching build'.info)
 	}
