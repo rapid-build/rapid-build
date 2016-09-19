@@ -10,7 +10,8 @@ class Task {
 	protected paths = {
 		root:  ROOT,
 		build: path.join(ROOT, 'scripts', 'build'),
-		dist:  path.join(ROOT, 'dist')
+		dist:  path.join(ROOT, 'dist'),
+		src:   path.join(ROOT, 'src')
 	}
 	protected constructor() {}
 }

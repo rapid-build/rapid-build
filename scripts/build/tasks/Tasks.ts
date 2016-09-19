@@ -3,11 +3,16 @@
  * @static
  ***************/
 import CleanLibTask from './tasks/CleanLibTask';
+import CoffeeSrc    from './tasks/CoffeeSrc';
+import CopySrc      from './tasks/CopySrc';
+import TsSrc        from './tasks/TsSrc';
 
 class Tasks {
-	private static instance: Tasks;
 	CleanLibTask = CleanLibTask;
-
+	CopySrc      = CopySrc;
+	CoffeeSrc    = CoffeeSrc;
+	TsSrc        = TsSrc;
+	private static instance: Tasks;
 	protected constructor() {}
 
 	static getInstance() {
