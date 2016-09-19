@@ -2,14 +2,14 @@
  * @class WatchTask
  * @static
  *******************/
-import path  = require('path')
-import watch = require('node-watch')
-import Task     from './../Task';
-import DevBuild from './../../builds/DevBuild';
+import path    = require('path')
+import watch   = require('node-watch')
+import Promise = require('bluebird');
+import Task        from './../Task';
+import ModuleCache from './../../helpers/ModuleCache';
 
 class WatchTask extends Task {
 	private static instance: WatchTask;
-
 	protected constructor() { super() }
 
 	static getInstance() {
@@ -18,13 +18,19 @@ class WatchTask extends Task {
 	}
 
 	run() {
-		// watcher.close()
-		var watcher = watch(this.paths.build, file => {
-			// watcher.close()
-			DevBuild.run()
+		var runBuildPath = path.join(this.paths.build, 'runBuild.js')
+		var promise = new Promise((resolve, reject) => {
+			watch(this.paths.build, file => {
+				var cleaned = ModuleCache.delete(runBuildPath)
+				if (!cleaned)
+					return console.log('failed to clean module cache'.error)
+				require(runBuildPath)(true)
+			});
+			resolve()
+		})
+		return promise.then((result) => {
+			return console.log('WATCHING BUILD...'.attn)
 		});
-
-		console.log('watching build'.info)
 	}
 }
 

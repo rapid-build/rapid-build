@@ -6,6 +6,7 @@ import { async, await } from 'asyncawait'
 import Tasks from './../tasks/Tasks';
 
 class DevBuild {
+	readonly watch: boolean = true;
 	private static instance: DevBuild;
 
 	private constructor() {}
@@ -15,13 +16,11 @@ class DevBuild {
 		return this.instance = new DevBuild()
 	}
 
-	private runTasks = async((watch) => {
-		await(Tasks.CleanLibTask.run());
-		if (watch) Tasks.WatchTask.run()
-	})
-
-	run(watch?: boolean) {
-		return this.runTasks(watch);
+	run() {
+		return async(() => {
+			var r1 = await(Tasks.CleanLibTask.run())
+			return r1
+		})();
 	}
 
 }

@@ -1,5 +1,5 @@
-/* BUILD BOOTSTRAP
- ******************/
+/* GLOBALLY ADD COLORS
+ **********************/
 var colors = require('colors');
 colors.setTheme({
 	alert:   'yellow',

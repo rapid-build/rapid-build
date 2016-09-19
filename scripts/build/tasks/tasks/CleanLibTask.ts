@@ -14,11 +14,10 @@ class CleanLibTask extends Task {
 	}
 
 	run() {
-		var promise = this.fse.removeAsync(this.paths.dist);
-		promise.then(() => {
-			console.log('dist cleaned'.info)
+		return this.fse.removeAsync(this.paths.dist)
+		.then(() => {
+			return console.log('dist cleaned'.info)
 		})
-		return promise;
 	}
 
 }
