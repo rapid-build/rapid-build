@@ -10,7 +10,6 @@
 		]
 	},
 	"include": [
-		"typings/**/*.d.ts",
-		"scripts/build/**/*.ts"
+		"**/*.ts"
 	]
 }
