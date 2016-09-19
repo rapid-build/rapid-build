@@ -1,18 +1,12 @@
 /* @class Task
  * @constructor
  ***************/
-import path = require('path')
-import * as fse from 'fs-extra-promise'
-const ROOT: string = process.cwd()
+import Pkgs  from './../helpers/Pkgs';
+import Paths from './../helpers/Paths';
 
 class Task {
-	protected fse = fse;
-	protected paths = {
-		root:  ROOT,
-		build: path.join(ROOT, 'scripts', 'build'),
-		dist:  path.join(ROOT, 'dist'),
-		src:   path.join(ROOT, 'src')
-	}
+	protected pkgs  = Pkgs
+	protected paths = Paths
 	protected constructor() {}
 }
 

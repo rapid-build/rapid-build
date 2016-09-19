@@ -1,25 +1,24 @@
 /* Singleton
- * @class WatchTask
+ * @class Watch
  * @static
- *******************/
-import path    = require('path')
-import watch   = require('node-watch')
-import Promise = require('bluebird');
+ ***************/
+import path  = require('path')
+import watch = require('node-watch')
 import Task        from './../Task';
 import ModuleCache from './../../helpers/ModuleCache';
 
-class WatchTask extends Task {
-	private static instance: WatchTask;
+class Watch extends Task {
+	private static instance: Watch;
 	protected constructor() { super() }
 
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new WatchTask()
+		return this.instance = new Watch()
 	}
 
 	run() {
 		var runBuildPath = path.join(this.paths.build, 'runBuild.js')
-		var promise = new Promise((resolve, reject) => {
+		var promise = new this.pkgs.Promise((resolve, reject) => {
 			watch(this.paths.build, file => {
 				var cleaned = ModuleCache.delete(runBuildPath)
 				if (!cleaned)
@@ -34,4 +33,4 @@ class WatchTask extends Task {
 	}
 }
 
-export default WatchTask.getInstance()
+export default Watch.getInstance()

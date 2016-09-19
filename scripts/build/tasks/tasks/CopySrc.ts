@@ -3,8 +3,6 @@
  * @static
  *******************/
 import Task from './../Task';
-import gulp    = require('gulp');
-import Promise = require('bluebird');
 
 class CopySrc extends Task {
 	private static instance: CopySrc;
@@ -19,9 +17,9 @@ class CopySrc extends Task {
 		`${this.paths.src}/**/*.*`,
 		`!${this.paths.src}/**/*.{coffee,ts}`
 	]) {
-		return new Promise((resolve, reject) => {
-			gulp.src(src)
-				.pipe(gulp.dest(this.paths.dist))
+		return new this.pkgs.Promise((resolve, reject) => {
+			this.pkgs.gulp.src(src)
+				.pipe(this.pkgs.gulp.dest(this.paths.dist))
 				.on('end', () => resolve())
 		})
 		.then(() => {

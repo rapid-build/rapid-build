@@ -4,9 +4,9 @@
  ***************/
 require('./bootstrap/add-colors')
 import { async, await } from 'asyncawait'
-import Env       from './helpers/Env';
-import DevBuild  from './builds/DevBuild';
-import WatchTask from './tasks/tasks/WatchTask';
+import DevBuild from './builds/DevBuild';
+import Env      from './helpers/Env';
+import Watch    from './tasks/tasks/Watch';
 
 class Build {
 	private static instance: Build;
@@ -17,10 +17,13 @@ class Build {
 		return this.instance = new Build()
 	}
 
-	private logBuildMsg() {
-		console.log(`---------------------`.attn)
-		console.log(`Running ${Env.env} Build`.attn)
-		console.log(`---------------------`.attn)
+	private logBuildMsg(fromWatch) {
+		if (fromWatch) console.log('')
+		var msg = fromWatch ? 'Rerunning' : 'Running'
+			msg += ' '
+			msg += `Build: ${Env.env}`
+		var div = Array(msg.length+1).join('-')
+		console.log(`${div.attn}\n${msg.attn}\n${div.attn}`)
 	}
 
 	private getBuild() {
@@ -50,8 +53,8 @@ class Build {
 	private runWatch = async((fromWatch) => {
 		if (!this.getBuild().watch) return
 		if (fromWatch) return
-		var r2 = await(WatchTask.run())
-		return r2
+		var r1 = await(Watch.run())
+		return r1
 	})
 
 	/* TODO - Add Build Types
@@ -59,7 +62,7 @@ class Build {
 	 * @return promise
 	 **************************/
 	run(fromWatch?: boolean) {
-		this.logBuildMsg();
+		this.logBuildMsg(fromWatch);
 		return async(() => {
 			var r1 = await(this.runBuild())
 			var r2 = await(this.runWatch(fromWatch))

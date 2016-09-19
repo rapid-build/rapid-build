@@ -2,10 +2,8 @@
  * @class TsSrc
  * @static
  *******************/
+import ts = require('gulp-typescript')
 import Task from './../Task';
-import gulp    = require('gulp');
-import ts      = require('gulp-typescript')
-import Promise = require('bluebird');
 
 class TsSrc extends Task {
 	private static instance: TsSrc;
@@ -21,10 +19,10 @@ class TsSrc extends Task {
 	}
 
 	run(src: string[] | string = [`${this.paths.src}/**/*.ts`]) {
-		return new Promise((resolve, reject) => {
-			gulp.src(src)
+		return new this.pkgs.Promise((resolve, reject) => {
+			this.pkgs.gulp.src(src)
 				.pipe(ts(this.opts))
-				.pipe(gulp.dest(this.paths.dist))
+				.pipe(this.pkgs.gulp.dest(this.paths.dist))
 				.on('end', () => resolve())
 		})
 		.then(() => {

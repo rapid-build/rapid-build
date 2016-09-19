@@ -3,10 +3,8 @@
  * @static
  *******************/
 import Task from './../Task';
-import gulp    = require('gulp');
 import coffee  = require('gulp-coffee')
 import plumber = require('gulp-plumber')
-import Promise = require('bluebird');
 
 class CoffeeSrc extends Task {
 	private static instance: CoffeeSrc;
@@ -22,11 +20,11 @@ class CoffeeSrc extends Task {
 	}
 
 	run(src: string[] | string = [`${this.paths.src}/**/*.coffee`]) {
-		return new Promise((resolve, reject) => {
-			gulp.src(src)
+		return new this.pkgs.Promise((resolve, reject) => {
+			this.pkgs.gulp.src(src)
 				.pipe(plumber())
 				.pipe(coffee(this.opts))
-				.pipe(gulp.dest(this.paths.dist))
+				.pipe(this.pkgs.gulp.dest(this.paths.dist))
 				.on('end', () => resolve())
 		})
 		.then(() => {

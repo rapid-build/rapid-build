@@ -2,16 +2,16 @@
  * @class Tasks
  * @static
  ***************/
-import CleanLibTask from './tasks/CleanLibTask';
-import CoffeeSrc    from './tasks/CoffeeSrc';
-import CopySrc      from './tasks/CopySrc';
-import TsSrc        from './tasks/TsSrc';
+import CleanLib  from './tasks/CleanLib';
+import CoffeeSrc from './tasks/CoffeeSrc';
+import CopySrc   from './tasks/CopySrc';
+import TsSrc     from './tasks/TsSrc';
 
 class Tasks {
-	CleanLibTask = CleanLibTask;
-	CopySrc      = CopySrc;
-	CoffeeSrc    = CoffeeSrc;
-	TsSrc        = TsSrc;
+	CleanLib  = CleanLib;
+	CoffeeSrc = CoffeeSrc;
+	CopySrc   = CopySrc;
+	TsSrc     = TsSrc;
 	private static instance: Tasks;
 	protected constructor() {}
 

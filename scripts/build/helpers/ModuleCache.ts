@@ -2,8 +2,6 @@
  * @class ModuleCache
  * @static
  *********************/
-import path = require('path')
-
 class ModuleCache {
 	private static instance: ModuleCache;
 

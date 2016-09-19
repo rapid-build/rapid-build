@@ -19,7 +19,7 @@ class DevBuild {
 	run() {
 		return async(() => {
 			var results = {
-				clean: await(Tasks.CleanLibTask.run()),
+				clean: await(Tasks.CleanLib.run()),
 				copy: await({
 					src: Tasks.CopySrc.run(),
 					coffee: Tasks.CoffeeSrc.run(),
