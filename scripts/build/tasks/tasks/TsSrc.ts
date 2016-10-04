@@ -14,7 +14,7 @@ class TsSrc extends Task {
 		return this.instance = new TsSrc()
 	}
 
-	get opts() {
+	private get opts() {
 		return {}
 	}
 

@@ -5,7 +5,11 @@
     "gulp": "registry:dt/gulp#3.8.0+20160907112908",
     "gulp-plumber": "registry:dt/gulp-plumber#0.0.0+20160316155526",
     "gulp-typescript": "registry:dt/gulp-typescript#0.0.0+20160317120654",
+    "gulp-watch": "registry:dt/gulp-watch#4.1.1+20160316155526",
     "node": "registry:env/node#6.0.0+20160902022231"
   },
-  "dependencies": {}
+  "dependencies": {
+    "orchestrator": "registry:npm/orchestrator#0.3.7+20160723033700",
+    "vinyl": "registry:npm/vinyl#1.2.0+20160817093728"
+  }
 }

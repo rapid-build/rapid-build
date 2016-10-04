@@ -4,9 +4,9 @@
  ***************/
 require('./bootstrap/add-colors')
 import { async, await } from 'asyncawait'
-import DevBuild from './builds/DevBuild';
-import Env      from './helpers/Env';
-import Watch    from './tasks/tasks/Watch';
+import DevBuild         from './builds/DevBuild';
+import Env              from './helpers/Env';
+import WatchBuild       from './tasks/tasks/WatchBuild';
 
 class Build {
 	private static instance: Build;
@@ -50,10 +50,10 @@ class Build {
 		return r1
 	});
 
-	private runWatch = async((fromWatch) => {
+	private runBuildWatch = async((fromWatch) => {
 		if (!this.getBuild().watch) return
 		if (fromWatch) return
-		var r1 = await(Watch.run())
+		var r1 = await(WatchBuild.run())
 		return r1
 	})
 
@@ -65,7 +65,7 @@ class Build {
 		this.logBuildMsg(fromWatch);
 		return async(() => {
 			var r1 = await(this.runBuild())
-			var r2 = await(this.runWatch(fromWatch))
+			var r2 = await(this.runBuildWatch(fromWatch))
 			return r1
 		})();
 	}

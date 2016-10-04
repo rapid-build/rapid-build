@@ -24,7 +24,8 @@ class DevBuild {
 					src: Tasks.CopySrc.run(),
 					coffee: Tasks.CoffeeSrc.run(),
 					ts: Tasks.TsSrc.run()
-				})
+				}),
+				watch: await(Tasks.WatchSrc.run())
 			}
 			return results
 		})();
