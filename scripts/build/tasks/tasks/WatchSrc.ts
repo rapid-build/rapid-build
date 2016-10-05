@@ -6,9 +6,11 @@ import path  = require('path')
 import watch = require('gulp-watch')
 import Task         from './../Task';
 import BuildEmitter from './../../events/BuildEmitter';
+import SrcEmitter   from './../../events/SrcEmitter';
+import IWatchStream from "./../../interfaces/IWatchStream";
 
 class WatchSrc extends Task {
-	private watcher: any;
+	private watcher: IWatchStream;
 	private static instance: WatchSrc;
 	protected constructor() {
 		super()
@@ -24,18 +26,20 @@ class WatchSrc extends Task {
 		return { read: false }
 	}
 
-	addListeners() {
+	private addListeners() {
 		BuildEmitter.event.on('restart build', () => {
 			this.watcher.close();
 		});
 	}
 
+	/* API
+	 ******/
 	run() {
-		var runBuildPath = path.join(this.paths.build, 'runBuild.js')
 		var promise = new this.pkgs.Promise((resolve, reject) => {
 			this.watcher = watch(this.paths.src, this.opts, file => {
-				console.log(file.relative)
-			}).on('ready', () => {
+				SrcEmitter.run(file)
+			})
+			this.watcher.on('ready', () => {
 				resolve()
 			})
 		})

@@ -9,7 +9,6 @@ import Task             from './../Task';
 import ModuleCache      from './../../helpers/ModuleCache';
 
 class WatchBuild extends Task {
-	private _emitter: any;
 	private static instance: WatchBuild;
 
 	static getInstance() {
@@ -17,6 +16,13 @@ class WatchBuild extends Task {
 		return this.instance = new WatchBuild()
 	}
 
+	private emit() {
+		var BuildEmitter = require('./../../events/BuildEmitter').default
+		BuildEmitter.event.emit('restart build');
+	}
+
+	/* API
+	 ******/
 	run() {
 		var runBuildPath = path.join(this.paths.build, 'runBuild.js')
 		var promise = new this.pkgs.Promise((resolve, reject) => {
@@ -24,8 +30,7 @@ class WatchBuild extends Task {
 				var cleaned = ModuleCache.delete(runBuildPath)
 				if (!cleaned) return console.log('failed to clean module cache'.error)
 				await(require(runBuildPath)(true));
-				var BuildEmitter = require('./../../events/BuildEmitter').default
-				BuildEmitter.event.emit('restart build');
+				this.emit()
 			}));
 			resolve()
 		})
