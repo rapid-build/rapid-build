@@ -26,7 +26,7 @@ class WatchBuild extends Task {
 	run() {
 		var runBuildPath = path.join(this.paths.build, 'runBuild.js')
 		var promise = new this.pkgs.Promise((resolve, reject) => {
-			watch(this.paths.build, async(file => {
+			watch(this.paths.build, async(filePath => {
 				var cleaned = ModuleCache.delete(runBuildPath)
 				if (!cleaned) return console.log('failed to clean module cache'.error)
 				await(require(runBuildPath)(true));

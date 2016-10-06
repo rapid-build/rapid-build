@@ -4,6 +4,7 @@
  ******************/
 import path  = require('path')
 import watch = require('gulp-watch')
+import Vinyl = require('vinyl')
 import Task         from './../Task';
 import BuildEmitter from './../../events/BuildEmitter';
 import SrcEmitter   from './../../events/SrcEmitter';
@@ -22,21 +23,21 @@ class WatchSrc extends Task {
 		return this.instance = new WatchSrc()
 	}
 
-	private get opts() {
-		return { read: false }
-	}
-
 	private addListeners() {
 		BuildEmitter.event.on('restart build', () => {
 			this.watcher.close();
 		});
 	}
 
+	private get opts() {
+		return { read: false }
+	}
+
 	/* API
 	 ******/
 	run() {
 		var promise = new this.pkgs.Promise((resolve, reject) => {
-			this.watcher = watch(this.paths.src, this.opts, file => {
+			this.watcher = watch(this.paths.src, this.opts, (file: Vinyl) => {
 				SrcEmitter.run(file)
 			})
 			this.watcher.on('ready', () => {
