@@ -18,10 +18,11 @@ class CleanDist extends Task {
 	/* Public Methods
 	 *****************/
 	run() {
-		return this.pkgs.fse.removeAsync(this.paths.dist)
-		.then(() => {
+		var promise = this.pkgs.fse.removeAsync(this.paths.dist);
+		promise.then(() => {
 			return console.log('cleaned dist'.info)
 		})
+		return promise;
 	}
 
 }

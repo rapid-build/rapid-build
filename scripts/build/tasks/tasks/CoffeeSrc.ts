@@ -23,16 +23,17 @@ class CoffeeSrc extends Task {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		return new this.pkgs.Promise((resolve, reject) => {
+		var promise = new this.pkgs.Promise((resolve, reject) => {
 			this.pkgs.gulp.src(src, this.gOpts)
 				.pipe(plumber())
 				.pipe(coffee(this.opts))
 				.pipe(this.pkgs.gulp.dest(this.paths.dist))
 				.on('end', () => resolve())
 		})
-		.then(() => {
+		promise.then(() => {
 			return console.log('compiled coffee to dist'.info)
 		})
+		return promise;
 	}
 
 	/* Private Methods

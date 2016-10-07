@@ -34,9 +34,10 @@ class WatchSrc extends Task {
 				resolve()
 			})
 		})
-		return promise.then((result) => {
-			console.log('watching src...'.attn)
+		promise.then((result) => {
+			console.log('watching src...'.info)
 		});
+		return promise;
 	}
 
 	/* Private Methods

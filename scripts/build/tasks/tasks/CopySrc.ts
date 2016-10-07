@@ -18,14 +18,15 @@ class CopySrc extends Task {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		return new this.pkgs.Promise((resolve, reject) => {
+		var promise = new this.pkgs.Promise((resolve, reject) => {
 			this.pkgs.gulp.src(src, this.gOpts)
 				.pipe(this.pkgs.gulp.dest(this.paths.dist))
 				.on('end', () => resolve())
 		})
-		.then(() => {
+		promise.then(() => {
 			return console.log('copied src to dist'.info)
 		})
+		return promise;
 	}
 
 	/* Getters and Setters
