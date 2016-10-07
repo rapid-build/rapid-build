@@ -10,16 +10,34 @@ import WatchBuild       from './tasks/tasks/WatchBuild';
 
 class Build {
 	private static instance: Build;
-	private constructor() {}
 
+	/* Constructor
+	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new Build()
 	}
 
+	/* Public Methods
+	 *****************/
+	run(fromWatch?: boolean) {
+		/* TODO - Add Build Types
+		 * Only have Dev right now
+		 * @return promise
+		 **************************/
+		this.logBuildMsg(fromWatch);
+		return async(() => {
+			var r1 = await(this.runBuild())
+			var r2 = await(this.runBuildWatch(fromWatch))
+			return r1
+		})();
+	}
+
+	/* Private Methods
+	 ******************/
 	private logBuildMsg(fromWatch) {
 		if (fromWatch) console.log('')
-		var msg = fromWatch ? 'Rerunning' : 'Running'
+		var msg = fromWatch ? 'Restart' : 'Running'
 			msg += ' '
 			msg += `Build: ${Env.env}`
 		var div = Array(msg.length+1).join('-')
@@ -56,20 +74,18 @@ class Build {
 		var r1 = await(WatchBuild.run())
 		return r1
 	})
-
-	/* TODO - Add Build Types
-	 * Only have Dev right now
-	 * @return promise
-	 **************************/
-	run(fromWatch?: boolean) {
-		this.logBuildMsg(fromWatch);
-		return async(() => {
-			var r1 = await(this.runBuild())
-			var r2 = await(this.runBuildWatch(fromWatch))
-			return r1
-		})();
-	}
 }
+
+/* Export Singleton
+ *******************/
 export default Build.getInstance()
+
+
+
+
+
+
+
+
 
 

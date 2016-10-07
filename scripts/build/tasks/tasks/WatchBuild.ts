@@ -3,41 +3,70 @@
  * @static
  ********************/
 import path  = require('path')
-import watch = require('node-watch')
-import { async, await } from 'asyncawait'
-import Task             from './../Task';
-import ModuleCache      from './../../helpers/ModuleCache';
+import watch = require('gulp-watch')
+import Vinyl = require('vinyl')
+import Task         from './../Task';
+import ModuleCache  from './../../helpers/ModuleCache';
+import IWatchStream from "./../../interfaces/IWatchStream";
 
 class WatchBuild extends Task {
+	private watcher: IWatchStream;
 	private static instance: WatchBuild;
 
+	/* Constructor
+	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new WatchBuild()
 	}
 
-	private emit() {
-		var BuildEmitter = require('./../../events/BuildEmitter').default
-		BuildEmitter.event.emit('restart build');
+	/* Public Methods
+	 *****************/
+	run() {
+		var promise = new this.pkgs.Promise((resolve, reject) => {
+			this.watcher = watch(this.paths.build, (file: Vinyl) => {
+				this.emitBuildRestart()
+				this.clearBuildCache()
+				this.restartBuild()
+			});
+			this.watcher.on('ready', () => { resolve() })
+		})
+
+		promise.then((result) => {
+			console.log('WATCHING BUILD...'.attn)
+		});
+
+		return promise;
 	}
 
-	/* API
-	 ******/
-	run() {
-		var runBuildPath = path.join(this.paths.build, 'runBuild.js')
-		var promise = new this.pkgs.Promise((resolve, reject) => {
-			watch(this.paths.build, async(filePath => {
-				var cleaned = ModuleCache.delete(runBuildPath)
-				if (!cleaned) return console.log('failed to clean module cache'.error)
-				await(require(runBuildPath)(true));
-				this.emit()
-			}));
-			resolve()
-		})
-		return promise.then((result) => {
-			return console.log('WATCHING BUILD...'.attn)
-		});
+	/* Private Methods
+	 ******************/
+	private emitBuildRestart(): boolean {
+		return require(this.buildEmitterPath).default.emit('build restart');
+	}
+
+	private clearBuildCache(): boolean {
+		var cleaned = ModuleCache.delete(this.runBuildPath);
+		if (!cleaned) console.log('failed to clean module cache'.error)
+		return cleaned;
+	}
+
+	private restartBuild() {
+		return require(this.runBuildPath)(true);
+	}
+
+	/* Getters and Setters
+	 **********************/
+	private get buildEmitterPath(): string {
+		return path.join(this.paths.build, 'events', 'BuildEmitter')
+	}
+	private get runBuildPath(): string { // .js ext required
+		return path.join(this.paths.build, 'runBuild.js')
 	}
 }
 
+/* Export Singleton
+ *******************/
 export default WatchBuild.getInstance()
+
+

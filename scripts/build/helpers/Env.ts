@@ -7,13 +7,28 @@ class Env {
 	private envs: string[] = ['default', 'dev', 'prod']
 	private _env: string = this.envs[0];
 
+	/* Constructor
+	 **************/
 	private constructor() {
 		this.setEnv()
 	}
-
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new Env()
+	}
+
+	/* Methods
+	 **********/
+	isDefault(): boolean {
+		return this.env === this.envs[0]
+	}
+
+	isDev(): boolean {
+		return this.env === this.envs[1]
+	}
+
+	isProd(): boolean {
+		return this.env === this.envs[2]
 	}
 
 	/* Getters and Setters
@@ -32,19 +47,10 @@ class Env {
 	 	return this
 	}
 
-	/* Methods
-	 **********/
-	isDefault(): boolean {
-		return this.env === this.envs[0]
-	}
-
-	isDev(): boolean {
-		return this.env === this.envs[1]
-	}
-
-	isProd(): boolean {
-		return this.env === this.envs[2]
-	}
 }
 
+/* Export Singleton
+ *******************/
 export default Env.getInstance()
+
+

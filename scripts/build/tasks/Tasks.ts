@@ -15,8 +15,9 @@ class Tasks {
 	TsSrc     = TsSrc;
 	WatchSrc  = WatchSrc;
 	private static instance: Tasks;
-	protected constructor() {}
 
+	/* Constructor
+	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new Tasks()
@@ -24,4 +25,8 @@ class Tasks {
 
 }
 
+/* Export Singleton
+ *******************/
 export default Tasks.getInstance()
+
+

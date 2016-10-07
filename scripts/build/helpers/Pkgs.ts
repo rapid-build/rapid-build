@@ -8,19 +8,24 @@ import Promise = require('bluebird')
 import * as fse from 'fs-extra-promise'
 
 class Pkgs {
-	private static instance: Pkgs;
-	protected constructor() {}
-
-	static getInstance() {
-		if (this.instance) return this.instance;
-		return this.instance = new Pkgs()
-	}
-
 	readonly pkgs = {
 		fse,
 		gulp,
 		Promise
 	}
+	private static instance: Pkgs;
+
+	/* Constructor
+	 **************/
+	static getInstance() {
+		if (this.instance) return this.instance;
+		return this.instance = new Pkgs()
+	}
+
 }
 
+/* Export Singleton
+ *******************/
 export default Pkgs.getInstance().pkgs
+
+

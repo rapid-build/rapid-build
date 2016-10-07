@@ -9,13 +9,15 @@ class DevBuild {
 	readonly watch: boolean = true;
 	private static instance: DevBuild;
 
-	private constructor() {}
-
+	/* Constructor
+	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new DevBuild()
 	}
 
+	/* Public Methods
+	 *****************/
 	run() {
 		return async(() => {
 			var results = {
@@ -30,7 +32,10 @@ class DevBuild {
 			return results
 		})();
 	}
-
 }
 
+/* Export Singleton
+ *******************/
 export default DevBuild.getInstance()
+
+

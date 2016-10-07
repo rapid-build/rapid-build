@@ -5,13 +5,15 @@
 class ModuleCache {
 	private static instance: ModuleCache;
 
-	private constructor() {}
-
+	/* Constructor
+	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new ModuleCache()
 	}
 
+	/* Public Methods
+	 *****************/
 	get(_path: string) {
 		return require.cache[_path]
 	}
@@ -33,4 +35,8 @@ class ModuleCache {
 	}
 }
 
+/* Export Singleton
+ *******************/
 export default ModuleCache.getInstance()
+
+

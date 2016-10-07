@@ -1,13 +1,18 @@
 /* @class Task
  * @constructor
  ***************/
-import Pkgs  from './../helpers/Pkgs';
-import Paths from './../helpers/Paths';
+import Pkgs         from './../helpers/Pkgs';
+import Paths        from './../helpers/Paths';
+import BuildEmitter from './../events/BuildEmitter';
 
 class Task {
-	protected pkgs  = Pkgs
-	protected paths = Paths
-	protected constructor() {}
+	protected eventEmitter = BuildEmitter
+	protected pkgs         = Pkgs
+	protected paths        = Paths
 }
 
+/* Export It!
+ *************/
 export default Task
+
+

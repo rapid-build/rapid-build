@@ -6,13 +6,17 @@ import Task from './../Task'
 
 class CleanLib extends Task {
 	private static instance: CleanLib;
-	protected constructor() { super() }
 
+	/* Constructor
+	 **************/
+	private constructor() { super() }
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new CleanLib()
 	}
 
+	/* Public Methods
+	 *****************/
 	run() {
 		return this.pkgs.fse.removeAsync(this.paths.dist)
 		.then(() => {
@@ -22,4 +26,8 @@ class CleanLib extends Task {
 
 }
 
+/* Export Singleton
+ *******************/
 export default CleanLib.getInstance()
+
+

@@ -4,35 +4,27 @@
  *******************/
 import coffee  = require('gulp-coffee')
 import plumber = require('gulp-plumber')
-import Task       from './../Task';
-import SrcEmitter from './../../events/SrcEmitter';
+import Task from './../Task';
 
 class CoffeeSrc extends Task {
 	private static instance: CoffeeSrc;
-	protected constructor() {
+
+	/* Constructor
+	 **************/
+	private constructor() {
 		super()
 		this.addListeners();
 	}
-
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new CoffeeSrc()
 	}
 
-	private addListeners() {
-		SrcEmitter.event.on('change coffee', (_path, base) => {
-			console.log('COFFEE CHANGE:'.minor, _path.minor);
-			this.run([_path], { base });
-		});
-	}
-
-	private get opts() {
-		return { bare: true }
-	}
-
-	run(src: string[] | string = [`${this.paths.src}/**/*.coffee`], gOpts={}) {
+	/* Public Methods
+	 *****************/
+	run(src: string[] | string = this.srcGlob) {
 		return new this.pkgs.Promise((resolve, reject) => {
-			this.pkgs.gulp.src(src, gOpts)
+			this.pkgs.gulp.src(src, this.gOpts)
 				.pipe(plumber())
 				.pipe(coffee(this.opts))
 				.pipe(this.pkgs.gulp.dest(this.paths.dist))
@@ -43,6 +35,31 @@ class CoffeeSrc extends Task {
 		})
 	}
 
+	/* Private Methods
+	 ******************/
+	private addListeners() {
+		this.eventEmitter.on('change coffee', (_path) => {
+			console.log('COFFEE CHANGE:'.minor, _path.minor);
+			this.run(_path);
+		});
+	}
+
+	/* Getters and Setters
+	 **********************/
+	private get opts(): {} {
+		return { bare: true }
+	}
+	private get gOpts(): {} {
+		return { base: this.paths.src }
+	}
+	private get srcGlob(): string[] {
+		return [`${this.paths.src}/**/*.coffee`]
+	}
+
 }
 
+/* Export Singleton
+ *******************/
 export default CoffeeSrc.getInstance()
+
+
