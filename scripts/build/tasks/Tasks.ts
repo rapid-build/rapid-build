@@ -2,14 +2,14 @@
  * @class Tasks
  * @static
  ***************/
-import CleanLib  from './tasks/CleanLib';
+import CleanDist  from './tasks/CleanDist';
 import CoffeeSrc from './tasks/CoffeeSrc';
 import CopySrc   from './tasks/CopySrc';
 import TsSrc     from './tasks/TsSrc';
 import WatchSrc  from './tasks/WatchSrc';
 
 class Tasks {
-	CleanLib  = CleanLib;
+	CleanDist = CleanDist;
 	CoffeeSrc = CoffeeSrc;
 	CopySrc   = CopySrc;
 	TsSrc     = TsSrc;
