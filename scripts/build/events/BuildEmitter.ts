@@ -2,8 +2,11 @@
  * @class BuildEmitter
  * @static
  **********************/
+import path   = require('path')
 import events = require('events')
 import Vinyl  = require('vinyl')
+import EVENTS from './../constants/eventsConst';
+import PATHS  from './../constants/pathsConst';
 
 class BuildEmitter {
 	private emitter = new events.EventEmitter();
@@ -27,30 +30,46 @@ class BuildEmitter {
 	}
 
 	emitWatch(file: Vinyl) {
-		var event = this.getEventName(file),
-			_path = file.path;
-		return this.emitter.emit(event, _path); // ex: 'change coffee'
+		var event  = this.getEvent(file);
+		var result = this.emitter.emit(event.event, file.path);
+		this.logWatchMsg(file, event.msg);
+		return result;
 	}
 
 	/* Private Methods
 	 ******************/
-	private getTask(ext: string): string {
-		return ext.slice(1);
+	private getEvent(file: Vinyl): { event: string, msg: string } {
+		if (this.isBuildChange(file)) return EVENTS.restart.build;
+
+		var event = file['event'];
+		var ext   = this.getFileExt(file);
+
+		if (!this.isEventType(file)) return EVENTS[event].other
+
+		return EVENTS[event][ext]; // ex: 'change coffee'
 	}
 
-	private getEventName(file: Vinyl): string {
-		var event = file['event'],
-			task  = this.getTask(file.extname);
-		return `${event} ${task}`;
+	private logWatchMsg(file: Vinyl, eventMsg: string): void {
+		if (this.isBuildChange(file)) return; // log happens in Build.ts
+
+		var msg = `${eventMsg} ${path.sep}${file.relative}`;
+		var div = Array(new Array(30).length).join('-');
+
+		console.log(`${div}\n${msg}`.minor)
 	}
 
-	private logMsg(event: string, _path: string, base: string) {
-		var msg = 'SRC EMITTER',
-			div = Array(msg.length+1).join('-');
-		console.log(`${div.attn}\n${msg.attn}\n${div.attn}`)
-		console.log('EVENT NAME:'.attn, event.info)
-		console.log('BASE PATH:'.attn, base.info)
-		console.log('FILE PATH:'.attn, _path.info)
+	private isBuildChange(file: Vinyl): boolean {
+		var isBuildChange = file.path.indexOf(PATHS.build) !== -1;
+		return isBuildChange;
+	}
+
+	private getFileExt(file: Vinyl): string {
+		return file.extname.slice(1);
+	}
+
+	private isEventType(file: Vinyl): boolean {
+		var ext = this.getFileExt(file);
+		return !!EVENTS[file['event']][ext]
 	}
 
 }

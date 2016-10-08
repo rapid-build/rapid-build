@@ -27,11 +27,11 @@ class CoffeeSrc extends Task {
 			this.pkgs.gulp.src(src, this.gOpts)
 				.pipe(plumber())
 				.pipe(coffee(this.opts))
-				.pipe(this.pkgs.gulp.dest(this.paths.dist))
+				.pipe(this.pkgs.gulp.dest(this.PATHS.dist))
 				.on('end', () => resolve())
 		})
 		promise.then(() => {
-			return console.log('compiled coffee to dist'.info)
+			return console.log('compiled coffee to dist'.minor)
 		})
 		return promise;
 	}
@@ -39,8 +39,7 @@ class CoffeeSrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on('change coffee', (_path) => {
-			console.log('COFFEE CHANGE:'.minor, _path.minor);
+		this.eventEmitter.on(this.EVENTS.change.coffee.event, (_path) => {
 			this.run(_path);
 		});
 	}
@@ -51,10 +50,10 @@ class CoffeeSrc extends Task {
 		return { bare: true }
 	}
 	private get gOpts(): {} {
-		return { base: this.paths.src }
+		return { base: this.PATHS.src }
 	}
 	private get srcGlob(): string[] {
-		return [`${this.paths.src}/**/*.coffee`]
+		return [`${this.PATHS.src}/**/*.coffee`]
 	}
 
 }

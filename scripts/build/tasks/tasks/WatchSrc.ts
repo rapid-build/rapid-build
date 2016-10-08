@@ -27,7 +27,7 @@ class WatchSrc extends Task {
 	 *****************/
 	run() {
 		var promise = new this.pkgs.Promise((resolve, reject) => {
-			this.watcher = watch(this.paths.src, this.opts, (file: Vinyl) => {
+			this.watcher = watch(this.PATHS.src, this.opts, (file: Vinyl) => {
 				this.eventEmitter.emitWatch(file);
 			})
 			this.watcher.on('ready', () => {
@@ -35,7 +35,7 @@ class WatchSrc extends Task {
 			})
 		})
 		promise.then((result) => {
-			console.log('watching src...'.info)
+			console.log('watching src...'.minor)
 		});
 		return promise;
 	}
@@ -43,7 +43,7 @@ class WatchSrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on('build restart', () => {
+		this.eventEmitter.on(this.EVENTS.restart.build.event, () => {
 			this.watcher.close();
 		});
 	}

@@ -25,11 +25,11 @@ class TsSrc extends Task {
 		var promise = new this.pkgs.Promise((resolve, reject) => {
 			this.pkgs.gulp.src(src, this.gOpts)
 				.pipe(ts(this.opts))
-				.pipe(this.pkgs.gulp.dest(this.paths.dist))
+				.pipe(this.pkgs.gulp.dest(this.PATHS.dist))
 				.on('end', () => resolve())
 		})
 		promise.then(() => {
-			return console.log('compiled typescript to dist'.info)
+			return console.log('compiled typescript to dist'.minor)
 		})
 		return promise;
 	}
@@ -37,8 +37,7 @@ class TsSrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on('change ts', (_path) => {
-			console.log('TS CHANGE:'.minor, _path.minor);
+		this.eventEmitter.on(this.EVENTS.change.ts.event, (_path) => {
 			this.run(_path);
 		});
 	}
@@ -49,10 +48,10 @@ class TsSrc extends Task {
 		return {}
 	}
 	private get gOpts(): {} {
-		return { base: this.paths.src }
+		return { base: this.PATHS.src }
 	}
 	private get srcGlob(): string[] {
-		return [`${this.paths.src}/**/*.ts`]
+		return [`${this.PATHS.src}/**/*.ts`]
 	}
 
 }

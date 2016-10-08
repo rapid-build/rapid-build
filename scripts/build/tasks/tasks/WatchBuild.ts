@@ -24,25 +24,23 @@ class WatchBuild extends Task {
 	 *****************/
 	run() {
 		var promise = new this.pkgs.Promise((resolve, reject) => {
-			this.watcher = watch(this.paths.build, (file: Vinyl) => {
-				this.emitBuildRestart()
+			this.watcher = watch(this.PATHS.build, (file: Vinyl) => {
+				this.emitBuildRestart(file)
 				this.clearBuildCache()
 				this.restartBuild()
 			});
 			this.watcher.on('ready', () => { resolve() })
 		})
-
 		promise.then((result) => {
-			console.log('WATCHING BUILD...'.attn)
+			console.log('watching build...'.info)
 		});
-
 		return promise;
 	}
 
 	/* Private Methods
 	 ******************/
-	private emitBuildRestart(): boolean {
-		return require(this.buildEmitterPath).default.emit('build restart');
+	private emitBuildRestart(file: Vinyl): boolean {
+		return require(this.buildEmitterPath).default.emitWatch(file);
 	}
 
 	private clearBuildCache(): boolean {
@@ -58,10 +56,10 @@ class WatchBuild extends Task {
 	/* Getters and Setters
 	 **********************/
 	private get buildEmitterPath(): string {
-		return path.join(this.paths.build, 'events', 'BuildEmitter')
+		return path.join(this.PATHS.build, 'events', 'BuildEmitter')
 	}
 	private get runBuildPath(): string { // .js ext required
-		return path.join(this.paths.build, 'runBuild.js')
+		return path.join(this.PATHS.build, 'runBuild.js')
 	}
 }
 
