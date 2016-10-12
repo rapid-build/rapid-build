@@ -1,7 +1,7 @@
 /* @class Singleton
  *******************/
 import { async, await } from 'asyncawait'
-// import WatchSrc from './tasks/WatchSrc';
+import MinifyScripts from './tasks/MinifyScripts';
 
 class Singleton {
 	private static instance: Singleton;
@@ -18,7 +18,7 @@ class Singleton {
 	run() {
 		return async(() => {
 			var results = {
-				minifyScripts: await('')
+				minifyScripts: await(MinifyScripts.run())
 			}
 			return results
 		})()

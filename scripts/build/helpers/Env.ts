@@ -5,7 +5,7 @@ class Singleton {
 	private envs: string[] = ['default', 'dev', 'prod']
 	private _env: string = this.envs[0];
 	private _watchBuild: boolean = false;
-	private readonly WATCH_BUILD: string = 'watch-build';
+	private readonly WATCH_BUILD: string = 'watch';
 
 	/* Constructor
 	 **************/
