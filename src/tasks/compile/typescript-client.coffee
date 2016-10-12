@@ -27,7 +27,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			ts:
 				project: paths.tsconfig
 			watch:
-				ignoreWatch: ['**/node_modules/**']
+				ignoreWatch: ['**/node_modules/**', '**/typings/**/*.d.ts']
 			bundle:
 				path:     bundlePath
 				fileName: bundleFile
