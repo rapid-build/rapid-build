@@ -1,6 +1,6 @@
 /* BUILD ENTRY
- * Excluded from watch.
- ***********************/
+ * executed via: npm run build
+ ******************************/
 var path     = require('path'),
 	tsconfig = path.join(__dirname, 'tsconfig.json');
 

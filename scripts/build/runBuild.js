@@ -1,6 +1,7 @@
 /* @function runBuild
  * @fromWatch promise
- *********************/
+ * required from index.js and WatchBuild.ts
+ *******************************************/
 module.exports = (fromWatch) => {
 	var Build = require('./Build').default
 
