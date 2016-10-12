@@ -2,6 +2,7 @@
  * @class CopySrc
  * @static
  *******************/
+import Vinyl = require('vinyl')
 import Task from './../Task';
 
 class CopySrc extends Task {
@@ -35,8 +36,17 @@ class CopySrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on(this.EVENTS.change.other.event, (_path) => {
-			this.run(_path);
+		this.eventEmitter.on(this.EVENTS.change.src, (file: Vinyl) => {
+			this.run(file.path);
+		});
+
+		this.eventEmitter.on(this.EVENTS.add.src, (file: Vinyl) => {
+			this.run(file.path);
+		});
+
+		this.eventEmitter.on(this.EVENTS.unlink.src, (file: Vinyl) => {
+			var _path = new this.utils.Path(file.path).srcToDist().path;
+			this.tasks.CleanDist.run(_path)
 		});
 	}
 

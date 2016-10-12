@@ -2,24 +2,22 @@
  *******************/
 const EVENTS = {
 	change: {
-		coffee: {
-			msg: 'coffee change:',
-			event: 'change coffee'
-		},
-		ts: {
-			msg: 'typescript change:',
-			event: 'change typescript'
-		},
-		other: {
-			msg: 'src change:',
-			event: 'change src'
-		}
+		coffee: 'change coffee',
+		ts:     'change typescript',
+		src:    'change src'
+	},
+	add: {
+		coffee: 'add coffee',
+		ts:     'add typescript',
+		src:    'add src'
+	},
+	unlink: {
+		coffee: 'delete coffee',
+		ts:     'delete typescript',
+		src:    'delete src'
 	},
 	restart: {
-		build: {
-			msg: 'build restart:',
-			event: 'restart build'
-		}
+		build:  'restart build'
 	}
 }
 

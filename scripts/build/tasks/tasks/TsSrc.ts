@@ -2,7 +2,8 @@
  * @class TsSrc
  * @static
  *******************/
-import ts = require('gulp-typescript')
+import ts    = require('gulp-typescript')
+import Vinyl = require('vinyl')
 import Task from './../Task';
 
 class TsSrc extends Task {
@@ -37,8 +38,17 @@ class TsSrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on(this.EVENTS.change.ts.event, (_path) => {
-			this.run(_path);
+		this.eventEmitter.on(this.EVENTS.change.ts, (file: Vinyl) => {
+			this.run(file.path);
+		});
+
+		this.eventEmitter.on(this.EVENTS.add.ts, (file: Vinyl) => {
+			this.run(file.path);
+		});
+
+		this.eventEmitter.on(this.EVENTS.unlink.ts, (file: Vinyl) => {
+			var _path = new this.utils.Path(file.path).srcToDist().swapExt('js').path;
+			this.tasks.CleanDist.run(_path)
 		});
 	}
 

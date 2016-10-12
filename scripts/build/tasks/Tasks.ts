@@ -2,7 +2,7 @@
  * @class Tasks
  * @static
  ***************/
-import CleanDist  from './tasks/CleanDist';
+import CleanDist from './tasks/CleanDist';
 import CoffeeSrc from './tasks/CoffeeSrc';
 import CopySrc   from './tasks/CopySrc';
 import TsSrc     from './tasks/TsSrc';

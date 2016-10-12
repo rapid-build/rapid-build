@@ -31,28 +31,29 @@ class BuildEmitter {
 
 	emitWatch(file: Vinyl) {
 		var event  = this.getEvent(file);
-		var result = this.emitter.emit(event.event, file.path);
-		this.logWatchMsg(file, event.msg);
+		var result = this.emitter.emit(event, file);
+		this.logWatchMsg(file, event);
 		return result;
 	}
 
 	/* Private Methods
 	 ******************/
-	private getEvent(file: Vinyl): { event: string, msg: string } {
+	private getEvent(file: Vinyl): string {
 		if (this.isBuildChange(file)) return EVENTS.restart.build;
 
 		var event = file['event'];
 		var ext   = this.getFileExt(file);
 
-		if (!this.isEventType(file)) return EVENTS[event].other
+		if (!this.isEventType(file)) return EVENTS[event].src
 
 		return EVENTS[event][ext]; // ex: 'change coffee'
 	}
 
-	private logWatchMsg(file: Vinyl, eventMsg: string): void {
+	private logWatchMsg(file: Vinyl, event: string): void {
 		if (this.isBuildChange(file)) return; // log happens in Build.ts
 
-		var msg = `${eventMsg} ${path.sep}${file.relative}`;
+		var msgs = event.split(' ');
+		var msg = `${msgs[1]} ${msgs[0]}: ${path.sep}${file.relative}`;
 		var div = Array(new Array(30).length).join('-');
 
 		console.log(`${div}\n${msg}`.minor)

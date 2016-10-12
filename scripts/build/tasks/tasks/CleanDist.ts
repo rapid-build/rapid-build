@@ -2,6 +2,7 @@
  * @class CleanDist
  * @static
  *******************/
+import del = require('del')
 import Task from './../Task'
 
 class CleanDist extends Task {
@@ -17,12 +18,21 @@ class CleanDist extends Task {
 
 	/* Public Methods
 	 *****************/
-	run() {
-		var promise = this.pkgs.fse.removeAsync(this.PATHS.dist);
+	run(src: string[] | string = this.srcGlob) {
+		var promise = del(src, this.opts);
 		promise.then(() => {
 			return console.log('cleaned dist'.minor)
 		})
 		return promise;
+	}
+
+	/* Getters and Setters
+	 **********************/
+	private get opts(): {} {
+		return { force: true }
+	}
+	private get srcGlob(): string[] {
+		return [ this.PATHS.dist ]
 	}
 
 }

@@ -43,7 +43,7 @@ class WatchSrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on(this.EVENTS.restart.build.event, () => {
+		this.eventEmitter.on(this.EVENTS.restart.build, (file: Vinyl) => {
 			this.watcher.close();
 		});
 	}

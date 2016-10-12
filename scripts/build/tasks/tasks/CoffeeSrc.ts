@@ -4,6 +4,7 @@
  *******************/
 import coffee  = require('gulp-coffee')
 import plumber = require('gulp-plumber')
+import Vinyl   = require('vinyl')
 import Task from './../Task';
 
 class CoffeeSrc extends Task {
@@ -39,8 +40,17 @@ class CoffeeSrc extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
-		this.eventEmitter.on(this.EVENTS.change.coffee.event, (_path) => {
-			this.run(_path);
+		this.eventEmitter.on(this.EVENTS.change.coffee, (file: Vinyl) => {
+			this.run(file.path);
+		});
+
+		this.eventEmitter.on(this.EVENTS.add.coffee, (file: Vinyl) => {
+			this.run(file.path);
+		});
+
+		this.eventEmitter.on(this.EVENTS.unlink.coffee, (file: Vinyl) => {
+			var _path = new this.utils.Path(file.path).srcToDist().swapExt('js').path;
+			this.tasks.CleanDist.run(_path)
 		});
 	}
 
