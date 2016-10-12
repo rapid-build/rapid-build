@@ -1,26 +1,22 @@
-/* Singleton
- * @class CleanDist
- * @static
+/* @class Singleton
  *******************/
 import del = require('del')
 import Task from './../Task'
 
-class CleanDist extends Task {
-	private static instance: CleanDist;
+class Singleton extends Task {
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
-	private constructor() { super() }
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new CleanDist()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		var promise = del(src, this.opts);
-		promise.then(() => {
+		var promise = del(src, this.opts).then((paths) => {
 			return console.log('cleaned dist'.minor)
 		})
 		return promise;
@@ -39,6 +35,6 @@ class CleanDist extends Task {
 
 /* Export Singleton
  *******************/
-export default CleanDist.getInstance()
+export default Singleton.getInstance()
 
 

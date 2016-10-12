@@ -1,15 +1,13 @@
-/* Singleton
- * @class ModuleCache
- * @static
- *********************/
-class ModuleCache {
-	private static instance: ModuleCache;
+/* @class Singleton
+ *******************/
+class Singleton {
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new ModuleCache()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -37,6 +35,6 @@ class ModuleCache {
 
 /* Export Singleton
  *******************/
-export default ModuleCache.getInstance()
+export default Singleton.getInstance()
 
 

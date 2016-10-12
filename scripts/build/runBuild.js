@@ -2,11 +2,9 @@
  * @fromWatch promise
  * required from index.js and WatchBuild.ts
  *******************************************/
-module.exports = (fromWatch) => {
+module.exports = () => {
+	require('./bootstrap/add-colors');
 	var Build = require('./Build').default
 
-	return Build.run(fromWatch)
-	// .then((result) => {
-	// 	console.log('RUN BUILD'.attn);
-	// })
+	return Build.run()
 }

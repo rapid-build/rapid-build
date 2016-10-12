@@ -1,22 +1,20 @@
-/* Singleton
- * @class CopySrc
- * @static
+/* @class Singleton
  *******************/
 import Vinyl = require('vinyl')
 import Task from './../Task';
 
-class CopySrc extends Task {
-	private static instance: CopySrc;
+class Singleton extends Task {
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	private constructor() {
 		super()
-		this.addListeners();
+		if (this.Env.isDev) this.addListeners()
 	}
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new CopySrc()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -66,6 +64,6 @@ class CopySrc extends Task {
 
 /* Export Singleton
  *******************/
-export default CopySrc.getInstance()
+export default Singleton.getInstance()
 
 

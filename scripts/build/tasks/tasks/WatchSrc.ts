@@ -1,26 +1,24 @@
-/* Singleton
- * @class WatchSrc
- * @static
- ******************/
+/* @class Singleton
+ *******************/
 import path  = require('path')
 import watch = require('gulp-watch')
 import Vinyl = require('vinyl')
 import Task         from './../Task';
 import IWatchStream from "./../../interfaces/IWatchStream";
 
-class WatchSrc extends Task {
+class Singleton extends Task {
 	private watcher: IWatchStream;
-	private static instance: WatchSrc;
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	private constructor() {
 		super()
-		this.addListeners()
+		if (this.Env.isDev) this.addListeners()
 	}
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new WatchSrc()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -58,6 +56,6 @@ class WatchSrc extends Task {
 
 /* Export Singleton
  *******************/
-export default WatchSrc.getInstance()
+export default Singleton.getInstance()
 
 

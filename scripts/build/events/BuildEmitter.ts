@@ -1,22 +1,20 @@
-/* Singleton
- * @class BuildEmitter
- * @static
- **********************/
+/* @class Singleton
+ *******************/
 import path   = require('path')
 import events = require('events')
 import Vinyl  = require('vinyl')
 import EVENTS from './../constants/eventsConst';
 import PATHS  from './../constants/pathsConst';
 
-class BuildEmitter {
+class Singleton {
 	private emitter = new events.EventEmitter();
-	private static instance: BuildEmitter;
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new BuildEmitter()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -77,6 +75,6 @@ class BuildEmitter {
 
 /* Export Singleton
  *******************/
-export default BuildEmitter.getInstance()
+export default Singleton.getInstance()
 
 

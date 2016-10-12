@@ -1,23 +1,21 @@
-/* Singleton
- * @class TsSrc
- * @static
+/* @class Singleton
  *******************/
 import ts    = require('gulp-typescript')
 import Vinyl = require('vinyl')
 import Task from './../Task';
 
-class TsSrc extends Task {
-	private static instance: TsSrc;
+class Singleton extends Task {
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	private constructor() {
 		super()
-		this.addListeners();
+		if (this.Env.isDev) this.addListeners()
 	}
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new TsSrc()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -68,6 +66,6 @@ class TsSrc extends Task {
 
 /* Export Singleton
  *******************/
-export default TsSrc.getInstance()
+export default Singleton.getInstance()
 
 

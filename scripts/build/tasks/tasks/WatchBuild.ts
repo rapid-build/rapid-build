@@ -1,7 +1,5 @@
-/* Singleton
- * @class WatchBuild
- * @static
- ********************/
+/* @class Singleton
+ *******************/
 import path  = require('path')
 import watch = require('gulp-watch')
 import Vinyl = require('vinyl')
@@ -9,15 +7,15 @@ import Task         from './../Task';
 import ModuleCache  from './../../helpers/ModuleCache';
 import IWatchStream from "./../../interfaces/IWatchStream";
 
-class WatchBuild extends Task {
+class Singleton extends Task {
 	private watcher: IWatchStream;
-	private static instance: WatchBuild;
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new WatchBuild()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -32,7 +30,7 @@ class WatchBuild extends Task {
 			this.watcher.on('ready', () => { resolve() })
 		})
 		promise.then((result) => {
-			console.log('watching build...'.info)
+			console.log('watching build...'.attn)
 		});
 		return promise;
 	}
@@ -50,7 +48,8 @@ class WatchBuild extends Task {
 	}
 
 	private restartBuild() {
-		return require(this.runBuildPath)(true);
+		this.Env.isWatchingBuild = true;
+		return require(this.runBuildPath)();
 	}
 
 	/* Getters and Setters
@@ -65,6 +64,6 @@ class WatchBuild extends Task {
 
 /* Export Singleton
  *******************/
-export default WatchBuild.getInstance()
+export default Singleton.getInstance()
 
 

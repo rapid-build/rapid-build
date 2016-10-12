@@ -1,31 +1,29 @@
 /* Common/Shared Packages
- * Singleton
- * @class Pkgs
- * @static
+ * @class Singleton
  *************************/
 import gulp    = require('gulp')
 import Promise = require('bluebird')
 import * as fse from 'fs-extra-promise'
 
-class Pkgs {
+class Singleton {
 	readonly pkgs = {
 		fse,
 		gulp,
 		Promise
 	}
-	private static instance: Pkgs;
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new Pkgs()
+		return this.instance = new Singleton()
 	}
 
 }
 
 /* Export Singleton
  *******************/
-export default Pkgs.getInstance().pkgs
+export default Singleton.getInstance().pkgs
 
 

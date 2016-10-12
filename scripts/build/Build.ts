@@ -1,84 +1,80 @@
-/* Singleton
- * @class Build
- * @static
- ***************/
-require('./bootstrap/add-colors')
+/* @class Singleton
+ *******************/
 import { async, await } from 'asyncawait'
-import DevBuild         from './builds/DevBuild';
-import Env              from './helpers/Env';
-import WatchBuild       from './tasks/tasks/WatchBuild';
+import Env         from './helpers/Env';
+import CmnTasks    from './tasks/CmnTasks';
+import DevTasks    from './tasks/DevTasks';
+import ProdTasks   from './tasks/ProdTasks';
+import WatchBuild  from './tasks/tasks/WatchBuild';
+import IBuildStack from "./interfaces/IBuildStack";
 
-class Build {
-	private static instance: Build;
-
+class Singleton {
 	/* Constructor
 	 **************/
+	private static instance: Singleton;
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new Build()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
 	 *****************/
-	run(fromWatch?: boolean) {
-		/* TODO - Add Build Types
-		 * Only have Dev right now
-		 * @return promise
-		 **************************/
-		this.logBuildMsg(fromWatch);
+	run() {
 		return async(() => {
-			var r1 = await(this.runBuild())
-			var r2 = await(this.runBuildWatch(fromWatch))
-			return r1
-		})();
+			this.logBuildMsg();
+			try {
+				var result = await(this.runTasks());
+				console.log('PACKAGE DIST CREATED'.attn);
+			}
+			catch (e) {
+				console.error('FAILED TO CREATE PACKAGE DIST'.error);
+				console.error(`Error: ${e.message}`.error);
+				result = e.message
+			}
+			return result
+		})()
 	}
 
 	/* Private Methods
 	 ******************/
-	private logBuildMsg(fromWatch) {
-		if (fromWatch) console.log('')
-		var msg = fromWatch ? 'Restart' : 'Running'
+	private logBuildMsg() {
+		if (Env.isWatchingBuild) console.log('')
+		var msg = Env.isWatchingBuild ? 'Restart' : 'Running'
 			msg += ' '
 			msg += `Build: ${Env.env}`
 		var div = Array(msg.length+1).join('-')
 		console.log(`${div.attn}\n${msg.attn}\n${div.attn}`)
 	}
 
-	private getBuild() {
-		switch (true) {
-			case Env.isProd():
-				return DevBuild
-			case Env.isDev():
-				return DevBuild
-			default:
-				return DevBuild
-		}
+	private runTasks() {
+		return async(() => {
+			var results: IBuildStack = {};
+
+			switch (true) {
+				case Env.isDefault:
+					results.cmn = await(CmnTasks.run())
+					break
+				case Env.isDev:
+					results.cmn = await(CmnTasks.run())
+					results.dev = await(DevTasks.run())
+					break
+				case Env.isProd:
+					results.cmn  = await(CmnTasks.run())
+					results.prod = await(ProdTasks.run());
+					break
+			}
+
+			if (Env.watchBuild && !Env.isWatchingBuild)
+				results.watchBuild = await(WatchBuild.run());
+
+			return results;
+		})()
 	}
-
-	private runBuild = async(() => {
-		try {
-			var r1 = await(this.getBuild().run())
-			console.log('PACKAGE DIST CREATED'.attn);
-		}
-		catch (e) {
-			console.error('FAILED TO CREATE PACKAGE DIST'.error);
-			console.error(`Error: ${e.message}`.error);
-			r1 = e.message
-		}
-		return r1
-	});
-
-	private runBuildWatch = async((fromWatch) => {
-		if (!this.getBuild().watch) return
-		if (fromWatch) return
-		var r1 = await(WatchBuild.run())
-		return r1
-	})
 }
 
 /* Export Singleton
  *******************/
-export default Build.getInstance()
+export default Singleton.getInstance()
 
 
 

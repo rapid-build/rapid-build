@@ -1,24 +1,22 @@
-/* Singleton
- * @class CoffeeSrc
- * @static
+/* @class Singleton
  *******************/
 import coffee  = require('gulp-coffee')
 import plumber = require('gulp-plumber')
 import Vinyl   = require('vinyl')
 import Task from './../Task';
 
-class CoffeeSrc extends Task {
-	private static instance: CoffeeSrc;
+class Singleton extends Task {
+	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	private constructor() {
 		super()
-		this.addListeners();
+		if (this.Env.isDev) this.addListeners()
 	}
 	static getInstance() {
 		if (this.instance) return this.instance;
-		return this.instance = new CoffeeSrc()
+		return this.instance = new Singleton()
 	}
 
 	/* Public Methods
@@ -70,6 +68,6 @@ class CoffeeSrc extends Task {
 
 /* Export Singleton
  *******************/
-export default CoffeeSrc.getInstance()
+export default Singleton.getInstance()
 
 
