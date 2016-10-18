@@ -1,3 +1,12 @@
+## [0.69.2](https://github.com/jyounce/rapid-build/compare/v0.69.1...v0.69.2) (2016-10-18)
+
+
+### Minor Features
+
+* **bump deps:** includes typescript v2.0.3 ([e218c11](https://github.com/jyounce/rapid-build/commit/e218c11))
+
+
+
 ## [0.69.1](https://github.com/jyounce/rapid-build/compare/v0.69.0...v0.69.1) (2016-09-14)
 
 
