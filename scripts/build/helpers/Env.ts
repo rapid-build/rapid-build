@@ -6,7 +6,6 @@ class Singleton {
 	private _env: string = this.envs[0];
 	private _watchBuild: boolean = false;
 	private readonly WATCH_BUILD: string = 'watch';
-	private readonly _RB_SRC_DIR: string;
 
 	/* Constructor
 	 **************/
@@ -60,22 +59,12 @@ class Singleton {
 		return this.env === this.envs[2]
 	}
 
-	get isRbTsSrc(): boolean {
-		var RB_SRC_DIR = process.env['RB_SRC_DIR'];
-			RB_SRC_DIR = typeof RB_SRC_DIR === 'string' ? RB_SRC_DIR.toLowerCase() : RB_SRC_DIR;
-		return RB_SRC_DIR === 'src-ts'
-	}
-
 	get isWatchingBuild(): boolean {
 		return process.env['RB_WATCHING_BUILD'] === 'true';
 	}
 
 	get watchBuild(): boolean {
 		return this._watchBuild
-	}
-
-	get RB_SRC_DIR(): string {
-		return this.isRbTsSrc ? 'src-ts' : 'src';
 	}
 
 	set isWatchingBuild(val: boolean) { // set in WatchBuild.ts

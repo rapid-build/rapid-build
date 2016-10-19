@@ -1,18 +1,22 @@
 /* @class Singleton
  *******************/
-import gulp    = require('gulp')
-import ts      = require('gulp-typescript')
-import Promise = require('bluebird')
-import Vinyl   = require('vinyl')
+import typescript = require('typescript')
+import path       = require('path')
+import gulp       = require('gulp')
+import ts         = require('gulp-typescript')
+import Promise    = require('bluebird')
+import Vinyl      = require('vinyl')
 import Task from './../Task';
 
 class Singleton extends Task {
+	private _tsProject;
 	private static instance: Singleton;
 
 	/* Constructor
 	 **************/
 	private constructor() {
 		super()
+		this.tsProject = this.opts
 		if (this.Env.isDev) this.addListeners()
 	}
 	static getInstance() {
@@ -25,7 +29,7 @@ class Singleton extends Task {
 	run(src: string[] | string = this.srcGlob) {
 		var promise = new Promise((resolve, reject) => {
 			gulp.src(src, this.gOpts)
-				.pipe(ts(this.opts))
+				.pipe(ts(this.tsProject))
 				.pipe(gulp.dest(this.PATHS.dist))
 				.on('end', () => resolve())
 		})
@@ -38,12 +42,17 @@ class Singleton extends Task {
 	/* Private Methods
 	 ******************/
 	private addListeners() {
+		var glob: string[];
+		var typings: string = `${this.PATHS.src}/{defs,typings}/**/*.ts`;
+
 		this.eventEmitter.on(this.EVENTS.change.ts, (file: Vinyl) => {
-			this.run(file.path);
+			glob = [].concat(file.path, typings);
+			this.run(glob);
 		});
 
 		this.eventEmitter.on(this.EVENTS.add.ts, (file: Vinyl) => {
-			this.run(file.path);
+			glob = [].concat(file.path, typings);
+			this.run(glob);
 		});
 
 		this.eventEmitter.on(this.EVENTS.unlink.ts, (file: Vinyl) => {
@@ -55,13 +64,21 @@ class Singleton extends Task {
 	/* Getters and Setters
 	 **********************/
 	private get opts(): {} {
-		return {}
+		return { typescript }
 	}
 	private get gOpts(): {} {
 		return { base: this.PATHS.src }
 	}
 	private get srcGlob(): string[] {
 		return [`${this.PATHS.src}/**/*.ts`]
+	}
+	private get tsProject() {
+		return this._tsProject
+	}
+
+	private set tsProject(opts) {
+		var tsconfig = path.join(this.PATHS.src, 'tsconfig.json');
+		this._tsProject = ts.createProject(tsconfig, this.opts);
 	}
 
 }

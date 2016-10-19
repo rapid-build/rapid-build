@@ -58,8 +58,7 @@ class Singleton extends Task {
 	}
 	private get srcGlob(): string[] {
 		return [
-			`${this.PATHS.src}/**/*.*`,
-			`!${this.PATHS.src}/**/*.{coffee,ts}`
+			`${this.PATHS.src}/**/*.js`,
 		]
 	}
 

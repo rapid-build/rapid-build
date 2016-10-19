@@ -23,7 +23,7 @@ class Singleton extends Task {
 	 *****************/
 	run() {
 		var promise = new Promise((resolve, reject) => {
-			this.watcher = watch(this.PATHS.build, (file: Vinyl) => {
+			this.watcher = watch(this.srcGlob, (file: Vinyl) => {
 				this.emitBuildRestart(file)
 				this.clearBuildCache()
 				this.restartBuild()
@@ -60,6 +60,15 @@ class Singleton extends Task {
 	}
 	private get runBuildPath(): string { // .js ext required
 		return path.join(this.PATHS.build, 'runBuild.js')
+	}
+	private get srcGlob(): string[] {
+		return [
+			this.PATHS.build,
+			`!${this.PATHS.build}/**/.DS_Store`,
+			`!${this.PATHS.build}/**/npm-debug.log`,
+			`!${this.PATHS.build}/typings/**`,
+			`!${this.PATHS.build}/node_modules/**`
+		]
 	}
 }
 

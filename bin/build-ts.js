@@ -41,5 +41,5 @@ if (RB_LIB === BUILDS[2]) {
 /* Run New Build (return promise)
  *********************************/
 logBuildMsg('new');
-var build = require(LIB_PATH)()();
+var build = require(LIB_PATH)();
 return build;

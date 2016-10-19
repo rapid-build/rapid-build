@@ -3,7 +3,6 @@
 import { async, await } from 'asyncawait'
 import Env       from './../helpers/Env';
 import CleanDist from './tasks/CleanDist';
-import CoffeeSrc from './tasks/CoffeeSrc';
 import CopySrc   from './tasks/CopySrc';
 import TsSrc     from './tasks/TsSrc';
 import ICmnTasks from "./../interfaces/ICmnTasks";
@@ -22,18 +21,13 @@ class Singleton {
 	 *****************/
 	run() {
 		 return async(() => {
-		 	var results: ICmnTasks = {};
-			results.clean = await(CleanDist.run())
-			switch (true) {
-				case Env.isRbTsSrc:
-					results.copy = await(TsSrc.run());
-					break
-				default:
-					results.copy = await({
-						src: CopySrc.run(),
-						coffee: CoffeeSrc.run(),
-					});
-			}
+		 	var results: ICmnTasks = {
+		 		clean: await(CleanDist.run()),
+		 		copy: await({
+					src: CopySrc.run(),
+					ts: TsSrc.run()
+				})
+		 	};
 			return results
 		})()
 	}

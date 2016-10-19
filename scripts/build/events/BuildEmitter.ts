@@ -44,7 +44,7 @@ class Singleton {
 
 		if (!this.isEventType(file)) return EVENTS[event].src
 
-		return EVENTS[event][ext]; // ex: 'change coffee'
+		return EVENTS[event][ext]; // ex: 'change ts'
 	}
 
 	private logWatchMsg(file: Vinyl, event: string): void {

@@ -26,7 +26,7 @@ class Singleton extends Task {
 	 *****************/
 	run() {
 		var promise = new Promise((resolve, reject) => {
-			this.watcher = watch(this.PATHS.src, this.opts, (file: Vinyl) => {
+			this.watcher = watch(this.srcGlob, this.opts, (file: Vinyl) => {
 				this.eventEmitter.emitWatch(file);
 			})
 			this.watcher.on('ready', () => {
@@ -51,6 +51,16 @@ class Singleton extends Task {
 	 **********************/
 	private get opts() {
 		return { read: false }
+	}
+	private get srcGlob(): string[] {
+		return [
+			this.PATHS.src,
+			`!${this.PATHS.src}/**/.DS_Store`,
+			`!${this.PATHS.src}/**/npm-debug.log`,
+			`!${this.PATHS.src}/**/{tsconfig,typings}.json`,
+			`!${this.PATHS.src}/typings/**`,
+			`!${this.PATHS.src}/node_modules/**`
+		]
 	}
 
 }

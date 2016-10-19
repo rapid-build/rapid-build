@@ -5,8 +5,7 @@
 		"target": "es5",
 		"traceResolution": true,
 		"lib": [
-			"es5",
-			"es2015.promise"
+			"es2017"
 		]
 	},
 	"include": [
