@@ -14,7 +14,7 @@ const EVENTS = {
 		src: 'delete src'
 	},
 	restart: {
-		build:  'restart build'
+		build: 'restart build'
 	}
 }
 
