@@ -50,16 +50,14 @@ class Singleton {
 		return async(() => {
 			var results: IBuildStack = {};
 
+			// run common tasks first
+			results.cmn = await(CmnTasks.run())
+
 			switch (true) {
-				case Env.isDefault:
-					results.cmn = await(CmnTasks.run())
-					break
 				case Env.isDev:
-					results.cmn = await(CmnTasks.run())
 					results.dev = await(DevTasks.run())
 					break
 				case Env.isProd:
-					results.cmn  = await(CmnTasks.run())
 					results.prod = await(ProdTasks.run());
 					break
 			}

@@ -1,7 +1,9 @@
 /* @class Singleton
  *******************/
-import ts    = require('gulp-typescript')
-import Vinyl = require('vinyl')
+import gulp    = require('gulp')
+import ts      = require('gulp-typescript')
+import Promise = require('bluebird')
+import Vinyl   = require('vinyl')
 import Task from './../Task';
 
 class Singleton extends Task {
@@ -21,10 +23,10 @@ class Singleton extends Task {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		var promise = new this.pkgs.Promise((resolve, reject) => {
-			this.pkgs.gulp.src(src, this.gOpts)
+		var promise = new Promise((resolve, reject) => {
+			gulp.src(src, this.gOpts)
 				.pipe(ts(this.opts))
-				.pipe(this.pkgs.gulp.dest(this.PATHS.dist))
+				.pipe(gulp.dest(this.PATHS.dist))
 				.on('end', () => resolve())
 		})
 		promise.then(() => {

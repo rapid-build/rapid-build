@@ -1,7 +1,9 @@
 /* @class Singleton
  *******************/
+import gulp    = require('gulp')
 import coffee  = require('gulp-coffee')
 import plumber = require('gulp-plumber')
+import Promise = require('bluebird')
 import Vinyl   = require('vinyl')
 import Task from './../Task';
 
@@ -22,11 +24,11 @@ class Singleton extends Task {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		var promise = new this.pkgs.Promise((resolve, reject) => {
-			this.pkgs.gulp.src(src, this.gOpts)
+		var promise = new Promise((resolve, reject) => {
+			gulp.src(src, this.gOpts)
 				.pipe(plumber())
 				.pipe(coffee(this.opts))
-				.pipe(this.pkgs.gulp.dest(this.PATHS.dist))
+				.pipe(gulp.dest(this.PATHS.dist))
 				.on('end', () => resolve())
 		})
 		promise.then(() => {

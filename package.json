@@ -23,7 +23,8 @@
 	"preferGlobal": true,
 	"main": "./",
 	"bin": {
-		"rapid-build": "bin/build.js"
+		"rapid-build": "bin/build.js",
+		"rapid-build-ts": "bin/build-ts.js"
 	},
 	"directories": {
 		"lib": "./lib",

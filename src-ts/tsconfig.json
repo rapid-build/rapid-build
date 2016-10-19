@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"target": "es5",
+		"traceResolution": true,
+		"lib": [
+			"es5",
+			"es2015.promise"
+		]
+	},
+	"include": [
+		"**/*.ts"
+	]
+}

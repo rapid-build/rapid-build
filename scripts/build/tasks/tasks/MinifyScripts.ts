@@ -1,6 +1,8 @@
 /* @class Singleton
  *******************/
-import path   = require('path')
+import gulp    = require('gulp')
+import path    = require('path')
+import Promise = require('bluebird')
 import uglify = require('gulp-uglify')
 import Task from './../Task';
 
@@ -17,14 +19,14 @@ class Singleton extends Task {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		var promise = new this.pkgs.Promise((resolve, reject) => {
-			this.pkgs.gulp.src(src, this.gOpts)
+		var promise = new Promise((resolve, reject) => {
+			gulp.src(src, this.gOpts)
 				.pipe(uglify(this.opts))
 				.on('error', e => {
 					e.message += `\nFile: ${e.cause.filename}`
 					return reject(e);
 				})
-				.pipe(this.pkgs.gulp.dest(this.PATHS.dist))
+				.pipe(gulp.dest(this.PATHS.dist))
 				.on('end', () => resolve())
 		})
 		promise.then(() => {

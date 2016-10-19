@@ -1,8 +1,9 @@
 /* @class Singleton
  *******************/
-import path  = require('path')
-import watch = require('gulp-watch')
-import Vinyl = require('vinyl')
+import path    = require('path')
+import watch   = require('gulp-watch')
+import Promise = require('bluebird')
+import Vinyl   = require('vinyl')
 import Task         from './../Task';
 import ModuleCache  from './../../helpers/ModuleCache';
 import IWatchStream from "./../../interfaces/IWatchStream";
@@ -21,7 +22,7 @@ class Singleton extends Task {
 	/* Public Methods
 	 *****************/
 	run() {
-		var promise = new this.pkgs.Promise((resolve, reject) => {
+		var promise = new Promise((resolve, reject) => {
 			this.watcher = watch(this.PATHS.build, (file: Vinyl) => {
 				this.emitBuildRestart(file)
 				this.clearBuildCache()
