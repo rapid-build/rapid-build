@@ -1,9 +1,9 @@
 /* PACKAGE ENTRY SCRIPT
  * package.json's main field value
  **********************************/
-require('./bootstrap');
+import bootstrap from './bootstrap'
 
 module.exports = () => {
-	console.log('Hello New Build!')
+	bootstrap.run()
 
 }
