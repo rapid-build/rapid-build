@@ -43,7 +43,8 @@ class Singleton extends Task {
 	 ******************/
 	private addListeners() {
 		var glob: string[];
-		var typings: string = `${this.PATHS.src}/{defs,typings}/**/*.ts`;
+		// was `${this.PATHS.src}/{defs,typings}/**/*.ts`: TODO(fix this)
+		var typings: string = this.srcGlob[0];
 
 		this.eventEmitter.on(this.EVENTS.change.ts, (file: Vinyl) => {
 			glob = [].concat(file.path, typings);

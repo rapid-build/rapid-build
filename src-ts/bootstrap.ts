@@ -3,6 +3,7 @@
 require('./bootstrap/colors')
 require('./bootstrap/polyfills')
 import env from './bootstrap/env'
+import PATHS from './constants/PATHS'
 
 class Singleton {
 	private static instance: Singleton;
@@ -11,6 +12,9 @@ class Singleton {
 	 **************/
 	private constructor() {
 		env.set()
+		// console.log(PATHS)
+		// console.log(PATHS.rb)
+		// console.log(PATHS.app)
 		// console.log(env.name)
 		// console.log(env.isTest)
 		// env.set('prod')

@@ -1,19 +1,9 @@
-interface IBuildTypes {
-	readonly default:        string;
-	readonly dev:            string;
-	readonly devTest:        string;
-	readonly devTestClient:  string;
-	readonly devTestServer:  string;
-	readonly prod:           string;
-	readonly prodServer:     string;
-	readonly prodTest:       string;
-	readonly prodTestClient: string;
-	readonly prodTestServer: string;
-	readonly test:           string;
-	readonly testClient:     string;
-	readonly testServer:     string;
-}
+/* BUILDS CONSTANT
+ ******************/
+import IBuildTypes from './../interfaces/IBuildTypes'
 
+/* Constants
+ ************/
 const TYPES: IBuildTypes = {
 	default:        'default',
 	dev:            'dev',
