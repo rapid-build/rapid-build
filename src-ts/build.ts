@@ -1,10 +1,10 @@
 /* @class Singleton
  *******************/
 import { async, await } from 'asyncawait'
-import Base         from './classes/Base'
-import devBuild     from './builds/devBuild'
-import prodBuild    from './builds/prodBuild'
-import defaultBuild from './builds/defaultBuild'
+import Base         from './common/Base'
+import devBuild     from './builds/dev-build'
+import prodBuild    from './builds/prod-build'
+import defaultBuild from './builds/default-build'
 
 class Singleton extends Base {
 	private static instance: Singleton;

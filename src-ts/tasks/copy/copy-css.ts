@@ -2,7 +2,7 @@
  *******************/
 import gulp  = require('gulp')
 import Vinyl = require('vinyl')
-import Base from './../../classes/Base'
+import Base from './../../common/Base'
 import ITask from './../../interfaces/Itask'
 
 class Singleton extends Base implements ITask {
@@ -18,7 +18,7 @@ class Singleton extends Base implements ITask {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		var dest = this.paths.app.dist.client.scripts.path;
+		var dest = this.paths.app.dist.client.styles.path;
 
 		var promise = new Promise((resolve, reject) => {
 			gulp.src(src, this.gOpts)
@@ -26,7 +26,7 @@ class Singleton extends Base implements ITask {
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
-			return console.log('copied js to client dist'.minor)
+			return console.log('copied css to client dist'.minor)
 		})
 		return promise;
 	}
@@ -34,11 +34,11 @@ class Singleton extends Base implements ITask {
 	/* Getters and Setters
 	 **********************/
 	private get gOpts(): {} {
-		return { base: this.paths.app.src.client.scripts.path }
+		return { base: this.paths.app.src.client.styles.path }
 	}
 	private get srcGlob(): string[] {
 		return [
-			`${this.paths.app.src.client.scripts.path}/**/*.js`,
+			`${this.paths.app.src.client.styles.path}/**/*.css`,
 		]
 	}
 }

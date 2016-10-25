@@ -1,10 +1,10 @@
 /* @class Singleton
  *******************/
 import { async, await } from 'asyncawait'
-import Base      from './../classes/Base'
-import cleanDist from './clean/cleanDist';
-import copyJS    from './copy/copyJS';
-import copyCSS   from './copy/copyCSS';
+import Base      from './../common/Base'
+import cleanDist from './clean/clean-dist';
+import copyJS    from './copy/copy-js';
+import copyCSS   from './copy/copy-css';
 import ITask from './../interfaces/Itask'
 
 class Singleton extends Base implements ITask {

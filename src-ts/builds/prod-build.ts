@@ -1,8 +1,8 @@
 /* @class Singleton
  *******************/
 import { async, await } from 'asyncawait'
-import Base     from './../classes/Base'
-import cmnTasks from './../tasks/cmnTasks'
+import Base     from './../common/Base'
+import cmnTasks from './../tasks/cmn-tasks'
 
 class Singleton extends Base {
 	private static instance: Singleton;

@@ -1,7 +1,7 @@
 /* @class Singleton
  *******************/
 import del = require('del')
-import Base from './../../classes/Base'
+import Base from './../../common/Base'
 import ITask from './../../interfaces/Itask'
 
 class Singleton extends Base implements ITask {
