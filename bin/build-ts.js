@@ -1,45 +1,41 @@
 #! /usr/bin/env node
-process.env.RB_LIB = 'dist';
-
-/* Requires
- ***********/
 var path = require('path');
 
 /* Constants
  ************/
-const BUILDS        = ['dist', 'src', 'lib'];
-const APP_PATH      = process.cwd();
-const BIN_PATH      = __dirname;
-const BUILD_PATH    = path.join(BIN_PATH, '..');
-const OLD_BIN_BUILD = path.join(BIN_PATH, 'build.js');
-
-/* Set RB_LIB and LIB_PATH
- **************************/
-var RB_LIB = process.env.RB_LIB;
-	RB_LIB = typeof RB_LIB === 'string' ? RB_LIB.toLowerCase() : RB_LIB;
-switch (RB_LIB) {
-	case BUILDS[0]: RB_LIB = BUILDS[0]; break;
-	case BUILDS[1]: RB_LIB = BUILDS[1]; break;
-	default:        RB_LIB = BUILDS[2];
-}
-const LIB_PATH = path.join(BUILD_PATH, RB_LIB);
+const BIN_PATH   = __dirname;
+const BUILD_PATH = path.join(BIN_PATH, '..');
+const DIST_PATH  = path.join(BUILD_PATH, 'dist');
+var build        = require(DIST_PATH);
 
 /* Helpers
  **********/
-var logBuildMsg = msg => {
-	var div = '-----------------';
-	console.log(`${div}\nrunning ${msg} build\n${div}`.toUpperCase());
+var logBuildMsg = (msg, type, results) => {
+	var div = Array(msg.length+1).join('-'),
+		isE = type === 'error';
+		msg = `\n${msg}\n`;
+	console.log(msg[type]);
+
+	if (!isE) return // comment out to see results
+
+	if (!results) return
+	results = results instanceof Error ? results : JSON.stringify(results, null, '\t');
+	type    = type === 'error' ? 'error' : 'log';
+	console[type](results)
+	console.log('\n')
 }
 
-/* Run Old Build
- ****************/
-if (RB_LIB === BUILDS[2]) {
-	logBuildMsg('old');
-	return require(OLD_BIN_BUILD);
-}
-
-/* Run New Build (return promise)
- *********************************/
-logBuildMsg('new');
-var build = require(LIB_PATH)();
-return build;
+/* Run Build (returns promise)
+ * Run one of the following in the terminal:
+ * build
+ * build test | test:client | test:server
+ * build dev  | dev:test    | dev:test:client  | dev:test:server
+ * build prod | prod:test   | prod:test:client | prod:test:server | prod:server
+ *******************************************************************************/
+return build()
+.then((results) => {
+	logBuildMsg('Build Complete!', 'attn', results);
+})
+.catch((error) => {
+	logBuildMsg('Build Failed', 'error', error);
+});;

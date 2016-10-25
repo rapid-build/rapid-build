@@ -1,10 +1,6 @@
-/* BOOTSTRAP
- ************/
-require('./bootstrap/colors')
-require('./bootstrap/polyfills')
-import env   from './bootstrap/env'
-import paths from './bootstrap/paths'
-import log   from './utils/log'
+/* @class Singleton
+ *******************/
+import PATHS from '../constants/PATHS'
 
 class Singleton {
 	private static instance: Singleton;
@@ -12,8 +8,8 @@ class Singleton {
 	/* Constructor
 	 **************/
 	private constructor() {
-		env.set()
-		paths.init()
+		PATHS // init PATHS
+		// console.log('paths initialized'.minor)
 	}
 	static getInstance() {
 		if (this.instance) return this.instance;
@@ -22,11 +18,14 @@ class Singleton {
 
 	/* Public Methods
 	 *****************/
-	run(): this {
-		log.msgDivs(`Running Build: ${env.name}`, 'attn')
-		console.log('bootstrap complete'.minor)
-		return this
+	init(): this { // called once in bootstrap.ts
+	 	return this
 	}
+
+	get() {
+	 	return PATHS
+	}
+
 }
 
 /* Export Singleton

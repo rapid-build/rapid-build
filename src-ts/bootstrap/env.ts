@@ -8,6 +8,10 @@ class Singleton {
 
 	/* Constructor
 	 **************/
+	private constructor() {
+		BUILDS // init BUILDS
+		// console.log('env set'.minor)
+	}
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new Singleton()

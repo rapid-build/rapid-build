@@ -25,7 +25,16 @@ const APP_PATHS: IAppPaths = {
 		dist: {
 			path: join(APP, 'dist'),
 			client: {
-				path: join(APP, 'dist', 'client')
+				path: join(APP, 'dist', 'client'),
+				bower:        { path: join(APP, 'dist', 'client', 'bower_components') },
+				images:       { path: join(APP, 'dist', 'client', 'images') },
+				libs:         { path: join(APP, 'dist', 'client', 'libs') },
+				node_modules: { path: join(APP, 'dist', 'client', 'node_modules') },
+				scripts:      { path: join(APP, 'dist', 'client', 'scripts') },
+				styles:       { path: join(APP, 'dist', 'client', 'styles') },
+				test:         { path: join(APP, 'dist', 'client', 'test') },
+				typings:      { path: join(APP, 'dist', 'client', 'typings') },
+				views:        { path: join(APP, 'dist', 'client', 'views') }
 			},
 			server: {
 				path: join(APP, 'dist', 'server')
@@ -34,7 +43,16 @@ const APP_PATHS: IAppPaths = {
 		src: {
 			path: join(APP, 'src'),
 			client: {
-				path: join(APP, 'src', 'client')
+				path: join(APP, 'src', 'client'),
+				bower:        { path: join(APP, 'src', 'client', 'bower_components') },
+				images:       { path: join(APP, 'src', 'client', 'images') },
+				libs:         { path: join(APP, 'src', 'client', 'libs') },
+				node_modules: { path: join(APP, 'src', 'client', 'node_modules') },
+				scripts:      { path: join(APP, 'src', 'client', 'scripts') },
+				styles:       { path: join(APP, 'src', 'client', 'styles') },
+				test:         { path: join(APP, 'src', 'client', 'test') },
+				typings:      { path: join(APP, 'src', 'client', 'typings') },
+				views:        { path: join(APP, 'src', 'client', 'views') }
 			},
 			server: {
 				path: join(APP, 'src', 'server')
@@ -47,3 +65,6 @@ const APP_PATHS: IAppPaths = {
  ************/
 const PATHS = Object.assign(RB_PATHS, APP_PATHS) // merge objects
 export default PATHS
+
+
+
