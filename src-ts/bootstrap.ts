@@ -11,10 +11,6 @@ class Singleton {
 
 	/* Constructor
 	 **************/
-	private constructor() {
-		env.set()
-		paths.init()
-	}
 	static getInstance() {
 		if (this.instance) return this.instance;
 		return this.instance = new Singleton()

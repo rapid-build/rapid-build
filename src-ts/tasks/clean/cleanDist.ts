@@ -2,8 +2,9 @@
  *******************/
 import del = require('del')
 import Base from './../../classes/Base'
+import ITask from './../../interfaces/Itask'
 
-class Singleton extends Base {
+class Singleton extends Base implements ITask {
 	private static instance: Singleton;
 
 	/* Constructor

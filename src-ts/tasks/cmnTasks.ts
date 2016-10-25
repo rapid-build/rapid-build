@@ -5,8 +5,9 @@ import Base      from './../classes/Base'
 import cleanDist from './clean/cleanDist';
 import copyJS    from './copy/copyJS';
 import copyCSS   from './copy/copyCSS';
+import ITask from './../interfaces/Itask'
 
-class Singleton extends Base {
+class Singleton extends Base implements ITask {
 	private static instance: Singleton;
 
 	/* Constructor

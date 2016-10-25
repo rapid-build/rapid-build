@@ -5,8 +5,8 @@ import paths from './../bootstrap/paths';
 import env   from './../bootstrap/env'
 
 class Base {
-	protected env   = env
-	protected paths = paths.get()
+	readonly env = env;
+	readonly paths = paths.paths;	
 }
 
 /* Export It!

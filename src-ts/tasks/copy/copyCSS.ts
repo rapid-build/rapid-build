@@ -3,8 +3,9 @@
 import gulp  = require('gulp')
 import Vinyl = require('vinyl')
 import Base from './../../classes/Base'
+import ITask from './../../interfaces/Itask'
 
-class Singleton extends Base {
+class Singleton extends Base implements ITask {
 	private static instance: Singleton;
 
 	/* Constructor

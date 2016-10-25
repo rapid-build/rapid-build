@@ -10,6 +10,7 @@ class Singleton {
 	 **************/
 	private constructor() {
 		BUILDS // init BUILDS
+		this.set()
 		// console.log('env set'.minor)
 	}
 	static getInstance() {
@@ -19,7 +20,7 @@ class Singleton {
 
 	/* Public Methods
 	 *****************/
-	set(buildType: string = process.argv[2]): this { // called in bootstrap.ts
+	private set(buildType: string = process.argv[2]): this { // called in bootstrap.ts
 		if (typeof buildType !== 'string') return this
 		buildType = buildType.toLowerCase()
 		for (let [key, val] of Object.entries(BUILDS.types)) {
@@ -27,7 +28,6 @@ class Singleton {
 			this._name = val
 			break
 		}
-	 	return this
 	}
 
 	/* Getters and Setters
