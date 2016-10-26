@@ -2,8 +2,8 @@
  *******************/
 import gulp  = require('gulp')
 import Vinyl = require('vinyl')
-import Base from './../../common/Base'
-import ITask from './../../interfaces/Itask'
+import Base from './../../../common/Base'
+import ITask from './../../../interfaces/Itask'
 
 class Singleton extends Base implements ITask {
 	private static instance: Singleton;
@@ -26,7 +26,7 @@ class Singleton extends Base implements ITask {
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
-			return console.log('copied js to client dist'.minor)
+			return console.log('copied js to /dist/client'.minor)
 		})
 		return promise;
 	}
