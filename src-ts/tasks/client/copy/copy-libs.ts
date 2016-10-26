@@ -1,9 +1,6 @@
 /* @class Singleton
  *******************/
-import gulp    = require('gulp')
-import babel   = require('gulp-babel')
-import es2015  = require('babel-preset-es2015')
-import plumber = require('gulp-plumber')
+import gulp = require('gulp')
 import Base  from './../../../common/Base'
 import ITask from './../../../interfaces/ITask'
 
@@ -22,31 +19,26 @@ class Singleton extends Base implements ITask {
 	run(src: string[] | string = this.srcGlob) {
 		var promise = new Promise((resolve, reject) => {
 			gulp.src(src, this.gOpts)
-				.pipe(plumber())
-				.pipe(babel(this.opts))
 				.pipe(gulp.dest(this.dest))
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
-			return console.log('compiled es6 to /dist/client'.minor)
+			return console.log('copied libs to /dist/client'.minor)
 		})
 		return promise;
 	}
 
 	/* Getters and Setters
 	 **********************/
-	private get opts() {
-		return { presets: [ es2015 ] } // performance hit (es2015)
-	}
 	private get gOpts() {
-		return { base: this.paths.app.src.client.scripts.path }
+		return { base: this.paths.app.src.client.libs.path }
 	}
 	private get dest() {
-		return this.paths.app.dist.client.scripts.path
+		return this.paths.app.dist.client.libs.path;
 	}
 	private get srcGlob() {
 		return [
-			`${this.paths.app.src.client.scripts.path}/**/*.es6`,
+			`${this.paths.app.src.client.libs.path}/**`,
 		]
 	}
 }
@@ -54,4 +46,5 @@ class Singleton extends Base implements ITask {
 /* Export Singleton
  *******************/
 export default Singleton.getInstance()
+
 

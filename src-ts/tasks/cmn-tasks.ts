@@ -6,6 +6,7 @@ import ITask     from './../interfaces/ITask'
 import cleanDist from './common/clean/clean-dist';
 import copyJS    from './client/copy/copy-js';
 import copyCSS   from './client/copy/copy-css';
+import copyLibs  from './client/copy/copy-libs';
 import es6       from './client/compile/es6';
 import coffee    from './client/compile/coffee';
 
@@ -31,8 +32,9 @@ class Singleton extends Base implements ITask {
 						es6:    es6.run()
 					},
 					copy: {
-						css: copyCSS.run(),
-						js:  copyJS.run()
+						css:  copyCSS.run(),
+						js:   copyJS.run(),
+						libs: copyLibs.run()
 					}
 				})
 			}
