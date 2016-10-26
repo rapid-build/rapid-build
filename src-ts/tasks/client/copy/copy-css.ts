@@ -1,8 +1,7 @@
 /* @class Singleton
  *******************/
-import gulp  = require('gulp')
-import Vinyl = require('vinyl')
-import Base from './../../../common/Base'
+import gulp = require('gulp')
+import Base  from './../../../common/Base'
 import ITask from './../../../interfaces/Itask'
 
 class Singleton extends Base implements ITask {
@@ -18,11 +17,9 @@ class Singleton extends Base implements ITask {
 	/* Public Methods
 	 *****************/
 	run(src: string[] | string = this.srcGlob) {
-		var dest = this.paths.app.dist.client.styles.path;
-
 		var promise = new Promise((resolve, reject) => {
 			gulp.src(src, this.gOpts)
-				.pipe(gulp.dest(dest))
+				.pipe(gulp.dest(this.dest))
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
@@ -35,6 +32,9 @@ class Singleton extends Base implements ITask {
 	 **********************/
 	private get gOpts(): {} {
 		return { base: this.paths.app.src.client.styles.path }
+	}
+	private get dest(): string {
+		return this.paths.app.dist.client.styles.path;
 	}
 	private get srcGlob(): string[] {
 		return [
