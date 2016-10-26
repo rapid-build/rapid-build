@@ -26,10 +26,10 @@ class Singleton extends Base implements ITask {
 
 	/* Getters and Setters
 	 **********************/
-	private get opts(): {} {
+	private get opts() {
 		return { force: true }
 	}
-	private get srcGlob(): string[] {
+	private get srcGlob() {
 		return [ this.paths.app.dist.path ]
 	}
 }

@@ -1,6 +1,7 @@
 {
   "globalDependencies": {
     "gulp": "registry:dt/gulp#3.8.0+20160907112908",
+    "gulp-babel": "registry:dt/gulp-babel#6.1.0+20160316171810",
     "gulp-plumber": "registry:dt/gulp-plumber#0.0.0+20160316155526",
     "gulp-typescript": "registry:dt/gulp-typescript#0.0.0+20160317120654",
     "gulp-uglify": "registry:dt/gulp-uglify#0.0.0+20160826020907",

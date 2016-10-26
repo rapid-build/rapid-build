@@ -6,6 +6,7 @@ import ITask     from './../interfaces/ITask'
 import cleanDist from './common/clean/clean-dist';
 import copyJS    from './client/copy/copy-js';
 import copyCSS   from './client/copy/copy-css';
+import es6       from './client/compile/es6';
 import coffee    from './client/compile/coffee';
 
 class Singleton extends Base implements ITask {
@@ -26,7 +27,8 @@ class Singleton extends Base implements ITask {
 				cleanDist: await(cleanDist.run()),
 				client: await({
 					compile: {
-						coffee: coffee.run()
+						coffee: coffee.run(),
+						es6:    es6.run()
 					},
 					copy: {
 						css: copyCSS.run(),

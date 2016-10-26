@@ -30,13 +30,13 @@ class Singleton extends Base implements ITask {
 
 	/* Getters and Setters
 	 **********************/
-	private get gOpts(): {} {
+	private get gOpts() {
 		return { base: this.paths.app.src.client.scripts.path }
 	}
-	private get dest(): string {
+	private get dest() {
 		return this.paths.app.dist.client.scripts.path;
 	}
-	private get srcGlob(): string[] {
+	private get srcGlob() {
 		return [
 			`${this.paths.app.src.client.scripts.path}/**/*.js`,
 		]
