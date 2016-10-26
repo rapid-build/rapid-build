@@ -2,7 +2,7 @@
  *******************/
 import { async, await } from 'asyncawait'
 import Base      from './../common/Base'
-import ITask     from './../interfaces/Itask'
+import ITask     from './../interfaces/ITask'
 import cleanDist from './common/clean/clean-dist';
 import copyJS    from './client/copy/copy-js';
 import copyCSS   from './client/copy/copy-css';

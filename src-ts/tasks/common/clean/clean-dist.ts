@@ -2,7 +2,7 @@
  *******************/
 import del = require('del')
 import Base  from './../../../common/Base'
-import ITask from './../../../interfaces/Itask'
+import ITask from './../../../interfaces/ITask'
 
 class Singleton extends Base implements ITask {
 	private static instance: Singleton;
