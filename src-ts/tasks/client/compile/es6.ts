@@ -28,7 +28,7 @@ class Singleton extends Base implements ITask {
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
-			return console.log('compiled es6 to /dist/client'.minor)
+			return console.log('compiled es6 to /dist/client/scripts'.minor)
 		})
 		return promise;
 	}
@@ -36,7 +36,7 @@ class Singleton extends Base implements ITask {
 	/* Getters and Setters
 	 **********************/
 	private get opts() {
-		return { presets: [ es2015 ] } // performance hit (es2015)
+		return { presets: [ es2015 ] } // big performance hit (es2015)
 	}
 	private get gOpts() {
 		return { base: this.paths.app.src.client.scripts.path }

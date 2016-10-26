@@ -1,14 +1,16 @@
 /* @class Singleton
  *******************/
 import { async, await } from 'asyncawait'
-import Base      from './../common/Base'
-import ITask     from './../interfaces/ITask'
-import cleanDist from './common/clean/clean-dist';
-import copyJS    from './client/copy/copy-js';
-import copyCSS   from './client/copy/copy-css';
-import copyLibs  from './client/copy/copy-libs';
-import es6       from './client/compile/es6';
-import coffee    from './client/compile/coffee';
+import Base       from './../common/Base'
+import ITask      from './../interfaces/ITask'
+import cleanDist  from './common/clean/clean-dist';
+import copyCSS    from './client/copy/copy-css';
+import copyHtml   from './client/copy/copy-html';
+import copyImages from './client/copy/copy-images';
+import copyJS     from './client/copy/copy-js';
+import copyLibs   from './client/copy/copy-libs';
+import es6        from './client/compile/es6';
+import coffee     from './client/compile/coffee';
 
 class Singleton extends Base implements ITask {
 	private static instance: Singleton;
@@ -32,9 +34,11 @@ class Singleton extends Base implements ITask {
 						es6:    es6.run()
 					},
 					copy: {
-						css:  copyCSS.run(),
-						js:   copyJS.run(),
-						libs: copyLibs.run()
+						css:    copyCSS.run(),
+						html:   copyHtml.run(),
+						images: copyImages.run(),
+						js:     copyJS.run(),
+						libs:   copyLibs.run()
 					}
 				})
 			}

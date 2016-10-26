@@ -23,7 +23,7 @@ class Singleton extends Base implements ITask {
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
-			return console.log('copied js to /dist/client'.minor)
+			return console.log('copied js to /dist/client/scripts'.minor)
 		})
 		return promise;
 	}

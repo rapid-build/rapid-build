@@ -23,7 +23,7 @@ class Singleton extends Base implements ITask {
 				.on('end', () => resolve(true))
 		})
 		promise.then(() => {
-			return console.log('copied css to /dist/client/styles'.minor)
+			return console.log('copied html to /dist/client/views'.minor)
 		})
 		return promise;
 	}
@@ -31,14 +31,14 @@ class Singleton extends Base implements ITask {
 	/* Getters and Setters
 	 **********************/
 	private get gOpts() {
-		return { base: this.paths.app.src.client.styles.path }
+		return { base: this.paths.app.src.client.views.path }
 	}
 	private get dest() {
-		return this.paths.app.dist.client.styles.path;
+		return this.paths.app.dist.client.views.path;
 	}
 	private get srcGlob() {
 		return [
-			`${this.paths.app.src.client.styles.path}/**/*.css`,
+			`${this.paths.app.src.client.views.path}/**/*.html`,
 		]
 	}
 }
