@@ -1,8 +1,7 @@
 /* @class Singleton
  *******************/
-import gulp    = require('gulp')
-import Promise = require('bluebird')
-import Vinyl   = require('vinyl')
+import gulp  = require('gulp')
+import Vinyl = require('vinyl')
 import Task from './../Task';
 
 class Singleton extends Task {

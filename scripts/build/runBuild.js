@@ -4,7 +4,8 @@
  *******************************************/
 module.exports = () => {
 	require('./bootstrap/add-colors');
-	var Build = require('./Build').default
+	require('./bootstrap/polyfills');
 
+	var Build = require('./Build').default
 	return Build.run()
 }

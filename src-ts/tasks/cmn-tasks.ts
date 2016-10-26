@@ -24,8 +24,10 @@ class Singleton extends Base implements ITask {
 			var results = {
 				cleanDist: await(cleanDist.run()),
 				copy: await({
-					css: copyCSS.run(),
-					js:  copyJS.run()
+					client: {
+						css: copyCSS.run(),
+						js:  copyJS.run()
+					}
 				})
 			}
 			return results

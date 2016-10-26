@@ -4,7 +4,6 @@ import typescript = require('typescript')
 import path       = require('path')
 import gulp       = require('gulp')
 import ts         = require('gulp-typescript')
-import Promise    = require('bluebird')
 import Vinyl      = require('vinyl')
 import Task from './../Task';
 

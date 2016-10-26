@@ -1,8 +1,7 @@
 /* @class Singleton
  *******************/
-import gulp    = require('gulp')
-import path    = require('path')
-import Promise = require('bluebird')
+import gulp   = require('gulp')
+import path   = require('path')
 import uglify = require('gulp-uglify')
 import Task from './../Task';
 

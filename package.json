@@ -37,7 +37,8 @@
 		"create-lib": "node scripts/create-lib",
 		"prepublish": "npm run create-lib",
 		"test": "node test",
-		"deploy-docs-ci": "node scripts/deploy-docs ci"
+		"deploy-docs-ci": "node scripts/deploy-docs ci",
+		"typings": "cd scripts/build/ && typings prune && typings install && cd ../../src-ts/ && typings prune && typings install"
 	},
 	"devDependencies": {
 		"bluebird": "3.4.6",

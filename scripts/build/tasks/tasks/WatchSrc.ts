@@ -1,9 +1,8 @@
 /* @class Singleton
  *******************/
-import path    = require('path')
-import watch   = require('gulp-watch')
-import Promise = require('bluebird')
-import Vinyl   = require('vinyl')
+import path  = require('path')
+import watch = require('gulp-watch')
+import Vinyl = require('vinyl')
 import Task         from './../Task';
 import IWatchStream from "./../../interfaces/IWatchStream";
 
