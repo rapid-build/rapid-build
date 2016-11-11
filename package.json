@@ -116,7 +116,8 @@
 		"vinyl-source-stream": "1.1.0",
 		"watchify": "3.7.0",
 		"asyncawait": "1.0.6",
-		"core-js": "2.4.1"
+		"core-js": "2.4.1",
+		"vinyl": "2.0.0"
 	},
 	"keywords": [
 		"build system",

@@ -9,8 +9,9 @@ import copyHtml   from './client/copy/copy-html';
 import copyImages from './client/copy/copy-images';
 import copyJS     from './client/copy/copy-js';
 import copyLibs   from './client/copy/copy-libs';
-import es6        from './client/compile/es6';
 import coffee     from './client/compile/coffee';
+import es6        from './client/compile/es6';
+import less       from './client/compile/less';
 
 class Singleton extends Base implements ITask {
 	private static instance: Singleton;
@@ -31,7 +32,8 @@ class Singleton extends Base implements ITask {
 				client: await({
 					compile: {
 						coffee: coffee.run(),
-						es6:    es6.run()
+						es6:    es6.run(),
+						less:   less.run()
 					},
 					copy: {
 						css:    copyCSS.run(),

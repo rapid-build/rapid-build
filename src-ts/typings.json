@@ -2,12 +2,14 @@
   "globalDependencies": {
     "gulp": "registry:dt/gulp#3.8.0+20160907112908",
     "gulp-babel": "registry:dt/gulp-babel#6.1.0+20160316171810",
+    "gulp-less": "registry:dt/gulp-less#0.0.0+20160316155526",
     "gulp-plumber": "registry:dt/gulp-plumber#0.0.0+20160316155526",
     "gulp-typescript": "registry:dt/gulp-typescript#0.0.0+20160317120654",
     "gulp-uglify": "registry:dt/gulp-uglify#0.0.0+20160826020907",
     "gulp-watch": "registry:dt/gulp-watch#4.1.1+20160316155526",
     "node": "registry:env/node#6.0.0+20160918225031",
     "source-map": "registry:dt/source-map#0.0.0+20161003134342",
+    "through2": "registry:dt/through2#2.0.0+20160926145203",
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526"
   },
   "dependencies": {
