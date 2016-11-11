@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build",
-	"version": "0.69.2",
+	"version": "0.69.3",
 	"tasksPrefix": "rb-",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
 	"homepage": "http://rapid-build.io/",
@@ -51,7 +51,7 @@
 		"ts-node": "1.6.0"
 	},
 	"dependencies": {
-		"babel-preset-es2015": "6.16.0",
+		"babel-preset-es2015": "6.18.0",
 		"body-parser": "1.15.2",
 		"bower": "1.7.9",
 		"browser-sync": "2.17.5",
@@ -112,7 +112,7 @@
 		"sha1": "1.1.1",
 		"through2": "2.0.1",
 		"tsify": "2.0.2",
-		"typescript": "2.0.6",
+		"typescript": "2.0.9",
 		"vinyl-source-stream": "1.1.0",
 		"watchify": "3.7.0",
 		"asyncawait": "1.0.6",

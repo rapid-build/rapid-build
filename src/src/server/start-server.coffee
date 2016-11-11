@@ -16,19 +16,25 @@ process.env.NODE_ENV = 'production' if config.env.is.prod
 server = {}
 server.express    = express
 server.app        = server.express()
-server.middleware = { bodyParser }
+server.middleware = {}
 server.paths      = client: clientDirPath, server: serverDirPath
 server.server     = require('./defaults/app-listener') server, config
 
-# load defaults
-# =============
+# load default settings
+# =====================
 require('./defaults/app-settings') server, config
-require('./defaults/app-middleware') server, config
 
-# load optional http proxy
-# ========================
-proxyFilePath = path.join dir, 'options', 'http-proxy.js'
-require(proxyFilePath) server.app, config if config.httpProxy.length
+# load optional http proxy middleware (must go before bodyParser)
+# ===================================
+if config.httpProxy.length
+	proxyFilePath = path.join dir, 'options', 'http-proxy.js'
+	httpProxy     = require(proxyFilePath) server.app, config
+	server.middleware.httpProxy = httpProxy
+
+# load default middleware
+# =======================
+server.middleware.bodyParser = bodyParser
+require('./defaults/app-middleware') server, config
 
 # load optional app server dist entry script
 # ==========================================
