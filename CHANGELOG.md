@@ -1,3 +1,12 @@
+## [0.69.3](https://github.com/jyounce/rapid-build/compare/v0.69.2...v0.69.3) (2016-11-11)
+
+
+### Bug Fixes
+
+* **server:** build option httpProxy, fix http verbs like put and post from not working when using httpProxy ([d06e4bc](https://github.com/jyounce/rapid-build/commit/d06e4bc))
+
+
+
 ## [0.69.2](https://github.com/jyounce/rapid-build/compare/v0.69.1...v0.69.2) (2016-10-18)
 
 
