@@ -86,7 +86,7 @@
 		"gulp-typescript": "2.13.6",
 		"gulp-uglify": "2.0.0",
 		"gulp-util": "3.0.7",
-		"gulp-watch": "4.3.10",
+		"gulp-watch": "4.3.11",
 		"http-proxy-middleware": "0.17.2",
 		"jasmine": "2.5.1",
 		"jasmine-core": "2.5.1",
