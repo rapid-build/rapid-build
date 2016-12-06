@@ -1,3 +1,12 @@
+## [0.69.4](https://github.com/jyounce/rapid-build/compare/v0.69.3...v0.69.4) (2016-12-06)
+
+
+### Bug Fixes
+
+* **windows watch:** fix script file types from not being moved to dist on the dev build's file watch ([829ee63](https://github.com/jyounce/rapid-build/commit/829ee63))
+
+
+
 ## [0.69.3](https://github.com/jyounce/rapid-build/compare/v0.69.2...v0.69.3) (2016-11-11)
 
 

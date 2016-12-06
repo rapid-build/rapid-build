@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build",
-	"version": "0.69.3",
+	"version": "0.69.4",
 	"tasksPrefix": "rb-",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
 	"homepage": "http://rapid-build.io/",
