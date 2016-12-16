@@ -240,7 +240,7 @@ rapid-build.json (build options - can be cson, json or js file)
 5. run server tests using [jasmine](http://jasmine.github.io/)
 
 ## Develop Rapidly!
-![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build/master/docs/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
+![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build-docs/master/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
 
 ## Known Issues
 These are either being worked on or on the todo list.

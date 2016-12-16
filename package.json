@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build",
-	"version": "0.69.3",
+	"version": "0.69.4",
 	"tasksPrefix": "rb-",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
 	"homepage": "http://rapid-build.io/",
@@ -37,7 +37,6 @@
 		"create-lib": "node scripts/create-lib",
 		"prepublish": "npm run create-lib",
 		"test": "node test",
-		"deploy-docs-ci": "node scripts/deploy-docs ci",
 		"typings": "cd scripts/build/ && typings prune && typings install && cd ../../src-ts/ && typings prune && typings install"
 	},
 	"devDependencies": {
@@ -90,7 +89,7 @@
 		"gulp-typescript": "2.13.6",
 		"gulp-uglify": "2.0.0",
 		"gulp-util": "3.0.7",
-		"gulp-watch": "4.3.10",
+		"gulp-watch": "4.3.11",
 		"http-proxy-middleware": "0.17.2",
 		"jasmine": "2.5.1",
 		"jasmine-core": "2.5.1",
