@@ -41,7 +41,3 @@ generated/**/*
 !extra/temp/.gitkeep
 !generated/.gitkeep
 
-# docs
-# ====
-/docs/dist.zip
-

@@ -34,8 +34,7 @@
 		"bump": "node scripts/bump",
 		"create-lib": "node scripts/create-lib",
 		"prepublish": "npm run create-lib",
-		"test": "node test",
-		"deploy-docs-ci": "node scripts/deploy-docs ci"
+		"test": "node test"
 	},
 	"devDependencies": {
 		"asyncawait": "1.0.6",
