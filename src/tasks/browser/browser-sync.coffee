@@ -54,7 +54,6 @@ module.exports =
 			open:    config.browser.open
 			files:   config.glob.browserSync.files
 			proxy:   "http://localhost:#{config.ports.server}/"
-			browser: 'google chrome'
 			injectChanges: false # don't try to inject css changes, just do a page refresh
 			reloadDebounce: 150  # windows fix for bundle reload (milliseconds)
 			watchOptions:
