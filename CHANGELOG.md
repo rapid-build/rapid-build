@@ -1,3 +1,12 @@
+## [0.69.5](https://github.com/jyounce/rapid-build/compare/v0.69.4...v0.69.5) (2016-12-22)
+
+
+### Bug Fixes
+
+* **windows:** from not opening google chrome browser on dev build, now defaults to opening default browser ([e3496ea](https://github.com/jyounce/rapid-build/commit/e3496ea))
+
+
+
 ## [0.69.4](https://github.com/jyounce/rapid-build/compare/v0.69.3...v0.69.4) (2016-12-06)
 
 
