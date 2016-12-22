@@ -1,6 +1,7 @@
 # CREATE PKG LIB
 # ==============
 module.exports = (rbRoot) ->
+	del      = require 'del'
 	gulp     = require 'gulp'
 	coffee   = require 'gulp-coffee'
 	minifyJs = require 'gulp-uglify'
@@ -9,18 +10,20 @@ module.exports = (rbRoot) ->
 	Promise  = require 'bluebird'
 	fse      = Promise.promisifyAll require 'fs-extra'
 
-	SRC  = "#{rbRoot}/src"
-	LIB  = "#{rbRoot}/lib" # lib is created from src
+	SRC      = "#{rbRoot}/src"
+	LIB      = "#{rbRoot}/lib" # lib is created from src
+	LIB_NMS  = "#{LIB}/src/server/node_modules"
+	DEL_OPTS = force: true
 	glob =
 		lib:
-			js:     "#{LIB}/**/*.js"
-			coffee: "#{LIB}/**/*.coffee"
+			js:     ["#{LIB}/**/*.js",     "!#{LIB_NMS}/**"]
+			coffee: ["#{LIB}/**/*.coffee", "!#{LIB_NMS}/**"]
 
 	# tasks
 	# =====
 	tasks =
 		cleanLib: ->
-			fse.removeAsync(LIB).then ->
+			del(LIB, DEL_OPTS).then (_paths) ->
 				console.log 'lib cleaned'.info
 
 		copySrc: ->
@@ -44,7 +47,7 @@ module.exports = (rbRoot) ->
 				console.log 'compiled lib coffee files'.info
 
 		cleanLibCoffeeFiles: ->
-			fse.removeAsync(glob.lib.coffee).then ->
+			del(glob.lib.coffee, DEL_OPTS).then (_paths) ->
 				console.log 'cleaned lib coffee files'.info
 
 		minifyJs: ->

@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-// process.env.RB_LIB = 'src';
+process.env.RB_LIB = 'src';
 
 /* Requires
  ***********/
