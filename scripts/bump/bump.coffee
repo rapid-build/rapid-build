@@ -12,6 +12,7 @@ module.exports = (rbRoot, version) ->
 		changelog: "#{rbRoot}/changelog/changelog.coffee"
 		pkgs:
 			rb:   "#{rbRoot}/package.json"
+			src:  "#{rbRoot}/src/src/server/package.json"
 			test: "#{rbRoot}/test/app/package.json"
 
 	pkgs =
@@ -37,6 +38,7 @@ module.exports = (rbRoot, version) ->
 	# ====================
 	runTasks = async ->
 		await tasks.bumpPkg 'rb'
+		await tasks.bumpPkg 'src'
 		await tasks.bumpPkg 'test'
 		await tasks.changelog()
 

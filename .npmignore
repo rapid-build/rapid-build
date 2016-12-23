@@ -22,9 +22,14 @@ typings/
 /artifacts/
 /changelog/
 /extra/
-/scripts/
+/scripts/**
 /src/
+/src-ts/
 /test/
+
+# root file extensions
+# ====================
+/*.tgz
 
 # root files
 # ==========
@@ -37,6 +42,10 @@ typings/
 tsconfig.json
 typings.json
 generated/**/*
+
+# folder negation
+# ===============
+!/scripts/unpack/**
 
 # retain empty folder via .gitkeep
 # ================================

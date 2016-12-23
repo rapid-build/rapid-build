@@ -1,15 +1,15 @@
 {
-	"name": "web-server",
-	"version": "0.69.4",
-	"description": "Application's default web server.",
-	"scripts": {
-		"start": "node ./start-server",
-		"stop": "node ./stop-server"
-	},
-	"dependencies": {
-		"body-parser": "1.15.2",
-		"express": "4.14.0",
-		"fs-extra": "0.30.0",
-		"http-proxy-middleware": "0.17.2"
-	}
+  "name": "web-server",
+  "version": "0.69.5",
+  "description": "Application's default web server.",
+  "scripts": {
+    "start": "node start-server",
+    "stop": "node stop-server"
+  },
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "express": "4.14.0",
+    "fs-extra": "0.30.0",
+    "http-proxy-middleware": "0.17.2"
+  }
 }
