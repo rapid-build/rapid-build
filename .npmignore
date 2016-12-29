@@ -45,8 +45,15 @@ generated/**/*
 
 # folder negation
 # ===============
-!/scripts/unpack/**
+!/scripts/bootstrap/**
+!/scripts/lib/**
+!/scripts/utils/**
 
 # retain empty folder via .gitkeep
 # ================================
 !generated/.gitkeep
+
+# lib files
+# ==========
+/lib/src/server/**
+!/lib/src/server/server.tgz
