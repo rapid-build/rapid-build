@@ -5,18 +5,19 @@ module.exports = (config, options) ->
 	# defaults
 	# ========
 	dir =
-		dist:    'dist'
-		src:     'src'
-		client:  'client'
-		images:  'images'
-		bower:   'bower_components'
-		libs:    'libs'
-		server:  'server'
-		scripts: 'scripts'
-		styles:  'styles'
-		test:    'test'
-		typings: 'typings'
-		views:   'views'
+		dist:         'dist'
+		src:          'src'
+		client:       'client'
+		images:       'images'
+		bower:        'bower_components'
+		libs:         'libs'
+		server:       'server'
+		node_modules: 'node_modules'
+		scripts:      'scripts'
+		styles:       'styles'
+		test:         'test'
+		typings:      'typings'
+		views:        'views'
 
 	file =
 		appServer: 'routes.js' # app server dist entry file
@@ -77,11 +78,14 @@ module.exports = (config, options) ->
 				dirName: serverDirName
 				scripts:
 					dir: o.serverDir or dir.scripts
+				node_modules:
+					dir: dir.node_modules
 				test:
 					dir: o.serverTest or dir.test
 				typings:
 					dir: dir.typings
 		if loc is 'dist'
+			info.server.node_modules.dirName = dir.node_modules
 			delete info.client.typings
 			delete info.server.typings
 			unless isApp

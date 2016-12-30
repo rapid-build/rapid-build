@@ -64,7 +64,8 @@ module.exports = (config) ->
 	addGlob = (loc, type, langs, includeBower, includeLibs) ->
 		for own k1, v1 of glob[loc]
 			for own k2, v2 of v1
-				continue if k2 is 'server' and ['scripts','test','typings'].indexOf(type) is -1
+				continue if k2 is 'client' and type is 'node_modules'
+				continue if k2 is 'server' and ['node_modules','scripts','test','typings'].indexOf(type) is -1
 				continue if k2 is 'server' and (includeBower or includeLibs)
 				v2[type] = {} unless isType.object v2[type]
 				for v3 in langs
@@ -102,6 +103,7 @@ module.exports = (config) ->
 	addGlob 'src', 'test',    ['ts']
 	addGlob 'src', 'test',    ['es6']
 	addGlob 'src', 'views',   ['html']
+	addGlob 'src', 'node_modules', ['all']
 
 	# dist
 	# ====
@@ -115,6 +117,7 @@ module.exports = (config) ->
 	addGlob 'dist', 'test',    ['css', 'js']
 	addGlob 'dist', 'views',   ['all']
 	addGlob 'dist', 'views',   ['html']
+	addGlob 'dist', 'node_modules', ['all']
 
 	# exclude spa.html
 	# ================
@@ -136,6 +139,18 @@ module.exports = (config) ->
 				v1.push exclude
 
 	excludeServerTests()
+
+	# exclude server node_modules
+	# ===========================
+	excludeServerNodeModules = ->
+		for appOrRb in ['app','rb']
+			exclude = path.join config.src[appOrRb].server.node_modules.dir, lang.all
+			exclude = pathHelp.format exclude
+			exclude = "!#{exclude}"
+			for own k1, v1 of glob.src[appOrRb].server.scripts
+				v1.push exclude
+
+	excludeServerNodeModules()
 
 	# cache bust
 	# ==========
