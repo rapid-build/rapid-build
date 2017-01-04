@@ -64,7 +64,6 @@ module.exports = (config) ->
 	addGlob = (loc, type, langs, includeBower, includeLibs) ->
 		for own k1, v1 of glob[loc]
 			for own k2, v2 of v1
-				continue if k2 is 'client' and type is 'node_modules'
 				continue if k2 is 'server' and ['node_modules','scripts','test','typings'].indexOf(type) is -1
 				continue if k2 is 'server' and (includeBower or includeLibs)
 				v2[type] = {} unless isType.object v2[type]

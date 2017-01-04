@@ -9,15 +9,15 @@ module.exports = (config, options) ->
 		src:          'src'
 		client:       'client'
 		images:       'images'
-		bower:        'bower_components'
 		libs:         'libs'
 		server:       'server'
-		node_modules: 'node_modules'
 		scripts:      'scripts'
 		styles:       'styles'
 		test:         'test'
 		typings:      'typings'
 		views:        'views'
+		bower:        'bower_components'
+		node_modules: 'node_modules'
 
 	file =
 		appServer: 'routes.js' # app server dist entry file
@@ -63,6 +63,8 @@ module.exports = (config, options) ->
 					dir: o.clientImages or dir.images
 				libs:
 					dir: o.clientLibs or dir.libs
+				node_modules:
+					dir: dir.node_modules # no option to name node_modules dir
 				scripts:
 					dir: o.clientScripts or dir.scripts
 				styles:
@@ -85,7 +87,6 @@ module.exports = (config, options) ->
 				typings:
 					dir: dir.typings
 		if loc is 'dist'
-			info.server.node_modules.dirName = dir.node_modules
 			delete info.client.typings
 			delete info.server.typings
 			unless isApp
@@ -138,8 +139,8 @@ module.exports = (config, options) ->
 	formatConfig 'src',  'rb'
 	formatConfig 'src',  'app'
 
-	# add dirName
-	# ===========
+	# add dirName (to dist)
+	# =====================
 	addDirName = (loc) ->
 		for own k1, v1 of config[loc]
 			continue if k1 is 'dir'
@@ -148,8 +149,8 @@ module.exports = (config, options) ->
 				for own k3, v3 of v2
 					continue if k3 is 'dirName'
 					continue if k3 is 'dir'
-					continue if k2 is 'server' and k3 isnt 'test'
-					if k1 is 'app'
+					continue if k2 is 'server' and ['node_modules','test'].indexOf(k3) is -1
+					if k1 is 'app' and k3 isnt 'node_modules'
 						v3.dirName = options[loc][k2][k3].dir or dir[k3]
 					else
 						v3.dirName = dir[k3]
