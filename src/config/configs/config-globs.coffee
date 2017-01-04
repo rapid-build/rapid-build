@@ -244,25 +244,6 @@ module.exports = (config) ->
 	addExcludeFromDist 'client'
 	addExcludeFromDist 'server'
 
-	# node_modules
-	# ============
-	addNodeModulesDistAndSrc = ->
-		for appOrRb, v of config.node_modules
-			glob.node_modules[appOrRb] = {}
-			for loc in ['dist', 'src']
-				glob.node_modules[appOrRb][loc] = {}
-
-	addNodeModules = (loc) ->
-		for appOrRb, v of config.node_modules
-			for module in v.modules
-				_path = path.join v[loc].modules[module], lang.all
-				_path = pathHelp.format _path
-				glob.node_modules[appOrRb][loc][module] = _path
-
-	glob.node_modules = {}
-	addNodeModulesDistAndSrc()
-	addNodeModules 'src'
-
 	# browsersync
 	# ===========
 	addBrowserSync = -> # relative app dist client paths

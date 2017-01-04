@@ -1,12 +1,13 @@
 module.exports = (config) ->
 	q           = require 'q'
 	del         = require 'del'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	cleanTask = (src) ->
 		defer = q.defer()
 		del(src, force:true).then (paths) ->
-			# console.log 'cleaned server dist test'.yellow
+			log.task "cleaned test files in: #{config.dist.app.server.dir}"
 			defer.resolve()
 		defer.promise
 
@@ -18,7 +19,6 @@ module.exports = (config) ->
 			src = [
 				config.dist.rb.server.test.dir
 				config.dist.app.server.test.dir
-				config.node_modules.rb.dist.modules['jasmine-expect']
 			]
 			cleanTask src
 

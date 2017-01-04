@@ -32,7 +32,6 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config.configs}/config-templates")     config
 	config  = require("#{config.req.config.configs}/config-temp")          config
 	config  = require("#{config.req.config.configs}/config-http-proxy")    config, options
-	config  = require("#{config.req.config.configs}/config-node_modules")  config, options
 	config  = require("#{config.req.config.configs}/config-order")         config, options
 	config  = require("#{config.req.config.configs}/config-globs")         config
 	config  = require("#{config.req.config.configs}/config-bower")         config, options

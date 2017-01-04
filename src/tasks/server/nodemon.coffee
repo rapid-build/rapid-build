@@ -9,10 +9,10 @@ module.exports = (config) ->
 	watchDir     = config.dist.app.server.scripts.dir
 
 	serverInfo   = path.join config.dist.rb.server.scripts.dir, 'server-info.json'
+	# Has default ignore list (like node_modules):
+	# https://github.com/remy/nodemon#user-content-ignoring-files
 	ignoreFiles  = [ serverInfo ]
 	ignoreDirs   = [
-		config.node_modules.rb.dist.dir
-		config.node_modules.app.dist.dir
 		config.dist.rb.server.test.dir
 		config.dist.app.server.test.dir
 	]

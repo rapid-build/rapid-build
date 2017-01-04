@@ -13,15 +13,8 @@ module.exports = (config) ->
 	Reporter      = require 'jasmine-terminal-reporter'
 	isType        = require "#{config.req.helpers}/isType"
 	moduleHelp    = require "#{config.req.helpers}/module"
-	jasmineExpect = path.join config.node_modules.rb.dist.modules['jasmine-expect'], 'index.js'
-
-	# helpers
-	# =======
-	getHelperFilePath = (file) ->
-		return file unless config.rb.isSymlink
-		file = file.replace config.node_modules.app.src.dir, config.node_modules.rb.src.dir
-		file = file.replace config.node_modules.rb.src.relPath, 'node_modules'
-		file
+	jasmineExpect = path.join config.rb.root, 'node_modules', 'jasmine-expect', 'index.js'
+	jasmineExpect = path.relative config.app.dir, jasmineExpect # get relative path from app
 
 	# return
 	# ======
@@ -110,7 +103,7 @@ module.exports = (config) ->
 			return @ unless helperFiles.length
 			for file in helperFiles
 				file = path.normalize file
-				moduleHelp.cache.delete getHelperFilePath file
+				moduleHelp.cache.delete file
 			@
 
 

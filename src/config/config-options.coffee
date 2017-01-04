@@ -15,7 +15,6 @@ module.exports = (config, options) ->
 	options = require("#{config.req.config.options}/option-minify")       config, options
 	options = require("#{config.req.config.options}/option-exclude")      config, options
 	options = require("#{config.req.config.options}/option-test")         config, options
-	options = require("#{config.req.config.options}/option-server")       config, options
 	options = require("#{config.req.config.options}/option-http-proxy")   config, options
 	options = require("#{config.req.config.options}/option-browser")      config, options
 	options = require("#{config.req.config.options}/option-extra")        config, options
