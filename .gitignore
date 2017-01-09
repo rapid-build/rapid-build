@@ -2,7 +2,6 @@
 # =======
 bower_components/
 dist/
-lib/
 node_modules/
 typings/
 
@@ -25,19 +24,23 @@ typings/
 *.tgz
 *.tmp
 
+# root folders
+# ============
+/lib/
+
 # root files
 # ==========
+/extra/temp/**/*
+/generated/**/*
 
 # folder files
 # ============
 
 # files
 # =====
-extra/temp/**/*
-generated/**/*
 
 # retain empty folder via .gitkeep
 # ================================
-!extra/temp/.gitkeep
-!generated/.gitkeep
+!/extra/temp/.gitkeep
+!/generated/.gitkeep
 
