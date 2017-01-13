@@ -1,3 +1,46 @@
+# [0.70.0](https://github.com/jyounce/rapid-build/compare/v0.69.5...v0.70.0) (2017-01-13)
+
+
+### Features
+
+* **npm 3+ support:** get the build working in npm 3+
+
+
+### Breaking Changes
+
+* To provide npm 3+ support, build option **server.node_modules** has been **removed** and replaced with the standard way of installing node_modules via creating a src/server/package.json
+
+To migrate the code follow the example below:
+
+**Before:**  
+For the build to move server node_modules to dist/server/
+you had to install them in your project's root then
+add something like the following in rapid-build.json:
+```json
+{
+  "server": {
+    "node_modules": ["cors"]
+  }
+}
+```
+
+**Now:**  
+Do it the natural way by creating a **package.json**
+in the root of **src/server/** then install your node_modules
+and the build will copy your src/server/node_modules/
+to dist/server/. Example of src/server/package.json:
+```json
+{
+  "name": "my-server",
+  "version": "1.0.0",
+  "dependencies": {
+    "cors": "^2.8.1"
+  }
+}
+```
+
+
+
 ## [0.69.5](https://github.com/jyounce/rapid-build/compare/v0.69.4...v0.69.5) (2016-12-22)
 
 
