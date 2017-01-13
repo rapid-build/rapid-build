@@ -17,6 +17,7 @@ module.exports = (rbRoot, version) ->
 
 	pkgs =
 		rb:   require paths.pkgs.rb
+		src:  require paths.pkgs.src
 		test: require paths.pkgs.test
 
 	# tasks
