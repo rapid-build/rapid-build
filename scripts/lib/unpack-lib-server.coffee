@@ -14,7 +14,6 @@ module.exports = (rbRoot) ->
 	# consts
 	# ======
 	LIB        = "#{rbRoot}/lib" # lib is created from src
-	NMS        = "node_modules"
 	SERVER     = "src/server"
 	LIB_SERVER = "#{LIB}/#{SERVER}"
 	PKG_NAME   = 'server.tgz'
