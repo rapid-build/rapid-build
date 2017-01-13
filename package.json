@@ -38,7 +38,7 @@
 		"lib-create": "npm run server-npm-install && node scripts/lib create-lib",
 		"lib-unpack-server": "node scripts/lib unpack-lib-server",
 		"server-npm-update": "cd src/src/server/ && npm update && cd ../../../",
-		"server-npm-install": "cd src/src/server/ && npm install && cd ../../../",
+		"server-npm-install": "cd src/src/server/ && npm prune && npm install && cd ../../../",
 		"server-npm-outdated": "cd src/src/server/ && npm outdated --depth=0 && cd ../../../",
 		"outdated": "npm outdated --depth=0 && npm run server-npm-outdated"
 	},
