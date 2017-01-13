@@ -25,6 +25,7 @@ rapid-build currently supports the following technologies:
 	* [express](http://expressjs.com/) (server)
 * package managers
 	* [bower](http://bower.io/) (client)
+	* [npm](https://www.npmjs.com/) (client and server)
 
 ##### Key concepts:
 * src
@@ -78,7 +79,7 @@ $ rapid-build
 ```
 
 ## Directory Structure
-Must have package.json, everthing else is optional.  
+Must have **package.json**, everthing else is optional.  
 Rapid build will be expecting this directory structure.
 ```
 dist/ (generated distributable folder created by rapid-build)
@@ -86,25 +87,25 @@ src/
 ├── client/
 │   ├── bower_components/ (generated folder via bower.json)
 │   ├── images/
-│   │   └── **/*.{gif,jpg,jpeg,png}
+│   │   └── gif, jpg, jpeg, png, etc..
 │   ├── libs/
-│   │   └── **/*.*
+│   │   └── (3rd party libraries that aren't bower components)
 │   ├── scripts/
-│   │   └── **/*.{coffee,es6,js,ts}
+│   │   └── coffee, es6, js or typescript
 │   ├── styles/
-│   │   └── **/*.{css,less,sass,scss}
+│   │   └── css, less, sass or scss
 │   ├── test/
-│   │   └── **/*.{coffee,es6,js}
+│   │   └── coffee, es6 or js
 │   ├── views/
-│   │   └── **/*.html
-│   └── spa.html (optional, see options.spa.src.filePath)
+│   │   └── html
+│   └── spa.html (see options.spa.src.filePath)
 └── server/
     ├── test/
-    │   └── **/*.{coffee,es6,js}
+    │   └── coffee, es6 or js
+    ├── package.json (for server node modules)
     └── routes.{coffee,es6,js,ts} (see options.dist.server.fileName)
-nodes_modules/ (generated folder via package.json)
-bower.json
-package.json (required)
+bower.json (for client bower components)
+package.json (required - must have name and version)
 rapid-build.json (build options - can be cson, json or js file)
 ```
 
@@ -174,7 +175,6 @@ rapid-build.json (build options - can be cson, json or js file)
 # exclude.from.spaFile.angular.files                = (boolean) defaults to false = set to true to exclude the angular files from spa.html the build includes (angular library and modules ngResource, ngRoute and ngSanitize)
 # exclude.from.dist[client|server]                  = (array of strings) = file paths: exclude client or server files from the dist folder 
 # test.client.browsers                              = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
-# server.node_modules                               = (array of module names) = node_modules you would like to copy to the server dist, example: ['q']
 # httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://git.io/vVyA0
 # browser.open                                      = (boolean) defaults to true = open the browser once the build completes, applies to builds: default, dev and prod:server
 # browser.reload                                    = (boolean) defaults to true = reloads the browser once you save your src file, only applies to dev builds
@@ -198,6 +198,7 @@ rapid-build.json (build options - can be cson, json or js file)
 	* html - (client)
 	* libs - (client) (everything in the libs directory)
 	* bower components - (client) (files in every bower.json's main prop)
+	* node modules - (server) (node_modules directory installed via server package.json)
 	* compile then copy to dist
 		* coffee -> js - (client and server)
 		* es6 -> js - (client and server)
