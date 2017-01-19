@@ -6,7 +6,8 @@ await   = require 'asyncawait/await'
 Promise = require 'bluebird'
 fs      = Promise.promisifyAll require 'fs'
 config  = require "#{process.cwd()}/extra/temp/config.json"
-genPath = config.paths.abs.generated.testApp
+path    = require 'path'
+genPath = path.join config.paths.abs.generated.testApp, 'src', 'client'
 
 # tests
 # =====

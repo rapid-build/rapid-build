@@ -24,7 +24,6 @@ module.exports = (config) ->
 	generated.pkg.relPath = join generated.dir, generated.pkg.dir
 	generated.pkg.path    = join generated.path, generated.pkg.dir
 	addHashToDir generated.pkg # avoid naming collisions, ensure unique dir name
-	generated.pkg.bower   = join generated.pkg.path, 'bower.json'
 	generated.pkg.config  = join generated.pkg.path, 'config.json'
 	generated.pkg.files   = {}
 	generated.pkg.src     = {}

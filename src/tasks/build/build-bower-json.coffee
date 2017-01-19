@@ -6,7 +6,7 @@ module.exports = (config, gulp) ->
 	# helpers
 	# =======
 	getData = ->
-		version      = '0.0.0'
+		version      = config.rb.version
 		name         = config.rb.name
 		dependencies = config.angular.bowerDeps
 		{ name, version, dependencies }
@@ -18,7 +18,7 @@ module.exports = (config, gulp) ->
 			defer    = q.defer()
 			format   = spaces: '\t'
 			json     = getData()
-			jsonFile = config.generated.pkg.bower
+			jsonFile = config.bower.rb.path
 			fse.writeJson jsonFile, json, format, (e) ->
 				# log.task 'built bower.json', 'minor'
 				defer.resolve()

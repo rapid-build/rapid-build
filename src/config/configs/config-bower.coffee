@@ -17,10 +17,11 @@ module.exports = (config, options) ->
 	# add info
 	# ========
 	addInfo = ->
-		['app', 'rb'].forEach (v) ->
-			bower[v].file = defaults.file
-			bower[v].dir  = if v is 'rb' then config.generated.pkg.path else config[v].dir
-			bower[v].path = path.join bower[v].dir, bower[v].file
+		['app','rb'].forEach (appOrRb) ->
+			bower[appOrRb].file = defaults.file
+			bower[appOrRb].dir  = config.src[appOrRb].client.dir
+			bower[appOrRb].path = path.join bower[appOrRb].dir, bower[appOrRb].file
+
 	addInfo()
 
 	# add bower to config

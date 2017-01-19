@@ -59,26 +59,31 @@ module.exports = (config) ->
 
 		create:
 			dirs: ->
+				defer = q.defer()
 				q.all([
 					createDir 'files'
 					createDir 'temp'
 				])
 				.done ->
-					dir = config.generated.pkg.dir
-					# log.task "generated #{dir} directory", 'minor'
+					# log.task "generated #{config.generated.pkg.dir} directory", 'minor'
+					defer.resolve()
+				defer.promise
 
 			jsonFiles: ->
+				defer = q.defer()
 				pkg   = config.generated.pkg
 				files = pkg.files
 				q.all([
 					createJson pkg.config
-					createJson pkg.bower
 					createJson files.files
 					createJson files.testFiles
 					createJson files.prodFiles
 					createJson files.prodFilesBlueprint
 				])
-				# .done -> log.task "generated #{config.generated.pkg.dir} json files", 'minor'
+				.done ->
+					# log.task "generated #{config.generated.pkg.dir} json files", 'minor'
+					defer.resolve()
+				defer.promise
 
 		copy:
 			src: ->
