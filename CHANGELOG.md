@@ -1,3 +1,27 @@
+# [0.71.0](https://github.com/jyounce/rapid-build/compare/v0.70.0...v0.71.0) (2017-01-19)
+
+
+### Features
+
+* **bower.json location:** move bower.json from project root to src/client/ root ([5b20a56](https://github.com/jyounce/rapid-build/commit/5b20a56))
+
+
+### Breaking Changes
+
+* This is completely an architectural design decision.
+  Seems more natural to place **bower.json** inside of **src/client/ root** and not the project's root.
+  This **only applies to people** using rapid-build to install client bower_components.
+
+To migrate, move bower.json from project root to src/client/ root.
+
+**Before:**  
+bower.json
+
+**Now:**  
+src/client/bower.json
+
+
+
 # [0.70.0](https://github.com/jyounce/rapid-build/compare/v0.69.5...v0.70.0) (2017-01-13)
 
 

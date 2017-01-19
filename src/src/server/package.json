@@ -1,6 +1,6 @@
 {
 	"name": "server",
-	"version": "0.70.0",
+	"version": "0.71.0",
 	"description": "Application's default web server.",
 	"scripts": {
 		"start": "node start-server",
