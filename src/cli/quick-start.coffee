@@ -10,7 +10,7 @@ module.exports = (config) ->
 	locs     = config.build.cli.opts.quickStart
 	mkClient = locs.indexOf('client') isnt -1
 	mkServer = locs.indexOf('server') isnt -1
-	opts     = clobber: false
+	opts     = overwrite: false
 
 	# make dirs
 	# =========

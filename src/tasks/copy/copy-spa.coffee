@@ -9,7 +9,7 @@ module.exports = (config, gulp) ->
 			defer = q.defer()
 			src   = config.spa.src.path
 			dest  = config.spa.temp.path
-			opts  = clobber: true
+			opts  = overwrite: true
 			fse.copy src, dest, opts, (e) ->
 				defer.resolve()
 			defer.promise

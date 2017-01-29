@@ -90,7 +90,7 @@ module.exports = (config) ->
 				defer = q.defer()
 				src   = path.join config.rb.dir, 'src'
 				dest  = config.generated.pkg.src.path
-				opts  = clobber: true, filter: (s) -> not /\.gitkeep$/ig.test s
+				opts  = overwrite: true, filter: (s) -> not /\.gitkeep$/ig.test s
 				fse.copy src, dest, opts, (e) ->
 					dir = config.generated.pkg.dir
 					# log.task "generated #{dir} src directory", 'minor'
