@@ -28,5 +28,11 @@ module.exports =
 	string: (v) ->
 		typeof v is 'string'
 
+	stringArray: (v) -> # v should be an array of strings
+		return false unless @array v
+		for val in v
+			return false unless @string val
+		true
+
 	undefined: (v) ->
 		v is undefined

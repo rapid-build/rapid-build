@@ -1,6 +1,8 @@
 module.exports = (config, options) ->
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
+	path     = require 'path'
+	log      = require "#{config.req.helpers}/log"
+	isType   = require "#{config.req.helpers}/isType"
+	pathHelp = require "#{config.req.helpers}/path"
 
 	# defaults
 	# ========
@@ -201,6 +203,74 @@ module.exports = (config, options) ->
 	config.dist.client = {}
 	config.dist.client.paths = {}
 	config.dist.client.paths.absolute = if options.dist.client.paths.absolute is null then true else !!options.dist.client.paths.absolute
+
+	# pack dist helpers
+	# =================
+	pack =
+		format:
+			opts: { 'tar', 'tgz', 'zip' }
+		get:
+			base: (includeBase) ->
+				return '.' if includeBase # pack dist folder and contents
+				config.dist.dir           # pack dist contents
+
+			format: (format='zip') ->
+				format = format.toLowerCase()
+				format = pack.format.opts[format]
+				return pack.format.opts.zip unless format
+				format
+
+			fileName: (format, fileName='dist') -> # return ex: dist.zip
+				formatExt = ".#{format}"
+				fileName  = path.basename fileName, formatExt
+				"#{fileName}.#{format}"
+
+			filePath: (fileName) -> # place file in project root
+				path.join config.app.dir, fileName
+
+
+			glob: (glob='**') -> # glob: string | string[]
+				glob = if isType.stringArray glob
+				then @globPatterns glob
+				else @globPattern glob
+				# console.log 'GLOB:'.info, glob
+				glob
+
+			globPattern: (glob) -> # glob pattern: string
+				negate    = '!'
+				glob      = glob.trim()
+				return glob unless glob.length
+				isNegated = glob[0] is negate
+				glob      = glob.slice 1 if isNegated
+				glob      = path.join config.dist.dir, glob # prepend dist directory name
+				glob      = pathHelp.format glob            # glob needs forward back slashes
+				glob      = "#{negate}#{glob}" if isNegated # prepend !
+				glob
+
+			globPatterns: (glob) -> # string[pattern]
+				return glob unless glob.length
+				for v, i in glob
+					glob[i] = @globPattern v
+				glob
+
+			isFormatMap: (fileName) -> # return: {} of is format flags
+				map = {}
+				for own key, val of pack.format.opts
+					map[key] = fileName.indexOf(".#{val}") != -1
+				map.gzip = map.tgz # extra info
+				map
+
+	# pack dist (in order)
+	# ====================
+	config.dist.pack = {}
+	config.dist.pack.enabled     = if options.dist.pack.enable is null then false else options.dist.pack.enable
+	config.dist.pack.format      = pack.get.format options.dist.pack.format
+	config.dist.pack.fileName    = pack.get.fileName config.dist.pack.format, options.dist.pack.fileName
+	config.dist.pack.filePath    = pack.get.filePath config.dist.pack.fileName
+	config.dist.pack.glob        = pack.get.glob options.dist.pack.glob
+	config.dist.pack.includeBase = if options.dist.pack.includeBase is null then false else options.dist.pack.includeBase
+	config.dist.pack.base        = pack.get.base config.dist.pack.includeBase
+	config.dist.pack.is          = pack.get.isFormatMap config.dist.pack.fileName
 
 	# logs
 	# ====

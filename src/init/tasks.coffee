@@ -111,6 +111,10 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'minify-spa',                '/minify/minify-spa'
 	taskHelp.addTask 'template-cache',            '/minify/template-cache'
 
+	# pack
+	# ====
+	taskHelp.addTask 'pack-dist', '/pack/pack-dist'
+
 	# server
 	# ======
 	taskHelp.addTask 'find-open-port',             '/server/find-open-port'

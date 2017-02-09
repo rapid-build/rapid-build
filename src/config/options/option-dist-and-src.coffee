@@ -29,6 +29,15 @@ module.exports = (config, options) ->
 	options.dist.client.paths = {} unless isType.object options.dist.client.paths
 	options.dist.client.paths.absolute = null unless isType.boolean options.dist.client.paths.absolute
 
+	# pack dist
+	# =========
+	options.dist.pack = {} unless isType.object options.dist.pack
+	options.dist.pack.enable      = null unless isType.boolean options.dist.pack.enable
+	options.dist.pack.format      = null unless isType.string options.dist.pack.format
+	options.dist.pack.fileName    = null unless isType.string options.dist.pack.fileName
+	options.dist.pack.glob        = null unless isType.string(options.dist.pack.glob) or isType.stringArray options.dist.pack.glob
+	options.dist.pack.includeBase = null unless isType.boolean options.dist.pack.includeBase
+
 	# return
 	# ======
 	options
