@@ -1,3 +1,19 @@
+# [0.72.0](https://github.com/jyounce/rapid-build/compare/v0.71.0...v0.72.0) (2017-02-09)
+
+
+### Features
+
+* **build option dist.pack:** disabled by default, enable to pack/create a zip, tar or tgz file from the dist directory once the build completes ([729ef3d](https://github.com/jyounce/rapid-build/commit/729ef3d))
+
+
+### Breaking Changes
+
+* Bumped dependency browserify to [v14.0.0](https://git.io/vDgrS) which drops support for IE8-10.
+  This only effects people who are using typescript on the client side and need to support IE8-10.
+  ([ada6fbe](https://github.com/jyounce/rapid-build/commit/ada6fbe))
+
+
+
 # [0.71.0](https://github.com/jyounce/rapid-build/compare/v0.70.0...v0.71.0) (2017-01-19)
 
 
