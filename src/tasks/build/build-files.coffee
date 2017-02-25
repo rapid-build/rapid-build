@@ -79,11 +79,11 @@ module.exports = (config, gulp) ->
 		files  = []
 		defer  = q.defer()
 		opts   = allowEmpty: true
-		stream = gs.create glob, opts
+		stream = gs glob, opts
 		stream.on 'data', (file) ->
 			_path = path.normalize file.path
 			_path = pathHelp.format _path
-			files.push pathHelp.format _path
+			files.push _path
 		.on 'end', ->
 			addData type, files
 			defer.resolve()
