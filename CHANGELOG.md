@@ -1,3 +1,16 @@
+# [1.0.0](https://github.com/jyounce/rapid-build/compare/v0.72.0...v1.0.0) (2017-02-25)
+
+
+After two years of development and 115 releases, rapid-build has finally reached the 1.0.0 milestone!  
+Enjoy and always, *Develop Rapidly!*
+
+
+### Minor Features
+
+* **bump deps:** includes typescript v2.2.1 ([37d97e8](https://github.com/jyounce/rapid-build/commit/37d97e8))
+
+
+
 # [0.72.0](https://github.com/jyounce/rapid-build/compare/v0.71.0...v0.72.0) (2017-02-09)
 
 
