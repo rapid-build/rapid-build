@@ -13,6 +13,10 @@ module.exports = (config, options) ->
 	spa.dist          = {}   unless isType.object spa.dist
 	spa.dist.fileName = null unless isType.string spa.dist.fileName
 	spa.placeholders  = null unless isType.array  spa.placeholders
+	spa.scripts       = {}   unless isType.object spa.scripts
+	spa.styles        = {}   unless isType.object spa.styles
+	spa.scripts.attrs = null unless isType.object spa.scripts.attrs
+	spa.styles.attrs  = null unless isType.object spa.styles.attrs
 
 	# add spa options
 	# ===============

@@ -65,6 +65,14 @@ module.exports = (config, options) ->
 	# ============
 	spa.placeholders = options.spa.placeholders or []
 
+	# scripts and styles
+	# ==================
+	spa.scripts =
+		attrs: options.spa.scripts.attrs or null
+
+	spa.styles =
+		attrs: options.spa.styles.attrs or null
+
 	# add spa to config
 	# =================
 	config.spa = spa

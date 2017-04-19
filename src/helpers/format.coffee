@@ -5,19 +5,50 @@ module.exports = ->
 		paths: (paths, opts={}) ->
 			opts.join       = opts.join or false
 			opts.htmlTag    = opts.htmlTag or null
+			opts.attrs      = opts.attrs or null # tag attrs
 			opts.lineEnding = opts.lineEnding or '\n'
 			_paths = []
-			paths.forEach (_path) =>
-				_paths.push @html[opts.htmlTag] _path if opts.htmlTag
+			for _path in paths
+				break unless opts.htmlTag
+				tag = @html[opts.htmlTag] _path, opts
+				continue unless tag
+				_paths.push tag
 			_paths = _paths.join opts.lineEnding if opts.join
 			_paths
 
 		html:
-			styles: (_path) ->
-				"<link rel=\"stylesheet\" href=\"#{_path}\" />"
+			# null attr produces valueless attribute
+			# ======================================
+			getStringAttrs: (attrs) ->
+				strAttrs = ''
+				for attr, val of attrs
+					continue if val is undefined
+					strAttrs += ' '
+					strAttrs += if val is null then "#{attr}" else "#{attr}=\"#{val}\""
+				strAttrs
 
-			scripts: (_path) ->
-				"<script src=\"#{_path}\"></script>"
+			mergeAttrs: (attrs, opts={}) -> # mutator
+				return attrs unless opts.attrs
+				Object.assign attrs, opts.attrs
+
+			styles: (_path, opts={}) -> # opts.attrs overide default attrs
+				attrs = # defaults
+					rel: 'stylesheet'
+					href: _path
+
+				@mergeAttrs attrs, opts
+				strAttrs = @getStringAttrs attrs
+				return unless strAttrs
+				tag = "<link#{strAttrs}>"
+
+			scripts: (_path, opts={}) -> # opts.attrs overide default attrs
+				attrs = # defaults
+					src: _path
+
+				@mergeAttrs attrs, opts
+				strAttrs = @getStringAttrs attrs
+				return unless strAttrs
+				tag = "<script#{strAttrs}></script>"
 
 	# return
 	# ======
@@ -30,3 +61,5 @@ module.exports = ->
 			html: (paths, htmlTag, opts={}) ->
 				opts.htmlTag = htmlTag
 				get.paths paths, opts
+
+

@@ -51,8 +51,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 		removePathSection += '/' unless config.dist.client.paths.absolute
 		files = require(jsonEnvFile).client
 		files = pathHelp.removeLocPartial files, removePathSection
-		files.styles  = format.paths.to.html files.styles, 'styles', join: true, lineEnding: '\n\t'
-		files.scripts = format.paths.to.html files.scripts, 'scripts', join: true, lineEnding: '\n\t'
+		files.styles  = format.paths.to.html files.styles,  'styles',  join: true, lineEnding: '\n\t', attrs: config.spa.styles.attrs
+		files.scripts = format.paths.to.html files.scripts, 'scripts', join: true, lineEnding: '\n\t', attrs: config.spa.scripts.attrs
 		files
 
 	getClickjackingTpl = ->
