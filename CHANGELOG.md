@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/jyounce/rapid-build/compare/v1.0.0...v1.1.0) (2017-04-20)
+
+
+### Features
+
+* **build option:** add build option spa[scripts|styles].attrs for ability to add or modify attrs on link and script tags in spa.html ([a857801](https://github.com/jyounce/rapid-build/commit/a857801))
+
+
+
 # [1.0.0](https://github.com/jyounce/rapid-build/compare/v0.72.0...v1.0.0) (2017-02-25)
 
 

@@ -153,6 +153,7 @@ rapid-build.json (build options - can be cson, json or js file)
 # spa.src.filePath                                  = (string)  set if you want to use your own spa file and not the build system's (file must be located in your client src directory)
 # spa.dist.fileName                                 = (string)  defaults to file name of spa.src.filePath or 'spa.html' = provide if you want the dist spa file to be named differently, example: 'index.html'
 # spa.placeholders                                  = (array of strings) = set to retain spa file placeholders, optional values are: ['clickjacking', 'description', 'moduleName', 'ngCloakStyles', 'scripts', 'styles', 'title'] or ['all']
+# spa[scripts|styles].attrs                         = (object) = set to add additional attributes to the link (styles) and script tags that the build outputs in spa.html or modify the default attributes: scripts = { src }, styles = { rel, href }
 # minify.css.styles                                 = (boolean) defaults to true = for prod build, minify the css
 # minify.css.fileName                               = (string)  defaults to 'styles.min.css'
 # minify.css.splitMinFile                           = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
