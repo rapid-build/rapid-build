@@ -10,7 +10,7 @@ angular.module('app').config(['$locationProvider', '$routeProvider',
 		/* Angular Router
 	 	 *****************/
 		$routeProvider.when('/', {
-			templateUrl: '/views/home.html'
+			templateUrl: 'views/home.html'
 		}).otherwise({
 			redirectTo: '/'
 		});
