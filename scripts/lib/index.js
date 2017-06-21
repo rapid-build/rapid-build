@@ -1,24 +1,28 @@
 /* SCRIPTS LIB CONTROLLER
  *************************/
 require('../bootstrap');
-var rbRoot = process.cwd(),
-	log    = require('../utils/log'),
-	task   = {};
-task.name  = process.argv[2];
-task.path  = `./${task.name}`;
-task.msg   = task.name.replace(/-/g,' ');
+var env = require('../utils/env');
+var log = require('../utils/log');
 
-/* Log Task
- ***********/
-log.msgWithSeps(task.msg, 'info', true, true, true)
+// Is Consumer or Local Install?
+env.isConsumer(true).then(isConsumer => {
+	var task = isConsumer ?
+		{ msg: 'unpack server', path: './unpack-lib-server' } :
+		{ msg: 'create lib', path: './create-lib' };
 
-/* Run Task
- ***********/
-require(task.path)(rbRoot).then(res => {
-	log.msgWithSeps(`${task.msg} (complete)`, 'attn', true, false);
-	console.log(); // formatting, log extra line
+	// Log Task
+	log.msgWithSeps(task.msg, 'info', true, true, true)
+	log.msg(`is consumer install: ${isConsumer}`);
+
+	// Run Task
+	require(task.path)().then(res => {
+		log.msgWithSeps(`${res.msg}\n`, 'attn', true, false);
+	})
+	.catch(e => {
+		log.msgWithSeps(`failed to ${task.msg}`, 'error', true, true, true);
+		log.msg(`Error: ${e.message}\n`, 'error');
+	});
 })
 .catch(e => {
-	log.msgWithSeps(`failed to ${task.msg}`, 'error', true, true, true);
 	log.msg(`Error: ${e.message}\n`, 'error');
-})
+});

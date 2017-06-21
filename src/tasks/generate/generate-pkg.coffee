@@ -57,6 +57,12 @@ module.exports = (config) ->
 				paths  = [root, files, temp, server, client, bower]
 				delDir paths, config.generated.pkg.dir
 
+		cleanup:
+			pkg: ->
+				serverPkg = config.generated.pkg.src.server.pkg
+				paths     = [serverPkg]
+				delDir paths, serverPkg
+
 		create:
 			dirs: ->
 				defer = q.defer()
@@ -109,6 +115,7 @@ module.exports = (config) ->
 				-> _api.create.dirs()
 				-> _api.create.jsonFiles()
 				-> _api.copy.src()
+				-> _api.cleanup.pkg()
 			]
 			tasks.reduce(q.when, q()).done -> defer.resolve()
 			defer.promise

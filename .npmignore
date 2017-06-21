@@ -6,6 +6,7 @@ typings/
 
 # dot files
 # =========
+.atomignore
 .travis.yml
 
 # file extensions
@@ -46,6 +47,7 @@ generated/**/*
 # folder negation
 # ===============
 !/scripts/bootstrap/**
+!/scripts/consts/**
 !/scripts/lib/**
 !/scripts/utils/**
 

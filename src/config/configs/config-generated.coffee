@@ -39,6 +39,7 @@ module.exports = (config) ->
 	generated.pkg.src.server = {}
 	generated.pkg.src.server.path = join generated.pkg.src.path, 'server'
 	generated.pkg.src.server.info = join generated.pkg.src.server.path, 'server-info.json'
+	generated.pkg.src.server.pkg  = join generated.pkg.src.server.path, 'server.tgz'
 	generated.pkg.temp.dir     = 'temp'
 	generated.pkg.temp.relPath = join generated.pkg.relPath, generated.pkg.temp.dir
 	generated.pkg.temp.path    = join generated.pkg.path, generated.pkg.temp.dir

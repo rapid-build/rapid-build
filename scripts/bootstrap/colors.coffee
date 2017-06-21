@@ -8,3 +8,4 @@ colors.setTheme
 	info:    'cyan'
 	minor:   'gray'
 	success: ['green', 'bold']
+	warn:    'magenta'

@@ -33,20 +33,15 @@
 	"scripts": {
 		"test": "node test",
 		"bump": "node scripts/bump",
-		"prepublish": "npm run lib-create",
-		"postinstall": "npm run lib-unpack-server",
-		"lib-create": "npm run server-npm-install && node scripts/lib create-lib",
-		"lib-unpack-server": "node scripts/lib unpack-lib-server",
-		"server-npm-update": "cd src/src/server/ && npm update && cd ../../../",
-		"server-npm-install": "cd src/src/server/ && npm prune && npm install && cd ../../../",
-		"server-npm-outdated": "cd src/src/server/ && npm outdated --depth=0 && cd ../../../",
-		"outdated": "npm outdated --depth=0 && npm run server-npm-outdated"
+		"create-lib": "node scripts/lib",
+		"postinstall": "npm run create-lib",
+		"npm-install-server": "cd src/src/server/ && npm install && npm prune && cd ../../../"
 	},
 	"devDependencies": {
 		"conventional-changelog": "1.1.0",
 		"prepend-file": "1.3.1",
 		"ps-node": "0.1.4",
-		"request": "2.79.0"
+		"request": "2.81.0"
 	},
 	"dependencies": {
 		"asyncawait": "1.0.6",
@@ -64,7 +59,7 @@
 		"delete-empty": "1.0.0",
 		"event-stream": "3.3.4",
 		"find-port": "1.0.1",
-		"fs-extra": "2.0.0",
+		"fs-extra": "3.0.1",
 		"fstream": "1.0.10",
 		"glob-stream": "6.0.0",
 		"gulp": "3.9.1",
@@ -98,11 +93,11 @@
 		"jasmine-expect": "3.6.0",
 		"jasmine-terminal-reporter": "1.0.3",
 		"karma": "1.5.0",
-		"karma-jasmine": "1.1.0",
-		"karma-jasmine-matchers": "3.6.0",
 		"karma-chrome-launcher": "2.0.0",
 		"karma-firefox-launcher": "1.0.0",
 		"karma-ie-launcher": "1.0.0",
+		"karma-jasmine": "1.1.0",
+		"karma-jasmine-matchers": "3.6.0",
 		"karma-phantomjs-launcher": "1.0.2",
 		"karma-safari-launcher": "1.0.0",
 		"open": "0.0.5",
@@ -110,6 +105,7 @@
 		"postcss": "5.2.15",
 		"postcss-import": "7.1.3",
 		"q": "1.4.1",
+		"semver": "5.3.0",
 		"sha1": "1.1.1",
 		"tar": "2.2.1",
 		"through2": "2.0.3",
