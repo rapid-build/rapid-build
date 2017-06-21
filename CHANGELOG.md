@@ -1,3 +1,13 @@
+## [1.1.1](https://github.com/jyounce/rapid-build/compare/v1.1.0...v1.1.1) (2017-06-21)
+
+
+### Bug Fixes
+
+* **npm5:** provide npm5 support ([6b489fa](https://github.com/jyounce/rapid-build/commit/6b489fa))
+* **quick start:** fix the client app for the quick start's prod:server build, it was crashing the browser ([780ae48](https://github.com/jyounce/rapid-build/commit/780ae48))
+
+
+
 # [1.1.0](https://github.com/jyounce/rapid-build/compare/v1.0.0...v1.1.0) (2017-04-20)
 
 
