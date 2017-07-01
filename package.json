@@ -35,7 +35,8 @@
 		"bump": "node scripts/bump",
 		"create-lib": "node scripts/lib",
 		"postinstall": "npm run create-lib",
-		"npm-install-server": "cd src/src/server/ && npm install && npm prune && cd ../../../"
+		"npm-install-server": "cd src/src/server/ && npm install && npm prune && cd ../../../",
+		"npm-uninstall-server": "cd src/src/server/ && npm uninstall `ls -1 node_modules | tr '/\n' ' '` --no-save && rm -rf node_modules && cd ../../../"
 	},
 	"devDependencies": {
 		"conventional-changelog": "1.1.0",
