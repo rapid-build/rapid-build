@@ -11,24 +11,28 @@ module.exports = (rbRoot, version) ->
 	paths =
 		changelog: "#{rbRoot}/changelog/changelog.coffee"
 		pkgs:
-			rb:   "#{rbRoot}/package.json"
-			src:  "#{rbRoot}/src/src/server/package.json"
-			test: "#{rbRoot}/test/app/package.json"
+			rb:      "#{rbRoot}/package.json"
+			src:     "#{rbRoot}/src/src/server/package.json"
+			test:    "#{rbRoot}/test/app/package.json"
+			rbLock:  "#{rbRoot}/package-lock.json"
+			srcLock: "#{rbRoot}/src/src/server/package-lock.json"
 
 	pkgs =
-		rb:   require paths.pkgs.rb
-		src:  require paths.pkgs.src
-		test: require paths.pkgs.test
+		rb:      require paths.pkgs.rb
+		src:     require paths.pkgs.src
+		test:    require paths.pkgs.test
+		rbLock:  require paths.pkgs.rbLock
+		srcLock: require paths.pkgs.srcLock
 
 	# tasks
 	# =====
 	tasks =
-		bumpPkg: (pkgName) ->
+		bumpPkg: (pkgName, file) ->
 			pkg     = pkgs[pkgName]
 			pkgPath = paths.pkgs[pkgName]
 			pkg.version = version
 			fse.writeJsonAsync(pkgPath, pkg, jsonFormat).then ->
-				console.log "bumped #{pkgName}'s package.json".info
+				console.log "bumped #{file}".info
 
 		changelog: ->
 			cmd = "coffee #{paths.changelog}"
@@ -38,9 +42,11 @@ module.exports = (rbRoot, version) ->
 	# run tasks (in order)
 	# ====================
 	runTasks = async ->
-		await tasks.bumpPkg 'rb'
-		await tasks.bumpPkg 'src'
-		await tasks.bumpPkg 'test'
+		await tasks.bumpPkg 'rb',      'package.json'
+		await tasks.bumpPkg 'rbLock',  'package-lock.json'
+		await tasks.bumpPkg 'src',     'src server package.json'
+		await tasks.bumpPkg 'srcLock', 'src server package-lock.json'
+		await tasks.bumpPkg 'test',    'test package.json'
 		await tasks.changelog()
 
 	# run it!
