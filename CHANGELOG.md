@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/jyounce/rapid-build/compare/v1.1.1...v2.0.0) (2017-07-01)
+
+
+### Features
+
+* **bump:** dep typescript to v2.4.1 from v2.2.1 ([5c0c9c1](https://github.com/jyounce/rapid-build/commit/5c0c9c1))
+* typescript features: [v2.3](https://git.io/vQWhG 'typescript v2.3 features') and [v2.4](https://git.io/vQWh4 'typescript v2.4 features')
+
+### Breaking Changes
+Only applies to people using typescript.  
+Find breaking changes here:
+* [v2.3](https://git.io/vQWhe 'typescript v2.3 breaking changes')
+* [v2.4](https://git.io/vQWh0 'typescript v2.4 breaking changes')
+
+
+
 ## [1.1.1](https://github.com/jyounce/rapid-build/compare/v1.1.0...v1.1.1) (2017-06-21)
 
 
@@ -679,7 +695,7 @@ dist/server/rapid-build/start-server.js
 **Before:**
 ```javascript
 module.exports = (app, opts) => {
-  app.get('/api/superheroes', (req, res) =>
+  app.get('/api/superheroes', (req, res) => {})
   ...
 }
 ```
@@ -689,7 +705,7 @@ module.exports = (app, opts) => {
 module.exports = (server) => {
   var app = server.app
 
-  app.get('/api/superheroes', (req, res) =>
+  app.get('/api/superheroes', (req, res) => {})
   ...
 }
 ```
