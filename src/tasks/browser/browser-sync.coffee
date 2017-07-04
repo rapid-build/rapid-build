@@ -49,11 +49,12 @@ module.exports =
 
 	setBsConfig: (config) ->
 		@bsConfig =
-			ui:      port: config.ports.reloadUI
-			port:    config.ports.reload
-			open:    config.browser.open
-			files:   config.glob.browserSync.files
-			proxy:   "http://localhost:#{config.ports.server}/"
+			ui:     port: config.ports.reloadUI
+			port:   config.ports.reload
+			open:   config.browser.open
+			files:  config.glob.browserSync.files
+			proxy:  "http://localhost:#{config.ports.server}/"
+			notify: false # hide ui popover notification
 			injectChanges: false # don't try to inject css changes, just do a page refresh
 			reloadDebounce: 150  # windows fix for bundle reload (milliseconds)
 			watchOptions:
