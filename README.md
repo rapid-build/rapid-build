@@ -1,5 +1,5 @@
 # rapid-build
-**[http://rapid-build.io/](http://rapid-build.io/)**  
+**[rapid-build.io](https://rapid-build.io/)**  
 Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
 Requirements: [git](https://git-scm.com/downloads) and [Node.js](http://nodejs.org/) version >= 4.0.0
 
@@ -83,7 +83,7 @@ Must have **package.json**, everthing else is optional.
 Rapid build will be expecting this directory structure.
 ```
 dist/ (generated distributable folder created by rapid-build)
-src/ 
+src/
 ├── client/
 │   ├── bower_components/ (generated folder via bower.json)
 │   ├── images/
@@ -132,8 +132,8 @@ rapid-build.json (build options - can be cson, json or js file)
 # src.server.dir                                    = (string)  defaults to 'server'
 # src.server.test.dir                               = (string)  defaults to 'test'
 # ports.server                                      = (int)     defaults to 3000, web server port
-# ports.reload                                      = (int)     defaults to 3001, browsersync server port 
-# ports.reloadUI                                    = (int)     defaults to 3002, browsersync's user-interface server port 
+# ports.reload                                      = (int)     defaults to 3001, browsersync server port
+# ports.reloadUI                                    = (int)     defaults to 3002, browsersync's user-interface server port
 # ports.test                                        = (int)     defaults to 9876, karma server port
 # order[scripts|styles][first|last]                 = (array of strings) = file paths
 # angular.modules                                   = (array of strings) = additional angular modules to load, already loaded are ['ngResource', 'ngRoute', 'ngSanitize'] and 'ngMockE2E' based on angular.httpBackend options
@@ -174,8 +174,8 @@ rapid-build.json (build options - can be cson, json or js file)
 # exclude.from.minFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the scripts.min.js or styles.min.css file
 # exclude.from.spaFile[scripts|styles]              = (array of strings) = file paths: exclude script or style files from automatically being generated in the spa.html file
 # exclude.from.spaFile.angular.files                = (boolean) defaults to false = set to true to exclude the angular files from spa.html the build includes (angular library and modules ngResource, ngRoute and ngSanitize)
-# exclude.from.dist[client|server]                  = (array of strings) = file paths: exclude client or server files from the dist folder 
-# test.client.browsers                              = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari'] 
+# exclude.from.dist[client|server]                  = (array of strings) = file paths: exclude client or server files from the dist folder
+# test.client.browsers                              = (array of browser names) = phantomjs will run by default, optional browser names are ['chrome', 'firefox', 'ie', 'safari']
 # httpProxy                                         = (array of objects) = object format: { context: array or string, options: object } for details see: https://git.io/vVyA0
 # browser.open                                      = (boolean) defaults to true = open the browser once the build completes, applies to builds: default, dev and prod:server
 # browser.reload                                    = (boolean) defaults to true = reloads the browser once you save your src file, only applies to dev builds

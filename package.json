@@ -3,7 +3,7 @@
 	"version": "2.0.0",
 	"tasksPrefix": "rb-",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
-	"homepage": "http://rapid-build.io/",
+	"homepage": "https://rapid-build.io/",
 	"author": {
 		"name": "Judd Younce",
 		"email": "jyounce@yahoo.com",
@@ -36,6 +36,7 @@
 		"create-lib": "node scripts/lib",
 		"postinstall": "npm run create-lib",
 		"npm-install-server": "cd src/src/server/ && npm install && npm prune && cd ../../../",
+		"npm-outdated-server": "cd src/src/server/ && npm outdated; cd ../../../",
 		"npm-uninstall-server": "cd src/src/server/ && npm uninstall `ls -1 node_modules | tr '/\n' ' '` --no-save && rm -rf node_modules && cd ../../../"
 	},
 	"devDependencies": {

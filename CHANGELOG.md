@@ -360,7 +360,7 @@ to dist/server/. Example of src/server/package.json:
 ### Features
 
 * **spa auto inject:** the build will automatically inject scripts and styles into your spa.html ([2b5a556](https://github.com/jyounce/rapid-build/commit/2b5a556))
-* **documentation site:** [http://rapid-build.io/](http://rapid-build.io/)
+* **documentation site:** [https://rapid-build.io/](https://rapid-build.io/)
 
 ### Breaking Changes
 
