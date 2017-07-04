@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/jyounce/rapid-build/compare/v2.0.0...v2.1.0) (2017-07-04)
+
+
+### Minor Features
+* **browsersync:** remove unnecessary ui popover notification ([f8d972a](https://github.com/jyounce/rapid-build/commit/f8d972a#diff-7a89fbf039df541b4f8e0887c6244cb8))
+* **bump deps:**
+	* babel-preset-es2015@6.24.1 ([3974bb5](https://github.com/jyounce/rapid-build/commit/3974bb5))
+	* browser-sync@2.18.12 ([f8d972a](https://github.com/jyounce/rapid-build/commit/f8d972a))
+	* browserify@14.4.0 ([e60838d](https://github.com/jyounce/rapid-build/commit/e60838d))
+
+
+
 # [2.0.0](https://github.com/jyounce/rapid-build/compare/v1.1.1...v2.0.0) (2017-07-01)
 
 
@@ -7,6 +19,7 @@
 * typescript features: [v2.3](https://git.io/vQWhG 'typescript v2.3 features') and [v2.4](https://git.io/vQWh4 'typescript v2.4 features')
 
 ### Breaking Changes
+
 Only applies to people using typescript.  
 Find breaking changes here:
 * [v2.3](https://git.io/vQWhe 'typescript v2.3 breaking changes')
