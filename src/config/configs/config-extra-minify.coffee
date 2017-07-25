@@ -37,7 +37,7 @@ module.exports = (config, options) ->
 
 	# logs
 	# ====
-	# log.json extra.minify, 'extra.minify ='
+	# log.json minify, 'extra.minify ='
 
 	# tests
 	# =====

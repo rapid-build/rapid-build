@@ -5,6 +5,11 @@ module.exports = (config, options) ->
 	# ====================
 	compile = options.compile
 	compile = {} unless isType.object compile
+
+	compile.htmlScripts = {} unless isType.object compile.htmlScripts
+	compile.htmlScripts.client = {} unless isType.object compile.htmlScripts.client
+	compile.htmlScripts.client.enable = false unless isType.boolean compile.htmlScripts.client.enable
+
 	compile.typescript = {} unless isType.object compile.typescript
 	compile.typescript.client = {} unless isType.object compile.typescript.client
 	compile.typescript.server = {} unless isType.object compile.typescript.server

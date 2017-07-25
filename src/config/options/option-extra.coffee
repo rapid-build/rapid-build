@@ -19,12 +19,13 @@ module.exports = (config, options) ->
 
 	# extra compile options
 	# =====================
-	extra.compile.client.coffee = null unless isType.array extra.compile.client.coffee
-	extra.compile.client.es6    = null unless isType.array extra.compile.client.es6
-	extra.compile.client.less   = null unless isType.array extra.compile.client.less
-	extra.compile.client.sass   = null unless isType.array extra.compile.client.sass
-	extra.compile.server.less   = null unless isType.array extra.compile.server.less
-	extra.compile.server.sass   = null unless isType.array extra.compile.server.sass
+	extra.compile.client.coffee      = null unless isType.array extra.compile.client.coffee
+	extra.compile.client.es6         = null unless isType.array extra.compile.client.es6
+	extra.compile.client.htmlScripts = null unless isType.array extra.compile.client.htmlScripts
+	extra.compile.client.less        = null unless isType.array extra.compile.client.less
+	extra.compile.client.sass        = null unless isType.array extra.compile.client.sass
+	extra.compile.server.less        = null unless isType.array extra.compile.server.less
+	extra.compile.server.sass        = null unless isType.array extra.compile.server.sass
 
 	# extra minify options
 	# ====================

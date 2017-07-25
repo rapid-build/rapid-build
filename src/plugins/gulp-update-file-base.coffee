@@ -1,7 +1,7 @@
 PLUGIN_NAME = 'gulp-update-file-base'
 through     = require 'through2'
 gutil       = require 'gulp-util'
-PluginError = gutil.PluginErrors
+PluginError = gutil.PluginError
 
 # Plugin level function(dealing with files)
 # Effects gulp.dest(dest).

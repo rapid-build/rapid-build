@@ -1,15 +1,16 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	q             = require 'q'
-	path          = require 'path'
-	es            = require 'event-stream'
-	gulpif        = require 'gulp-if'
-	minifyHtml    = require 'gulp-htmlmin'
-	templateCache = require 'gulp-angular-templatecache'
-	log           = require "#{config.req.helpers}/log"
-	ngFormify     = require "#{config.req.plugins}/gulp-ng-formify"
-	dirHelper     = require("#{config.req.helpers}/dir") config, gulp
-	runNgFormify  = config.angular.ngFormify
-	forWatchFile = !!taskOpts.watchFile
+	q                  = require 'q'
+	path               = require 'path'
+	es                 = require 'event-stream'
+	gulpif             = require 'gulp-if'
+	minifyHtml         = require 'gulp-htmlmin'
+	templateCache      = require 'gulp-angular-templatecache'
+	compileHtmlScripts = require "#{config.req.plugins}/gulp-compile-html-scripts"
+	log                = require "#{config.req.helpers}/log"
+	ngFormify          = require "#{config.req.plugins}/gulp-ng-formify"
+	dirHelper          = require("#{config.req.helpers}/dir") config, gulp
+	runNgFormify       = config.angular.ngFormify
+	forWatchFile       = !!taskOpts.watchFile
 
 	# globs
 	# =====
@@ -57,11 +58,13 @@ module.exports = (config, gulp, taskOpts={}) ->
 		opts.module = config.angular.moduleName
 		gulp.src src
 			.pipe addToDistPath()
+			.pipe gulpif config.compile.htmlScripts.client.enable, compileHtmlScripts()
 			.pipe gulpif minify, minifyHtml minOpts
 			.pipe gulpif runNgFormify, ngFormify()
 			.pipe templateCache file, opts
 			.pipe gulp.dest dest
 			.on 'end', ->
+				log.task "compiled html es6 scripts to: #{config.dist.app.client.dir}" if config.compile.htmlScripts.client.enable
 				log.task "created and copied #{file} to: #{config.dist.app.client.dir}"
 				log.task "minified html in #{file}" if minify
 				defer.resolve()

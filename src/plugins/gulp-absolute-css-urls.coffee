@@ -2,7 +2,7 @@ PLUGIN_NAME     = 'gulp-absolute-css-urls'
 through         = require 'through2'
 gutil           = require 'gulp-util'
 path            = require 'path'
-PluginError     = gutil.PluginErrors
+PluginError     = gutil.PluginError
 # for find and replace - added negative lookahead to not match comments
 urlRegX         = /url\s*\(\s*['"]?(.*?)['"]?\s*\)(?![^\*]*?\*\/)/g
 importNoUrlRegX = /@import\s*?['"]+?(.*?)['"]+?(?![^\*]*?\*\/)/g

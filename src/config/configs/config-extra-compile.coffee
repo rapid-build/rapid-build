@@ -4,34 +4,36 @@ module.exports = (config, options) ->
 	test = require("#{config.req.helpers}/test")()
 
 	# init extra.compile
-	# compile additional files [coffee|es6|less|sass]
+	# compile additional files [coffee|es6|htmlScripts|less|sass]
 	# to dist that the build didn't compile
-	# ===============================================
+	# ===========================================================
 	compile =
 		rb:
 			client:
-				coffee: []
-				es6:    []
-				less:   []
-				sass:   []
+				coffee:      []
+				es6:         []
+				htmlScripts: []
+				less:        []
+				sass:        []
 			server:
-				less:   []
-				sass:   []
+				less: []
+				sass: []
 		app:
 			client:
-				coffee: options.extra.compile.client.coffee or []
-				es6:    options.extra.compile.client.es6    or []
-				less:   options.extra.compile.client.less   or []
-				sass:   options.extra.compile.client.sass   or []
+				coffee:      options.extra.compile.client.coffee      or []
+				es6:         options.extra.compile.client.es6         or []
+				htmlScripts: options.extra.compile.client.htmlScripts or []
+				less:        options.extra.compile.client.less        or []
+				sass:        options.extra.compile.client.sass        or []
 			server:
-				less:   options.extra.compile.server.less   or []
-				sass:   options.extra.compile.server.sass   or []
+				less: options.extra.compile.server.less or []
+				sass: options.extra.compile.server.sass or []
 
 	# format compile paths
 	# ====================
 	formatCompilePaths = (appOrRb) ->
 		for loc in ['client','server']
-			for lang in ['coffee','es6','less','sass']
+			for lang in ['coffee','es6','htmlScripts','less','sass']
 				files = compile[appOrRb][loc][lang]
 				continue unless files
 				continue unless files.length
@@ -47,7 +49,7 @@ module.exports = (config, options) ->
 
 	# logs
 	# ====
-	# log.json extra.compile, 'extra.compile ='
+	# log.json compile, 'extra.compile ='
 
 	# tests
 	# =====

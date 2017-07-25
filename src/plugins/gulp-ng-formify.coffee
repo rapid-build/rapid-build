@@ -1,7 +1,7 @@
 PLUGIN_NAME   = 'gulp-ng-formify'
 through       = require 'through2'
 gutil         = require 'gulp-util'
-PluginError   = gutil.PluginErrors
+PluginError   = gutil.PluginError
 
 # For find and replace
 # ====================

@@ -33,7 +33,7 @@ module.exports = (config, options) ->
 
 	# logs
 	# ====
-	# log.json extra.copy, 'extra.copy ='
+	# log.json copy, 'extra.copy ='
 
 	# tests
 	# =====

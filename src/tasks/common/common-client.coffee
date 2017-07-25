@@ -27,6 +27,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}sass"
 					"#{config.rb.prefix.task}compile-extra-coffee:client"
 					"#{config.rb.prefix.task}compile-extra-es6:client"
+					"#{config.rb.prefix.task}compile-extra-html-scripts:client"
 					"#{config.rb.prefix.task}compile-extra-less:client"
 					"#{config.rb.prefix.task}compile-extra-sass:client"
 					"#{config.rb.prefix.task}copy-extra-files:client"

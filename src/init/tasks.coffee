@@ -74,14 +74,15 @@ module.exports = (gulp, config) ->
 
 	# extra
 	# =====
-	taskHelp.addTask 'compile-extra-coffee:client', '/extra/compile-extra-coffee', loc: 'client'
-	taskHelp.addTask 'compile-extra-es6:client',    '/extra/compile-extra-es6',    loc: 'client'
-	taskHelp.addTask 'compile-extra-less:client',   '/extra/compile-extra-less',   loc: 'client'
-	taskHelp.addTask 'compile-extra-less:server',   '/extra/compile-extra-less',   loc: 'server'
-	taskHelp.addTask 'compile-extra-sass:client',   '/extra/compile-extra-sass',   loc: 'client'
-	taskHelp.addTask 'compile-extra-sass:server',   '/extra/compile-extra-sass',   loc: 'server'
-	taskHelp.addTask 'copy-extra-files:client',     '/extra/copy-extra-files',     loc: 'client'
-	taskHelp.addTask 'copy-extra-files:server',     '/extra/copy-extra-files',     loc: 'server'
+	taskHelp.addTask 'compile-extra-coffee:client',       '/extra/compile-extra-coffee',       loc: 'client'
+	taskHelp.addTask 'compile-extra-es6:client',          '/extra/compile-extra-es6',          loc: 'client'
+	taskHelp.addTask 'compile-extra-html-scripts:client', '/extra/compile-extra-html-scripts', loc: 'client'
+	taskHelp.addTask 'compile-extra-less:client',         '/extra/compile-extra-less',         loc: 'client'
+	taskHelp.addTask 'compile-extra-less:server',         '/extra/compile-extra-less',         loc: 'server'
+	taskHelp.addTask 'compile-extra-sass:client',         '/extra/compile-extra-sass',         loc: 'client'
+	taskHelp.addTask 'compile-extra-sass:server',         '/extra/compile-extra-sass',         loc: 'server'
+	taskHelp.addTask 'copy-extra-files:client',           '/extra/copy-extra-files',           loc: 'client'
+	taskHelp.addTask 'copy-extra-files:server',           '/extra/copy-extra-files',           loc: 'server'
 
 	# format
 	# ======
