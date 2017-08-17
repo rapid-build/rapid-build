@@ -1,7 +1,23 @@
+# [2.2.0](https://github.com/jyounce/rapid-build/compare/v2.1.0...v2.2.0) (2017-08-17)
+
+
+### Features
+
+* **2 new build options:** compile.htmlScripts.client.enable and extra.compile.client.htmlScripts ([f12310f](https://github.com/jyounce/rapid-build/commit/f12310f))
+	* useful for creating web components that work with unsupported browsers like IE11
+
+### Minor Features
+
+* **bump deps:**
+	* babel-core@6.26.0 and typescript@2.4.2 ([68b15d7](https://github.com/jyounce/rapid-build/commit/68b15d7))
+
+
+
 # [2.1.0](https://github.com/jyounce/rapid-build/compare/v2.0.0...v2.1.0) (2017-07-04)
 
 
 ### Minor Features
+
 * **browsersync:** remove unnecessary ui popover notification ([f8d972a](https://github.com/jyounce/rapid-build/commit/f8d972a#diff-7a89fbf039df541b4f8e0887c6244cb8))
 * **bump deps:**
 	* babel-preset-es2015@6.24.1 ([3974bb5](https://github.com/jyounce/rapid-build/commit/3974bb5))
