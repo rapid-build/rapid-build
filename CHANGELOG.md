@@ -1,3 +1,15 @@
+## [2.2.1](https://github.com/jyounce/rapid-build/compare/v2.2.0...v2.2.1) (2017-09-06)
+
+
+Keeping dependencies up-to-date &#128077;
+
+
+### Minor Features
+
+* **bump deps:** includes bumping typescript v2.4.2 to [v2.5.2](https://git.io/v52PS)
+
+
+
 # [2.2.0](https://github.com/jyounce/rapid-build/compare/v2.1.0...v2.2.0) (2017-08-17)
 
 
