@@ -71,7 +71,7 @@ module.exports = (config, gulp) ->
 	delEmptyDirsTask = (msg) ->
 		defer = q.defer()
 		src   = config.dist.app.client.dir
-		opts  = silent: true
+		opts  = verbose: false
 		deleteEmpty src, opts, (err, deleted) ->
 			# log.task msg, 'minor' if msg
 			defer.resolve()
