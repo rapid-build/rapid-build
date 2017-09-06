@@ -91,7 +91,7 @@
 		"gulp-util": "3.0.8",
 		"gulp-watch": "4.3.11",
 		"gulp-zip": "4.0.0",
-		"jasmine": "2.5.1",
+		"jasmine": "2.8.0",
 		"jasmine-core": "2.8.0",
 		"jasmine-expect": "3.7.1",
 		"jasmine-terminal-reporter": "1.0.3",
