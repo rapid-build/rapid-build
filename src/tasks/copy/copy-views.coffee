@@ -1,10 +1,8 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	gulpSequence = require('gulp-sequence').use gulp
-
 	# API
 	# ===
 	api =
-		runTask: (cb) ->
+		runTask: ->
 			if config.env.is.prod
 				if config.minify.html.templateCache
 					task = 'template-cache'
@@ -15,8 +13,11 @@ module.exports = (config, gulp, taskOpts={}) ->
 			else
 				task = 'copy-html'
 
-			gulpSequence "#{config.rb.prefix.task}#{task}", cb
+			gulp.series([
+				"#{config.rb.prefix.task}#{task}"
+				(cb) -> cb(); taskOpts.taskCB()
+			])()
 
 	# return
 	# ======
-	api.runTask taskOpts.taskCB
+	api.runTask()

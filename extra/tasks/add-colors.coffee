@@ -7,5 +7,7 @@ module.exports = ->
 		attn:    ['cyan', 'bold']
 		error:   ['red', 'bold']
 		info:    'cyan'
+		minor:   'gray'
 		success: ['green', 'bold']
+		warn:    'magenta'
 	colors

@@ -9,4 +9,5 @@ module.exports = ->
 		info:    'cyan'
 		minor:   'gray'
 		success: ['green', 'bold']
+		warn:    'magenta'
 	colors

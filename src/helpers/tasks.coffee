@@ -4,6 +4,10 @@ module.exports = (config, gulp={}) ->
 
 	# private
 	# =======
+	addedTaskCB = (_path, cb, opts) ->
+		opts.taskCB = cb if opts.taskCB
+		api.startTask _path, opts
+
 	getTasks = (tasksCb, type, lang, locs) ->
 		tasks = []
 		locs.forEach (v1) ->
@@ -15,9 +19,11 @@ module.exports = (config, gulp={}) ->
 			tasks[i] = -> tasksCb v.src, v.dest
 		tasks
 
+	prefixTask = (taskName) ->
+		config.rb.prefix.task + taskName
+
 	prefixTaskDeps = (deps) ->
-		deps = (dep = "#{config.rb.prefix.task}#{dep}" for dep in deps)
-		deps
+		deps = (prefixTask dep for dep in deps)
 
 	getTaskDeps = (deps=[]) ->
 		return [] unless deps.length
@@ -26,39 +32,34 @@ module.exports = (config, gulp={}) ->
 
 	# public
 	# ======
-	run:
-		async: (tasksCb, type, lang, locs) ->
-			tasks    = getTasks tasksCb, type, lang, locs
-			defer    = q.defer()
-			promises = tasks.map (task) -> task()
-			q.all(promises).done -> defer.resolve()
-			defer.promise
+	api =
+		run:
+			async: (tasksCb, type, lang, locs) ->
+				tasks    = getTasks tasksCb, type, lang, locs
+				defer    = q.defer()
+				promises = tasks.map (task) -> task()
+				q.all(promises).done -> defer.resolve()
+				defer.promise
 
-		sync: (tasksCb, type, lang, locs) ->
-			tasks = getTasks tasksCb, type, lang, locs
-			defer = q.defer()
-			tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+			sync: (tasksCb, type, lang, locs) ->
+				tasks = getTasks tasksCb, type, lang, locs
+				defer = q.defer()
+				tasks.reduce(q.when, q()).done -> defer.resolve()
+				defer.promise
 
-	wasCalledFrom: (taskName) -> # return boolean
-		calledFromTask = gulp.seq.indexOf(taskName) isnt -1
-		# console.log "was called from task #{taskName} = #{calledFromTask}".yellow
-		calledFromTask
+		startTask: (taskPath, taskOpts={}) ->
+			task = require "#{config.req.tasks}#{taskPath}"
+			taskOpts.taskCB = taskOpts.taskCB or ->
+			return task config, gulp, taskOpts if isType.function task
+			task[taskOpts.run] config, gulp, taskOpts # task is an object
 
-	startTask: (taskPath, taskOpts={}) ->
-		task = require "#{config.req.tasks}#{taskPath}"
-		taskOpts.taskCB = taskOpts.taskCB or ->
-		task config, gulp, taskOpts
+		addTask: (taskName, _path, opts={}) -> # very important method
+			deps     = getTaskDeps opts.deps
+			taskName = prefixTask taskName
 
-	addTask: (taskName, _path, opts={}) -> # very important method
-		deps = getTaskDeps opts.deps
-
-		gulp.task "#{config.rb.prefix.task}#{taskName}", deps, (cb) ->
-			task = require "#{config.req.tasks}#{_path}"
-			opts.taskCB = cb if opts.taskCB
-
-			return task config, gulp, opts if isType.function task
-			task[opts.run] config, gulp, opts # task is an object
-
-
-
+			if !deps.length
+				gulp.task taskName, (cb) ->
+					addedTaskCB _path, cb, opts
+			else
+				gulp.task taskName, gulp.series deps, (cb) ->
+					addedTaskCB _path, cb, opts

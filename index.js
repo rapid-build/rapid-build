@@ -16,12 +16,12 @@ module.exports = function() {
 	var gulp, options;
 	if (arguments.length) {
 		var getGulp = function(args) {
-			if (!!args[0].seq) return args[0]
-			else if (!!args[1] && !!args[1].seq) return args[1]
+			if (!!args[0].task) return args[0]
+			else if (!!args[1] && !!args[1].task) return args[1]
 		}
 		var getOptions = function(args) {
-			if (!args[0].seq) return args[0]
-			else if (!!args[1] && !args[1].seq) return args[1]
+			if (!args[0].task) return args[0]
+			else if (!!args[1] && !args[1].task) return args[1]
 		}
 		gulp    = getGulp(arguments)
 		options = getOptions(arguments)

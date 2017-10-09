@@ -5,8 +5,9 @@ module.exports = (config, gulp) ->
 	# tasks
 	# =====
 	copyTask = (src, dest) ->
-		defer = q.defer()
-		gulp.src src
+		defer   = q.defer()
+		srcOpts = allowEmpty: true
+		gulp.src src, srcOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
 				defer.resolve()

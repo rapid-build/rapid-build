@@ -7,8 +7,10 @@ module.exports =
 		dev:        false
 		prod:       false
 		test:       false
+		testBoth:   false
 		testClient: false
 		testServer: false
+		prodServer: false
 
 	get: (mode) ->
 		switch mode
@@ -17,6 +19,7 @@ module.exports =
 			when 'test'
 				@is.default    = true
 				@is.test       = true
+				@is.testBoth   = true
 				@is.testClient = true
 				@is.testServer = true
 			when 'test:client'
@@ -32,6 +35,7 @@ module.exports =
 			when 'dev:test'
 				@is.dev        = true
 				@is.test       = true
+				@is.testBoth   = true
 				@is.testClient = true
 				@is.testServer = true
 			when 'dev:test:client'
@@ -44,9 +48,11 @@ module.exports =
 				@is.testServer = true
 			when 'prod', 'prod:server'
 				@is.prod       = true
+				@is.prodServer = true if mode is 'prod:server'
 			when 'prod:test'
 				@is.prod       = true
 				@is.test       = true
+				@is.testBoth   = true
 				@is.testClient = true
 				@is.testServer = true
 			when 'prod:test:client'

@@ -7,7 +7,7 @@ module.exports =
 		'/common/common-server'
 		'/build/build-spa'
 		'/server/start-server'
-		# '/browser/open-browser' # todo
+		# '/browser/open-browser' # TODO
 	]
 	dev: [
 		'/common/common'
@@ -18,7 +18,7 @@ module.exports =
 		'/browser/browser-sync'
 		'/watch/watch'
 	]
-	prod: [
+	prod: [ # TODO
 		'/common/common'
 		'/common/common-client'
 	]

@@ -26,13 +26,15 @@ module.exports = (config, gulp) ->
 	# Single Tasks
 	# ============
 	setMinFileExcludes = (type) ->
-		defer  = q.defer()
-		appDir = pathHelp.format config.app.dir
-		src    = [].concat(
+		defer   = q.defer()
+		appDir  = pathHelp.format config.app.dir
+		srcOpts = buffer: false, allowEmpty: true
+		src = [].concat(
 			config.exclude.rb.from.minFile[type]
 			config.exclude.app.from.minFile[type]
 		)
-		gulp.src src, buffer: false
+		return promiseHelp.get defer unless src.length
+		gulp.src src, srcOpts
 			.on 'data', (file) ->
 				_path = pathHelp.format(file.path).replace "#{appDir}/", ''
 				MinFileExcludes[type].push _path

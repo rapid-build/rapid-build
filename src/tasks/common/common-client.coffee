@@ -1,19 +1,18 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	gulpSequence = require('gulp-sequence').use gulp
-	promiseHelp  = require "#{config.req.helpers}/promise"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# API
 	# ===
 	api =
-		runTask: (cb) ->
+		runTask: ->
 			return promiseHelp.get() unless config.build.client
-			gulpSequence(
+			gulp.series([
 				"#{config.rb.prefix.task}update-angular-mocks-config"
 				"#{config.rb.prefix.task}build-bower-json"
 				"#{config.rb.prefix.task}bower"
 				"#{config.rb.prefix.task}build-angular-modules"
 				"#{config.rb.prefix.task}build-angular-bootstrap"
-				[
+				gulp.parallel([
 					"#{config.rb.prefix.task}copy-bower_components"
 					"#{config.rb.prefix.task}copy-css"
 					"#{config.rb.prefix.task}copy-images"
@@ -31,14 +30,13 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}compile-extra-less:client"
 					"#{config.rb.prefix.task}compile-extra-sass:client"
 					"#{config.rb.prefix.task}copy-extra-files:client"
-				]
+				])
 				"#{config.rb.prefix.task}update-css-urls"
 				"#{config.rb.prefix.task}clean-rb-client" # if exclude.default.client.files
 				"#{config.rb.prefix.task}build-files"
-				cb
-			)
-
+				(cb) -> cb(); taskOpts.taskCB()
+			])()
 	# return
 	# ======
-	api.runTask taskOpts.taskCB
+	api.runTask()
 

@@ -28,5 +28,6 @@ module.exports = (gulp, options={}) ->
 	#     build(buildMode).done -> console.log 'build finished'
 	# =============================================================
 	(env = 'default') ->
-		gulp.start config.rb.tasks[env]
-		promise
+		env = env.replace /:$/, '' if typeof env is 'string' and env isnt 'default'
+		gulp.task(config.rb.tasks[env])() # kickoff the build
+		promise # return build promise

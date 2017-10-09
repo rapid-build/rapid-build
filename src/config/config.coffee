@@ -10,9 +10,9 @@ module.exports = (rbDir, options) ->
 	# ===================
 	config  = require("#{rbDir}/config/configs/config-req")                config, rbDir
 	options = require("#{config.req.config.path}/config-options")          config, options
-	config  = require("#{config.req.config.configs}/config-env")           config
 	config  = require("#{config.req.config.configs}/config-rb")            config, rbDir
 	config  = require("#{config.req.config.configs}/config-app")           config, options
+	config  = require("#{config.req.config.configs}/config-env")           config
 	config  = require("#{config.req.config.configs}/config-generated")     config
 	config  = require("#{config.req.config.configs}/config-build")         config, options
 	config  = require("#{config.req.config.configs}/config-ports")         config, options

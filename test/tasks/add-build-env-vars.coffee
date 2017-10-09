@@ -13,7 +13,7 @@ module.exports = (config) ->
 
 	# set
 	# ===
-	process.env.RB_TEST    = true              # for testing app's gulpfile.js
-	process.env.RB_OPTIONS = getOptions()      # for testing app's build options
-	process.env.RB_MODE    = config.build.mode # technique for running build tasks for specific modes
-	process.env.RB_LIB     = config.test.lib   # test lib or src | default is lib
+	process.env.RB_LIB           = config.test.lib   # test lib or src | default is lib
+	process.env.RB_MODE_OVERRIDE = config.build.mode # technique for running build tasks for specific modes
+	process.env.RB_TEST          = true              # for testing app's gulpfile.js
+	process.env.RB_TEST_OPTIONS  = getOptions()      # for testing app's build options

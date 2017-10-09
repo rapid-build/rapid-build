@@ -11,7 +11,7 @@ var path = require('path'),
 var getBuildMode, getIsCiBuild, getConfig;
 var buildMode, isCiBuild, options;
 var buildPath, config;
-var buildTask, gulpTask;
+var buildTask, gulpTask, gulpTaskOrg;
 
 /* Helpers
  **********/
@@ -50,11 +50,20 @@ require(buildPath)(gulp, options);
 
 /* Init Tasks
  *************/
-gulpTask  = buildMode;
-buildTask = config.pkgs.rb.name;
-if (gulpTask && gulpTask != 'default') buildTask += `:${buildMode}`;
-// console.log('TASKS ---', gulpTask, buildTask);
-if (!!gulp.tasks[gulpTask]) return
+gulpTask    = buildMode;
+gulpTaskOrg = gulpTask;
+buildTask   = config.pkgs.rb.name;
+
+// if (gulpTask && gulpTask != 'default') buildTask += `:${buildMode}`;
+if (gulpTask && gulpTask.indexOf('rb-') !== -1) {
+	gulpTask  = `${buildTask}:${gulpTask}`
+	buildTask = gulpTaskOrg;
+} else if (gulpTask && gulpTask != 'default') {
+	buildTask += `:${buildMode}`;
+}
+
+// console.log('APP TASKS:', { gulpTask, buildTask}, '\n');
+if (!!gulp.tree().nodes[gulpTask]) return
 
 /**
  * Run Build - in the console type one of the following:
@@ -63,14 +72,20 @@ if (!!gulp.tasks[gulpTask]) return
  * gulp dev  | dev:test    | dev:test:client  | dev:test:server
  * gulp prod | prod:test   | prod:test:client | prod:test:server | prod:server
  ******************************************************************************/
-gulp.task('default', [config.pkgs.rb.name], function(cb) {
-	console.log('Build Complete!');
-	cb();
-})
+gulp.task('default', gulp.series([
+	config.pkgs.rb.name,
+	function(cb) {
+		console.log('Build Complete!');
+		cb();
+	}
+]));
 
-gulp.task(gulpTask, [buildTask], function(cb) {
-	console.log('Build Complete!');
-	cb();
-})
+gulp.task(gulpTask, gulp.series([
+	buildTask,
+	function(cb) {
+		console.log('Build Complete!');
+		cb();
+	}
+]));
 
 

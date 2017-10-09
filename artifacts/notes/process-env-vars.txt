@@ -1,0 +1,23 @@
+-------------------------------
+BUILD'S CUSTOM PROCESS ENV VARS
+-------------------------------
+Type:   string
+Format: process.env.RB_{X}
+-------------------------------
+Value Formats:
+• First value is default.
+• RB_MODE:
+  ◦ optionally stacks
+  ◦ example: prod[:server] = prod | prod:server
+• RB_TEST_OPTIONS
+  ◦ must have at least 1 option
+  ◦ and start with 'options:' then optionally stacks
+----------------------------------------------------
+Var                 Bin    Src    Test    Value
+---                 ---    ---    ----    -----
+1. RB_LIB            ✔      ✔      ✔      lib | src
+2. RB_MODE                  ✔             default | dev[:test[:client|:server]] | prod[:server|:test[:client|:server]] | test[:client|:server]
+3. RB_MODE_OVERRIDE         ✔      ✔      same as RB_MODE
+4. RB_TEST                         ✔      undefined | true
+5. RB_TEST_WATCH                   ✔      same as RB_TEST
+6. RB_TEST_OPTIONS                 ✔      options:*|:opt[:opt]...

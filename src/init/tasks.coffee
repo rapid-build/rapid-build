@@ -1,8 +1,11 @@
-# Order doesn't matter.
 # Available tasks prefixed with config.rb.prefix.task.
 # ====================================================
 module.exports = (gulp, config) ->
 	taskHelp = require("#{config.req.helpers}/tasks") config, gulp
+
+	# MUST RUN FIRST (as of gulp >= v4, order doesn't matter for the rest)
+	# ==============
+	taskHelp.addTask 'clean-files', '/clean/clean-files'
 
 	# browser
 	# =======
@@ -27,7 +30,6 @@ module.exports = (gulp, config) ->
 	# clean
 	# =====
 	taskHelp.addTask 'clean-dist',           '/clean/clean-dist'
-	taskHelp.addTask 'clean-files',          '/clean/clean-files'
 	taskHelp.addTask 'clean-rb-client',      '/clean/clean-rb-client'
 	taskHelp.addTask 'clean-rb-client:test', '/clean/clean-rb-client', env: 'test'
 	taskHelp.addTask 'cleanup-client',       '/clean/cleanup-client'

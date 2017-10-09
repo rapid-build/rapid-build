@@ -1,21 +1,21 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	gulpSequence = require('gulp-sequence').use gulp
-	promiseHelp  = require "#{config.req.helpers}/promise"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# API
 	# ===
 	api =
-		runTask: (cb, env) ->
+		runTask: ->
 			return promiseHelp.get() unless config.build.server
 			return promiseHelp.get() if config.exclude.default.server.files
-			serverTask = if env is 'dev' then 'nodemon' else 'spawn-server'
-			gulpSequence(
+			serverTask = if taskOpts.env is 'dev' then 'nodemon' else 'spawn-server'
+
+			gulp.series([
 				"#{config.rb.prefix.task}#{serverTask}"
-				cb
-			)
+				(cb) -> cb(); taskOpts.taskCB()
+			])()
 
 	# return
 	# ======
-	api.runTask taskOpts.taskCB, taskOpts.env
+	api.runTask()
 
 

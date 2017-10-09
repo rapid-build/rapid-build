@@ -7,7 +7,7 @@ module.exports = (config) ->
 
 	# constants
 	# =========
-	ENV_RB_MODE = process.env.RB_MODE
+	RB_MODE_OVERRIDE = process.env.RB_MODE_OVERRIDE
 
 	# helpers
 	# =======
@@ -24,6 +24,7 @@ module.exports = (config) ->
 			when 'test'
 				env.is.default    = true
 				env.is.test       = true
+				env.is.testBoth   = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'test:client'
@@ -39,6 +40,7 @@ module.exports = (config) ->
 			when 'dev:test'
 				env.is.dev        = true
 				env.is.test       = true
+				env.is.testBoth   = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'dev:test:client'
@@ -51,9 +53,11 @@ module.exports = (config) ->
 				env.is.testServer = true
 			when 'prod', 'prod:server'
 				env.is.prod       = true
+				env.is.prodServer = true if name is 'prod:server'
 			when 'prod:test'
 				env.is.prod       = true
 				env.is.test       = true
+				env.is.testBoth   = true
 				env.is.testClient = true
 				env.is.testServer = true
 			when 'prod:test:client'
@@ -65,18 +69,25 @@ module.exports = (config) ->
 				env.is.test       = true
 				env.is.testServer = true
 
+	prepMode = (mode) ->
+		return mode unless mode
+		return mode if mode.indexOf(config.rb.prefix.api) is -1
+		mode = mode.split(':').slice(1).join(':')
+
 	# init env
 	# ========
 	env = {}
 	env.name     = 'default'
-	env.override = !!ENV_RB_MODE
+	env.override = !!RB_MODE_OVERRIDE
 	env.is =
 		default:    true
 		dev:        false
 		prod:       false
 		test:       false
+		testBoth:   false
 		testClient: false
 		testServer: false
+		prodServer: false
 
 	# add env to config
 	# =================
@@ -84,15 +95,19 @@ module.exports = (config) ->
 
 	# public methods
 	# ==============
-	config.env.set = (mode) -> # mode = build mode (called in 'set-env-config' which is called first in 'common')
-		# console.log "OVERRIDE: #{config.env.override},".cyan, mode
+	config.env.set = (mode, force = false) -> # mode = build mode (called in 'set-env-config' which is called first in 'common')
+		return unless mode
+		return if not force and config.env.override
+		# log.task "OVERRIDE: #{config.env.override}", 'warn'
+		mode = prepMode mode
+		# log.task "IF OVERRIDE: use override build \"#{mode}\"", 'warn'
 		return unless mode
 		config.env.name = mode
 		setIsEnv()
 
 	# env override
 	# ============
-	config.env.set ENV_RB_MODE if config.env.override
+	config.env.set RB_MODE_OVERRIDE, true if config.env.override
 
 	# logs
 	# ====

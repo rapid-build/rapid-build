@@ -1,19 +1,19 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	gulpSequence = require('gulp-sequence').use gulp
-	promiseHelp  = require "#{config.req.helpers}/promise"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# API
 	# ===
 	api =
-		runTask: (cb) ->
+		runTask: ->
 			return promiseHelp.get() unless config.build.server
-			gulpSequence(
+
+			gulp.series([
 				"#{config.rb.prefix.task}copy-server-tests"
 				"#{config.rb.prefix.task}run-server-tests"
-				cb
-			)
+				(cb) -> cb(); taskOpts.taskCB()
+			])()
 
 	# return
 	# ======
-	api.runTask taskOpts.taskCB
+	api.runTask()
 

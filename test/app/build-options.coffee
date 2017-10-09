@@ -20,11 +20,11 @@ getOptFileName = (fileName) -> # convert camelCase to spinal-case
 # Common Build Options
 # ====================
 getCommonOptions = ->
-	options    = {}
-	optsDir    = 'build-options'
-	RB_OPTIONS = process.env.RB_OPTIONS
-	return options unless RB_OPTIONS
-	opts = RB_OPTIONS.split ':'
+	options         = {}
+	optsDir         = 'build-options'
+	RB_TEST_OPTIONS = process.env.RB_TEST_OPTIONS
+	return options unless RB_TEST_OPTIONS
+	opts = RB_TEST_OPTIONS.split ':'
 	for optFile in opts
 		optFile = getOptFileName optFile
 		options = merge options, require "./#{optsDir}/#{optFile}"

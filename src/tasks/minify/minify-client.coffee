@@ -1,19 +1,18 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	gulpSequence = require('gulp-sequence').use gulp
-	promiseHelp  = require "#{config.req.helpers}/promise"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# API
 	# ===
 	api =
-		runTask: (cb) ->
+		runTask: ->
 			return promiseHelp.get() unless config.build.client
-			gulpSequence(
-				[
+			gulp.series([
+				gulp.parallel([
 					"#{config.rb.prefix.task}minify-css"
 					"#{config.rb.prefix.task}minify-html"
 					"#{config.rb.prefix.task}minify-images" # todo
 					"#{config.rb.prefix.task}minify-js"
-				]
+				])
 				"#{config.rb.prefix.task}build-prod-files-blueprint"
 				"#{config.rb.prefix.task}build-prod-files"
 				"#{config.rb.prefix.task}concat-scripts-and-styles"
@@ -24,10 +23,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 				"#{config.rb.prefix.task}build-spa:prod"
 				"#{config.rb.prefix.task}minify-spa"
 				"#{config.rb.prefix.task}cache-bust"
-				cb
-			)
+				(cb) -> cb(); taskOpts.taskCB()
+			])()
 
 	# return
 	# ======
-	api.runTask taskOpts.taskCB
+	api.runTask()
 

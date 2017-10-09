@@ -1,15 +1,14 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	gulpSequence = require('gulp-sequence').use gulp
-	promiseHelp  = require "#{config.req.helpers}/promise"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# API
 	# ===
 	api =
-		runTask: (cb) ->
+		runTask: ->
 			return promiseHelp.get() unless config.build.server
-			gulpSequence(
+			gulp.series([
 				"#{config.rb.prefix.task}find-open-port"
-				[
+				gulp.parallel([
 					"#{config.rb.prefix.task}copy-js:server"
 					"#{config.rb.prefix.task}coffee:server"
 					"#{config.rb.prefix.task}es6:server"
@@ -21,11 +20,11 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}compile-extra-less:server"
 					"#{config.rb.prefix.task}compile-extra-sass:server"
 					"#{config.rb.prefix.task}copy-extra-files:server"
-				]
-				cb
-			)
+				])
+				(cb) -> cb(); taskOpts.taskCB()
+			])()
 
 	# return
 	# ======
-	api.runTask taskOpts.taskCB
+	api.runTask()
 
