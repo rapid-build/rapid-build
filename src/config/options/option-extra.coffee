@@ -8,6 +8,7 @@ module.exports = (config, options) ->
 	extra.copy    = {} unless isType.object extra.copy
 	extra.compile = {} unless isType.object extra.compile
 	extra.minify  = {} unless isType.object extra.minify
+	extra.watch   = {} unless isType.object extra.watch
 	extra.compile.client = {} unless isType.object extra.compile.client
 	extra.compile.server = {} unless isType.object extra.compile.server
 	extra.minify.client  = {} unless isType.object extra.minify.client
@@ -31,6 +32,11 @@ module.exports = (config, options) ->
 	# ====================
 	extra.minify.client.css = null unless isType.array extra.minify.client.css
 	extra.minify.client.js  = null unless isType.array extra.minify.client.js
+
+	# extra watch options
+	# ===================
+	extra.watch.client = null unless isType.array extra.watch.client
+	extra.watch.server = null unless isType.array extra.watch.server
 
 	# add extra options
 	# =================

@@ -158,6 +158,17 @@ module.exports = (config, options) ->
 						v3.dirName = dir[k3]
 	addDirName 'dist'
 
+	# add root to locs
+	# ================
+	addRootClientAndServerDir = ->
+		for distOrSrc in ['dist', 'src']
+			for appOrRb in ['rb', 'app']
+				for clientOrServer in ['client', 'server']
+					dirs = config[distOrSrc][appOrRb][clientOrServer]
+					dirs.root = dir: dirs.dir
+
+	addRootClientAndServerDir()
+
 	# server
 	# ======
 	updateServerScriptsDir = -> # server dir is server.scripts.dir

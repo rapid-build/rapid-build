@@ -22,6 +22,7 @@ module.exports = (config, gulp) ->
 		tCache:     require "#{config.req.tasks}/minify/template-cache"
 		clientTest: require "#{config.req.tasks}/test/client/copy-client-tests"
 		serverTest: require "#{config.req.tasks}/test/server/copy-server-tests"
+		extra:      require "#{config.req.tasks}/extra/copy-extra-files"
 
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
@@ -178,6 +179,11 @@ module.exports = (config, gulp) ->
 				-> createWatch config.glob.src.app.server.test.es6,    'serverTest', lang:'es6',    srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
 				-> createWatch config.glob.src.app.server.test.coffee, 'serverTest', lang:'coffee', srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
 			]
+			extraWatches =
+				client: ->
+					createWatch config.extra.watch.app.client, 'extra', lang:'extra', srcType:'root', loc:'client', bsReload:true, logTaskName:'extra client'
+				server: ->
+					createWatch config.extra.watch.app.server, 'extra', lang:'extra', srcType:'root', loc:'server', bsReload:true, logTaskName:'extra server'
 
 			# setup watch rules
 			if config.build.client
@@ -186,11 +192,15 @@ module.exports = (config, gulp) ->
 				else
 					watches = watches.concat clientWatches
 
+				watches.push extraWatches.client if config.extra.watch.app.client.length
+
 			if config.build.server
 				if config.env.is.test
 					watches = watches.concat serverWatches, serverTestWatches if config.env.is.testServer
 				else
 					watches = watches.concat serverWatches
+
+				watches.push extraWatches.server if config.extra.watch.app.server.length
 
 			# async
 			promises = watches.map (watch) -> watch()
