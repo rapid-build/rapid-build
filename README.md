@@ -183,6 +183,7 @@ rapid-build.json (build options - can be cson, json or js file)
 # extra.compile.client[coffee|es6|htmlScripts|less|sass] = (array of strings) = file paths: additional files to compile to dist/client that the build didn't compile
 # extra.compile.server[less|sass]                        = (array of strings) = file paths: additional files to compile to dist/server that the build didn't compile
 # extra.minify.client[css|js]                            = (array of strings) = file paths: additional files to minify in dist/client that the build didn't minify (by default, the build does not minify files in libs or bower_components)
+# extra.watch[client|server]                             = (array of strings) = file paths: additional files to watch in src/client and or src/server that the build didn't watch
 # security.client.clickjacking                           = (boolean) defaults to true = includes a clickjacking defense script in the default spa.html (set to false to disable)
 # compile.htmlScripts.client.enable                      = (boolean) defaults to false = set to true to compile inline html scripts that have es6 code to es5
 # compile.typescript[client|server].enable               = (boolean) defaults to false = set to true to enable client and or server typescript compiler
