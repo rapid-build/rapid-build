@@ -1,3 +1,27 @@
+# [3.0.0](https://github.com/jyounce/rapid-build/compare/v2.2.1...v3.0.0) (2017-10-11)
+
+
+### Features
+
+* **new build option:** extra.watch[client|server] ([1a01fc0^...ad27ca5](https://github.com/jyounce/rapid-build/compare/1a01fc0^...ad27ca5))
+	* useful for watching files that the build doesn't by default (supports symlinks too)
+	* example: extra.watch.server = ['\*\*/\*.json']
+
+### Performance Improvements
+
+* **gulp 4:** boosted performance by upgrading the build to use [gulp 4](https://git.io/vdrqe) ([d1fc1d4](https://github.com/jyounce/rapid-build/commit/d1fc1d4))
+
+### Breaking Changes
+
+Probably won't affect anyone.  
+If you are using rapid-build's cli then you're good &#128077;
+
+Only applies to people using gulp <= v3 and rapid-build in their own gulp file or gulp tasks.
+
+To migrate, upgrade your gulp to [version 4](https://git.io/vdgze).
+
+
+
 ## [2.2.1](https://github.com/jyounce/rapid-build/compare/v2.2.0...v2.2.1) (2017-09-06)
 
 
