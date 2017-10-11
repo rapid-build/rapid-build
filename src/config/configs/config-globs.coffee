@@ -250,11 +250,17 @@ module.exports = (config) ->
 		distGlob        = glob.dist.app.client.all
 		rbBowerDirName  = config.dist.rb.client.bower.dirName
 		appBowerDirName = config.dist.app.client.bower.dirName
+		appLibsDir      = config.dist.app.client.libs.dir
 		nodeModsGlob    = '**/node_modules/**'
 		rbBowerGlob     = "**/#{rbBowerDirName}/**"
 		appBowerGlob    = "**/#{appBowerDirName}/**"
-		ignoreGlobs     = [nodeModsGlob, rbBowerGlob]
+		appLibsGlob     = "#{appLibsDir}/**"
+		extraGlobs      = config.extra.watch.app.client
+		ignoreGlobs     = [nodeModsGlob, rbBowerGlob, appLibsGlob]
 		ignoreGlobs.push appBowerGlob if appBowerDirName isnt rbBowerDirName
+		if extraGlobs.length # ensure watch handles browserSync.restart() for extra watches
+			for _glob in extraGlobs
+				ignoreGlobs.push _glob.replace config.src.app.client.dir, config.dist.app.client.dir
 		glob.browserSync =
 			files:  [distGlob]
 			ignore: ignoreGlobs

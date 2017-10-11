@@ -9,20 +9,21 @@ module.exports = (config, gulp) ->
 	# tasks
 	# =====
 	tasks =
-		clean:      require "#{config.req.tasks}/clean/clean-dist"
-		coffee:     require "#{config.req.tasks}/compile/coffee"
-		css:        require "#{config.req.tasks}/copy/copy-css"
-		es6:        require "#{config.req.tasks}/compile/es6"
-		ts:         require "#{config.req.tasks}/compile/typescript-server"
-		html:       require "#{config.req.tasks}/copy/copy-html"
-		image:      require "#{config.req.tasks}/copy/copy-images"
-		js:         require "#{config.req.tasks}/copy/copy-js"
-		less:       require "#{config.req.tasks}/compile/less"
-		sass:       require "#{config.req.tasks}/compile/sass"
-		tCache:     require "#{config.req.tasks}/minify/template-cache"
-		clientTest: require "#{config.req.tasks}/test/client/copy-client-tests"
-		serverTest: require "#{config.req.tasks}/test/server/copy-server-tests"
-		extra:      require "#{config.req.tasks}/extra/copy-extra-files"
+		clean:       require "#{config.req.tasks}/clean/clean-dist"
+		coffee:      require "#{config.req.tasks}/compile/coffee"
+		css:         require "#{config.req.tasks}/copy/copy-css"
+		es6:         require "#{config.req.tasks}/compile/es6"
+		ts:          require "#{config.req.tasks}/compile/typescript-server"
+		html:        require "#{config.req.tasks}/copy/copy-html"
+		image:       require "#{config.req.tasks}/copy/copy-images"
+		js:          require "#{config.req.tasks}/copy/copy-js"
+		less:        require "#{config.req.tasks}/compile/less"
+		sass:        require "#{config.req.tasks}/compile/sass"
+		tCache:      require "#{config.req.tasks}/minify/template-cache"
+		clientTest:  require "#{config.req.tasks}/test/client/copy-client-tests"
+		serverTest:  require "#{config.req.tasks}/test/server/copy-server-tests"
+		extraClient: require "#{config.req.tasks}/extra/copy-extra-files"
+		extraServer: require "#{config.req.tasks}/extra/copy-extra-files"
 
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
@@ -77,18 +78,20 @@ module.exports = (config, gulp) ->
 
 	# event tasks
 	# ===========
-	changeTask = (taskName, file) ->
+	changeTask = (taskName, file, opts) ->
+		tasks.browserSync() if opts.bsReload is opts.event # see extraWatches.client
 		tasks[taskName] config, gulp, watchFile: file
 
 	addTask = (taskName, file, opts) ->
-		changeTask(taskName, file).then ->
+		changeTask(taskName, file, opts).then ->
 			return promiseHelp.get()   if opts.isTest
 			return promiseHelp.get()   if opts.taskOnly
+			return promiseHelp.get()   if opts.loc is 'server'
 			return tasks.browserSync() if opts.bsReload
 			tasks.buildSpa()
 
 	cleanTask = (taskName, file, opts) ->
-		return changeTask taskName, file if opts.taskOnly
+		return changeTask taskName, file, opts if opts.taskOnly
 		tasks['clean'](config, gulp, watchFile: file).then ->
 			return promiseHelp.get()   if opts.isTest
 			return tasks.browserSync() if opts.bsReload
@@ -102,9 +105,10 @@ module.exports = (config, gulp) ->
 		return unless file.event
 		return unless file.path
 		return unless taskName
+		opts.event = file.event
 		file = addFileProps file, opts
 		switch file.event
-			when 'change' then changeTask taskName, file
+			when 'change' then changeTask taskName, file, opts
 			when 'unlink' then cleanTask taskName, file, opts
 			when 'add'    then addTask taskName, file, opts
 
@@ -161,9 +165,9 @@ module.exports = (config, gulp) ->
 				-> spaWatch config.spa.src.path
 			]
 			serverWatches = [ # server watch: scripts
-				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',         srcType:'scripts', loc:'server', bsReload:true
-				-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',        srcType:'scripts', extDist:'js', loc:'server', bsReload:true
-				-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee',     srcType:'scripts', extDist:'js', loc:'server', bsReload:true
+				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server', bsReload:true
+				-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', loc:'server', bsReload:true, extDist:'js'
+				-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', loc:'server', bsReload:true, extDist:'js'
 				->
 					return promiseHelp.get() unless config.compile.typescript.server.enable
 					tsGlob = [].concat config.glob.src.app.server.scripts.ts, "!#{config.glob.src.app.server.typings.defs}"
@@ -171,19 +175,19 @@ module.exports = (config, gulp) ->
 			]
 			clientTestWatches = [
 				-> createWatch config.glob.src.app.client.test.js,     'clientTest', lang:'js',     srcType:'test', isTest:true, logTaskName:'client test'
-				-> createWatch config.glob.src.app.client.test.es6,    'clientTest', lang:'es6',    srcType:'test', extDist:'js', isTest:true, logTaskName:'client test'
-				-> createWatch config.glob.src.app.client.test.coffee, 'clientTest', lang:'coffee', srcType:'test', extDist:'js', isTest:true, logTaskName:'client test'
+				-> createWatch config.glob.src.app.client.test.es6,    'clientTest', lang:'es6',    srcType:'test', isTest:true, logTaskName:'client test', extDist:'js'
+				-> createWatch config.glob.src.app.client.test.coffee, 'clientTest', lang:'coffee', srcType:'test', isTest:true, logTaskName:'client test', extDist:'js'
 			]
 			serverTestWatches = [
 				-> createWatch config.glob.src.app.server.test.js,     'serverTest', lang:'js',     srcType:'test', loc:'server', isTest:true, logTaskName:'server test'
-				-> createWatch config.glob.src.app.server.test.es6,    'serverTest', lang:'es6',    srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
-				-> createWatch config.glob.src.app.server.test.coffee, 'serverTest', lang:'coffee', srcType:'test', extDist:'js', loc:'server', isTest:true, logTaskName:'server test'
+				-> createWatch config.glob.src.app.server.test.es6,    'serverTest', lang:'es6',    srcType:'test', loc:'server', isTest:true, logTaskName:'server test', extDist:'js'
+				-> createWatch config.glob.src.app.server.test.coffee, 'serverTest', lang:'coffee', srcType:'test', loc:'server', isTest:true, logTaskName:'server test', extDist:'js'
 			]
 			extraWatches =
 				client: ->
-					createWatch config.extra.watch.app.client, 'extra', lang:'extra', srcType:'root', loc:'client', bsReload:true, logTaskName:'extra client'
+					createWatch config.extra.watch.app.client, 'extraClient', lang:'extra', srcType:'root', loc:'client', bsReload:'change', logTaskName:'extra client'
 				server: ->
-					createWatch config.extra.watch.app.server, 'extra', lang:'extra', srcType:'root', loc:'server', bsReload:true, logTaskName:'extra server'
+					createWatch config.extra.watch.app.server, 'extraServer', lang:'extra', srcType:'root', loc:'server', bsReload:true, logTaskName:'extra server'
 
 			# setup watch rules
 			if config.build.client

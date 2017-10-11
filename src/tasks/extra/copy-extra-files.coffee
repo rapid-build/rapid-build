@@ -5,8 +5,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 	forWatchFile = !!taskOpts.watchFile
 
 	runTask = (src, dest, base, appOrRb, loc) ->
-		defer = q.defer()
-		gulp.src src, { base, buffer: false }
+		defer   = q.defer()
+		# follow to ensure globs with "**" work properly with symlinks
+		srcOpts = { base, buffer: false, follow: true }
+		gulp.src src, srcOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
 				# console.log dest
