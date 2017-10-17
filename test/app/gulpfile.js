@@ -11,7 +11,8 @@ var path = require('path'),
 var getBuildMode, getIsCiBuild, getConfig;
 var buildMode, isCiBuild, options;
 var buildPath, config;
-var buildTask, gulpTask, gulpTaskOrg;
+var gulpTask, gulpTaskOrg;
+var buildTask, buildTaskPrefix;
 
 /* Helpers
  **********/
@@ -50,12 +51,13 @@ require(buildPath)(gulp, options);
 
 /* Init Tasks
  *************/
-gulpTask    = buildMode;
-gulpTaskOrg = gulpTask;
-buildTask   = config.pkgs.rb.name;
+gulpTask        = buildMode;
+gulpTaskOrg     = gulpTask;
+buildTask       = config.pkgs.rb.name;
+buildTaskPrefix = config.pkgs.rb.tasksPrefix;
 
 // if (gulpTask && gulpTask != 'default') buildTask += `:${buildMode}`;
-if (gulpTask && gulpTask.indexOf('rb-') !== -1) {
+if (gulpTask && gulpTask.indexOf(buildTaskPrefix) !== -1) {
 	gulpTask  = `${buildTask}:${gulpTask}`
 	buildTask = gulpTaskOrg;
 } else if (gulpTask && gulpTask != 'default') {
