@@ -8,7 +8,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	compileHtmlScripts = require "#{config.req.plugins}/gulp-compile-html-scripts"
 	log                = require "#{config.req.helpers}/log"
 	ngFormify          = require "#{config.req.plugins}/gulp-ng-formify"
-	dirHelper          = require("#{config.req.helpers}/dir") config, gulp
+	dirHelper          = require("#{config.req.helpers}/dir") config
 	runNgFormify       = config.angular.ngFormify
 	forWatchFile       = !!taskOpts.watchFile
 

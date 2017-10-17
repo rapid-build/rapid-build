@@ -1,12 +1,12 @@
 module.exports =
-	delay: (delay, defer) ->
+	delay: (delay, defer, resolved) ->
 		defer = require('q').defer() unless defer
 		setTimeout ->
-			defer.resolve()
+			defer.resolve resolved
 		, delay
 		defer.promise
 
-	get: (defer) ->
+	get: (defer, resolved) ->
 		defer = require('q').defer() unless defer
-		defer.resolve()
+		defer.resolve resolved
 		defer.promise

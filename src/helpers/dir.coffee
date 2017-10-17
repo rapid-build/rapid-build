@@ -1,8 +1,10 @@
-module.exports = (config, gulp) ->
-	q    = require 'q'
-	fs   = require 'fs'
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
+module.exports = (config) ->
+	q           = require 'q'
+	fs          = require 'fs'
+	path        = require 'path'
+	gs          = require 'glob-stream'
+	log         = require "#{config.req.helpers}/log"
+	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# helpers
 	# =======
@@ -68,13 +70,15 @@ module.exports = (config, gulp) ->
 	# returns promise with hasFiles boolean value
 	hasFiles: (src) ->
 		defer    = q.defer()
-		opts     = buffer:false, read:false
+		opts     = buffer:false, read:false, allowEmpty:true
 		hasFiles = false
-		gulp.src src, opts
+		return promiseHelp.get defer, hasFiles unless src and src.length
+
+		gs src, opts
 			.on 'data', (file) ->
 				return unless file
 				hasFiles = true
-				@.end()
+				@destroy()
 			.on 'end', ->
 				defer.resolve hasFiles
 		defer.promise
