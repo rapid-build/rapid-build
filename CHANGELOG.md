@@ -1,3 +1,13 @@
+## [3.0.1](https://github.com/jyounce/rapid-build/compare/v3.0.0...v3.0.1) (2017-10-18)
+
+
+### Bug Fixes
+
+* **option angular.templateCache.dev:** error caused by gulp 4 upgrade ([2927a23](https://github.com/jyounce/rapid-build/commit/2927a23))
+* **bower:** bump dep bower to [v1.8.2](https://git.io/vdQsr) it migrates registry url from http://bower.herokuapp.com to https://registry.bower.io ([234fb7c](https://github.com/jyounce/rapid-build/commit/234fb7c))
+
+
+
 # [3.0.0](https://github.com/jyounce/rapid-build/compare/v2.2.1...v3.0.0) (2017-10-11)
 
 

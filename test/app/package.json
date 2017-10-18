@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build-test",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Application for testing the rapid-build.",
 	"author": {
 		"name": "Judd Younce",
