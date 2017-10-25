@@ -3,10 +3,12 @@
 Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
 Requirements: [git](https://git-scm.com/downloads) and [Node.js](http://nodejs.org/) version >= 4.0.0
 
+
 ## Installation
 ```bash
 $ npm install rapid-build -g
 ```
+
 
 ## Description
 *Rapidly* develop distributable client and server side packages.
@@ -78,6 +80,7 @@ $ rapid-build
 }
 ```
 
+
 ## Directory Structure
 Must have **package.json**, everything else is optional.  
 Rapid build will be expecting this directory structure.
@@ -109,7 +112,64 @@ package.json (required - must have name and version)
 rapid-build.json (build options - can be cson, json or js file)
 ```
 
-## Options API
+
+## Build Types
+#### Common Tasks (all 4 builds do the following tasks first):
+1. install bower components (if they aren't installed)
+2. copy the following files to the dist directory
+	* css - (client)
+	* images - (client)
+	* js - (client and server)
+	* html - (client)
+	* libs - (client) (everything in the libs directory)
+	* bower components - (client) (files in every bower.json's main prop)
+	* node modules - (server) (node_modules directory installed via server package.json)
+	* compile then copy to dist
+		* coffee -> js - (client and server)
+		* es6 -> js - (client and server)
+		* typescript -> js - (client and server)
+		* less -> css - (client)
+		* sass -> css - (client)
+
+#### Default Build:
+1. run common tasks (see above)
+2. build the spa.html file then copy to dist/client/
+3. start the server
+4. open the browser
+
+#### Dev Build:
+1. run common tasks (see above)
+2. build the spa.html file then copy to dist/client/
+3. start the server
+4. open the browser
+5. fireup the file watchers (on saving a file, the browser will refresh)
+
+#### Prod Build:
+1. run common tasks (see above)
+2. minify the application files
+	* css
+	* html
+	* js
+3. concatenate files
+	* css (styles.min.css created)
+	* js (scripts.min.css created)
+4. build the spa.html file
+5. minify the spa.html file
+6. cache bust the files (client)
+7. minify server js files
+
+#### Test Build:
+1. run common tasks (see above)
+2. copy client test scripts to dist/client/
+3. run client tests in [PhantomJS](http://phantomjs.org/)
+4. copy server test scripts to dist/server/
+5. run server tests using [jasmine](http://jasmine.github.io/)
+
+
+## Build Options
+Default builds don't suffice, no problem!  
+Below are a list of options you can use to customize your builds (place in rapid-build.json).
+
 ```coffeescript
 # Example: options.ports.server = 5000
 # Options is an object, you can set the following properties:
@@ -191,57 +251,6 @@ rapid-build.json (build options - can be cson, json or js file)
 # ==========================================================================================================================================================================================================================================================================================================
 ```
 
-## Build Types
-#### Common Tasks (all 4 builds do the following tasks first):
-1. install bower components (if they aren't installed)
-2. copy the following files to the dist directory
-	* css - (client)
-	* images - (client)
-	* js - (client and server)
-	* html - (client)
-	* libs - (client) (everything in the libs directory)
-	* bower components - (client) (files in every bower.json's main prop)
-	* node modules - (server) (node_modules directory installed via server package.json)
-	* compile then copy to dist
-		* coffee -> js - (client and server)
-		* es6 -> js - (client and server)
-		* typescript -> js - (client and server)
-		* less -> css - (client)
-		* sass -> css - (client)
-
-#### Default Build:
-1. run common tasks (see above)
-2. build the spa.html file then copy to dist/client/
-3. start the server
-4. open the browser
-
-#### Dev Build:
-1. run common tasks (see above)
-2. build the spa.html file then copy to dist/client/
-3. start the server
-4. open the browser
-5. fireup the file watchers (on saving a file, the browser will refresh)
-
-#### Prod Build:
-1. run common tasks (see above)
-2. minify the application files
-	* css
-	* html
-	* js
-3. concatenate files
-	* css (styles.min.css created)
-	* js (scripts.min.css created)
-4. build the spa.html file
-5. minify the spa.html file
-6. cache bust the files (client)
-7. minify server js files
-
-#### Test Build:
-1. run common tasks (see above)
-2. copy client test scripts to dist/client/
-3. run client tests in [PhantomJS](http://phantomjs.org/)
-4. copy server test scripts to dist/server/
-5. run server tests using [jasmine](http://jasmine.github.io/)
 
 ## Develop Rapidly!
 ![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build-docs/master/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
