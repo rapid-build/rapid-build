@@ -11,3 +11,4 @@ Package                       Current   Upgrade Failure
 6. jasmine                    2.5.1     (test results report shows twice)
 7. postcss-import             7.1.3     (sync mode was removed)
 8. tar                        2.2.1     (breaking changes not documented and getting error, have to newup something)
+9. deepmerge                  1.5.1     (breaking changes in v2.0.0, before updating review changes and test)
