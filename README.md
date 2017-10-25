@@ -9,7 +9,7 @@ $ npm install rapid-build -g
 ```
 
 ## Description
-*Rapidly* develop distributable client and server side packages/folders.
+*Rapidly* develop distributable client and server side packages.
 rapid-build currently supports the following technologies:
 * languages
 	* [css](https://developer.mozilla.org/en-US/docs/Web/CSS), [less](http://lesscss.org/) and [sass](http://sass-lang.com/) (client)
@@ -33,7 +33,7 @@ rapid-build currently supports the following technologies:
 	* these files should be under a [version control system](http://guides.beanstalkapp.com/version-control/intro-to-version-control.html)
 	  ([ex](https://github.com/ "Example: GitHub that uses Git"))
 * dist
-	* this is where your distributable packages/folders will be built
+	* this is where your distributable package will be built
 	* once built you can ship them off to places like a webserver
 	* these packages should not be under version control
 		* instead use a [ci system](http://www.thoughtworks.com/continuous-integration "Continuous Integration System")
@@ -79,7 +79,7 @@ $ rapid-build
 ```
 
 ## Directory Structure
-Must have **package.json**, everthing else is optional.  
+Must have **package.json**, everything else is optional.  
 Rapid build will be expecting this directory structure.
 ```
 dist/ (generated distributable folder created by rapid-build)
@@ -245,24 +245,4 @@ rapid-build.json (build options - can be cson, json or js file)
 
 ## Develop Rapidly!
 ![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build-docs/master/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
-
-## Known Issues
-These are either being worked on or on the todo list.
-* doesn't support sass "import multiple files in one @import"
-```scss
-// note: it will compile but the dist will end up with duplicate css
-// example:
-@import "rounded-corners", "text-shadow";
-```
-
-
-
-
-
-
-
-
-
-
-
 
