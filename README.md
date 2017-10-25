@@ -191,7 +191,7 @@ rapid-build.json (build options - can be cson, json or js file)
 # ==========================================================================================================================================================================================================================================================================================================
 ```
 
-## Build Modes
+## Build Types
 #### Common Tasks (all 4 builds do the following tasks first):
 1. install bower components (if they aren't installed)
 2. copy the following files to the dist directory
