@@ -3,8 +3,9 @@ module.exports = (config, gulp) ->
 	log = require "#{config.req.helpers}/log"
 
 	runTask = (src, dest, appOrRb) ->
-		defer = q.defer()
-		gulp.src src
+		defer   = q.defer()
+		srcOpts = { follow: true }
+		gulp.src src, srcOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
 				# console.log "copied #{appOrRb} libs".yellow
