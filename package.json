@@ -4,21 +4,28 @@
 	"tasksPrefix": "rb-",
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
 	"homepage": "https://rapid-build.io/",
-	"author": {
-		"name": "Judd Younce",
-		"email": "jyounce@yahoo.com",
-		"url": "https://github.com/jyounce"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jyounce/rapid-build"
-	},
-	"bugs": {
-		"url": "https://github.com/jyounce/rapid-build/issues"
-	},
 	"license": "MIT",
 	"engines": {
 		"node": ">=4.0.0"
+	},
+	"contributors": [
+		{
+			"name": "Judd Younce",
+			"email": "jyounce@yahoo.com",
+			"url": "https://github.com/jyounce"
+		},
+		{
+			"name": "Yevgeniy Okun",
+			"email": "yevgeniyokun@gmail.com",
+			"url": "https://github.com/yokun"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rapid-build/rapid-build"
+	},
+	"bugs": {
+		"url": "https://github.com/rapid-build/rapid-build/issues"
 	},
 	"preferGlobal": true,
 	"main": "./",

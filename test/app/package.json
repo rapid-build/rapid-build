@@ -1,10 +1,5 @@
 {
 	"name": "rapid-build-test",
 	"version": "3.0.1",
-	"description": "Application for testing the rapid-build.",
-	"author": {
-		"name": "Judd Younce",
-		"email": "jyounce@yahoo.com",
-		"url": "https://github.com/jyounce"
-	}
+	"description": "Application for testing rapid-build."
 }

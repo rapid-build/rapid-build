@@ -1,6 +1,6 @@
 # rapid-build
 **[rapid-build.io](https://rapid-build.io/)**  
-Releases are documented here [changelog](https://github.com/jyounce/rapid-build/blob/master/CHANGELOG.md).  
+Releases are documented here [changelog](https://github.com/rapid-build/rapid-build/blob/master/CHANGELOG.md).  
 Requirements: [git](https://git-scm.com/downloads) and [Node.js](http://nodejs.org/) version >= 4.0.0
 
 
@@ -253,5 +253,5 @@ Below are a list of options you can use to customize your builds (place in rapid
 
 
 ## Develop Rapidly!
-![Shake and Bake!](https://raw.githubusercontent.com/jyounce/rapid-build-docs/master/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
+![Shake and Bake!](https://raw.githubusercontent.com/rapid-build/rapid-build.io/master/src/client/images/shake-and-bake.jpg "Shake n' Bake!")
 

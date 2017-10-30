@@ -49,7 +49,7 @@ pathHelp =
 
 	getAbsolute: (paths, opts) ->
 		prependPath = opts.prependPath isnt false
-		base        = paths.base # /Users/jyounce/npm-packages/build-test/dist/client/libs/
+		base        = paths.base # /Users/xxx/app/dist/client/libs/
 		rel         = paths.rel  # build/styles/x.css
 		# console.log "Base: #{base} | Rel: #{rel}"
 		base        = base.split '/'
