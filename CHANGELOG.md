@@ -1,3 +1,16 @@
+# [3.1.0](https://github.com/rapid-build/rapid-build/compare/v3.0.1...v3.1.0) (2017-10-30)
+
+
+Release includes many dependency bumps and a couple new features.
+
+
+### Features
+
+* **symlinks:** add symlink support to client libs folder ([52a2b8f](https://github.com/rapid-build/rapid-build/commit/52a2b8f))
+* **cache busting:** cache bust svg files ([17e4133](https://github.com/rapid-build/rapid-build/commit/17e4133))
+
+
+
 ## [3.0.1](https://github.com/rapid-build/rapid-build/compare/v3.0.0...v3.0.1) (2017-10-18)
 
 
