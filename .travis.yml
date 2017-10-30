@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - 6.11.0
+- 6.11.5
 notifications:
   email:
     on_success: always
 deploy:
   - provider: npm
     skip_cleanup: true
-    email: jyounce@yahoo.com
+    email: rapid.build@yahoo.com
     api_key:
-      secure: JRR+gdB4nXCzt/M0/Q5jlgcFP+iPsEhZJnn36MK9N749BWMl31tdgmhdoQESpeJZtLY/T/zaISYkHXCiIegiW8HFFdEorCvbNxgTaowETeYjIZj62g3FBmM1A8zGeEgKA6a2Oo4H9nvqCD9r/wbHgiZeVT4L6O8BtlU0n+HGzeypWCfr1lU/ToznjMTdnffOL/4Wfh4D5TfwiFT/HMnUtTebWFZH0TaYMtdcBh3QloEgoDddXQ+MUQNC1lZjeXNR4ua+a9zhBpmzWNTbgnHH2ShD5y6bEsAqVtoExUsA7aDtE3Eimcl4XVldQeXX8H84M7nf409izXjO80Ww5iyO8Ca2f/5N1sJ1QAwyi7NFWfGEppzW6c4zRZ/1tRHSP1ca7VTqQTFPcE0mulx/BgolV+G2xHJaVMGulYD7wQFFwaPQxPQHtoNaYMVFBlYYA3FXiSJvGMuDtNwbUf/8XGhRcE1noVJDH7KvDmKouxci0kyeH0s6sMlPF813uQgZlxsb3Fidu9bkD58oOnn8zK/+Q2iI9/nWSIRR8F4pRxJhuVm7sjDgk/fzObkRwuHcegvQ41ISQaX1idXGWdYPnuCTT9IgEtPUOijk1u61zt9ckJwjESjVYVz4Y8NcmFVD7KLNtgoUdfgMIm751l3ZxMveS4ajmzR7K59tMco4f2EznZg=
+      secure: ubfQLGtejX+3PyoBPOgDudbKqSQJtOL2tMUUdp3e3DIGTPOLUTUXM/N2I333+6OToIlkBwHsIDzOHLFZEHvlckDfe8hF+KV3KzhXpRKkoZD74IPZ13BzwzdSQLjxfwjMU7Ktu6alEy+2PneyV2U5x5dtB8kNSXjgk9MtcLwdYRU5IM9727MUL6N8rI/+pCHTkXqPvaCMYPO0bSDgVJHbVGP1gsLSm9J0LjhIaFnHnlAYDuBk/95mHpaXVv91hocINy9u7/mUJ+srnC+HO37FigU9td5keHpLileiX8NRhlVDeJu/BFiCVoJ6jPrxGArjvWuadBrOBfVt7uYI3VkAauCz7xHHc50Ahjfw75MIksUs6twCWWa9y8xXHKBj4c7eWOWGZpzpBcu/cbHFWUHneM0zBgYBdi1qnrpaZdrk7XuVxKUOMO0UuAPGJ/Uv18YUOb5tNmv0NBl2XLJOggGD/tXEQX42/W0FXq2qCi274JEARE6d1pXkml9UqZuhnlZeoMjfnFBrT6xGZHMmn32NdN3ANk8d3pirE4rjoRX3IZ9zB7pBigY+zjZk395H8FAd2u5itmR/2Jj2nl0roi65XaVlP03qnvHg60ZE8hAUsgVragM/qL9mMszhlJZPWFo11jmE4qmquTHjOvlah00kEbnF5Cs/M5I0xdY/M93H7hg=
     on:
       tags: true
