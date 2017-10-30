@@ -13,7 +13,7 @@ module.exports = (config) ->
 		es6:    'es6'
 		fonts:  'eot,svg,ttf,woff,woff2' # not used
 		html:   'html'
-		images: 'gif,jpg,jpeg,png'
+		images: 'gif,jpg,jpeg,png,svg'
 		js:     'js'
 		less:   'less'
 		sass:   'sass,scss'
