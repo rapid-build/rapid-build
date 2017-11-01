@@ -1,3 +1,12 @@
+## [3.1.1](https://github.com/rapid-build/rapid-build/compare/v3.1.0...v3.1.1) (2017-11-01)
+
+
+### Bug Fixes
+
+* **node v8:** fix installation issues in windows for node v8 ([f40c686](https://github.com/rapid-build/rapid-build/commit/f40c686))
+
+
+
 # [3.1.0](https://github.com/rapid-build/rapid-build/compare/v3.0.1...v3.1.0) (2017-10-30)
 
 
