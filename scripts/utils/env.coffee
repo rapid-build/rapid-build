@@ -1,9 +1,8 @@
 # ENVIRONMENT HELPER
 # ==================
+q      = require 'q'
 exec   = require('child_process').exec
 fse    = require 'fs-extra'
-async  = require 'asyncawait/async'
-await  = require 'asyncawait/await'
 semver = require 'semver'
 consts = require '../consts/consts'
 log    = require './log'
@@ -19,17 +18,18 @@ module.exports =
 				log.msg "running npm: v#{version}"
 				resolve version
 
-	isConsumer: async (silent=false) -> # :promise<boolean>
-		exists = await fse.pathExists consts.RB_SRC # published package doesn't have root/src/
-		exists = !exists
-		log.msg "is consumer install: #{exists}" unless silent
-		exists
+	isConsumer: (silent=false) -> # :promise<boolean>
+		# published package doesn't have root/src/
+		fse.pathExists(consts.RB_SRC).then (exists) ->
+			exists = !exists
+			log.msg "is consumer install: #{exists}" unless silent
+			exists
 
-	isNpmVersion: async (versionRange) -> # :promise<boolean>
-		version = await @getNpmVersion()
-		inRange = semver.satisfies version, versionRange
-		log.msg "is npm v#{version} in range #{versionRange}: #{inRange}"
-		inRange
+	isNpmVersion: (versionRange) -> # :promise<boolean>
+		@getNpmVersion().then (version) ->
+			inRange = semver.satisfies version, versionRange
+			log.msg "is npm v#{version} in range #{versionRange}: #{inRange}"
+			inRange
 
 
 

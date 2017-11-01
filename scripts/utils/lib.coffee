@@ -1,5 +1,6 @@
 # LIB HELPER
 # ==========
+q        = require 'q'
 fse      = require 'fs-extra'
 del      = require 'del'
 gulp     = require 'gulp'
@@ -7,30 +8,42 @@ coffee   = require 'gulp-coffee'
 minifyJs = require 'gulp-uglify'
 tar      = require 'tar'
 fstream  = require 'fstream' # used in github tar examples
-async    = require 'asyncawait/async'
-await    = require 'asyncawait/await'
 consts   = require '../consts/consts'
 log      = require './log'
 
 # module
 # ======
 module.exports =
-	clean: async (verbose=false) -> # :promise<boolean>
-		opts   = force: true
-		_paths = await del consts.RB_LIB, opts
-		log.msg _path, 'minor' for _path in _paths if verbose
-		exists = await fse.pathExists consts.RB_LIB
-		log.msg "cleaned lib: #{!exists}"
-		exists
+	clean: (verbose=false) -> # :promise<boolean>
+		defer = q.defer()
+		tasks = [
+			->
+				del(consts.RB_LIB, force: true).then (_paths) ->
+					log.msg _path, 'minor' for _path in _paths if verbose
+			->
+				fse.pathExists(consts.RB_LIB).then (exists) ->
+					exists = !exists
+					log.msg "cleaned lib: #{exists}"
+					exists
+		]
+		tasks.reduce(q.when, q()).done (val) -> defer.resolve val
+		defer.promise
 
-	copySrc: async -> # :promise<boolean>
-		opts =
-			errorOnExist: true
-			filter: (src) -> not /\.DS_Store$/ig.test src
-		copied = await fse.copy consts.RB_SRC, consts.RB_LIB, opts
-		exists = await fse.pathExists consts.RB_LIB
-		log.msg "copied src to lib: #{exists}"
-		exists
+	copySrc: -> # :promise<boolean>
+		defer = q.defer()
+		tasks = [
+			->
+				opts =
+					errorOnExist: true
+					filter: (src) -> not /\.DS_Store$/ig.test src
+				fse.copy consts.RB_SRC, consts.RB_LIB, opts
+			->
+				fse.pathExists(consts.RB_LIB).then (exists) ->
+					log.msg "copied src to lib: #{exists}"
+					exists
+		]
+		tasks.reduce(q.when, q()).done (val) -> defer.resolve val
+		defer.promise
 
 	compileCoffee: -> # :promise<boolean>
 		new Promise (resolve, reject) ->
@@ -46,32 +59,53 @@ module.exports =
 					log.msg "compiled coffee lib files: true"
 					resolve true
 
-	cleanCoffee: async (verbose=false) -> # :promise<boolean>
-		opts   = force: true
-		glob   = ["#{consts.RB_LIB}/**/*.coffee", "!**/node_modules/**"]
-		_paths = await del glob, opts
-		log.msg _path, 'minor' for _path in _paths if verbose
-		exists = await fse.pathExists _paths[0]
-		log.msg "cleaned coffee lib files: #{!exists and !!_paths.length}"
-		exists
+	cleanCoffee: (verbose=false) -> # :promise<boolean>
+		defer = q.defer()
+		tasks = [
+			->
+				glob = ["#{consts.RB_LIB}/**/*.coffee", "!**/node_modules/**"]
+				del(glob, force: true).then (_paths) ->
+					log.msg _path, 'minor' for _path in _paths if verbose
+					_paths
+			(_paths) -> # coffee file paths
+				fse.pathExists(_paths[0]).then (exists) ->
+					exists = !exists and !!_paths.length
+					log.msg "cleaned coffee lib files: #{exists}"
+					exists
+		]
+		tasks.reduce(q.when, q()).done (val) -> defer.resolve val
+		defer.promise
 
-	cleanServer: async (verbose=false) -> # :promise<boolean> (for consumer installs)
-		opts   = force: true
-		glob   = ["#{consts.RB_LIB_SERVER}/*", "!#{consts.RB_LIB_SERVER_PKG}"]
-		_paths = await del glob, opts
-		log.msg _path, 'minor' for _path in _paths if verbose
-		exists = await fse.pathExists consts.RB_LIB_SERVER_PKG
-		log.msg "cleaned server lib: #{exists}"
-		exists
+	cleanServer: (verbose=false) -> # :promise<boolean> (for consumer installs)
+		defer = q.defer()
+		tasks = [
+			->
+				glob = ["#{consts.RB_LIB_SERVER}/*", "!#{consts.RB_LIB_SERVER_PKG}"]
+				del(glob, force: true).then (_paths) ->
+					log.msg _path, 'minor' for _path in _paths if verbose
+			->
+				fse.pathExists(consts.RB_LIB_SERVER_PKG).then (exists) ->
+					log.msg "cleaned server lib: #{exists}"
+					exists
+		]
+		tasks.reduce(q.when, q()).done (val) -> defer.resolve val
+		defer.promise
 
-	cleanupServer: async (verbose=false) -> # :promise<boolean> (for local installs)
-		opts   = force: true
-		glob   = ["#{consts.RB_LIB_SERVER}/package-lock.json"]
-		_paths = await del glob, opts
-		log.msg _path, 'minor' for _path in _paths if verbose
-		exists = await fse.pathExists "#{consts.RB_LIB_SERVER}/package-lock.json"
-		log.msg "cleaned up lib server: #{!exists}"
-		exists
+	cleanupServer: (verbose=false) -> # :promise<boolean> (for local installs)
+		defer = q.defer()
+		tasks = [
+			->
+				glob = ["#{consts.RB_LIB_SERVER}/package-lock.json"]
+				del(glob, force: true).then (_paths) ->
+					log.msg _path, 'minor' for _path in _paths if verbose
+			->
+				fse.pathExists("#{consts.RB_LIB_SERVER}/package-lock.json").then (exists) ->
+					exists = !exists
+					log.msg "cleaned up lib server: #{exists}"
+					exists
+		]
+		tasks.reduce(q.when, q()).done (val) -> defer.resolve val
+		defer.promise
 
 	minifyJs: -> # :promise<boolean>
 		new Promise (resolve, reject) ->

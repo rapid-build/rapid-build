@@ -1,17 +1,21 @@
 # UNPACK LIB SERVER
 # =================
 module.exports = ->
-	async = require 'asyncawait/async'
-	await = require 'asyncawait/await'
-	lib   = require '../utils/lib'
+	q   = require 'q'
+	lib = require '../utils/lib'
 
 	# run tasks (in order, synchronously)
 	# ===================================
-	runTasks = async ->
+	runTasks = ->
 		# for consumer installs
-		await lib.cleanServer()
-		await lib.unpackServer()
-		msg: 'server unpacked (success!)'
+		defer = q.defer()
+		tasks = [
+			-> lib.cleanServer()
+			-> lib.unpackServer()
+			-> msg: 'server unpacked (success!)'
+		]
+		tasks.reduce(q.when, q()).done (msg) -> defer.resolve msg
+		defer.promise
 
 	# run it!
 	# =======

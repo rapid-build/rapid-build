@@ -1,11 +1,9 @@
 # BUMP VERSIONS THEN RUN CHANGELOG
 # ================================
 module.exports = (rbRoot, version) ->
-	async      = require 'asyncawait/async'
-	await      = require 'asyncawait/await'
-	Promise    = require 'bluebird'
-	fse        = Promise.promisifyAll require 'fs-extra'
-	exec       = Promise.promisify require('child_process').exec
+	q          = require 'q'
+	fse        = require 'fs-extra'
+	execSync   = require('child_process').execSync
 	jsonFormat = spaces: '\t'
 
 	paths =
@@ -26,28 +24,36 @@ module.exports = (rbRoot, version) ->
 
 	# tasks
 	# =====
-	tasks =
+	api =
 		bumpPkg: (pkgName, file) ->
 			pkg     = pkgs[pkgName]
 			pkgPath = paths.pkgs[pkgName]
 			pkg.version = version
-			fse.writeJsonAsync(pkgPath, pkg, jsonFormat).then ->
+			fse.writeJson(pkgPath, pkg, jsonFormat).then ->
 				console.log "bumped #{file}".info
 
 		changelog: ->
 			cmd = "coffee #{paths.changelog}"
-			exec(cmd).then (result) ->
-				console.log result.info
+			try stdout = execSync cmd
+			catch e then throw e
+			msg = stdout.toString()
+			console.log msg.info
+			q msg
 
 	# run tasks (in order)
 	# ====================
-	runTasks = async ->
-		await tasks.bumpPkg 'rb',      'package.json'
-		await tasks.bumpPkg 'rbLock',  'package-lock.json'
-		await tasks.bumpPkg 'src',     'src server package.json'
-		await tasks.bumpPkg 'srcLock', 'src server package-lock.json'
-		await tasks.bumpPkg 'test',    'test package.json'
-		await tasks.changelog()
+	runTasks = -> # sync
+		defer = q.defer()
+		tasks = [
+			-> api.bumpPkg 'rb',      'package.json'
+			-> api.bumpPkg 'rbLock',  'package-lock.json'
+			-> api.bumpPkg 'src',     'src server package.json'
+			-> api.bumpPkg 'srcLock', 'src server package-lock.json'
+			-> api.bumpPkg 'test',    'test package.json'
+			-> api.changelog()
+		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
 
 	# run it!
 	# =======
