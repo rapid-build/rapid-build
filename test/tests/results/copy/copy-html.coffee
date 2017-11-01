@@ -1,10 +1,7 @@
 # test results: copy-html
 # =======================
 task      = 'copy-html'
-async     = require 'asyncawait/async'
-await     = require 'asyncawait/await'
-Promise   = require 'bluebird'
-fs        = Promise.promisifyAll require 'fs'
+fse       = require 'fs-extra'
 config    = require "#{process.cwd()}/extra/temp/config.json"
 tests     = require("#{config.paths.abs.test.helpers}/tests") config
 viewsPath = config.paths.abs.test.app.dist.client.views
@@ -15,11 +12,14 @@ describe task, ->
 	appConfig  = undefined
 
 	beforeAll ->
-		appConfig  = tests.get.app.config()
+		appConfig = tests.get.app.config()
 
-	it 'should copy html to dist', async (done) ->
+	it 'should copy html to dist', (done) ->
 		return done() if config.build.is.prod and appConfig.minify.html.templateCache
-		try stats = await fs.statAsync "#{viewsPath}/mains/home.html"
-		result = stats?.isFile()
-		expect(result).toBeDefined()
-		done()
+
+		fse.stat "#{viewsPath}/mains/home.html"
+		.then (stats) ->
+			expect(stats.isFile()).toBeTrue()
+			done()
+		.catch (e) ->
+			done.fail e

@@ -1,10 +1,7 @@
 # test results: copy-server-config
 # ================================
 task         = 'copy-server-config'
-async        = require 'asyncawait/async'
-await        = require 'asyncawait/await'
-Promise      = require 'bluebird'
-fs           = Promise.promisifyAll require 'fs'
+fse          = require 'fs-extra'
 config       = require "#{process.cwd()}/extra/temp/config.json"
 rbServerPath = config.paths.abs.test.app.dist.server.build
 rbDirName    = config.pkgs.rb.name
@@ -13,8 +10,10 @@ rbDirName    = config.pkgs.rb.name
 # =====
 describe task, ->
 	msg1 = "should copy config.json to server dist #{rbDirName} dir"
-	it msg1, async (done) ->
-		try stats = await fs.statAsync "#{rbServerPath}/config.json"
-		result = stats?.isFile()
-		expect(result).toBeDefined()
-		done()
+	it msg1, (done) ->
+		fse.stat "#{rbServerPath}/config.json"
+		.then (stats) ->
+			expect(stats.isFile()).toBeTrue()
+			done()
+		.catch (e) ->
+			done.fail e

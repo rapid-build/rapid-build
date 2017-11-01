@@ -1,18 +1,17 @@
 # test results: build-angular-modules
 # ===================================
 task    = 'build-angular-modules'
-async   = require 'asyncawait/async'
-await   = require 'asyncawait/await'
-Promise = require 'bluebird'
-fs      = Promise.promisifyAll require 'fs'
+fse     = require 'fs-extra'
 config  = require "#{process.cwd()}/extra/temp/config.json"
 genPath = config.paths.abs.generated.testApp
 
 # tests
 # =====
 describe task, ->
-	it 'should create app.coffee', async (done) ->
-		try stats = await fs.statAsync "#{genPath}/src/client/scripts/app.coffee"
-		result = stats?.isFile()
-		expect(result).toBeDefined()
-		done()
+	it 'should create app.coffee', (done) ->
+		fse.stat "#{genPath}/src/client/scripts/app.coffee"
+		.then (stats) ->
+			expect(stats.isFile()).toBeTrue()
+			done()
+		.catch (e) ->
+			done.fail e

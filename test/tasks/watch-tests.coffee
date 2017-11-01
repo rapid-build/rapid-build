@@ -2,10 +2,9 @@
 # ===========
 module.exports = (config, jasmine) ->
 	return unless config.test.watch
-	gWatch  = require 'gulp-watch'
-	Promise = require 'bluebird'
-	tests   = require("#{config.paths.abs.test.helpers}/tests") config
-	specs   = [ "#{config.paths.abs.test.tests.path}/**/*" ]
+	gWatch = require 'gulp-watch'
+	tests  = require("#{config.paths.abs.test.helpers}/tests") config
+	specs  = [ "#{config.paths.abs.test.tests.path}/**/*" ]
 
 	# helpers
 	# =======
@@ -26,6 +25,9 @@ module.exports = (config, jasmine) ->
 			.on 'ready', ->
 				console.log "watching tests".info
 				resolve()
+			.on 'error', (e) ->
+				console.log "test watcher error".error
+				reject e.message
 
 	# return
 	# ======

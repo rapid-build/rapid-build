@@ -1,6 +1,5 @@
 module.exports = (pkgRoot) ->
-	async = require 'asyncawait/async'
-	await = require 'asyncawait/await'
+	q = require 'q'
 	require("#{pkgRoot}/extra/tasks/add-colors")()
 
 	# get config then build it (synchronously), specs use it
@@ -25,12 +24,18 @@ module.exports = (pkgRoot) ->
 
 	# tasks in order
 	# ==============
-	runTasks = async ->
-		await addBuildEnvVars config
-		# timer = new Timer 'runTests', true
-		await runTests()
-		# timer.clear true
-		await watchTests() if config.test.watch
+	runTasks = -> # sync
+		defer = q.defer()
+		# timer = undefined
+		tasks = [
+			-> addBuildEnvVars config
+			# -> timer = new Timer 'runTests', true
+			-> runTests()
+			# -> timer.clear true
+			-> watchTests() if config.test.watch
+		]
+		tasks.reduce(q.when, q()).done -> defer.resolve()
+		defer.promise
 
 	# return
 	# ======
