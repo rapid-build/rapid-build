@@ -11,10 +11,11 @@ module.exports = (config, gulp={}) ->
 	getTasks = (tasksCb, type, lang, locs) ->
 		tasks = []
 		locs.forEach (v1) ->
-			['rb','app'].forEach (v2) ->
-				tasks.push
-					src:  config.glob.src[v2][v1][type][lang]
-					dest: config.dist[v2][v1][type].dir
+			for v2 in ['rb','app']
+				src  = config.glob.src[v2][v1][type][lang]
+				dest = config.dist[v2][v1][type].dir
+				continue unless src and src.length # gulp 4 requires a src value
+				tasks.push { src, dest }
 		tasks.forEach (v, i) ->
 			tasks[i] = -> tasksCb v.src, v.dest
 		tasks
