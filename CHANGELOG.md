@@ -1,3 +1,12 @@
+## [3.1.2](https://github.com/rapid-build/rapid-build/compare/v3.1.1...v3.1.2) (2017-11-03)
+
+
+### Bug Fixes
+
+* **build option:** fix option exclude.default.server.files ([f386547](https://github.com/rapid-build/rapid-build/commit/f386547))
+
+
+
 ## [3.1.1](https://github.com/rapid-build/rapid-build/compare/v3.1.0...v3.1.1) (2017-11-01)
 
 
