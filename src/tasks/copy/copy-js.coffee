@@ -1,12 +1,17 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	log          = require "#{config.req.helpers}/log"
-	tasks        = require("#{config.req.helpers}/tasks") config
-	forWatchFile = !!taskOpts.watchFile
+	q                  = require 'q'
+	gulpif             = require 'gulp-if'
+	log                = require "#{config.req.helpers}/log"
+	tasks              = require("#{config.req.helpers}/tasks") config
+	compileHtmlImports = require "#{config.req.plugins}/gulp-compile-html-imports"
+	forWatchFile       = !!taskOpts.watchFile
+	CHI_ENABLED        = config.compile.htmlImports.client.enable
 
-	runTask = (src, dest) ->
+	runTask = (src, dest, opts={}) ->
 		defer = q.defer()
+		chi   = CHI_ENABLED and opts.appOrRb is 'app' and opts.loc is 'client'
 		gulp.src src
+			.pipe gulpif chi, compileHtmlImports()
 			.pipe gulp.dest dest
 			.on 'end', ->
 				# console.log dest
@@ -17,7 +22,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runSingle: ->
-			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
+			opts =
+				appOrRb: taskOpts.watchFile.rbAppOrRb
+				loc: taskOpts.watchFile.rbClientOrServer
+			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir, opts
 
 		runMulti: (loc) ->
 			promise = tasks.run.async runTask, 'scripts', 'js', [loc]

@@ -6,6 +6,10 @@ module.exports = (config, options) ->
 	# init compile
 	# ============
 	compile =
+		htmlImports:
+			client:
+				enable: options.compile.htmlImports.client.enable
+
 		htmlScripts:
 			client:
 				enable: options.compile.htmlScripts.client.enable
