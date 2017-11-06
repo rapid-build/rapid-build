@@ -17,8 +17,8 @@ Regx =
 		/\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
 
 	htmlImport: (statement) ->
-		# /import template from '..\/views\/rb-nav.html';/g
-		new RegExp statement, 'g'
+		# /import template from '..\/views\/rb-nav.html';\n?/g
+		new RegExp "#{statement}\\n?", 'g'
 
 	templateVar: (variable) ->
 		# /\btemplate(?=\n|\s?;|\s(?!\S))/g
