@@ -10,47 +10,71 @@ fse         = require 'fs-extra'
 PLUGIN_NAME = 'gulp-compile-html-imports'
 PluginError = gutil.PluginError
 
+# Regular Expressions
+# ===================
+Regx =
+	htmlImports:
+		/\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
+
+	htmlImport: (statement) ->
+		# /import template from '..\/views\/rb-nav.html';/g
+		new RegExp statement, 'g'
+
+	templateVar: (variable) ->
+		# /\btemplate(?=\n|\s?;|\s(?!\S))/g
+		new RegExp "\\b#{variable}(?=\\n|\\s?;|\\s(?!\\S))", 'g'
+
+# Html Imports
+# { jsFilePath: { htmlFilePath: { statement:'', variable:'', html:'' }}}
+# paths     = absolute
+# statement = import template from '../views/rb-nav.html';
+# variable  = template
+# ======================================================================
+HtmlImports = {}
+
 # Compiler
 # ========
-compileImports =
-	opts: {}
-
-	htmlImports: [] # :[{}] -> { statement: '', variable: '', path: '', html: '' }
-
-	get: (file, opts) -> # :string
-		@_setOpts file, opts
+CompileImports =
+	get: (file, opts={}) -> # :string
 		js = file.contents.toString()
 		@_setHtmlImportVars file, js
-		js = @_htmlImportReplace js
-		js = @_templateVarReplace js
+		js = @_htmlImportReplace file, js
+		js = @_templateVarReplace file, js
 		js
-
-	_setOpts: (file, opts={}) -> # :void
-		Object.assign @opts, opts
 
 	_setHtmlImportVars: (file, js) -> # :void
-		regx = /\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
-		while (match = regx.exec(js)) != null
-			htmlImport =
-				statement: match[0]
-				variable:  match[1]
-				path:      path.join file.dirname, match[2]
-			htmlImport.html = fse.readFileSync htmlImport.path, 'utf8'
-			@htmlImports.push htmlImport
+		jsPath      = file.path
+		htmlImports = {}
 
-	_htmlImportReplace: (js) -> # :string
-		return js unless @htmlImports.length
-		for htmlImport, i in @htmlImports
-			regx = new RegExp "#{htmlImport.statement}", 'g'
-			js = js.replace regx, ''
+		while (match = Regx.htmlImports.exec(js)) != null
+			statement     = match[0]
+			variable      = match[1]
+			importPath    = match[2]
+			importPathAbs = path.join file.dirname, importPath
+			try
+				html = fse.readFileSync importPathAbs, 'utf8'
+			catch e
+				e.message = "html import file in #{file.relative} doesn't exist: #{importPath}"
+				console.error e.message.error
+				continue
+			htmlImport = { statement, variable, html }
+			htmlImports[importPathAbs] = htmlImport
+
+		hasImports = !!Object.getOwnPropertyNames(htmlImports).length
+		return delete HtmlImports[jsPath] unless hasImports
+		HtmlImports[jsPath] = {} unless HtmlImports[jsPath]
+		HtmlImports[jsPath] = htmlImports
+
+	_htmlImportReplace: (file, js) -> # :string
+		return js unless HtmlImports[file.path]
+		for importPath, htmlImport of HtmlImports[file.path]
+			js = js.replace Regx.htmlImport(htmlImport.statement), ''
 		js
 
-	_templateVarReplace: (js) -> # :string
-		return js unless @htmlImports.length
-		for htmlImport, i in @htmlImports
-			# \btemplate(?=\n|\s?;|\s(?!\S))
-			regx = new RegExp "\\b#{htmlImport.variable}(?=\\n|\\s?;|\\s(?!\\S))", 'g'
-			js = js.replace regx, "`#{htmlImport.html}`"
+	_templateVarReplace: (file, js) -> # :string
+		return js unless HtmlImports[file.path]
+		for importPath, htmlImport of HtmlImports[file.path]
+			js = js.replace Regx.templateVar(htmlImport.variable), "`#{htmlImport.html}`"
 			js
 		js
 
@@ -63,7 +87,7 @@ compileHtmlImports = (opts={}) ->
 		return cb new PluginError PLUGIN_NAME, 'streaming not supported' if file.isStream()
 		return cb null, file unless file.isBuffer()
 		try
-			compiledJS    = compileImports.get file, opts
+			compiledJS    = CompileImports.get file, opts
 			file.contents = new Buffer compiledJS
 		catch e
 			return cb new PluginError PLUGIN_NAME, e
