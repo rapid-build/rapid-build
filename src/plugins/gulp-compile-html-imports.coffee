@@ -14,6 +14,9 @@ PluginError = gutil.PluginError
 # ===================
 Regx =
 	htmlImports:
+		# TODO
+		# • exclude imports in comments
+		# • fix multiple imports on the same line
 		/\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
 
 	htmlImport: (statement) ->
