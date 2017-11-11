@@ -9,21 +9,22 @@ module.exports = (config, gulp) ->
 	# tasks
 	# =====
 	tasks =
-		clean:       require "#{config.req.tasks}/clean/clean-dist"
-		coffee:      require "#{config.req.tasks}/compile/coffee"
-		css:         require "#{config.req.tasks}/copy/copy-css"
-		es6:         require "#{config.req.tasks}/compile/es6"
-		ts:          require "#{config.req.tasks}/compile/typescript-server"
-		html:        require "#{config.req.tasks}/copy/copy-html"
-		image:       require "#{config.req.tasks}/copy/copy-images"
-		js:          require "#{config.req.tasks}/copy/copy-js"
-		less:        require "#{config.req.tasks}/compile/less"
-		sass:        require "#{config.req.tasks}/compile/sass"
-		tCache:      require "#{config.req.tasks}/minify/template-cache"
-		clientTest:  require "#{config.req.tasks}/test/client/copy-client-tests"
-		serverTest:  require "#{config.req.tasks}/test/server/copy-server-tests"
-		extraClient: require "#{config.req.tasks}/extra/copy-extra-files"
-		extraServer: require "#{config.req.tasks}/extra/copy-extra-files"
+		clean:         require "#{config.req.tasks}/clean/clean-dist"
+		coffee:        require "#{config.req.tasks}/compile/coffee"
+		css:           require "#{config.req.tasks}/copy/copy-css"
+		es6:           require "#{config.req.tasks}/compile/es6"
+		ts:            require "#{config.req.tasks}/compile/typescript-server"
+		html:          require "#{config.req.tasks}/copy/copy-html"
+		image:         require "#{config.req.tasks}/copy/copy-images"
+		js:            require "#{config.req.tasks}/copy/copy-js"
+		less:          require "#{config.req.tasks}/compile/less"
+		sass:          require "#{config.req.tasks}/compile/sass"
+		tCache:        require "#{config.req.tasks}/minify/template-cache"
+		clientTest:    require "#{config.req.tasks}/test/client/copy-client-tests"
+		serverTest:    require "#{config.req.tasks}/test/server/copy-server-tests"
+		extraClient:   require "#{config.req.tasks}/extra/copy-extra-files"
+		extraServer:   require "#{config.req.tasks}/extra/copy-extra-files"
+		jsHtmlImports: require "#{config.req.tasks}/compile/js-html-imports"
 
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
@@ -163,6 +164,10 @@ module.exports = (config, gulp) ->
 				-> createWatch config.glob.src.app.client.scripts.js,     'js',     lang:'js',     srcType:'scripts'
 				-> htmlWatch config.glob.src.app.client.views.html
 				-> spaWatch config.spa.src.path
+				->
+					return promiseHelp.get() unless config.compile.jsHtmlImports.client.enable
+					jsGlob = [].concat config.glob.dist.app.client.scripts.all
+					createWatch jsGlob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import'
 			]
 			serverWatches = [ # server watch: scripts
 				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server', bsReload:true

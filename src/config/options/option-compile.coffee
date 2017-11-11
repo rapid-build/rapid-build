@@ -6,13 +6,13 @@ module.exports = (config, options) ->
 	compile = options.compile
 	compile = {} unless isType.object compile
 
-	compile.htmlImports = {} unless isType.object compile.htmlImports
-	compile.htmlImports.client = {} unless isType.object compile.htmlImports.client
-	compile.htmlImports.client.enable = false unless isType.boolean compile.htmlImports.client.enable
-
 	compile.htmlScripts = {} unless isType.object compile.htmlScripts
 	compile.htmlScripts.client = {} unless isType.object compile.htmlScripts.client
 	compile.htmlScripts.client.enable = false unless isType.boolean compile.htmlScripts.client.enable
+
+	compile.jsHtmlImports = {} unless isType.object compile.jsHtmlImports
+	compile.jsHtmlImports.client = {} unless isType.object compile.jsHtmlImports.client
+	compile.jsHtmlImports.client.enable = false unless isType.boolean compile.jsHtmlImports.client.enable
 
 	compile.typescript = {} unless isType.object compile.typescript
 	compile.typescript.client = {} unless isType.object compile.typescript.client

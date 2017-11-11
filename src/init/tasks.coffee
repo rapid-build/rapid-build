@@ -52,6 +52,7 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'typescript:server', '/compile/typescript-server'
 	taskHelp.addTask 'less',              '/compile/less'
 	taskHelp.addTask 'sass',              '/compile/sass'
+	taskHelp.addTask 'compile-js-html-imports:client', '/compile/js-html-imports', loc: 'client'
 
 	# config
 	# ======
