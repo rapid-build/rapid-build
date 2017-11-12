@@ -19,7 +19,7 @@ module.exports = (config, gulp) ->
 		js:            require "#{config.req.tasks}/copy/copy-js"
 		less:          require "#{config.req.tasks}/compile/less"
 		sass:          require "#{config.req.tasks}/compile/sass"
-		tCache:        require "#{config.req.tasks}/minify/template-cache"
+		templateCache: require "#{config.req.tasks}/minify/template-cache"
 		clientTest:    require "#{config.req.tasks}/test/client/copy-client-tests"
 		serverTest:    require "#{config.req.tasks}/test/server/copy-server-tests"
 		extraClient:   require "#{config.req.tasks}/extra/copy-extra-files"
@@ -75,6 +75,7 @@ module.exports = (config, gulp) ->
 		file.rbFileName       = getFileName file
 		file.rbDistDir        = getDistDir file, opts
 		file.rbDistPath       = getDistPath file, opts
+		file.rbLog            = opts.logWatch if opts.addLog
 		file
 
 	# event tasks
@@ -100,7 +101,8 @@ module.exports = (config, gulp) ->
 			tasks.buildSpa()
 
 	events = (file, taskName, opts={}) -> # add, change, unlink
-		log.watch taskName, file, opts
+		opts.logWatch = -> log.watch taskName, file, opts
+		opts.logWatch() unless opts.silent
 		return tasks.buildSpa() if taskName is 'build spa'
 		return unless file
 		return unless file.event
@@ -132,7 +134,7 @@ module.exports = (config, gulp) ->
 	htmlWatch = (views) ->
 		if config.angular.templateCache.dev
 			return promiseHelp.get() if config.exclude.default.client.files
-			return createWatch views, 'tCache', lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
+			return createWatch views, 'templateCache', lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
 		createWatch views, 'html', lang:'html', srcType:'views', bsReload:true
 
 	# spa watch (if custom spa file then watch it)
@@ -167,7 +169,7 @@ module.exports = (config, gulp) ->
 				->
 					return promiseHelp.get() unless config.compile.jsHtmlImports.client.enable
 					jsGlob = [].concat config.glob.dist.app.client.scripts.all
-					createWatch jsGlob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import'
+					createWatch jsGlob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import', silent: true, addLog: true
 			]
 			serverWatches = [ # server watch: scripts
 				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server', bsReload:true

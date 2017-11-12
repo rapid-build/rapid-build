@@ -1,5 +1,3 @@
-watchFileCnt = 0 # technique to only inline watch file once
-
 module.exports = (config, gulp, taskOpts={}) ->
 	promiseHelp          = require "#{config.req.helpers}/promise"
 	return promiseHelp.get() unless config.compile.jsHtmlImports.client.enable
@@ -13,6 +11,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 		srcOpts = { base }
 		gulp.src src, srcOpts
 			.pipe compileJsHtmlImports()
+			.on 'data', ->
+				taskOpts.watchFile.rbLog() if forWatchFile
 			.pipe gulp.dest dest
 			.on 'end', ->
 				# console.log dest
@@ -23,9 +23,6 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runSingle: ->
-			# console.log 'WATCH FILE CNT:', watchFileCnt
-			return promiseHelp.get null, watchFileCnt-- if watchFileCnt is 1
-			watchFileCnt++
 			src  = taskOpts.watchFile.rbDistPath
 			dest = config.dist.app.client.root.dir
 			base = taskOpts.watchFile.rbDistDir
@@ -33,8 +30,6 @@ module.exports = (config, gulp, taskOpts={}) ->
 			# console.log 'DEST:', dest
 			# console.log 'BASE:', base
 			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir, base
-			# process.exit()
-			# promiseHelp.get()
 
 		runMulti: (loc) ->
 			src  = config.glob.dist.app[loc].scripts.all
@@ -43,7 +38,6 @@ module.exports = (config, gulp, taskOpts={}) ->
 			# console.log 'SRC:', src
 			# console.log 'DEST:', dest
 			# console.log 'BASE:', base
-			# console.log base
 			promise = runTask src, dest, base
 			promise.done ->
 				log.task "compiled js html imports in: #{config.dist.app[loc].dir}"
