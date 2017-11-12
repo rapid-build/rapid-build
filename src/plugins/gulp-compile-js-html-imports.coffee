@@ -9,13 +9,11 @@ path        = require 'path'
 fse         = require 'fs-extra'
 PLUGIN_NAME = 'gulp-compile-js-html-imports'
 PluginError = gutil.PluginError
+require('colors').setTheme error:['red','bold'] unless 'colors'.error
 
-# Helpers
+# HELPERS
 # =======
 Help =
-	logJson: (json) -> # log pretty json
-		console.log JSON.stringify json, null, '\t'
-
 	inspectFile: (file, sort=false) -> # log vinyl props
 		props = base: null, relative: null, extname: null, stem: null, basename: null, cwd: null, dirname: null, path: null, event: null
 		if sort then Object.keys(props).sort().forEach (key) -> delete props[key]; props[key] = null
@@ -23,16 +21,20 @@ Help =
 		json = JSON.stringify(props, null, '\t').replace(/"/g, "'").replace /(\t)'(\w*)'/g, '$1$2'
 		console.log json
 
+	logJson: (json) -> # log pretty json
+		console.log JSON.stringify json, null, '\t'
+
+	isObject: (val) ->
+		return false if typeof val isnt 'object'
+		return false if val is null
+		return false if Array.isArray val
+		true
+
 	isEmptyObject: (obj) -> # :boolean
-		return false unless typeof obj is 'object'
+		return false unless @isObject obj
 		!!Object.getOwnPropertyNames(obj).length
 
-	hasImports: (obj) -> # :boolean (obj = js file object in HtmlImports)
-		return false unless typeof obj is 'object'
-		@isEmptyObject obj['imports']
-
-
-# Regular Expressions
+# REGULAR EXPRESSIONS
 # ===================
 Regx =
 	htmlImports:
@@ -49,103 +51,85 @@ Regx =
 		# /\btemplate(?=\n|\s?;|\s(?!\S))/g
 		new RegExp "\\b#{variable}(?=\\n|\\s?;|\\s(?!\\S))", 'g'
 
-# Html Imports
-# jsPath:
+# HTML IMPORTS (hashmap)
+# jsPath:                 (dist/client/scripts/xxx.js)
 # 	imports:
-# 		htmlPath:
-# 			statement: ''
-# 			variable: ''
-# 			html: ''
-# 	contents:
-# 		uncompiled: ''
-# 		compiled: ''
-# paths     = absolute
-# statement = import template from '../views/rb-nav.html';
-# variable  = template
+# 		htmlPath:         (dist/client/views/xxx.html)
+# 			statement: '' (import template from '../views/xxx.html';)
+# 			variable: ''  (template)
+# 			html: ''      (html file contents)
 # ======================================================================
 HtmlImports = {}
 
-# Compiler
+# COMPILER
 # ========
 InlineImports =
-	js:
-		changed:  false # (boolean) is file.contents same as HtmlImports.jsPath.compiledJS
-		dir:      null  # dist/client/scripts
-		path:     null  # dist/client/scripts/xxx.js
-		relPath:  null  # scripts/xxx.js
-		contents: null  # original uncompiled js contents, needed for html watch
-
-	get: (file, opts={}) -> # :@js (run in order)
-		@_setJsProps file
-		@_setHtmlImportVars()
-		@_setJsChanged()
-		return @js unless @js.changed
-		js = @_htmlImportReplace @js.contents
-		js = @_templateVarReplace js
-		@_setHtmlImportContents js
-		@js.contents = js
-		# console.log js
-		# Help.inspectFile file
-		# Help.logJson @js
+	# Public Methods
+	# ==============
+	get: (file, opts={}) -> # :@JS (run in order)
+		@initJS file
+		@setHtmlImportVars()
+		@updateJS changed: @didFileChange()
+		# console.log 'CHANGED:', @JS.changed
+		return @JS unless @JS.changed
+		@htmlImportReplace()
+		@templateVarReplace()
+		# Help.logJson @JS
 		# Help.logJson HtmlImports
-		# Help.logJson returnVal
-		@js
+		@JS
 
-	_setJsProps: (file) -> # :void (run in order)
-		@js.relPath  = file.relative
-		@js.path     = path.join file.base, @js.relPath
-		@js.dir      = path.dirname @js.path
-		@js.contents = file.contents.toString()
+	# Private Methods
+	# ===============
+	initJS: (file) -> # :void (@JS will be the return value for @get())
+		_path = path.join file.base, file.relative
+		@JS =
+			changed:  false                    # changed if js contents has html import(s)
+			dir:      path.dirname _path       # dist/client/scripts
+			path:     _path                    # dist/client/scripts/xxx.js
+			relPath:  file.relative            # scripts/xxx.js
+			contents: file.contents.toString() # original uninlined js contents (needed for html watch)
 
-	_setJsChanged: -> # :void
-		@js.changed = @_didFileChange()
+	updateJS: (props={}) -> # :void
+		return unless Help.isEmptyObject props
+		for key, val of props
+			continue if typeof @JS[key] is 'undefined'
+			@JS[key] = val
 
-	_didFileChange: -> # :boolean
-		return false unless HtmlImports[@js.path]
-		@js.contents isnt HtmlImports[@js.path].contents.compiled
+	didFileChange: -> # :boolean
+		!!HtmlImports[@JS.path]
 
-	_setHtmlImportVars: -> # :void
+	setHtmlImportVars: -> # :void
 		htmlImports = {}
-		while (match = Regx.htmlImports.exec(@js.contents)) != null
+		while (match = Regx.htmlImports.exec(@JS.contents)) != null
 			statement      = match[0] # import template from '../views/xxx.html';
 			variable       = match[1] # template
 			importPath     = match[2] # ../views/xxx.html
-			importDistPath = path.join @js.dir, importPath # dist/client/views/xxx.html
+			importDistPath = path.join @JS.dir, importPath # dist/client/views/xxx.html
 			try
 				html = fse.readFileSync importDistPath, 'utf8'
 			catch e
-				e.message = "html import file in #{@js.relPath} doesn't exist: #{importPath}"
+				e.message = "html import file in #{@JS.relPath} doesn't exist: #{importPath}"
 				console.error e.message.error
 				continue
 			htmlImport = { statement, variable, html }
 			htmlImports[importDistPath] = htmlImport
 
 		hasImports = Help.isEmptyObject htmlImports
-		return delete HtmlImports[@js.path] unless hasImports
-		HtmlImports[@js.path] = {} unless HtmlImports[@js.path]
-		# Object.assign HtmlImports[@js.path], htmlImports
-		HtmlImports[@js.path].imports  = htmlImports
-		HtmlImports[@js.path].contents = {}
+		return delete HtmlImports[@JS.path] unless hasImports
+		HtmlImports[@JS.path] = {} unless HtmlImports[@JS.path]
+		HtmlImports[@JS.path].imports = htmlImports
 
-	_setHtmlImportContents: (js) -> # :void
-		return js unless Help.hasImports HtmlImports[@js.path]
-		contents = uncompiled: @js.contents, compiled: js
-		HtmlImports[@js.path].contents = contents
+	htmlImportReplace: -> # :void
+		return unless !!HtmlImports[@JS.path]
+		for htmlPath, htmlImport of HtmlImports[@JS.path].imports
+			@JS.contents = @JS.contents.replace Regx.htmlImport(htmlImport.statement), ''
 
-	_htmlImportReplace: (js) -> # :string | null
-		return js unless Help.hasImports HtmlImports[@js.path]
-		for htmlPath, htmlImport of HtmlImports[@js.path].imports
-			js = js.replace Regx.htmlImport(htmlImport.statement), ''
-		js
+	templateVarReplace: -> # :void
+		return unless !!HtmlImports[@JS.path]
+		for htmlPath, htmlImport of HtmlImports[@JS.path].imports
+			@JS.contents = @JS.contents.replace Regx.templateVar(htmlImport.variable), "`#{htmlImport.html}`"
 
-	_templateVarReplace: (js) -> # :string
-		return js unless Help.hasImports HtmlImports[@js.path]
-		for htmlPath, htmlImport of HtmlImports[@js.path].imports
-			js = js.replace Regx.templateVar(htmlImport.variable), "`#{htmlImport.html}`"
-			js
-		js
-
-# Gulp Plugin
+# GULP PLUGIN
 # ===========
 inlineJsHtmlImports = (opts={}) ->
 	through.obj (file, enc, cb) ->
@@ -162,6 +146,6 @@ inlineJsHtmlImports = (opts={}) ->
 
 		cb null, file
 
-# Export It!
+# EXPORT IT!
 # ==========
 module.exports = inlineJsHtmlImports
