@@ -4,6 +4,7 @@
 # Currently no opts available.
 # ==========================================
 through     = require 'through2'
+gulp        = require 'gulp'
 gutil       = require 'gulp-util'
 path        = require 'path'
 fse         = require 'fs-extra'
@@ -15,7 +16,7 @@ require('colors').setTheme error:['red','bold'] unless 'colors'.error
 # =======
 Help =
 	inspectFile: (file, sort=false) -> # log vinyl props
-		props = base: null, relative: null, extname: null, stem: null, basename: null, cwd: null, dirname: null, path: null, event: null
+		props = event: null, base: null, relative: null, extname: null, stem: null, basename: null, cwd: null, dirname: null, path: null, event: null
 		if sort then Object.keys(props).sort().forEach (key) -> delete props[key]; props[key] = null
 		for key of props then props[key] = file[key]
 		json = JSON.stringify(props, null, '\t').replace(/"/g, "'").replace /(\t)'(\w*)'/g, '$1$2'
@@ -33,6 +34,10 @@ Help =
 	isEmptyObject: (obj) -> # :boolean
 		return false unless @isObject obj
 		!!Object.getOwnPropertyNames(obj).length
+
+	isHtmlFile: (val) ->
+		return false if typeof val isnt 'string'
+		val.toLowerCase().indexOf('.html') isnt -1
 
 # REGULAR EXPRESSIONS
 # ===================
@@ -58,6 +63,7 @@ Regx =
 # 			statement: '' (import template from '../views/xxx.html';)
 # 			variable: ''  (template)
 # 			html: ''      (html file contents)
+# 	contents: ''          (the uninlined js file contents)
 # ======================================================================
 HtmlImports = {}
 
@@ -67,11 +73,15 @@ InlineImports =
 	# Public Methods
 	# ==============
 	get: (file, opts={}) -> # :@JS (run in order)
+		# Help.inspectFile file
+		if Help.isHtmlFile file.extname
+			@reloadJS file
+			return hasImports: false
 		@initJS file
 		@setHtmlImportVars()
-		@updateJS changed: @didFileChange()
-		# console.log 'CHANGED:', @JS.changed
-		return @JS unless @JS.changed
+		@updateJS hasImports: @hasImports()
+		# Help.logJson @JS
+		return @JS unless @JS.hasImports
 		@htmlImportReplace()
 		@templateVarReplace()
 		# Help.logJson @JS
@@ -83,11 +93,12 @@ InlineImports =
 	initJS: (file) -> # :void (@JS will be the return value for @get())
 		_path = path.join file.base, file.relative
 		@JS =
-			changed:  false                    # changed if js contents has html import(s)
-			dir:      path.dirname _path       # dist/client/scripts
-			path:     _path                    # dist/client/scripts/xxx.js
-			relPath:  file.relative            # scripts/xxx.js
-			contents: file.contents.toString() # original uninlined js contents (needed for html watch)
+			hasImports: false                    # does js contents have html import(s)
+			dir:        path.dirname _path       # dist/client/scripts
+			path:       _path                    # dist/client/scripts/xxx.js
+			relPath:    file.relative            # scripts/xxx.js
+			extname:    file.extname             # .js
+			contents:   file.contents.toString() # original uninlined js contents (needed for html watch)
 
 	updateJS: (props={}) -> # :void
 		return unless Help.isEmptyObject props
@@ -95,8 +106,8 @@ InlineImports =
 			continue if typeof @JS[key] is 'undefined'
 			@JS[key] = val
 
-	didFileChange: -> # :boolean
-		!!HtmlImports[@JS.path]
+	hasImports: -> # :boolean
+		!!HtmlImports[@JS.path] and !!HtmlImports[@JS.path].hasImports
 
 	setHtmlImportVars: -> # :void
 		htmlImports = {}
@@ -115,9 +126,28 @@ InlineImports =
 			htmlImports[importDistPath] = htmlImport
 
 		hasImports = Help.isEmptyObject htmlImports
+		if HtmlImports[@JS.path] and HtmlImports[@JS.path].hasImports
+			return HtmlImports[@JS.path].hasImports = hasImports
+
 		return delete HtmlImports[@JS.path] unless hasImports
-		HtmlImports[@JS.path] = {} unless HtmlImports[@JS.path]
-		HtmlImports[@JS.path].imports = htmlImports
+		HtmlImports[@JS.path] = { imports: htmlImports, hasImports, contents: @JS.contents }
+
+	reloadJS: (file) -> # :void (for watching html files)
+		# Help.logJson HtmlImports
+		htmlPath = path.join file.base, file.relative
+		jsFiles  = []
+		for jsPath, jsFile of HtmlImports
+			continue unless jsFile.imports[htmlPath]
+			jsFiles.push jsPath
+		return unless jsFiles.length
+		# Help.logJson HtmlImports
+		for jsPath in jsFiles
+			fse.pathExists(jsPath).then (exists) ->
+				unless exists
+					eMsg = "failed to inline html import, file doesn't exist: #{jsPath}"
+					return console.error eMsg.error
+				fse.outputFile(jsPath, HtmlImports[jsPath].contents).then ->
+					delete HtmlImports[jsPath]
 
 	htmlImportReplace: -> # :void
 		return unless !!HtmlImports[@JS.path]
@@ -139,7 +169,7 @@ inlineJsHtmlImports = (opts={}) ->
 		return cb null, file unless file.isBuffer()
 		try
 			inlinedJS = InlineImports.get file, opts
-			return cb null unless inlinedJS.changed
+			return cb null unless inlinedJS.hasImports
 			file.contents = new Buffer inlinedJS.contents
 		catch e
 			return cb new PluginError PLUGIN_NAME, e

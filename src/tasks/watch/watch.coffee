@@ -168,7 +168,10 @@ module.exports = (config, gulp) ->
 				-> spaWatch config.spa.src.path
 				->
 					return promiseHelp.get() unless config.compile.jsHtmlImports.client.enable
-					jsGlob = [].concat config.glob.dist.app.client.scripts.all
+					jsGlob = [].concat(
+						config.glob.dist.app.client.scripts.all,
+						config.glob.dist.app.client.views.all
+					)
 					createWatch jsGlob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import', silent: true, addLog: true
 			]
 			serverWatches = [ # server watch: scripts
