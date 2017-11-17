@@ -91,10 +91,11 @@ InlineImports =
 		@updateHtmlImportsMap htmlImports
 
 		return @JS unless @JS.hasImports
-		@htmlImportReplace()
-		@templateVarReplace()
+
+		@inlineImports()
 
 		HtmlImports[@JS.path].contents.compiled = @JS.contents
+		# Help.logJson HtmlImports
 		@JS
 
 	# Private Methods
@@ -126,7 +127,7 @@ InlineImports =
 				e.message = "html import file in #{@JS.relPath} doesn't exist: #{importPath}"
 				console.error e.message.error
 				continue
-			htmlImport = { statement, variable, html }
+			htmlImport = { statement, path: importPath, variable, html }
 			htmlImports[importDistPath] = htmlImport
 		htmlImports
 
@@ -154,15 +155,21 @@ InlineImports =
 					return console.error eMsg.error
 				fse.outputFile jsPath, HtmlImports[jsPath].contents.uncompiled
 
-	htmlImportReplace: -> # :void
+	inlineImports: ->
 		return unless !!HtmlImports[@JS.path]
 		for htmlPath, htmlImport of HtmlImports[@JS.path].imports
-			@JS.contents = @JS.contents.replace Regx.htmlImport(htmlImport.statement), ''
-
-	templateVarReplace: -> # :void
-		return unless !!HtmlImports[@JS.path]
-		for htmlPath, htmlImport of HtmlImports[@JS.path].imports
-			@JS.contents = @JS.contents.replace Regx.templateVar(htmlImport.variable), "`#{htmlImport.html}`"
+			hasTemplateVar = false
+			@JS.contents = @JS.contents.replace Regx.templateVar(htmlImport.variable), (match) ->
+				hasTemplateVar = true
+				"`#{htmlImport.html}`"
+			if hasTemplateVar
+				@JS.contents = @JS.contents.replace Regx.htmlImport(htmlImport.statement), ''
+			else
+				console.error "
+					failed to inline js html import \"#{htmlImport.path}\"
+					in file \"#{@JS.relPath}\",
+					variable \"#{htmlImport.variable}\" unused
+				".error
 
 # GULP PLUGIN
 # ===========
