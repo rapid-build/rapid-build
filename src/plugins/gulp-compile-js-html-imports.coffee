@@ -11,6 +11,10 @@ PLUGIN_NAME = 'gulp-compile-js-html-imports'
 PluginError = gutil.PluginError
 require('colors').setTheme error:['red','bold'] unless 'colors'.error
 
+# CONSTANTS
+# =========
+COMMENT_PLACEHOLDER = '//RB_COMMENT_PLACEHOLDER'
+
 # HELPERS
 # =======
 Help =
@@ -48,17 +52,20 @@ Help =
 Regx =
 	htmlImports:
 		# TODO
-		# • exclude imports in comments
-		# • fix multiple imports on the same line
+		# fix multiple imports on the same line
 		/\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
 
 	htmlImport: (statement) ->
 		# /import template from '..\/views\/rb-nav.html';\n?/g
 		new RegExp "#{statement}\\n?", 'g'
 
-	templateVar: (variable) ->
-		# /\btemplate(?=\n|\s?;|\s(?!\S))/g
-		new RegExp "\\b#{variable}(?=\\n|\\s?;|\\s(?!\\S))", 'g'
+	templateVar: (variable) -> # :RegExp
+		# TODO
+		# fix not replacing when it's the last line and doesn't have a semicolon
+		new RegExp "\\b#{variable}(?=\\n|\\s?;|\\s(?!\\S))", 'g' # /\btemplate(?=\n|\s?;|\s(?!\S))/g
+
+	comments:
+		/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
 
 # HTML IMPORTS (hashmap)
 # jsPath:                 (dist/client/scripts/xxx.js)
@@ -89,13 +96,10 @@ InlineImports =
 		htmlImports = @getHtmlImports()
 		@JS.hasImports = !Help.isEmptyObject htmlImports
 		@updateHtmlImportsMap htmlImports
-
 		return @JS unless @JS.hasImports
 
 		@inlineImports()
-
 		HtmlImports[@JS.path].contents.compiled = @JS.contents
-		# Help.logJson HtmlImports
 		@JS
 
 	# Private Methods
@@ -116,6 +120,7 @@ InlineImports =
 
 	getHtmlImports: -> # :htmlImports<hashmap> { jsPath: { statement:'', variable:'', html:'' }}
 		htmlImports = {}
+		@removeComments()
 		while (match = Regx.htmlImports.exec(@JS.contents)) != null
 			statement      = match[0] # import template from '../views/xxx.html';
 			variable       = match[1] # template
@@ -129,6 +134,7 @@ InlineImports =
 				continue
 			htmlImport = { statement, path: importPath, variable, html }
 			htmlImports[importDistPath] = htmlImport
+		@addComments()
 		htmlImports
 
 	updateHtmlImportsMap: (htmlImports) -> # :void
@@ -155,8 +161,20 @@ InlineImports =
 					return console.error eMsg.error
 				fse.outputFile jsPath, HtmlImports[jsPath].contents.uncompiled
 
+	addComments: -> # :void
+		return unless @comments.length
+		i = 0; regx = new RegExp COMMENT_PLACEHOLDER, 'g'
+		@JS.contents = @JS.contents.replace regx, (match) => @comments[i++]
+
+	removeComments: -> # :void
+		@comments = []
+		@JS.contents = @JS.contents.replace Regx.comments, (match) =>
+			@comments.push match
+			COMMENT_PLACEHOLDER
+
 	inlineImports: ->
 		return unless !!HtmlImports[@JS.path]
+		@removeComments()
 		for htmlPath, htmlImport of HtmlImports[@JS.path].imports
 			hasTemplateVar = false
 			@JS.contents = @JS.contents.replace Regx.templateVar(htmlImport.variable), (match) ->
@@ -170,6 +188,7 @@ InlineImports =
 					in file \"#{@JS.relPath}\",
 					variable \"#{htmlImport.variable}\" unused
 				".error
+		@addComments()
 
 # GULP PLUGIN
 # ===========
