@@ -23,21 +23,15 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runSingle: ->
-			src  = taskOpts.watchFile.rbDistPath
-			dest = config.dist.app.client.root.dir
-			base = taskOpts.watchFile.rbDistDir
-			# console.log 'SRC:', src
-			# console.log 'DEST:', dest
-			# console.log 'BASE:', base
-			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir, base
+			src  = taskOpts.watchFile.path
+			dest = taskOpts.watchFile.rbDistDir
+			base = dest
+			runTask src, dest, base
 
 		runMulti: (loc) ->
 			src  = config.glob.dist.app[loc].scripts.all
 			dest = config.dist.app[loc].root.dir
 			base = dest
-			# console.log 'SRC:', src
-			# console.log 'DEST:', dest
-			# console.log 'BASE:', base
 			promise = runTask src, dest, base
 			promise.done ->
 				log.task "compiled js html imports in: #{config.dist.app[loc].dir}"
