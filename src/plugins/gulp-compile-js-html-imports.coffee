@@ -50,10 +50,11 @@ Help =
 # REGULAR EXPRESSIONS
 # ===================
 Regx =
+	comments:
+		/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
+
 	htmlImports:
-		# TODO
-		# fix multiple imports on the same line
-		/\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
+		/\bimport\s+(?:(.+?)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\s*?(;|\/\/|\/\*|\n|$))(\s*;)?/g
 
 	htmlImport: (statement) -> # :RegExp
 		# /import template from '..\/views\/rb-nav.html';\n?/g
@@ -62,9 +63,6 @@ Regx =
 	templateVar: (variable) -> # :RegExp
 		# \btemplate(?=\s*?(;|\/\/|\/\*|\n|$))(?!\s+?(:|\(|from))
 		new RegExp "\\b#{variable}(?=\\s*?(;|\\/\\/|\\/\\*|\\n|$))(?!\\s+?(:|\\(|from))", 'g'
-
-	comments:
-		/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
 
 # HTML IMPORTS (hashmap)
 # jsPath:                 (dist/client/scripts/xxx.js)
