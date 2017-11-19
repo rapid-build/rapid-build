@@ -55,14 +55,13 @@ Regx =
 		# fix multiple imports on the same line
 		/\bimport\s+(?:(.+)\s+from\s+)?[\'"`]([^`"\']+\.html)[`"\'](?=\n|\s?;|\s(?!\S))(\s*;)?/g
 
-	htmlImport: (statement) ->
+	htmlImport: (statement) -> # :RegExp
 		# /import template from '..\/views\/rb-nav.html';\n?/g
 		new RegExp "#{statement}\\n?", 'g'
 
 	templateVar: (variable) -> # :RegExp
-		# TODO
-		# fix not replacing when it's the last line and doesn't have a semicolon
-		new RegExp "\\b#{variable}(?=\\n|\\s?;|\\s(?!\\S))", 'g' # /\btemplate(?=\n|\s?;|\s(?!\S))/g
+		# \btemplate(?=\s*?(;|\/\/|\/\*|\n|$))(?!\s+?(:|\(|from))
+		new RegExp "\\b#{variable}(?=\\s*?(;|\\/\\/|\\/\\*|\\n|$))(?!\\s+?(:|\\(|from))", 'g'
 
 	comments:
 		/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
