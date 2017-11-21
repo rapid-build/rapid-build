@@ -6,10 +6,6 @@ module.exports = (config, options) ->
 	# init inline
 	# ============
 	inline =
-		htmlExternalCss:
-			client:
-				enable: options.inline.htmlExternalCss.client.enable
-
 		jsHtmlImports:
 			client:
 				enable: options.inline.jsHtmlImports.client.enable
