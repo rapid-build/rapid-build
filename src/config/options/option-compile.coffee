@@ -10,10 +10,6 @@ module.exports = (config, options) ->
 	compile.htmlScripts.client = {} unless isType.object compile.htmlScripts.client
 	compile.htmlScripts.client.enable = false unless isType.boolean compile.htmlScripts.client.enable
 
-	compile.jsHtmlImports = {} unless isType.object compile.jsHtmlImports
-	compile.jsHtmlImports.client = {} unless isType.object compile.jsHtmlImports.client
-	compile.jsHtmlImports.client.enable = false unless isType.boolean compile.jsHtmlImports.client.enable
-
 	compile.typescript = {} unless isType.object compile.typescript
 	compile.typescript.client = {} unless isType.object compile.typescript.client
 	compile.typescript.server = {} unless isType.object compile.typescript.server

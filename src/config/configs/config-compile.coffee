@@ -10,10 +10,6 @@ module.exports = (config, options) ->
 			client:
 				enable: options.compile.htmlScripts.client.enable
 
-		jsHtmlImports:
-			client:
-				enable: options.compile.jsHtmlImports.client.enable
-
 		typescript:
 			client:
 				enable:  options.compile.typescript.client.enable

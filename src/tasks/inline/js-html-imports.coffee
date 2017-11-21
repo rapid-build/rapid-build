@@ -1,16 +1,16 @@
 module.exports = (config, gulp, taskOpts={}) ->
-	promiseHelp          = require "#{config.req.helpers}/promise"
-	return promiseHelp.get() unless config.compile.jsHtmlImports.client.enable
-	q                    = require 'q'
-	log                  = require "#{config.req.helpers}/log"
-	compileJsHtmlImports = require "#{config.req.plugins}/gulp-compile-js-html-imports"
-	forWatchFile         = !!taskOpts.watchFile
+	promiseHelp         = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
+	q                   = require 'q'
+	log                 = require "#{config.req.helpers}/log"
+	inlineJsHtmlImports = require "#{config.req.plugins}/gulp-inline-js-html-imports"
+	forWatchFile        = !!taskOpts.watchFile
 
 	runTask = (src, dest, base) ->
 		defer   = q.defer()
 		srcOpts = { base }
 		gulp.src src, srcOpts
-			.pipe compileJsHtmlImports()
+			.pipe inlineJsHtmlImports()
 			.on 'data', ->
 				taskOpts.watchFile.rbLog() if forWatchFile
 			.pipe gulp.dest dest
@@ -34,7 +34,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			base = dest
 			promise = runTask src, dest, base
 			promise.done ->
-				log.task "compiled js html imports in: #{config.dist.app[loc].dir}"
+				log.task "inlined js html imports in: #{config.dist.app[loc].dir}"
 			promise
 
 	# return

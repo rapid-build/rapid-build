@@ -24,7 +24,7 @@ module.exports = (config, gulp) ->
 		serverTest:    require "#{config.req.tasks}/test/server/copy-server-tests"
 		extraClient:   require "#{config.req.tasks}/extra/copy-extra-files"
 		extraServer:   require "#{config.req.tasks}/extra/copy-extra-files"
-		jsHtmlImports: require "#{config.req.tasks}/compile/js-html-imports"
+		jsHtmlImports: require "#{config.req.tasks}/inline/js-html-imports"
 
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
@@ -167,7 +167,7 @@ module.exports = (config, gulp) ->
 				-> htmlWatch config.glob.src.app.client.views.html
 				-> spaWatch config.spa.src.path
 				->
-					return promiseHelp.get() unless config.compile.jsHtmlImports.client.enable
+					return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
 					jsGlob = [].concat(
 						config.glob.dist.app.client.scripts.all,
 						config.glob.dist.app.client.views.all

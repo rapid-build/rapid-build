@@ -25,6 +25,7 @@ module.exports = (rbDir, options) ->
 	config  = require("#{config.req.config.configs}/config-spa")           config, options
 	config  = require("#{config.req.config.configs}/config-exclude")       config, options
 	config  = require("#{config.req.config.configs}/config-compile")       config, options
+	config  = require("#{config.req.config.configs}/config-inline")        config, options
 	config  = require("#{config.req.config.configs}/config-extra")         config
 	config  = require("#{config.req.config.configs}/config-extra-copy")    config, options
 	config  = require("#{config.req.config.configs}/config-extra-compile") config, options

@@ -1,4 +1,4 @@
-# GULP PLUGIN: gulp-compile-js-html-imports
+# GULP PLUGIN: gulp-inline-js-html-imports
 # Plugin level: function(dealing with files)
 # Compiles html imports inside scripts.
 # Currently no opts available.
@@ -7,7 +7,7 @@ through     = require 'through2'
 gutil       = require 'gulp-util'
 path        = require 'path'
 fse         = require 'fs-extra'
-PLUGIN_NAME = 'gulp-compile-js-html-imports'
+PLUGIN_NAME = 'gulp-inline-js-html-imports'
 PluginError = gutil.PluginError
 require('colors').setTheme error:['red','bold'] unless 'colors'.error
 
