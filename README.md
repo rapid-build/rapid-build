@@ -216,7 +216,7 @@ Below are a list of options you can use to customize your builds (place in rapid
 # spa[scripts|styles].attrs                              = (object) = set to add additional attributes to the link (styles) and script tags that the build outputs in spa.html or modify the default attributes: scripts = { src }, styles = { rel, href }
 # minify.css.styles                                      = (boolean) defaults to true = for prod build, minify the css
 # minify.css.fileName                                    = (string)  defaults to 'styles.min.css'
-# minify.css.splitMinFile                                = (boolean) defaults to true = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
+# minify.css.splitMinFile                                = (boolean) defaults to false = for prod build, task for ie9 and below, split styles.min.css into multiple files if selector count > 4,095
 # minify.html.views                                      = (boolean) defaults to true = for prod build, minify the html
 # minify.html.templateCache                              = (boolean) defaults to true = for prod build, use the template cache
 # minify.html.options                                    = (object)  defaults to { collapseWhitespace: true, removeComments: true, removeEmptyElements: false, removeEmptyAttributes: false } for details see: https://git.io/vVyAC

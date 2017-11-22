@@ -5,9 +5,9 @@ module.exports = (config, options) ->
 
 	# helpers
 	# =======
-	getOption = (type, opt) ->
+	getOption = (type, opt, defaultVal = true) ->
 		opt = options.minify[type][opt]
-		return true if isType.null opt
+		return defaultVal if isType.null opt
 		opt
 
 	getFileName = (type, lang) ->
@@ -23,7 +23,7 @@ module.exports = (config, options) ->
 	minify =
 		css:
 			styles: getOption 'css', 'styles'
-			splitMinFile: getOption 'css', 'splitMinFile'
+			splitMinFile: getOption 'css', 'splitMinFile', false
 			fileName: getFileName 'styles', 'css'
 		js:
 			scripts: getOption 'js', 'scripts'
@@ -58,8 +58,7 @@ module.exports = (config, options) ->
 	# cache bust
 	# ==========
 	cacheBustOpt = options.minify.cacheBust
-	minify.cacheBust =
-		if isType.null cacheBustOpt then true else cacheBustOpt
+	minify.cacheBust = if isType.null cacheBustOpt then true else cacheBustOpt
 
 	# add minify to config
 	# ====================
