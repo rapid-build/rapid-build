@@ -1,8 +1,11 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
-	minifyJs    = require 'gulp-uglify'
+	uglifier    = if config.minify.client.js.es6 then 'uglify-es' else 'uglify-js'
+	UglifyJS    = require uglifier
+	composer    = require 'gulp-uglify/composer'
 	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
+	minifyJs    = composer UglifyJS, console
 
 	runTask = (appOrRb, opts) ->
 		defer = q.defer()
@@ -35,9 +38,9 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.minify.js.scripts
+			return promiseHelp.get() unless config.minify.client.js.enable
 			defer  = q.defer()
-			opts   = mangle: config.minify.js.mangle
+			opts   = config.minify.client.js.options
 			q.all([
 				runTask 'rb', opts
 				runTask 'app', opts

@@ -5,11 +5,13 @@ fse      = require 'fs-extra'
 del      = require 'del'
 gulp     = require 'gulp'
 coffee   = require 'gulp-coffee'
-minifyJs = require 'gulp-uglify'
+composer = require 'gulp-uglify/composer'
+UglifyJS = require 'uglify-js'
 tar      = require 'tar'
 fstream  = require 'fstream' # used in github tar examples
 consts   = require '../consts/consts'
 log      = require './log'
+minifyJs = composer UglifyJS, console
 
 # module
 # ======
@@ -111,8 +113,9 @@ module.exports =
 		new Promise (resolve, reject) ->
 			src  = ["#{consts.RB_LIB}/**/*.js", "!**/node_modules/**"]
 			dest = consts.RB_LIB
+			opts = mangle: true
 			gulp.src src
-				.pipe minifyJs mangle: true
+				.pipe minifyJs opts
 				.on 'error', (e) ->
 					e.message += "\nFile: #{e.filename}"
 					reject e

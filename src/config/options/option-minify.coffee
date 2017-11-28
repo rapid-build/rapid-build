@@ -7,7 +7,6 @@ module.exports = (config, options) ->
 	minify = {} unless isType.object minify
 	minify.css       = {} unless isType.object minify.css
 	minify.html      = {} unless isType.object minify.html
-	minify.js        = {} unless isType.object minify.js
 	minify.spa       = {} unless isType.object minify.spa
 	minify.cacheBust = null unless isType.boolean minify.cacheBust
 	minify.css.styles         = null unless isType.boolean minify.css.styles
@@ -16,10 +15,24 @@ module.exports = (config, options) ->
 	minify.html.views         = null unless isType.boolean minify.html.views
 	minify.html.templateCache = null unless isType.boolean minify.html.templateCache
 	minify.html.options       = {}   unless isType.object minify.html.options
-	minify.js.scripts         = null unless isType.boolean minify.js.scripts
-	minify.js.fileName        = null unless isType.string minify.js.fileName
-	minify.js.mangle          = null unless isType.boolean minify.js.mangle
 	minify.spa.file           = null unless isType.boolean minify.spa.file
+
+	minify.client = {} unless isType.object minify.client
+	minify.server = {} unless isType.object minify.server
+	minify.client.js = {} unless isType.object minify.client.js
+	minify.server.js = {} unless isType.object minify.server.js
+
+	minify.client.js.es6      = null unless isType.boolean minify.client.js.es6
+	minify.client.js.enable   = null unless isType.boolean minify.client.js.enable
+	minify.client.js.options  = null unless isType.object minify.client.js.options
+	minify.client.js.fileName = null unless isType.string minify.client.js.fileName
+
+	minify.server.js.es6      = null unless isType.boolean minify.server.js.es6
+	minify.server.js.enable   = null unless isType.boolean minify.server.js.enable
+	minify.server.js.options  = null unless isType.object minify.server.js.options
+
+	minify.server.json = {} unless isType.object minify.server.json
+	minify.server.json.enable = null unless isType.boolean minify.server.json.enable
 
 	# add minify options
 	# ==================

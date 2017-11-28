@@ -117,7 +117,9 @@
 		"tar": "2.2.1",
 		"through2": "2.0.3",
 		"tsify": "3.0.3",
-		"typescript": "2.6.1",
+		"typescript": "2.6.2",
+		"uglify-es": "3.2.0",
+		"uglify-js": "3.2.0",
 		"vinyl-source-stream": "1.1.0",
 		"watchify": "3.9.0"
 	},

@@ -7,9 +7,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 		runTask: ->
 			return promiseHelp.get() unless config.build.client
 			gulp.series([
+				"#{config.rb.prefix.task}minify-html"
+				"#{config.rb.prefix.task}inline-js-html-imports:prod"
 				gulp.parallel([
 					"#{config.rb.prefix.task}minify-css"
-					"#{config.rb.prefix.task}minify-html"
 					"#{config.rb.prefix.task}minify-images" # todo
 					"#{config.rb.prefix.task}minify-js"
 				])

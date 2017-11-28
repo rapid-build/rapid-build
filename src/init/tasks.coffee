@@ -97,7 +97,8 @@ module.exports = (gulp, config) ->
 
 	# inline
 	# ======
-	taskHelp.addTask 'inline-js-html-imports:client', '/inline/js-html-imports', loc: 'client'
+	taskHelp.addTask 'inline-js-html-imports:dev',  '/inline/js-html-imports', env: 'dev'
+	taskHelp.addTask 'inline-js-html-imports:prod', '/inline/js-html-imports', env: 'prod'
 
 	# manage
 	# ======

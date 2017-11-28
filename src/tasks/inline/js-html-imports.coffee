@@ -28,16 +28,17 @@ module.exports = (config, gulp, taskOpts={}) ->
 			base = dest
 			runTask src, dest, base
 
-		runMulti: (loc) ->
-			src  = config.glob.dist.app[loc].scripts.all
-			dest = config.dist.app[loc].root.dir
+		runMulti: (env) ->
+			return promiseHelp.get() if config.env.is.prod and env is 'dev'  # skip, will run later in minify-client
+			src  = config.glob.dist.app.client.scripts.all
+			dest = config.dist.app.client.root.dir
 			base = dest
 			promise = runTask src, dest, base
 			promise.done ->
-				log.task "inlined js html imports in: #{config.dist.app[loc].dir}"
+				log.task "inlined js html imports in: #{config.dist.app.client.dir}"
 			promise
 
 	# return
 	# ======
 	return api.runSingle() if forWatchFile
-	api.runMulti taskOpts.loc
+	api.runMulti taskOpts.env

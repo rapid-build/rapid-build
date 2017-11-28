@@ -1,15 +1,19 @@
 module.exports = (config, gulp) ->
 	q           = require 'q'
-	minifyJs    = require 'gulp-uglify'
+	uglifier    = if config.minify.server.js.es6 then 'uglify-es' else 'uglify-js'
+	UglifyJS    = require uglifier
+	composer    = require 'gulp-uglify/composer'
 	minifyJson  = require 'gulp-jsonminify'
 	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
+	minifyJs    = composer UglifyJS, console
 
 	minJsTask = (src, dest) ->
 		defer = q.defer()
+		return promiseHelp.get defer unless config.minify.server.js.enable
+		opts  = config.minify.server.js.options
 		gulp.src src
-			# .pipe minifyJs mangle:false
-			.pipe minifyJs()
+			.pipe minifyJs opts
 			.pipe gulp.dest dest
 			.on 'end', ->
 				log.task "minified js in: #{config.dist.app.server.dir}"
@@ -18,6 +22,7 @@ module.exports = (config, gulp) ->
 
 	minJsonTask = (src, dest) ->
 		defer = q.defer()
+		return promiseHelp.get defer unless config.minify.server.json.enable
 		gulp.src src
 			.pipe minifyJson()
 			.pipe gulp.dest dest

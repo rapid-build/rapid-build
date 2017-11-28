@@ -21,7 +21,7 @@ module.exports = (config) ->
 	fileName =
 		scripts:
 			load: loadScriptFiles
-			min:  config.minify.js.fileName
+			min:  config.minify.client.js.fileName
 		styles:
 			load: loadStylesFiles
 			min:  config.minify.css.fileName
