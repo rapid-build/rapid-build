@@ -1,3 +1,77 @@
+# [4.0.0](https://github.com/rapid-build/rapid-build/compare/v3.1.2...v4.0.0) (2017-11-28)
+
+
+### Features
+
+* **new build option:**
+	* inline.jsHtmlImports.client.enable ([task](https://github.com/rapid-build/rapid-build/blob/d8f2817/src/tasks/inline/js-html-imports.coffee), [plugin](https://github.com/rapid-build/rapid-build/blob/4ff77a6/src/plugins/gulp-inline-js-html-imports.coffee))
+	* set to true to inline js html imports
+	* removes html import statement
+	* replaces template variable with [template literal](https://mzl.la/24ne8EJ) containing contents of ../views/xxx.html
+	```js
+	// example js file
+	import template from '../views/xxx.html';
+	return template;
+	```
+* **new minify build options:**
+	* minify[client|server] ([d8f2817](https://github.com/rapid-build/rapid-build/commit/d8f2817))
+	* before the minify.js build options only applied to client,
+	* now you can target either client or server and minify ES6+ (minifying ES6+ must be enabled)
+	* new build options (*introduces breaking changes*):
+		* minify.server.json.enable
+		* minify.client.js.fileName
+		* minify[client|server].js.enable
+		* minify[client|server].js.es6 (to minify ES6+)
+		* minify[client|server].js.options
+* **bump deps:**
+	* includes bumping typescript v2.5.3 to [v2.6.2](https://git.io/vbfXt) ([192b60e^...d8f2817](https://github.com/rapid-build/rapid-build/compare/192b60e^...d8f2817#diff-b9cfc7f2cdf78a7f4b91a753d10865a2))
+* **bump server deps:**
+	* includes bumping express v4.14.1 to [v4.16.2](https://git.io/vbfSM) ([7dc4cf4](https://github.com/rapid-build/rapid-build/commit/7dc4cf4))
+
+### BREAKING CHANGES
+
+1. **minify build options:**
+	* To migrate the code follow the example below (in rapid-build.json):
+
+	**Before:**
+	```js
+	{
+		minify: {
+			js: {
+				scripts: false,
+				mangle : false,
+				fileName: 'rapid-build.min.js'
+			}
+		}
+	}
+	```
+
+	**Now:**
+	```js
+	{
+		minify: {
+			client: {
+				js: {
+					enable: false,
+					options: { mangle: false },
+					fileName: 'rapid-build.min.js'
+				}
+			}
+		}
+	}
+	```
+2. **build option:**
+	* breaking change only applies to people who need to support ie 8 and 9
+	* changed build option minify.css.splitMinFile *default value to false* ([82ebb10](https://github.com/rapid-build/rapid-build/commit/82ebb10))
+	* the build will no longer by default split styles.min.css into multiple files if the selector count > 4,095
+	* if you need this feature set the following in your rapid-build.json:
+		* minify.css.splitMinFile = true
+3. **bump typescript:**
+	* breaking change only applies to people using typescript
+	* find breaking changes here: [v2.6](https://git.io/vFFbj)
+
+
+
 ## [3.1.2](https://github.com/rapid-build/rapid-build/compare/v3.1.1...v3.1.2) (2017-11-03)
 
 
