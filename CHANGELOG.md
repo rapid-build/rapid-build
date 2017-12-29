@@ -1,3 +1,13 @@
+## [4.0.1](https://github.com/rapid-build/rapid-build/compare/v4.0.0...v4.0.1) (2017-12-29)
+
+
+### Bug Fixes
+
+* **bump deps:**
+	* uglify-js and uglify-es from v3.2.0 to v3.2.2 ([47f687c](https://github.com/rapid-build/rapid-build/commit/47f687c))
+
+
+
 # [4.0.0](https://github.com/rapid-build/rapid-build/compare/v3.1.2...v4.0.0) (2017-11-28)
 
 
