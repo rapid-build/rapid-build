@@ -3,10 +3,10 @@
 # Compiles html imports inside scripts.
 # Currently no opts available.
 # ==========================================
-through     = require 'through2'
-gutil       = require 'gulp-util'
 path        = require 'path'
 fse         = require 'fs-extra'
+through     = require 'through2'
+gutil       = require 'gulp-util'
 PLUGIN_NAME = 'gulp-inline-js-html-imports'
 PluginError = gutil.PluginError
 require('colors').setTheme error:['red','bold'] unless 'colors'.error
@@ -44,8 +44,10 @@ Help =
 		return false if typeof file.extname isnt 'string'
 		file.extname.toLowerCase().indexOf('.html') isnt -1
 
-	logJson: (json) -> # :void (log pretty json)
-		console.log JSON.stringify json, null, '\t'
+	logJson: (json, prefix) -> # :void (log pretty json)
+		json = JSON.stringify json, null, '\t'
+		return console.log json unless prefix
+		console.log "#{prefix}:", json
 
 # REGULAR EXPRESSIONS
 # ===================
@@ -72,6 +74,7 @@ Regx =
 # 	imports:
 # 		htmlPath:         (dist/client/views/xxx.html)
 # 			statement: '' (import template from '../views/xxx.html';)
+#           path: ''      (statement path '../views/xxx.html')
 # 			variable: ''  (template)
 # 			html: ''      (html file contents)
 # 	contents:
@@ -118,7 +121,7 @@ InlineImports =
 		return false unless !!HtmlImports[@JS.path]
 		@JS.contents is HtmlImports[@JS.path].contents.compiled
 
-	getHtmlImports: -> # :htmlImports<hashmap> { jsPath: { statement:'', variable:'', html:'' }}
+	getHtmlImports: -> # :htmlImports<hashmap> { jsPath: { statement:'', path:'', variable:'', html:'' }}
 		htmlImports = {}
 		@removeComments()
 		while (match = Regx.htmlImports.exec(@JS.contents)) != null
@@ -172,7 +175,7 @@ InlineImports =
 			@comments.push match
 			COMMENT_PLACEHOLDER
 
-	inlineImports: ->
+	inlineImports: -> # :void
 		return unless !!HtmlImports[@JS.path]
 		@removeComments()
 		for htmlPath, htmlImport of HtmlImports[@JS.path].imports

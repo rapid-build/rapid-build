@@ -6,6 +6,9 @@ module.exports = (config, options) ->
 	# init inline
 	# ============
 	inline =
+		htmlAssets:
+			client:
+				enable: options.inline.htmlAssets.client.enable
 		jsHtmlImports:
 			client:
 				enable: options.inline.jsHtmlImports.client.enable

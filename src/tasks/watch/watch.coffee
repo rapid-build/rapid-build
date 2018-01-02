@@ -24,6 +24,7 @@ module.exports = (config, gulp) ->
 		serverTest:    require "#{config.req.tasks}/test/server/copy-server-tests"
 		extraClient:   require "#{config.req.tasks}/extra/copy-extra-files"
 		extraServer:   require "#{config.req.tasks}/extra/copy-extra-files"
+		htmlAssets:    require "#{config.req.tasks}/inline/html-assets"
 		jsHtmlImports: require "#{config.req.tasks}/inline/js-html-imports"
 
 		buildSpa: ->
@@ -144,6 +145,24 @@ module.exports = (config, gulp) ->
 		return promiseHelp.get() if config.exclude.spa
 		createWatch spaFilePath, 'build spa', lang: config.spa.dist.file
 
+	# inline watches
+	# ==============
+	jsHtmlImportsWatch = ->
+		return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
+		_glob = [].concat(
+			config.glob.dist.app.client.scripts.all,
+			config.glob.dist.app.client.views.all
+		)
+		createWatch _glob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import', silent: true, addLog: true
+
+	htmlAssetsWatch = ->
+		return promiseHelp.get() unless config.inline.htmlAssets.client.enable
+		_glob = [].concat(
+			config.glob.dist.app.client.styles.all,
+			config.glob.dist.app.client.views.all
+		)
+		createWatch _glob, 'htmlAssets', lang:'html asset', srcType:'views', logTaskName:'html asset', silent: true, addLog: true
+
 	# callbacks
 	# =========
 	cleanStylesCb = (file) ->
@@ -166,13 +185,8 @@ module.exports = (config, gulp) ->
 				-> createWatch config.glob.src.app.client.scripts.js,     'js',     lang:'js',     srcType:'scripts'
 				-> htmlWatch config.glob.src.app.client.views.html
 				-> spaWatch config.spa.src.path
-				->
-					return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
-					jsGlob = [].concat(
-						config.glob.dist.app.client.scripts.all,
-						config.glob.dist.app.client.views.all
-					)
-					createWatch jsGlob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import', silent: true, addLog: true
+				-> htmlAssetsWatch()
+				-> jsHtmlImportsWatch()
 			]
 			serverWatches = [ # server watch: scripts
 				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server', bsReload:true
