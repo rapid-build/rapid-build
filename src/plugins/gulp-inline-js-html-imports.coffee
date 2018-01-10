@@ -59,7 +59,7 @@ Regx =
 		/<link\s+(?:[^>]*?\s+)?href=(?:"|')?([^"]*\.css)(?:"|')?[\s\S]*?>/g
 
 	htmlImports:
-		/\bimport\s+(?:(.+?)\s+from\s*?)?[\'"`]([^`"\']+\.html)[`"\'](?=\s*?(;|\/\/|\/\*|\n|$))(\s*;)?/g
+		/\bimport\s+(?=[^;]+\.html)(?:(.+?)\s+from\s*?)?[\'"`]([^`"\']+\.html)[`"\'](?=\s*?(;|\/\/|\/\*|\n|$))(\s*;)?/g
 
 	htmlImport: (statement) -> # :RegExp
 		# /import template from '..\/views\/rb-nav.html';\n?/g
