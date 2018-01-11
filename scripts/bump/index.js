@@ -2,7 +2,7 @@ var bump;
 var rbRoot = process.cwd();
 var version = process.argv.slice(2)[0];
 
-require('coffee-script/register');
+require('coffeescript/register');
 require(`${rbRoot}/extra/tasks/add-colors`)();
 bump = require('./bump');
 

@@ -11,7 +11,7 @@ const APP_PATH   = process.cwd();
 const BUILD_PATH = path.join(__dirname, '..');
 const FOR_LIB    = process.env.RB_LIB !== 'src'; // 'src' for development
 const LIB_PATH   = FOR_LIB ? path.join(BUILD_PATH, 'lib') : path.join(BUILD_PATH, 'src');
-if (!FOR_LIB) require('coffee-script/register');
+if (!FOR_LIB) require('coffeescript/register');
 
 /* Config
  *********/

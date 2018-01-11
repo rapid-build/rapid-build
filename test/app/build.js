@@ -1,5 +1,5 @@
 'use strict'
-require('coffee-script/register');
+require('coffeescript/register');
 
 /* Requires
  ***********/

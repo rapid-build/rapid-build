@@ -1,3 +1,3 @@
 /* ADD COFFEE SUPPORT
  *********************/
-require('coffee-script/register');
+require('coffeescript/register');

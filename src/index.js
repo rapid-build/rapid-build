@@ -5,6 +5,6 @@ module.exports = function(gulp, options) {
 		parentDir = path.basename(__dirname), // src or lib
 		isLib     = parentDir == 'lib';
 
-	if (!isLib) require('coffee-script/register');
+	if (!isLib) require('coffeescript/register');
 	return require('./gulpfile')(gulp, options)
 }

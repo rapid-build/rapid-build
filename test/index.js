@@ -12,7 +12,7 @@
  * npm test verbose:jasmine
  * npm test verbose:processes
  **********************************/
-require('coffee-script/register');
+require('coffeescript/register');
 var path     = require('path');
 var initPath = path.join(__dirname, 'init', 'index');
 var pkgRoot  = path.resolve(__dirname, '..');
