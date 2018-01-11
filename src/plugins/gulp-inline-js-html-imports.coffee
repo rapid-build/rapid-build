@@ -66,8 +66,8 @@ Regx =
 		new RegExp "#{statement}\\n?", 'g'
 
 	templateVar: (variable) -> # :RegExp
-		# \btemplate(?=\s*?(;|\/\/|\/\*|\n|$))(?!\s+?(:|\(|from))
-		new RegExp "\\b#{variable}(?=\\s*?(;|\\/\\/|\\/\\*|\\n|$))(?!\\s+?(:|\\(|from))", 'g'
+		# \btemplate(?=\s*?(;|}|\/\/|\/\*|\n|$))(?!\s+?(:|\(|from))
+		new RegExp "\\b#{variable}(?=\\s*?(;|}|\\/\\/|\\/\\*|\\n|$))(?!\\s+?(:|\\(|from))", 'g'
 
 # HTML IMPORTS (hashmap)
 # jsPath:                 (dist/client/scripts/xxx.js)
