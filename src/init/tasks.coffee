@@ -117,6 +117,7 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'minify-html',               '/minify/minify-html'
 	taskHelp.addTask 'minify-images',             '/minify/minify-images'
 	taskHelp.addTask 'minify-js',                 '/minify/minify-js'
+	taskHelp.addTask 'minify-js-html-imports',    '/minify/minify-js-html-imports', taskCB: true
 	taskHelp.addTask 'minify-server',             '/minify/minify-server'
 	taskHelp.addTask 'minify-spa',                '/minify/minify-spa'
 	taskHelp.addTask 'template-cache',            '/minify/template-cache'

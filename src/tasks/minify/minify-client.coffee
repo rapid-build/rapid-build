@@ -7,11 +7,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 		runTask: ->
 			return promiseHelp.get() unless config.build.client
 			gulp.series([
-				"#{config.rb.prefix.task}minify-html"
-				"#{config.rb.prefix.task}inline-js-html-imports:prod"
 				gulp.parallel([
 					"#{config.rb.prefix.task}minify-css"
-					"#{config.rb.prefix.task}minify-images" # todo
+					"#{config.rb.prefix.task}minify-html"
+					"#{config.rb.prefix.task}minify-images" # TODO maybe
 					"#{config.rb.prefix.task}minify-js"
 				])
 				"#{config.rb.prefix.task}build-prod-files-blueprint"
@@ -24,6 +23,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 				"#{config.rb.prefix.task}build-spa:prod"
 				"#{config.rb.prefix.task}minify-spa"
 				"#{config.rb.prefix.task}cache-bust"
+				"#{config.rb.prefix.task}inline-html-assets:prod"
+				"#{config.rb.prefix.task}minify-js-html-imports" # needs to run on individual files
 				(cb) -> cb(); taskOpts.taskCB()
 			])()
 
