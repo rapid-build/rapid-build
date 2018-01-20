@@ -7,7 +7,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		runTask: ->
 			gulp.series([
 				"#{config.rb.prefix.task}build-files"
-				"#{config.rb.prefix.task}build-spa"
+				"#{config.rb.prefix.task}build-spa:dev"
 				(cb) -> cb(); taskOpts.taskCB()
 			])()
 

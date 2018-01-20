@@ -8,9 +8,11 @@ module.exports = (config, gulp, taskOpts={}) ->
 
 	runTask = (src, dest, base) ->
 		defer   = q.defer()
-		srcOpts = { base }
+		srcOpts = { base, allowEmpty: true }
 		gulp.src src, srcOpts
+			.on 'error', (e) -> log.error e, 'inline html assets'
 			.pipe inlineHtmlAssets()
+			.on 'error', (e) -> log.error e, 'inline html assets'
 			.on 'data', ->
 				taskOpts.watchFile.rbLog() if forWatchFile
 			.pipe gulp.dest dest
@@ -29,8 +31,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 			runTask src, dest, base
 
 		runMulti: (env) ->
-			return promiseHelp.get() if config.env.is.prod and env is 'dev'  # skip, will run later in minify-client
-			src  = config.glob.dist.app.client.views.all
+			return promiseHelp.get() if config.env.is.prod and env is 'dev' # skip, will run later in minify-client
+			src  = config.glob.dist.app.client.views.all.concat config.spa.dist.path
 			dest = config.dist.app.client.root.dir
 			base = dest
 			promise = runTask src, dest, base

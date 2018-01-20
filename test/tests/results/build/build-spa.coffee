@@ -17,6 +17,17 @@ describe task, ->
 			.catch (e) ->
 				expect(e.code.toLowerCase()).toContain 'enoent'
 				done()
+
+	else if config.build.is.prod
+		it "should skip #{task} task in common-client task if build type is prod, will run later in minify-client task", (done) ->
+			fse.stat "#{appPath}/spa.html"
+			.then (stats) ->
+				expect(stats.isFile()).toBeFalse()
+				done()
+			.catch (e) ->
+				expect(e.code.toLowerCase()).toContain 'enoent'
+				done()
+
 	else
 		it 'should create client dist spa.html', (done) ->
 			fse.stat "#{appPath}/spa.html"

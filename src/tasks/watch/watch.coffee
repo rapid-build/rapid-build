@@ -120,7 +120,8 @@ module.exports = (config, gulp) ->
 	# =======
 	createWatch = (_glob, taskName, opts={}) ->
 		defer = q.defer()
-		gWatch _glob, read:false, (file) ->
+		gOpts = read: false
+		gWatch _glob, gOpts, (file) ->
 			events file, taskName, opts
 		.on 'ready', ->
 			loc = opts.loc or 'client'
@@ -158,8 +159,10 @@ module.exports = (config, gulp) ->
 	htmlAssetsWatch = ->
 		return promiseHelp.get() unless config.inline.htmlAssets.client.enable
 		_glob = [].concat(
+			# config.glob.dist.app.client.scripts.all,
 			config.glob.dist.app.client.styles.all,
-			config.glob.dist.app.client.views.all
+			config.glob.dist.app.client.views.all,
+			config.spa.dist.path
 		)
 		createWatch _glob, 'htmlAssets', lang:'html asset', srcType:'views', logTaskName:'html asset', silent: true, addLog: true
 

@@ -24,5 +24,6 @@ describe "#{task} tasks", ->
 	tests.test.results '/format/absolute-css-urls'
 	tests.test.results '/clean/clean-rb-client'
 	tests.test.results '/build/build-files'
+	tests.test.results '/build/build-spa'
 
 

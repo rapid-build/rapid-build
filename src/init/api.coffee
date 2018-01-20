@@ -13,7 +13,6 @@ module.exports = (gulp, config) ->
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-server"
-		"#{rb}build-spa"
 		"#{rb}start-server"
 		"#{rb}open-browser"
 		(cb) -> defer.tasks.resolve(); cb()
@@ -25,7 +24,6 @@ module.exports = (gulp, config) ->
 		(cb) -> process.env.RB_MODE = config.rb.tasks['test:client']; cb()
 		"#{rb}common"
 		"#{rb}common-client"
-		"#{rb}build-spa"
 		"#{rb}common-test-client"
 		"#{rb}run-client-tests"
 		(cb) ->
@@ -63,7 +61,6 @@ module.exports = (gulp, config) ->
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-server"
-		"#{rb}build-spa"
 		"#{rb}start-server:dev"
 		"#{rb}browser-sync"
 		"#{rb}watch"
@@ -76,7 +73,6 @@ module.exports = (gulp, config) ->
 		(cb) -> process.env.RB_MODE = config.rb.tasks['dev:test:client']; cb()
 		"#{rb}common"
 		"#{rb}common-client"
-		"#{rb}build-spa"
 		"#{rb}common-test-client"
 		"#{rb}run-client-tests:dev"
 		"#{rb}watch"
@@ -103,7 +99,6 @@ module.exports = (gulp, config) ->
 		(cb) -> process.env.RB_MODE = config.rb.tasks['dev:test']; cb()
 		"#{rb}common"
 		"#{rb}common-client"
-		"#{rb}build-spa"
 		"#{rb}common-test-client"
 		"#{rb}run-client-tests:dev"
 		"#{rb}common-server"

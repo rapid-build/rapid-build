@@ -32,10 +32,11 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}copy-extra-files:client"
 				])
 				"#{config.rb.prefix.task}update-css-urls"
-				"#{config.rb.prefix.task}inline-html-assets:dev"
-				"#{config.rb.prefix.task}inline-js-html-imports:dev"
 				"#{config.rb.prefix.task}clean-rb-client" # if exclude.default.client.files
 				"#{config.rb.prefix.task}build-files"
+				"#{config.rb.prefix.task}build-spa:dev"
+				"#{config.rb.prefix.task}inline-html-assets:dev"
+				"#{config.rb.prefix.task}inline-js-html-imports:dev"
 				(cb) -> cb(); taskOpts.taskCB()
 			])()
 	# return

@@ -21,9 +21,9 @@ module.exports = (gulp, config) ->
 	taskHelp.addTask 'build-files',                '/build/build-files',  deps: ['clean-files']
 	taskHelp.addTask 'build-prod-files',           '/build/build-prod-files'
 	taskHelp.addTask 'build-prod-files-blueprint', '/build/build-prod-files-blueprint'
-	taskHelp.addTask 'build-spa',                  '/build/build-spa', taskCB: true
-	taskHelp.addTask 'build-spa:prod',             '/build/build-spa', taskCB: true, env: 'prod'
-	taskHelp.addTask 'build-spa-file',             '/build/build-spa-file'
+	taskHelp.addTask 'build-spa:dev',              '/build/build-spa',      env: 'dev',  taskCB: true
+	taskHelp.addTask 'build-spa:prod',             '/build/build-spa',      env: 'prod', taskCB: true
+	taskHelp.addTask 'build-spa-file:dev',         '/build/build-spa-file', env: 'dev'
 	taskHelp.addTask 'build-spa-file:prod',        '/build/build-spa-file', env: 'prod'
 	taskHelp.addTask 'build-spa-placeholders',     '/build/build-spa-placeholders'
 
@@ -99,8 +99,8 @@ module.exports = (gulp, config) ->
 	# ======
 	taskHelp.addTask 'inline-js-html-imports:dev',  '/inline/js-html-imports', env: 'dev'
 	taskHelp.addTask 'inline-js-html-imports:prod', '/inline/js-html-imports', env: 'prod'
-	taskHelp.addTask 'inline-html-assets:dev',      '/inline/html-assets', env: 'dev'
-	taskHelp.addTask 'inline-html-assets:prod',     '/inline/html-assets', env: 'prod'
+	taskHelp.addTask 'inline-html-assets:dev',      '/inline/html-assets',     env: 'dev'
+	taskHelp.addTask 'inline-html-assets:prod',     '/inline/html-assets',     env: 'prod'
 
 	# manage
 	# ======

@@ -9,6 +9,14 @@ module.exports =
 		return unless msg
 		console.log msg[type]
 
+	error: (e, msg='') ->
+		eMsg = e if typeof e is 'string'
+		eMsg = e.message if e and e.message
+		msg  = if msg and eMsg then "#{msg}\n#{eMsg}" else eMsg
+		msg  = " #{msg}" if msg
+		return unless msg
+		console.error "ERROR:#{msg}".error
+
 	watch: (taskName, file, opts={}) ->
 		taskName = opts.logTaskName or taskName
 		@task "#{taskName} #{file.event}: #{file.path}", 'minor'

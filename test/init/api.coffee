@@ -5,7 +5,6 @@ module.exports =
 		'/common/common'
 		'/common/common-client'
 		'/common/common-server'
-		'/build/build-spa'
 		'/server/start-server'
 		# '/browser/open-browser' # TODO
 	]
@@ -13,7 +12,6 @@ module.exports =
 		'/common/common'
 		'/common/common-client'
 		'/common/common-server'
-		'/build/build-spa'
 		'/server/start-server-dev'
 		'/browser/browser-sync'
 		'/watch/watch'
