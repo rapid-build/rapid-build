@@ -6,10 +6,9 @@
 path        = require 'path'
 fse         = require 'fs-extra'
 through     = require 'through2'
-gutil       = require 'gulp-util'
+PluginError = require 'plugin-error'
 inliner     = require('inline-source').sync
 PLUGIN_NAME = 'gulp-inline-html-assets'
-PluginError = gutil.PluginError
 require('colors').setTheme error:['red','bold'] unless 'colors'.error
 
 # HELPERS

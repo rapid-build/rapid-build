@@ -4,11 +4,10 @@
 # Currently no opts available.
 # ==========================================
 through     = require 'through2'
-gutil       = require 'gulp-util'
+PluginError = require 'plugin-error'
 babel       = require 'babel-core'
 es2015      = require 'babel-preset-es2015'
 PLUGIN_NAME = 'gulp-compile-html-scripts'
-PluginError = gutil.PluginError
 
 # Regular Expressions
 # ===================
