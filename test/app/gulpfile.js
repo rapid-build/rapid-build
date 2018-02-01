@@ -54,7 +54,7 @@ require(buildPath)(gulp, options);
 gulpTask        = buildMode;
 gulpTaskOrg     = gulpTask;
 buildTask       = config.pkgs.rb.name;
-buildTaskPrefix = config.pkgs.rb.tasksPrefix;
+buildTaskPrefix = config.pkgs.rb.build.tasksPrefix;
 
 // if (gulpTask && gulpTask != 'default') buildTask += `:${buildMode}`;
 if (gulpTask && gulpTask.indexOf(buildTaskPrefix) !== -1) {

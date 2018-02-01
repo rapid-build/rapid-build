@@ -29,7 +29,7 @@ module.exports = (config, rbDir) ->
 	# ========
 	rb.prefix = {}
 	rb.prefix.api     = rb.name
-	rb.prefix.task    = pkg.tasksPrefix # prefix for all internal tasks
+	rb.prefix.task    = pkg.build.tasksPrefix # prefix for all internal tasks
 	rb.prefix.distDir = rb.name
 
 	# api tasks

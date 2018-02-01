@@ -1,16 +1,20 @@
 #! /usr/bin/env node
-// process.env.RB_LIB = 'src';
 
 /* Requires
  ***********/
 var path = require('path');
 
+/* Process Env
+ **************/
+const BUILD_PATH   = path.join(__dirname, '..');
+const RB_PKG       = require(path.join(BUILD_PATH, 'package.json'));
+process.env.RB_LIB = RB_PKG.build.lib === 'src' ? 'src': 'lib';
+
 /* Constants
  ************/
-const APP_PATH   = process.cwd();
-const BUILD_PATH = path.join(__dirname, '..');
-const FOR_LIB    = process.env.RB_LIB !== 'src'; // 'src' for development
-const LIB_PATH   = FOR_LIB ? path.join(BUILD_PATH, 'lib') : path.join(BUILD_PATH, 'src');
+const APP_PATH = process.cwd();
+const FOR_LIB  = process.env.RB_LIB !== 'src'; // 'src' for development
+const LIB_PATH = FOR_LIB ? path.join(BUILD_PATH, 'lib') : path.join(BUILD_PATH, 'src');
 if (!FOR_LIB) require('coffeescript/register');
 
 /* Config
@@ -20,7 +24,7 @@ config.app   = {};
 config.build = {};
 config.app.path   = APP_PATH;
 config.build.path = BUILD_PATH;
-config.build.pkg  = require(path.join(config.build.path, 'package.json'));
+config.build.pkg  = RB_PKG;
 config.app.build  = {};
 config.app.build.opts = path.join(config.app.path, config.build.pkg.name);
 config.build.helpers = {};

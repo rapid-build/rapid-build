@@ -1,7 +1,10 @@
 {
 	"name": "rapid-build",
 	"version": "4.0.1",
-	"tasksPrefix": "rb-",
+	"build": {
+		"lib": "lib",
+		"tasksPrefix": "rb-"
+	},
 	"description": "Rapid build system utilizing Node.js, Express and AngularJS.",
 	"homepage": "https://rapid-build.io/",
 	"license": "MIT",
