@@ -26,7 +26,7 @@ module.exports = (config) ->
 	# configure
 	# =========
 	program
-		.version config.build.pkg.version
+		.version config.build.pkg.version, '-v, --version'
 		.option '-s, --skip-options [opts]', 'skip build option(s) ex: dev,prod', list, []
 		.option '--cache-clean [opt]', "cleans #{config.build.pkg.name}'s internal cache for an app, optionally provide * to clean internal cache for all apps"
 		.option '--cache-list', "list #{config.build.pkg.name}'s internal cache for all apps"
