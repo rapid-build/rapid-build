@@ -43,9 +43,10 @@ config.build.generated.path = path.join(BUILD_PATH, 'generated');
 /* Bootstrap
  ************/
 require(path.join(config.build.cli.path, 'add-colors'))();
-if (config.build.cli.opts.quickStart.length) return require(path.join(config.build.cli.path, 'quick-start'))(config);
 if (!!config.build.cli.opts.cacheClean)      return require(path.join(config.build.cli.path, 'cache-clean'))(config);
 if (!!config.build.cli.opts.cacheList)       return require(path.join(config.build.cli.path, 'cache-list'))(config);
+if (!!config.build.cli.opts.location)        return require(path.join(config.build.cli.path, 'location'))(config);
+if (config.build.cli.opts.quickStart.length) return require(path.join(config.build.cli.path, 'quick-start'))(config);
 
 var build = require(path.join(config.build.cli.path, 'get-build'))(config);
 /**
