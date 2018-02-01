@@ -1,39 +1,46 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	log          = require "#{config.req.helpers}/log"
-	extraHelp    = require("#{config.req.helpers}/extra") config
-	forWatchFile = !!taskOpts.watchFile
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
 
-	runTask = (src, dest, base, appOrRb, loc) ->
-		defer   = q.defer()
+	unless forWatchFile
+		promiseHelp = require "#{config.req.helpers}/promise"
+		return promiseHelp.get() unless config.extra.copy.enabled[Task.opts.loc]
+
+	# requires
+	# ========
+	q          = require 'q'
+	taskRunner = require("#{config.req.helpers}/task-runner") config
+
+	runTask = (src, dest, opts={}) ->
 		# follow to ensure globs with "**" work properly with symlinks
-		srcOpts = { base, buffer: false, follow: true }
+		defer   = q.defer()
+		srcOpts = base: opts.base, buffer: false, follow: true
 		gulp.src src, srcOpts
+			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runSingle: ->
-			appOrRb = taskOpts.watchFile.rbAppOrRb
-			loc     = taskOpts.watchFile.rbClientOrServer
-			src     = taskOpts.watchFile.path
+			appOrRb = Task.opts.watchFile.rbAppOrRb
+			loc     = Task.opts.watchFile.rbClientOrServer
+			src     = Task.opts.watchFile.path
 			dest    = config.dist[appOrRb][loc].root.dir
 			base    = config.src[appOrRb][loc].root.dir
-			# log.json { loc, appOrRb, src, base, dest }, 'WATCH EXTRA COPY:'
-			runTask src, dest, base, appOrRb, loc
+			opts    = { appOrRb, loc, base }
+			# console.log 'WATCH EXTRA COPY:', { src, dest, opts }
+			runTask src, dest, opts
 
 		runMulti: (loc) ->
-			promise = extraHelp.run.tasks.async runTask, 'copy', null, [loc]
-			promise.done ->
-				log.task "copied extra files to: #{config.dist.app[loc].dir}"
-			promise
+			promise = taskRunner.async runTask, 'copy', null, [loc], Task
+			promise.then ->
+				log: true
+				message: "copied extra files to: #{config.dist.app[loc].dir}"
 
 	# return
 	# ======
 	return api.runSingle() if forWatchFile
-	api.runMulti taskOpts.loc
+	api.runMulti Task.opts.loc

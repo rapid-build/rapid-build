@@ -1,19 +1,17 @@
-module.exports = (config) ->
-	q   = require 'q'
+module.exports = (config, gulp, Task) ->
 	del = require 'del'
 
 	# API
 	# ===
 	api =
-		runTask: (src) ->
-			defer = q.defer()
+		runTask: ->
+			src = config.generated.pkg.files.files
 			del(src, force:true).then (paths) ->
-				# console.log 'files.json deleted'.yellow
-				defer.resolve()
-			defer.promise
+				# log: 'minor'
+				message: "deleted files.json"
 
 	# return
 	# ======
-	api.runTask config.generated.pkg.files.files
+	api.runTask()
 
 

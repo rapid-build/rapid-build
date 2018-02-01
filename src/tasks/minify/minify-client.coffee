@@ -1,11 +1,16 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.client
+
+	# requires
+	# ========
+	q = require 'q'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.build.client
+			defer = q.defer()
 			gulp.series([
 				gulp.parallel([
 					"#{config.rb.prefix.task}minify-css"
@@ -25,8 +30,9 @@ module.exports = (config, gulp, taskOpts={}) ->
 				"#{config.rb.prefix.task}cache-bust"
 				"#{config.rb.prefix.task}inline-html-assets:prod"
 				"#{config.rb.prefix.task}minify-js-html-imports" # needs to run on individual files
-				(cb) -> cb(); taskOpts.taskCB()
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			])()
+			defer.promise
 
 	# return
 	# ======

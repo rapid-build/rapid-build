@@ -1,15 +1,15 @@
-module.exports = (config) ->
-	q            = require 'q'
+module.exports = (config, gulp, Task) ->
+	promiseHelp  = require "#{config.req.helpers}/promise"
 	rbServerFile = config.dist.rb.server.scripts.start
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			defer = q.defer()
 			require rbServerFile
-			defer.resolve()
-			defer.promise
+			promiseHelp.get
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 	# return
 	# ======

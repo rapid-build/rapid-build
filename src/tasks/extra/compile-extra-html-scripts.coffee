@@ -1,27 +1,35 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.extra.compile.enabled[Task.opts.loc].htmlScripts
+
+	# requires
+	# ========
 	q                  = require 'q'
 	plumber            = require 'gulp-plumber'
-	log                = require "#{config.req.helpers}/log"
-	extraHelp          = require("#{config.req.helpers}/extra") config
+	taskRunner         = require("#{config.req.helpers}/task-runner") config
 	compileHtmlScripts = require "#{config.req.plugins}/gulp-compile-html-scripts"
 
-	runTask = (src, dest, base, appOrRb, loc) ->
-		defer = q.defer()
-		gulp.src src, { base }
+	runTask = (src, dest, opts={}) ->
+		defer   = q.defer()
+		srcOpts = base: opts.base
+		gulp.src src, srcOpts
+			.on 'error', (e) -> defer.reject e
 			.pipe plumber()
 			.pipe compileHtmlScripts()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				log.task "compiled extra html es6 scripts to: #{config.dist.app[loc].dir}"
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runTask: (loc) ->
-			extraHelp.run.tasks.async runTask, 'compile', 'htmlScripts', [loc]
+			promise = taskRunner.async runTask, 'compile', 'htmlScripts', [loc], Task
+			promise.then ->
+				log: true
+				message: "compiled extra html es6 scripts to: #{config.dist.app[loc].dir}"
 
 	# return
 	# ======
-	api.runTask taskOpts.loc
+	api.runTask Task.opts.loc

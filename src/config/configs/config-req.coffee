@@ -4,9 +4,10 @@ module.exports = (config, rbDir) ->
 	req =
 		rb:      rbDir
 		app:     process.cwd()
-		plugins: "#{rbDir}/plugins"
 		helpers: "#{rbDir}/helpers"
 		init:    "#{rbDir}/init"
+		manage:  "#{rbDir}/manage"
+		plugins: "#{rbDir}/plugins"
 		tasks:   "#{rbDir}/tasks"
 		config:
 			path:    "#{rbDir}/config"

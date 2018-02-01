@@ -1,42 +1,51 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	babel        = require 'gulp-babel'
-	coffee       = require 'gulp-coffee'
-	plumber      = require 'gulp-plumber'
-	es2015       = require 'babel-preset-es2015'
-	tasks        = require("#{config.req.helpers}/tasks") config
-	babelOpts    = presets: [es2015]
-	forWatchFile = !!taskOpts.watchFile
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
+
+	# requires
+	# ========
+	q          = require 'q'
+	babel      = require 'gulp-babel'
+	coffee     = require 'gulp-coffee'
+	plumber    = require 'gulp-plumber'
+	es2015     = require 'babel-preset-es2015'
+	taskRunner = require("#{config.req.helpers}/task-runner") config
+	babelOpts  = presets: [es2015]
 
 	coffeeTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe plumber()
 			.pipe coffee bare: true
 			.pipe gulp.dest dest
-			.on 'end', -> defer.resolve()
+			.on 'end', ->
+				defer.resolve message: "compiled coffee client tests"
 		defer.promise
 
 	es6Task = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe plumber()
 			.pipe babel babelOpts
 			.pipe gulp.dest dest
-			.on 'end', -> defer.resolve()
+			.on 'end', ->
+				defer.resolve message: "compiled es6 client tests"
 		defer.promise
 
 	jsTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
-			.on 'end', -> defer.resolve()
+			.on 'end', ->
+				defer.resolve message: "copied js client tests"
 		defer.promise
 
 	compileWatchFile = ->
-		ext  = taskOpts.watchFile.extname.replace '.', ''
-		src  = taskOpts.watchFile.path
-		dest = taskOpts.watchFile.rbDistDir
+		ext  = Task.opts.watchFile.extname.replace '.', ''
+		src  = Task.opts.watchFile.path
+		dest = Task.opts.watchFile.rbDistDir
 		switch ext
 			when 'js'     then jsTask src, dest
 			when 'es6'    then es6Task src, dest
@@ -45,23 +54,18 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# API
 	# ===
 	api =
-		runSingle: -> # synchronously
-			defer  = q.defer()
-			_tasks = [
-				-> compileWatchFile()
-				# -> runTest gulp, config, taskOpts.watchFile.rbDistPath
-			]
-			_tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+		runSingle: ->
+			compileWatchFile().then ->
+				message: "copied test script to: #{config.dist.app.client.test.dir}"
 
 		runMulti: ->
-			defer = q.defer()
 			q.all([
-				tasks.run.async coffeeTask, 'test', 'coffee', ['client']
-				tasks.run.async es6Task,    'test', 'es6',    ['client']
-				tasks.run.async jsTask,     'test', 'js',     ['client']
-			]).done -> defer.resolve()
-			defer.promise
+				taskRunner.async coffeeTask, 'test', 'coffee', ['client'], Task
+				taskRunner.async es6Task,    'test', 'es6',    ['client'], Task
+				taskRunner.async jsTask,     'test', 'js',     ['client'], Task
+			]).then ->
+				log: true
+				message: "copied test scripts to: #{config.dist.app.client.test.dir}"
 
 	# return
 	# ======

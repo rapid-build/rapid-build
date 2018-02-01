@@ -1,40 +1,44 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	path        = require 'path'
 	gWatch      = require 'gulp-watch'
 	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
-	taskHelp    = require("#{config.req.helpers}/tasks") config, gulp
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
 	# tasks
 	# =====
 	tasks =
-		clean:         require "#{config.req.tasks}/clean/clean-dist"
-		coffee:        require "#{config.req.tasks}/compile/coffee"
-		css:           require "#{config.req.tasks}/copy/copy-css"
-		es6:           require "#{config.req.tasks}/compile/es6"
-		ts:            require "#{config.req.tasks}/compile/typescript-server"
-		html:          require "#{config.req.tasks}/copy/copy-html"
-		image:         require "#{config.req.tasks}/copy/copy-images"
-		js:            require "#{config.req.tasks}/copy/copy-js"
-		less:          require "#{config.req.tasks}/compile/less"
-		sass:          require "#{config.req.tasks}/compile/sass"
-		templateCache: require "#{config.req.tasks}/minify/template-cache"
-		clientTest:    require "#{config.req.tasks}/test/client/copy-client-tests"
-		serverTest:    require "#{config.req.tasks}/test/server/copy-server-tests"
-		extraClient:   require "#{config.req.tasks}/extra/copy-extra-files"
-		extraServer:   require "#{config.req.tasks}/extra/copy-extra-files"
-		htmlAssets:    require "#{config.req.tasks}/inline/html-assets"
-		jsHtmlImports: require "#{config.req.tasks}/inline/js-html-imports"
+		clean:         'clean-dist'
+		coffee:        'coffee:'
+		css:           'copy-css'
+		es6:           'es6:'
+		ts:            'typescript:server'
+		html:          'copy-html'
+		image:         'copy-images'
+		js:            'copy-js:'
+		less:          'less'
+		sass:          'sass'
+		templateCache: 'template-cache'
+		clientTest:    'copy-client-tests'
+		serverTest:    'copy-server-tests'
+		extraClient:   'copy-extra-files:'
+		extraServer:   'copy-extra-files:'
+		htmlAssets:    'inline-html-assets:dev'
+		jsHtmlImports: 'inline-js-html-imports:dev'
 
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
-			taskHelp.startTask '/watch/watch-build-spa'
+			taskManager.runWatchTask 'watch-build-spa'
 
 		browserSync: ->
 			return unless config.build.server
-			browserSync = require "#{config.req.tasks}/browser/browser-sync"
-			browserSync.restart()
+			taskManager.runWatchTask 'browser-sync', run: 'restart'
+
+		get: (taskName, opts) -> # :string
+			taskName = @[taskName]
+			return taskName unless taskName.substr(-1) is ':'
+			taskName += if opts.loc is 'server' then 'server' else 'client'
 
 	# helpers
 	# =======
@@ -83,7 +87,8 @@ module.exports = (config, gulp) ->
 	# ===========
 	changeTask = (taskName, file, opts) ->
 		tasks.browserSync() if opts.bsReload is opts.event # see extraWatches.client
-		tasks[taskName] config, gulp, watchFile: file
+		taskName = tasks.get taskName, opts
+		taskManager.runWatchTask taskName, watchFile: file
 
 	addTask = (taskName, file, opts) ->
 		changeTask(taskName, file, opts).then ->
@@ -95,7 +100,7 @@ module.exports = (config, gulp) ->
 
 	cleanTask = (taskName, file, opts) ->
 		return changeTask taskName, file, opts if opts.taskOnly
-		tasks['clean'](config, gulp, watchFile: file).then ->
+		taskManager.runWatchTask(tasks['clean'], watchFile: file).then ->
 			return promiseHelp.get()   if opts.isTest
 			return tasks.browserSync() if opts.bsReload
 			return opts.cleanCb(file).then(-> tasks.buildSpa()) if opts.cleanCb
@@ -112,9 +117,9 @@ module.exports = (config, gulp) ->
 		opts.event = file.event
 		file = addFileProps file, opts
 		switch file.event
+			when 'add'    then addTask taskName, file, opts
 			when 'change' then changeTask taskName, file, opts
 			when 'unlink' then cleanTask taskName, file, opts
-			when 'add'    then addTask taskName, file, opts
 
 	# watches
 	# =======
@@ -176,7 +181,6 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: ->
-			defer   = q.defer()
 			watches = []
 			clientWatches = [ # client watch: images, styles, scripts, views and the spa.html
 				-> createWatch config.glob.src.app.client.images.all,     'image',  lang:'image',  srcType:'images',  bsReload:true
@@ -233,10 +237,11 @@ module.exports = (config, gulp) ->
 
 				watches.push extraWatches.server if config.extra.watch.app.server.length
 
-			# async
+			# activate watchers (async)
 			promises = watches.map (watch) -> watch()
-			q.all(promises).done -> defer.resolve()
-			defer.promise
+			q.all(promises).then ->
+				# log: 'minor'
+				message: "file watchers activated"
 
 	# return
 	# ======

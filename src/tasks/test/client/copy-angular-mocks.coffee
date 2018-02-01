@@ -1,8 +1,13 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() if config.angular.httpBackend.enabled
+	return promiseHelp.get() if config.exclude.default.client.files
+
+	# requires
+	# ========
 	q           = require 'q'
 	path        = require 'path'
 	es          = require 'event-stream'
-	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
 	# transforms
@@ -28,25 +33,23 @@ module.exports = (config, gulp) ->
 		return promiseHelp.get() if not src or not src.paths.absolute.length
 		defer = q.defer()
 		gulp.src src.paths.absolute
+			.on 'error', (e) -> defer.reject e
 			.pipe addDistBasePath src.paths.relative
 			.pipe removeMin()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name} copy task"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() if config.angular.httpBackend.enabled
-			return promiseHelp.get() if config.exclude.default.client.files
-
 			src  = bowerHelper.get.src 'rb', pkg:'angular-mocks', test:true
 			dest = config.src.rb.client.test.dir
-			# console.log src
-			copyTask src, dest
+			copyTask(src, dest).then ->
+				# log: 'minor'
+				message: "copied angular mocks to: #{dest}"
 
 	# return
 	# ======

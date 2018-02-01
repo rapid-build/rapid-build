@@ -1,32 +1,36 @@
-module.exports = (config, gulp) ->
-	q           = require 'q'
-	path        = require 'path'
-	minifyHtml  = require 'gulp-htmlmin'
-	log         = require "#{config.req.helpers}/log"
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() if config.minify.html.templateCache
+
+	# requires
+	# ========
+	q          = require 'q'
+	path       = require 'path'
+	minifyHtml = require 'gulp-htmlmin'
+	log        = require "#{config.req.helpers}/log"
 
 	minifyTask = (appOrRb) ->
 		defer = q.defer()
 		return promiseHelp.get defer unless config.minify.html.views
-
 		minOpts = config.minify.html.options
+
 		gulp.src config.glob.dist[appOrRb].client.views.all
+			.on 'error', (e) -> defer.reject e
 			.pipe minifyHtml minOpts
 			.pipe gulp.dest config.dist[appOrRb].client.views.dir
 			.on 'end', ->
-				# console.log "minified #{appOrRb} dist views".yellow
-				defer.resolve()
+				message = "minified #{appOrRb} dist views"
+				defer.resolve { message }
 		defer.promise
 
 	minifyTasks = ->
-		defer = q.defer()
 		q.all([
 			minifyTask 'rb'
 			minifyTask 'app'
-		]).done ->
-			log.task "minified html in: #{config.dist.app.client.dir}"
-			defer.resolve()
-		defer.promise
+		]).then ->
+			message = "minified html in: #{config.dist.app.client.dir}"
+			log.task message
+			{ message }
 
 	moveTask = -> # move to rb .temp folder
 		defer = q.defer()
@@ -37,22 +41,24 @@ module.exports = (config, gulp) ->
 					config.dist.rb.client.views.dirName
 				)
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log "copied rb views".yellow
-				defer.resolve()
+				message = "completed: copied views from .temp directory"
+				defer.resolve { message }
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runTask: -> # template-cache task minifies the html
-			return promiseHelp.get() if config.minify.html.templateCache
-			defer = q.defer()
-			minifyTasks().done ->
-				moveTask().done ->
-					defer.resolve()
-			defer.promise
+			tasks = [
+				-> minifyTasks()
+				-> moveTask()
+			]
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 	# return
 	# ======

@@ -1,20 +1,23 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	del          = require 'del'
-	path         = require 'path'
-	fse          = require 'fs-extra'
-	promiseHelp  = require "#{config.req.helpers}/promise"
-	jasmine      = require("#{config.req.helpers}/jasmine") config
-	resultsFile  = path.join config.dist.app.server.dir, 'test-results.json'
-	forWatchFile = !!taskOpts.watchFilePath
+module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.server
+	forWatchFile = !!Task.opts.watchFilePath
+
+	# requires
+	# ========
+	q           = require 'q'
+	del         = require 'del'
+	path        = require 'path'
+	fse         = require 'fs-extra'
+	log         = require "#{config.req.helpers}/log"
+	jasmine     = require("#{config.req.helpers}/jasmine") config
+	resultsFile = path.join config.dist.app.server.dir, 'test-results.json'
 
 	# tasks
 	# =====
 	cleanResultsFile = (src) ->
-		defer = q.defer()
 		del(src, force:true).then (paths) ->
-			defer.resolve()
-		defer.promise
+			message: "cleaned test results file: #{src}"
 
 	runTests = (files) ->
 		jasmine.init(files).execute() # returns promise
@@ -22,36 +25,37 @@ module.exports = (config, gulp, taskOpts={}) ->
 	writeResultsFile = (src) ->
 		results = jasmine.getResults()
 		return promiseHelp.get() unless results.status is 'failed'
-		fse.writeJSONSync src, results, spaces: '\t'
-		promiseHelp.get()
+		fse.writeJson(src, results, spaces: '\t').then ->
+			message: "created test results file: #{src}"
 
 	failureCheck = ->
+		defer   = q.defer()
 		results = jasmine.getResults()
-		return promiseHelp.get() if results.status is 'passed'
+		return promiseHelp.get defer if results.status is 'passed'
 		process.on 'exit', ->
-			msg = "Server test failed - created #{resultsFile}"
-			console.error msg.error
+			e = new Error "server test failed - created #{resultsFile}"
+			log.error e
+			defer.reject e
 		.exit 1
+		defer.promise
 
 	runMulti = -> # synchronously
-		defer = q.defer()
 		tasks = [
 			-> cleanResultsFile resultsFile
 			-> runTests config.glob.dist.app.server.test.js
 			-> writeResultsFile resultsFile
 			-> failureCheck()
 		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "completed task: #{Task.name}"
 
 	runMultiDev = -> # synchronously
-		defer = q.defer()
 		tasks = [
 			-> cleanResultsFile resultsFile
 			-> runTests config.glob.dist.app.server.test.js
 		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "completed task: #{Task.name}"
 
 	# API
 	# ===
@@ -59,14 +63,13 @@ module.exports = (config, gulp, taskOpts={}) ->
 		runSingle: (file) ->
 			jasmine.init(file).reExecute() # returns promise
 
-		runTask: (env) ->
-			return promiseHelp.get() unless config.build.server
-			return runMultiDev() if env is 'dev'
+		runTask: ->
+			return runMultiDev() if Task.opts.env is 'dev'
 			runMulti()
 
 	# return
 	# ======
-	return api.runSingle taskOpts.watchFilePath if forWatchFile
-	api.runTask taskOpts.env
+	return api.runSingle Task.opts.watchFilePath if forWatchFile
+	api.runTask()
 
 

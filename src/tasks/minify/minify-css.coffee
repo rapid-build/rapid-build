@@ -1,8 +1,12 @@
-module.exports = (config, gulp) ->
-	q           = require 'q'
-	minifyCss   = require 'gulp-cssnano'
-	log         = require "#{config.req.helpers}/log"
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.minify.css.styles
+
+	# requires
+	# ========
+	q         = require 'q'
+	minifyCss = require 'gulp-cssnano'
+	log       = require "#{config.req.helpers}/log"
 	minOpts =
 		safe: true
 		mergeRules: false
@@ -13,10 +17,11 @@ module.exports = (config, gulp) ->
 		src   = config.glob.dist[appOrRb].client.styles.all
 		dest  = config.dist[appOrRb].client.styles.dir
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe minifyCss minOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				defer.resolve()
+				defer.resolve message: 'completed: run task'
 		defer.promise
 
 	runExtraTask = (appOrRb) ->
@@ -25,27 +30,26 @@ module.exports = (config, gulp) ->
 		return promiseHelp.get() unless src.length
 		dest  = config.dist[appOrRb].client.dir
 		gulp.src src, base: dest
+			.on 'error', (e) -> defer.reject e
 			.pipe minifyCss minOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				log.task "minified extra css in: #{config.dist.app.client.dir}"
-				defer.resolve()
+				message = "minified extra css in: #{config.dist.app.client.dir}"
+				log.task message
+				defer.resolve { message }
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.minify.css.styles
-			defer = q.defer()
 			q.all([
 				runTask 'rb'
 				runTask 'app'
 				runExtraTask 'app'
-			]).done ->
-				log.task "minified css in: #{config.dist.app.client.dir}"
-				defer.resolve()
-			defer.promise
+			]).then ->
+				log: true
+				message: "minified css in: #{config.dist.app.client.dir}"
 
 	# return
 	# ======

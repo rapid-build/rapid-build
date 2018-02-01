@@ -76,17 +76,17 @@ if (!!gulp.tree().nodes[gulpTask]) return
  ******************************************************************************/
 gulp.task('default', gulp.series([
 	config.pkgs.rb.name,
-	function(cb) {
+	function(done) {
 		console.log('Build Complete!');
-		cb();
+		done();
 	}
 ]));
 
 gulp.task(gulpTask, gulp.series([
 	buildTask,
-	function(cb) {
+	function(done) {
 		console.log('Build Complete!');
-		cb();
+		done();
 	}
 ]));
 

@@ -1,31 +1,37 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	log          = require "#{config.req.helpers}/log"
-	promiseHelp  = require "#{config.req.helpers}/promise"
-	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
+module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.client
+
+	# requires
+	# ========
+	q           = require 'q'
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
+
+	# helpers
+	# =======
+	runTaskManager = (taskName) -> # promise
+		return taskManager.runTask taskName unless Task.opts.watchFilePath
+		taskManager.runWatchTask taskName, watchFilePath: Task.opts.watchFilePath
 
 	# API
 	# ===
 	api =
 		runTask: -> # synchronously
-			return promiseHelp.get() unless config.build.client
-			calledFromMinTask = taskOpts.calledFrom is 'minify-task'
+			calledFromMinTask = Task.opts.env is 'prod'
 			skipInCommonTask  = config.env.is.prod and not calledFromMinTask
-			defer = q.defer()
 			tasks = [
 				-> # only run in common-client task
 					return promiseHelp.get() if calledFromMinTask
-					taskHelp.startTask '/format/absolute-css-urls', taskOpts
+					runTaskManager 'absolute-css-urls'
 
 				-> # skip in common-client task if prod build
 					return promiseHelp.get() if config.dist.client.paths.absolute
 					return promiseHelp.get() if skipInCommonTask
-					taskHelp.startTask '/format/relative-css-urls', taskOpts
+					runTaskManager 'relative-css-urls'
 			]
-			tasks.reduce(q.when, q()).done ->
-				# log.task 'updated css urls', 'minor'
-				defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: 'updated css urls'
 
 	# return
 	# ======

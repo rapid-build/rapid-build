@@ -1,4 +1,4 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	del         = require 'del'
 	path        = require 'path'
@@ -13,8 +13,7 @@ module.exports = (config, gulp) ->
 	# Concat Task
 	# ===========
 	concatTask = (type) ->
-		defer1 = q.defer()
-		tasks  = []
+		tasks = []
 		for file, i in Blueprint[type]
 			continue if file.type is 'exclude'
 			do (file) ->
@@ -23,15 +22,17 @@ module.exports = (config, gulp) ->
 					src   = file.files
 					dest  = config.temp.client[type].dir
 					gulp.src src
+						.on 'error', (e) -> defer.reject e
 						.pipe concat file.name
 						.pipe gulp.dest dest
 						.on 'end', ->
 							fileType = if type is 'styles' then 'css' else 'js'
-							log.task "concatenated #{fileType} files to create #{file.name} in: #{config.dist.app.client.dir}"
-							defer.resolve()
+							message  = "concatenated #{fileType} files to create #{file.name} in: #{config.dist.app.client.dir}"
+							log.task message
+							defer.resolve { message }
 					defer.promise
-		tasks.reduce(q.when, q()).done -> defer1.resolve()
-		defer1.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "concatenated client: #{type}"
 
 	# Multi Tasks
 	# ===========
@@ -41,36 +42,32 @@ module.exports = (config, gulp) ->
 		promiseHelp.get()
 
 	cleanTask = ->
-		defer = q.defer()
-		src   = [
+		src = [
 			config.temp.client['scripts'].dir
 			config.temp.client['styles'].dir
 		]
 		del(src, force:true).then (paths) ->
-			# log.task 'cleaned temp scripts and styles', 'minor'
-			defer.resolve()
-		defer.promise
+			message: 'cleaned temp scripts and styles'
 
 	multiConcatTask = ->
-		defer = q.defer()
 		q.all([
 			concatTask 'scripts'
 			concatTask 'styles'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then ->
+			message: "concatenated scripts and styles"
 
 	# API
 	# ===
 	api =
 		runTask: -> # synchronously
-			defer = q.defer()
 			tasks = [
 				-> setBlueprint()
 				-> cleanTask()
 				-> multiConcatTask()
 			]
-			tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 	# return
 	# ======

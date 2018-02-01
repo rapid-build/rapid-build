@@ -1,11 +1,16 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.client
+
+	# requires
+	# ========
+	q = require 'q'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.build.client
+			defer = q.defer()
 			gulp.series([
 				"#{config.rb.prefix.task}update-angular-mocks-config"
 				"#{config.rb.prefix.task}build-bower-json"
@@ -31,14 +36,16 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}compile-extra-sass:client"
 					"#{config.rb.prefix.task}copy-extra-files:client"
 				])
-				"#{config.rb.prefix.task}update-css-urls"
+				"#{config.rb.prefix.task}update-css-urls:dev"
 				"#{config.rb.prefix.task}clean-rb-client" # if exclude.default.client.files
 				"#{config.rb.prefix.task}build-files"
 				"#{config.rb.prefix.task}build-spa:dev"
 				"#{config.rb.prefix.task}inline-html-assets:dev"
 				"#{config.rb.prefix.task}inline-js-html-imports:dev"
-				(cb) -> cb(); taskOpts.taskCB()
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			])()
+			defer.promise
+
 	# return
 	# ======
 	api.runTask()

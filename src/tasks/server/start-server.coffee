@@ -1,21 +1,24 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.server
+	return promiseHelp.get() if config.exclude.default.server.files
+
+	# requires
+	# ========
+	q = require 'q'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.build.server
-			return promiseHelp.get() if config.exclude.default.server.files
-			serverTask = if taskOpts.env is 'dev' then 'nodemon' else 'spawn-server'
-
+			taskName = if Task.opts.env is 'dev' then 'nodemon' else 'spawn-server'
+			defer    = q.defer()
 			gulp.series([
-				"#{config.rb.prefix.task}#{serverTask}"
-				(cb) -> cb(); taskOpts.taskCB()
+				"#{config.rb.prefix.task}#{taskName}"
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			])()
+			defer.promise
 
 	# return
 	# ======
 	api.runTask()
-
-

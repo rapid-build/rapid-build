@@ -1,38 +1,43 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
+
+	# requires
+	# ========
 	q                  = require 'q'
 	gulpif             = require 'gulp-if'
 	plumber            = require 'gulp-plumber'
 	log                = require "#{config.req.helpers}/log"
 	ngFormify          = require "#{config.req.plugins}/gulp-ng-formify"
 	compileHtmlScripts = require "#{config.req.plugins}/gulp-compile-html-scripts"
-	tasks              = require("#{config.req.helpers}/tasks") config
+	taskRunner         = require("#{config.req.helpers}/task-runner") config
 	runNgFormify       = config.angular.ngFormify
-	forWatchFile       = !!taskOpts.watchFile
 
 	runTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe plumber()
 			.pipe gulpif runNgFormify, ngFormify()
 			.pipe gulpif config.compile.htmlScripts.client.enable, compileHtmlScripts()
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runSingle: ->
-			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
+			runTask Task.opts.watchFile.path, Task.opts.watchFile.rbDistDir
 
 		runMulti: ->
-			promise = tasks.run.async runTask, 'views', 'html', ['client']
-			promise.done ->
-				log.task "compiled html es6 scripts to: #{config.dist.app.client.dir}" if config.compile.htmlScripts.client.enable
-				log.task "copied views to: #{config.dist.app.client.dir}"
-			promise
+			promise = taskRunner.async runTask, 'views', 'html', ['client'], Task
+			promise.then ->
+				msgs = ["copied views to: #{config.dist.app.client.dir}"]
+				if config.compile.htmlScripts.client.enable
+					msgs.unshift "compiled html es6 scripts to: #{config.dist.app.client.dir}"
+				log: true
+				message: msgs
 
 	# return
 	# ======

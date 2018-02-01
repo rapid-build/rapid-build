@@ -1,35 +1,37 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	coffee       = require 'gulp-coffee'
-	plumber      = require 'gulp-plumber'
-	log          = require "#{config.req.helpers}/log"
-	tasks        = require("#{config.req.helpers}/tasks") config
-	forWatchFile = !!taskOpts.watchFile
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
+
+	# requires
+	# ========
+	q          = require 'q'
+	coffee     = require 'gulp-coffee'
+	plumber    = require 'gulp-plumber'
+	taskRunner = require("#{config.req.helpers}/task-runner") config
 
 	runTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe plumber()
 			.pipe coffee bare: true
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runSingle: ->
-			runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
+			runTask Task.opts.watchFile.path, Task.opts.watchFile.rbDistDir
 
 		runMulti: (loc) ->
-			promise = tasks.run.async runTask, 'scripts', 'coffee', [loc]
-			promise.done ->
-				log.task "compiled coffee to: #{config.dist.app[loc].dir}"
-			promise
+			promise = taskRunner.async runTask, 'scripts', 'coffee', [loc], Task
+			promise.then ->
+				log: true
+				message: "compiled coffee to: #{config.dist.app[loc].dir}"
 
 	# return
 	# ======
 	return api.runSingle() if forWatchFile
-	api.runMulti taskOpts.loc
+	api.runMulti Task.opts.loc

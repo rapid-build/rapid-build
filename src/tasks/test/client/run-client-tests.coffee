@@ -1,12 +1,17 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.client
+	return promiseHelp.get() if config.exclude.angular.files
+
+	# requires
+	# ========
 	q           = require 'q'
-	fs          = require 'fs'
 	del         = require 'del'
 	path        = require 'path'
+	fse         = require 'fs-extra'
 	Server      = require('karma').Server
+	log         = require "#{config.req.helpers}/log"
 	moduleHelp  = require "#{config.req.helpers}/module"
-	promiseHelp = require "#{config.req.helpers}/promise"
-	format      = require("#{config.req.helpers}/format")()
 	resultsFile = path.join config.dist.app.client.dir, 'test-results.json'
 
 	# Global
@@ -51,7 +56,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 
 	hasTestsCheck = (cnt) ->
 		return true if cnt
-		console.log 'no client test scripts to run'
+		log.task 'no client test scripts to run', 'alert'
 		false
 
 	startKarmaServer = (karmaConfig, defer) ->
@@ -65,10 +70,8 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# tasks
 	# =====
 	cleanResultsFile = (src) ->
-		defer = q.defer()
 		del(src, force:true).then (paths) ->
-			defer.resolve()
-		defer.promise
+			message: "cleaned test results file: #{src}"
 
 	runTests = ->
 		defer       = q.defer()
@@ -93,48 +96,47 @@ module.exports = (config, gulp, taskOpts={}) ->
 
 	writeResultsFile = (file) ->
 		return promiseHelp.get() unless TestResults.status is 'failed'
-		fs.writeFileSync file, format.json TestResults
-		promiseHelp.get()
+		fse.writeJson(file, TestResults, spaces: '\t').then ->
+			message: "created test results file: #{file}"
 
 	failureCheck = ->
-		return promiseHelp.get() if TestResults.status is 'passed'
+		defer = q.defer()
+		return promiseHelp.get defer if TestResults.status is 'passed'
 		process.on 'exit', ->
-			msg = "Client test failed - created #{resultsFile}"
-			console.error msg.error
+			e = new Error "client test failed - created #{resultsFile}"
+			log.error e
+			defer.reject e
 		.exit 1
+		defer.promise
 
 	runDefaultTask = -> # synchronously
-		defer = q.defer()
 		tasks = [
 			-> cleanResultsFile resultsFile
 			-> runTests()
 			-> writeResultsFile resultsFile
 			-> failureCheck()
 		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "completed task: #{Task.name}"
 
 	runDevTask = -> # synchronously
-		defer = q.defer()
 		tasks = [
 			-> cleanResultsFile resultsFile
 			-> runDevTests()
 		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "completed task: #{Task.name}"
 
 	# API
 	# ===
 	api =
-		runTask: (env) ->
-			return promiseHelp.get() unless config.build.client
-			return promiseHelp.get() if config.exclude.angular.files
-			return runDevTask() if env is 'dev'
+		runTask: ->
+			return runDevTask() if Task.opts.env is 'dev'
 			runDefaultTask()
 
 	# return
 	# ======
-	api.runTask taskOpts.env
+	api.runTask()
 
 
 

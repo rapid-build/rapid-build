@@ -1,15 +1,17 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	path         = require 'path'
-	es           = require 'event-stream'
-	gulpif       = require 'gulp-if'
-	sass         = require 'gulp-sass'
-	plumber      = require 'gulp-plumber'
-	log          = require "#{config.req.helpers}/log"
-	sassHelper   = require("#{config.req.helpers}/Sass") config, gulp
-	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
-	forWatchFile = !!taskOpts.watchFile
-	extCss       = '.css'
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
+
+	# requires
+	# ========
+	q           = require 'q'
+	path        = require 'path'
+	es          = require 'event-stream'
+	gulpif      = require 'gulp-if'
+	sass        = require 'gulp-sass'
+	plumber     = require 'gulp-plumber'
+	sassHelper  = require("#{config.req.helpers}/Sass") config, gulp
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
+	extCss      = '.css'
 
 	# streams
 	# =======
@@ -29,6 +31,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	runTask = (src, dest, appOrRb) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe plumber()
 			.pipe sass().on 'data', (file) ->
 				# needed for empty files. without, ext will stay .scss
@@ -39,10 +42,9 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.on 'data', (file) ->
 				return unless forWatchFile
 				watchFilePath = path.relative file.cwd, file.path
-				taskHelp.startTask '/format/update-css-urls', { watchFilePath }
+				taskManager.runWatchTask 'update-css-urls:dev', { watchFilePath }
 			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+				defer.resolve message: "completed: run task"
 		defer.promise
 
 	# helpers
@@ -61,43 +63,49 @@ module.exports = (config, gulp, taskOpts={}) ->
 		new sassHelper config.glob.src[appOrRb].client.styles.sass
 			.setImports()
 			.then (me) ->
-				src = me.getWatchSrc taskOpts.watchFile.path
+				src = me.getWatchSrc Task.opts.watchFile.path
 				defer.resolve src
 		defer.promise
 
 	# runs
 	# ====
 	runWatch = (appOrRb) ->
-		defer = q.defer()
-		getWatchSrc(appOrRb).then (src) ->
-			dest = config.dist[appOrRb].client.styles.dir
-			runTask(src, dest, appOrRb).done -> defer.resolve()
-		defer.promise
+		tasks = [
+			-> getWatchSrc(appOrRb).then (src) ->
+				dest = config.dist[appOrRb].client.styles.dir
+				targets = { src, dest, appOrRb }
+			(targets) ->
+				runTask targets.src, targets.dest, targets.appOrRb
+		]
+		tasks.reduce(q.when, q()).then ->
+			message: "completed: run watch"
 
-	run = (appOrRb) ->
-		defer = q.defer()
-		getImports(appOrRb).then (imports) ->
-			dest = config.dist[appOrRb].client.styles.dir
-			src  = config.glob.src[appOrRb].client.styles.sass
-			src  = [].concat src, imports
-			runTask(src, dest).done -> defer.resolve()
-		defer.promise
+	init = (appOrRb) ->
+		tasks = [
+			-> getImports(appOrRb).then (imports) ->
+				dest = config.dist[appOrRb].client.styles.dir
+				src  = config.glob.src[appOrRb].client.styles.sass
+				src  = [].concat src, imports
+				targets = { src, dest, appOrRb }
+			(targets) ->
+				runTask targets.src, targets.dest, targets.appOrRb
+		]
+		tasks.reduce(q.when, q()).then ->
+			message: "completed: init"
 
 	# API
 	# ===
 	api =
 		runSingle: ->
-			runWatch taskOpts.watchFile.rbAppOrRb
+			runWatch Task.opts.watchFile.rbAppOrRb
 
 		runMulti: ->
-			defer = q.defer()
 			q.all([
-				run 'app'
-				run 'rb'
-			]).done ->
-				log.task "compiled sass to: #{config.dist.app.client.dir}"
-				defer.resolve()
-			defer.promise
+				init 'app'
+				init 'rb'
+			]).then ->
+				log: true
+				message: "compiled sass to: #{config.dist.app.client.dir}"
 
 	# return
 	# ======

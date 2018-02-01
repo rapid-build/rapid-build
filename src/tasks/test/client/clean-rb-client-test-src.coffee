@@ -1,14 +1,6 @@
-module.exports = (config) ->
-	q    = require 'q'
+module.exports = (config, gulp, Task) ->
 	del  = require 'del'
 	path = require 'path'
-
-	cleanTask = (src) ->
-		defer = q.defer()
-		del(src, force:true).then (paths) ->
-			# console.log 'cleaned rb test src'.yellow
-			defer.resolve()
-		defer.promise
 
 	# API
 	# ===
@@ -19,7 +11,9 @@ module.exports = (config) ->
 				path.join dest, '*'
 				path.join "!#{dest}", '.gitkeep'
 			]
-			cleanTask src
+			del(src, force:true).then (paths) ->
+				# log: 'minor'
+				message: 'cleaned rb test src'
 
 	# return
 	# ======

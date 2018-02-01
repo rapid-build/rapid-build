@@ -1,162 +1,164 @@
 # Available tasks prefixed with config.rb.prefix.task.
 # ====================================================
 module.exports = (gulp, config) ->
-	taskHelp = require("#{config.req.helpers}/tasks") config, gulp
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
 	# MUST RUN FIRST (as of gulp >= v4, order doesn't matter for the rest)
 	# ==============
-	taskHelp.addTask 'clean-files', '/clean/clean-files'
+	taskManager.addTask 'clean-files', '/clean/clean-files'
 
 	# browser
 	# =======
-	taskHelp.addTask 'browser-sync', '/browser/browser-sync', run: 'init'
-	taskHelp.addTask 'open-browser', '/browser/open-browser'
+	taskManager.addTask 'browser-sync', '/browser/browser-sync', run: 'init'
+	taskManager.addTask 'open-browser', '/browser/open-browser'
 
 	# build
 	# =====
-	taskHelp.addTask 'build-angular-bootstrap',    '/build/build-angular-bootstrap'
-	taskHelp.addTask 'build-angular-modules',      '/build/build-angular-modules'
-	taskHelp.addTask 'build-bower-json',           '/build/build-bower-json'
-	taskHelp.addTask 'build-config',               '/build/build-config'
-	taskHelp.addTask 'build-files',                '/build/build-files',  deps: ['clean-files']
-	taskHelp.addTask 'build-prod-files',           '/build/build-prod-files'
-	taskHelp.addTask 'build-prod-files-blueprint', '/build/build-prod-files-blueprint'
-	taskHelp.addTask 'build-spa:dev',              '/build/build-spa',      env: 'dev',  taskCB: true
-	taskHelp.addTask 'build-spa:prod',             '/build/build-spa',      env: 'prod', taskCB: true
-	taskHelp.addTask 'build-spa-file:dev',         '/build/build-spa-file', env: 'dev'
-	taskHelp.addTask 'build-spa-file:prod',        '/build/build-spa-file', env: 'prod'
-	taskHelp.addTask 'build-spa-placeholders',     '/build/build-spa-placeholders'
+	taskManager.addTask 'build-angular-bootstrap',    '/build/build-angular-bootstrap'
+	taskManager.addTask 'build-angular-modules',      '/build/build-angular-modules'
+	taskManager.addTask 'build-bower-json',           '/build/build-bower-json'
+	taskManager.addTask 'build-config',               '/build/build-config'
+	taskManager.addTask 'build-files',                '/build/build-files', deps: ['clean-files']
+	taskManager.addTask 'build-prod-files',           '/build/build-prod-files'
+	taskManager.addTask 'build-prod-files-blueprint', '/build/build-prod-files-blueprint'
+	taskManager.addTask 'build-spa:dev',              '/build/build-spa',      env: 'dev'
+	taskManager.addTask 'build-spa:prod',             '/build/build-spa',      env: 'prod'
+	taskManager.addTask 'build-spa-file:dev',         '/build/build-spa-file', env: 'dev'
+	taskManager.addTask 'build-spa-file:prod',        '/build/build-spa-file', env: 'prod'
+	taskManager.addTask 'build-spa-placeholders',     '/build/build-spa-placeholders'
 
 	# clean
 	# =====
-	taskHelp.addTask 'clean-dist',           '/clean/clean-dist'
-	taskHelp.addTask 'clean-rb-client',      '/clean/clean-rb-client'
-	taskHelp.addTask 'clean-rb-client:test', '/clean/clean-rb-client', env: 'test'
-	taskHelp.addTask 'cleanup-client',       '/clean/cleanup-client'
+	taskManager.addTask 'clean-dist',           '/clean/clean-dist'
+	taskManager.addTask 'clean-rb-client',      '/clean/clean-rb-client'
+	taskManager.addTask 'clean-rb-client:test', '/clean/clean-rb-client', env: 'test'
+	taskManager.addTask 'cleanup-client',       '/clean/cleanup-client'
 
 	# common
 	# ======
-	taskHelp.addTask 'common',             '/common/common',             taskCB: true
-	taskHelp.addTask 'common-client',      '/common/common-client',      taskCB: true
-	taskHelp.addTask 'common-server',      '/common/common-server',      taskCB: true
-	taskHelp.addTask 'common-test-client', '/common/common-test-client', taskCB: true
-	taskHelp.addTask 'common-test-server', '/common/common-test-server', taskCB: true
+	taskManager.addTask 'common',             '/common/common'
+	taskManager.addTask 'common-client',      '/common/common-client'
+	taskManager.addTask 'common-server',      '/common/common-server'
+	taskManager.addTask 'common-test-client', '/common/common-test-client'
+	taskManager.addTask 'common-test-server', '/common/common-test-server'
 
 	# compile
 	# =======
-	taskHelp.addTask 'coffee:client',     '/compile/coffee',     loc: 'client'
-	taskHelp.addTask 'coffee:server',     '/compile/coffee',     loc: 'server'
-	taskHelp.addTask 'es6:client',        '/compile/es6',        loc: 'client'
-	taskHelp.addTask 'es6:server',        '/compile/es6',        loc: 'server'
-	taskHelp.addTask 'typescript:client', '/compile/typescript-client'
-	taskHelp.addTask 'typescript:server', '/compile/typescript-server'
-	taskHelp.addTask 'less',              '/compile/less'
-	taskHelp.addTask 'sass',              '/compile/sass'
+	taskManager.addTask 'coffee:client',     '/compile/coffee', loc: 'client'
+	taskManager.addTask 'coffee:server',     '/compile/coffee', loc: 'server'
+	taskManager.addTask 'es6:client',        '/compile/es6',    loc: 'client'
+	taskManager.addTask 'es6:server',        '/compile/es6',    loc: 'server'
+	taskManager.addTask 'typescript:client', '/compile/typescript-client'
+	taskManager.addTask 'typescript:server', '/compile/typescript-server'
+	taskManager.addTask 'less',              '/compile/less'
+	taskManager.addTask 'sass',              '/compile/sass'
 
 	# config
 	# ======
-	taskHelp.addTask 'set-env-config',              '/config/set-env-config'
-	taskHelp.addTask 'update-angular-mocks-config', '/config/update-angular-mocks-config'
+	taskManager.addTask 'set-env-config',              '/config/set-env-config'
+	taskManager.addTask 'update-angular-mocks-config', '/config/update-angular-mocks-config'
 
 	# copy
 	# ====
-	taskHelp.addTask 'copy-bower_components',    '/copy/copy-bower_components'
-	taskHelp.addTask 'copy-css',                 '/copy/copy-css'
-	taskHelp.addTask 'copy-html',                '/copy/copy-html'
-	taskHelp.addTask 'copy-images',              '/copy/copy-images'
-	taskHelp.addTask 'copy-js:client',           '/copy/copy-js', loc: 'client'
-	taskHelp.addTask 'copy-js:server',           '/copy/copy-js', loc: 'server'
-	taskHelp.addTask 'copy-libs',                '/copy/copy-libs'
-	taskHelp.addTask 'copy-server-config',       '/copy/copy-server-config'
-	taskHelp.addTask 'copy-server-info',         '/copy/copy-server-info'
-	taskHelp.addTask 'copy-server-node_modules', '/copy/copy-server-node_modules'
-	taskHelp.addTask 'copy-server-pkgs',         '/copy/copy-server-pkgs'
-	taskHelp.addTask 'copy-spa',                 '/copy/copy-spa'
-	taskHelp.addTask 'copy-views',               '/copy/copy-views', taskCB: true
+	taskManager.addTask 'copy-bower_components',    '/copy/copy-bower_components'
+	taskManager.addTask 'copy-css',                 '/copy/copy-css'
+	taskManager.addTask 'copy-html',                '/copy/copy-html'
+	taskManager.addTask 'copy-images',              '/copy/copy-images'
+	taskManager.addTask 'copy-js:client',           '/copy/copy-js', loc: 'client'
+	taskManager.addTask 'copy-js:server',           '/copy/copy-js', loc: 'server'
+	taskManager.addTask 'copy-libs',                '/copy/copy-libs'
+	taskManager.addTask 'copy-server-config',       '/copy/copy-server-config'
+	taskManager.addTask 'copy-server-info',         '/copy/copy-server-info'
+	taskManager.addTask 'copy-server-node_modules', '/copy/copy-server-node_modules'
+	taskManager.addTask 'copy-server-pkgs',         '/copy/copy-server-pkgs'
+	taskManager.addTask 'copy-spa',                 '/copy/copy-spa'
+	taskManager.addTask 'copy-views',               '/copy/copy-views'
 
 	# extra
 	# =====
-	taskHelp.addTask 'compile-extra-coffee:client',       '/extra/compile-extra-coffee',       loc: 'client'
-	taskHelp.addTask 'compile-extra-es6:client',          '/extra/compile-extra-es6',          loc: 'client'
-	taskHelp.addTask 'compile-extra-html-scripts:client', '/extra/compile-extra-html-scripts', loc: 'client'
-	taskHelp.addTask 'compile-extra-less:client',         '/extra/compile-extra-less',         loc: 'client'
-	taskHelp.addTask 'compile-extra-less:server',         '/extra/compile-extra-less',         loc: 'server'
-	taskHelp.addTask 'compile-extra-sass:client',         '/extra/compile-extra-sass',         loc: 'client'
-	taskHelp.addTask 'compile-extra-sass:server',         '/extra/compile-extra-sass',         loc: 'server'
-	taskHelp.addTask 'copy-extra-files:client',           '/extra/copy-extra-files',           loc: 'client'
-	taskHelp.addTask 'copy-extra-files:server',           '/extra/copy-extra-files',           loc: 'server'
+	taskManager.addTask 'compile-extra-coffee:client',       '/extra/compile-extra-coffee',       loc: 'client'
+	taskManager.addTask 'compile-extra-es6:client',          '/extra/compile-extra-es6',          loc: 'client'
+	taskManager.addTask 'compile-extra-html-scripts:client', '/extra/compile-extra-html-scripts', loc: 'client'
+	taskManager.addTask 'compile-extra-less:client',         '/extra/compile-extra-less',         loc: 'client'
+	taskManager.addTask 'compile-extra-less:server',         '/extra/compile-extra-less',         loc: 'server'
+	taskManager.addTask 'compile-extra-sass:client',         '/extra/compile-extra-sass',         loc: 'client'
+	taskManager.addTask 'compile-extra-sass:server',         '/extra/compile-extra-sass',         loc: 'server'
+	taskManager.addTask 'copy-extra-files:client',           '/extra/copy-extra-files',           loc: 'client'
+	taskManager.addTask 'copy-extra-files:server',           '/extra/copy-extra-files',           loc: 'server'
 
 	# format
 	# ======
-	taskHelp.addTask 'update-css-urls',      '/format/update-css-urls'
-	taskHelp.addTask 'update-css-urls:prod', '/format/update-css-urls', calledFrom: 'minify-task'
+	taskManager.addTask 'absolute-css-urls',    '/format/absolute-css-urls'
+	taskManager.addTask 'relative-css-urls',    '/format/relative-css-urls'
+	taskManager.addTask 'update-css-urls:dev',  '/format/update-css-urls', env: 'dev'
+	taskManager.addTask 'update-css-urls:prod', '/format/update-css-urls', env: 'prod'
 
 	# generate
 	# ========
-	taskHelp.addTask 'generate-pkg', '/generate/generate-pkg'
+	taskManager.addTask 'generate-pkg', '/generate/generate-pkg'
 
 	# inline
 	# ======
-	taskHelp.addTask 'inline-js-html-imports:dev',  '/inline/js-html-imports', env: 'dev'
-	taskHelp.addTask 'inline-js-html-imports:prod', '/inline/js-html-imports', env: 'prod'
-	taskHelp.addTask 'inline-html-assets:dev',      '/inline/html-assets',     env: 'dev'
-	taskHelp.addTask 'inline-html-assets:prod',     '/inline/html-assets',     env: 'prod'
+	taskManager.addTask 'inline-js-html-imports:dev',  '/inline/js-html-imports', env: 'dev'
+	taskManager.addTask 'inline-js-html-imports:prod', '/inline/js-html-imports', env: 'prod'
+	taskManager.addTask 'inline-html-assets:dev',      '/inline/html-assets',     env: 'dev'
+	taskManager.addTask 'inline-html-assets:prod',     '/inline/html-assets',     env: 'prod'
 
 	# manage
 	# ======
-	taskHelp.addTask 'bower', '/manage/bower'
+	taskManager.addTask 'bower', '/manage/bower'
 
 	# minify
 	# ======
-	taskHelp.addTask 'cache-bust',                '/minify/cache-bust'
-	taskHelp.addTask 'concat-scripts-and-styles', '/minify/concat-scripts-and-styles'
-	taskHelp.addTask 'css-file-split',            '/minify/css-file-split'
-	taskHelp.addTask 'inline-css-imports',        '/minify/inline-css-imports'
-	taskHelp.addTask 'minify-client',             '/minify/minify-client', taskCB: true
-	taskHelp.addTask 'minify-css',                '/minify/minify-css'
-	taskHelp.addTask 'minify-html',               '/minify/minify-html'
-	taskHelp.addTask 'minify-images',             '/minify/minify-images'
-	taskHelp.addTask 'minify-js',                 '/minify/minify-js'
-	taskHelp.addTask 'minify-js-html-imports',    '/minify/minify-js-html-imports', taskCB: true
-	taskHelp.addTask 'minify-server',             '/minify/minify-server'
-	taskHelp.addTask 'minify-spa',                '/minify/minify-spa'
-	taskHelp.addTask 'template-cache',            '/minify/template-cache'
+	taskManager.addTask 'cache-bust',                '/minify/cache-bust'
+	taskManager.addTask 'concat-scripts-and-styles', '/minify/concat-scripts-and-styles'
+	taskManager.addTask 'css-file-split',            '/minify/css-file-split'
+	taskManager.addTask 'inline-css-imports',        '/minify/inline-css-imports'
+	taskManager.addTask 'minify-client',             '/minify/minify-client'
+	taskManager.addTask 'minify-css',                '/minify/minify-css'
+	taskManager.addTask 'minify-html',               '/minify/minify-html'
+	taskManager.addTask 'minify-images',             '/minify/minify-images'
+	taskManager.addTask 'minify-js',                 '/minify/minify-js'
+	taskManager.addTask 'minify-js-html-imports',    '/minify/minify-js-html-imports'
+	taskManager.addTask 'minify-server',             '/minify/minify-server'
+	taskManager.addTask 'minify-spa',                '/minify/minify-spa'
+	taskManager.addTask 'template-cache',            '/minify/template-cache'
 
 	# pack
 	# ====
-	taskHelp.addTask 'pack-dist', '/pack/pack-dist'
+	taskManager.addTask 'pack-dist', '/pack/pack-dist'
 
 	# server
 	# ======
-	taskHelp.addTask 'find-open-port',             '/server/find-open-port'
-	taskHelp.addTask 'find-open-port:test:client', '/server/find-open-port', loc: 'test:client'
-	taskHelp.addTask 'nodemon',                    '/server/nodemon'
-	taskHelp.addTask 'spawn-server',               '/server/spawn-server'
-	taskHelp.addTask 'start-server',               '/server/start-server', taskCB: true
-	taskHelp.addTask 'start-server:dev',           '/server/start-server', taskCB: true, env: 'dev'
-	taskHelp.addTask 'stop-server',                '/server/stop-server'
+	taskManager.addTask 'find-open-port',             '/server/find-open-port'
+	taskManager.addTask 'find-open-port:test:client', '/server/find-open-port', loc: 'test:client'
+	taskManager.addTask 'nodemon',                    '/server/nodemon'
+	taskManager.addTask 'spawn-server',               '/server/spawn-server'
+	taskManager.addTask 'start-server',               '/server/start-server'
+	taskManager.addTask 'start-server:dev',           '/server/start-server', env: 'dev'
+	taskManager.addTask 'stop-server',                '/server/stop-server'
 
 	# client test
 	# ===========
-	taskHelp.addTask 'build-inject-angular-mocks', '/test/client/build-inject-angular-mocks'
-	taskHelp.addTask 'build-client-test-files',    '/test/client/build-client-test-files'
-	taskHelp.addTask 'clean-rb-client-test-src',   '/test/client/clean-rb-client-test-src'
-	taskHelp.addTask 'clean-client-test-dist',     '/test/client/clean-client-test-dist'
-	taskHelp.addTask 'copy-angular-mocks',         '/test/client/copy-angular-mocks'
-	taskHelp.addTask 'copy-client-tests',          '/test/client/copy-client-tests'
-	taskHelp.addTask 'run-client-tests',           '/test/client/run-client-tests'
-	taskHelp.addTask 'run-client-tests:dev',       '/test/client/run-client-tests', env: 'dev'
+	taskManager.addTask 'build-inject-angular-mocks', '/test/client/build-inject-angular-mocks'
+	taskManager.addTask 'build-client-test-files',    '/test/client/build-client-test-files'
+	taskManager.addTask 'clean-rb-client-test-src',   '/test/client/clean-rb-client-test-src'
+	taskManager.addTask 'clean-client-test-dist',     '/test/client/clean-client-test-dist'
+	taskManager.addTask 'copy-angular-mocks',         '/test/client/copy-angular-mocks'
+	taskManager.addTask 'copy-client-tests',          '/test/client/copy-client-tests'
+	taskManager.addTask 'run-client-tests',           '/test/client/run-client-tests'
+	taskManager.addTask 'run-client-tests:dev',       '/test/client/run-client-tests', env: 'dev'
 
 	# server test
 	# ===========
-	taskHelp.addTask 'clean-server-test-dist', '/test/server/clean-server-test-dist'
-	taskHelp.addTask 'copy-server-tests',      '/test/server/copy-server-tests'
-	taskHelp.addTask 'run-server-tests',       '/test/server/run-server-tests'
-	taskHelp.addTask 'run-server-tests:dev',   '/test/server/run-server-tests', env: 'dev'
+	taskManager.addTask 'clean-server-test-dist', '/test/server/clean-server-test-dist'
+	taskManager.addTask 'copy-server-tests',      '/test/server/copy-server-tests'
+	taskManager.addTask 'run-server-tests',       '/test/server/run-server-tests'
+	taskManager.addTask 'run-server-tests:dev',   '/test/server/run-server-tests', env: 'dev'
 
 	# watch
 	# =====
-	taskHelp.addTask 'watch',           '/watch/watch'
-	taskHelp.addTask 'watch-build-spa', '/watch/watch-build-spa', taskCB: true
+	taskManager.addTask 'watch',           '/watch/watch'
+	taskManager.addTask 'watch-build-spa', '/watch/watch-build-spa'
 
 

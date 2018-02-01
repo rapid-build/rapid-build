@@ -1,4 +1,8 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFilePath
+
+	# requires
+	# ========
 	q               = require 'q'
 	path            = require 'path'
 	log             = require "#{config.req.helpers}/log"
@@ -6,7 +10,6 @@ module.exports = (config, gulp, taskOpts={}) ->
 	promiseHelp     = require "#{config.req.helpers}/promise"
 	urlRegX         = /url\s*\(\s*['"]?(.*?)['"]?\s*\)(?![^\*]*?\*\/)/g
 	importNoUrlRegX = /@import\s*?['"]+?(.*?)['"]+?(?![^\*]*?\*\/)/g
-	forWatchFile    = !!taskOpts.watchFilePath
 
 	# constants
 	# =========
@@ -39,6 +42,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 		src   = config.glob.dist[appOrRb].client[type][opts.glob] if opts.glob
 		dest  = config.dist[appOrRb].client[type].dir
 		gulp.src src, { base }
+			.on 'error', (e) -> defer.reject e
 			.on 'data', (file) ->
 				css = file.contents
 				return unless css
@@ -49,17 +53,16 @@ module.exports = (config, gulp, taskOpts={}) ->
 				file.contents = new Buffer css
 			.pipe gulp.dest dest
 			.on 'end', ->
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runSingle: -> # for watch
-			runTask 'app', 'styles', single: taskOpts.watchFilePath
+			runTask 'app', 'styles', single: Task.opts.watchFilePath
 
-		runMulti: (env) -> # async
-			defer = q.defer()
+		runMulti: -> # async
 			q.all([
 				runTask 'rb',  'bower',  glob: 'css'
 				runTask 'rb',  'libs',   glob: 'css'
@@ -67,14 +70,13 @@ module.exports = (config, gulp, taskOpts={}) ->
 				runTask 'app', 'bower',  glob: 'css'
 				runTask 'app', 'libs',   glob: 'css'
 				runTask 'app', 'styles', glob: 'all'
-			]).done ->
-				log.task 'changed all css urls to relative'
-				defer.resolve()
-			defer.promise
+			]).then ->
+				log: true
+				message: 'changed all css urls to relative'
 
 	# return
 	# ======
 	return api.runSingle() if forWatchFile
-	api.runMulti taskOpts.env
+	api.runMulti()
 
 

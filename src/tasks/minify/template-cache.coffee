@@ -1,21 +1,26 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
+
+	# requires
+	# ========
 	q                  = require 'q'
 	path               = require 'path'
 	es                 = require 'event-stream'
 	gulpif             = require 'gulp-if'
 	minifyHtml         = require 'gulp-htmlmin'
 	templateCache      = require 'gulp-angular-templatecache'
-	compileHtmlScripts = require "#{config.req.plugins}/gulp-compile-html-scripts"
 	log                = require "#{config.req.helpers}/log"
+	promiseHelp        = require "#{config.req.helpers}/promise"
 	ngFormify          = require "#{config.req.plugins}/gulp-ng-formify"
+	compileHtmlScripts = require "#{config.req.plugins}/gulp-compile-html-scripts"
 	dirHelper          = require("#{config.req.helpers}/dir") config
 	runNgFormify       = config.angular.ngFormify
-	forWatchFile       = !!taskOpts.watchFile
 
 	# globs
 	# =====
 	getGlob = (loc, type, lang) ->
 		config.glob.src[loc].client[type][lang]
+
 	glob =
 		views:
 			rb:  getGlob 'rb',  'views', 'html'
@@ -33,6 +38,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 		prefix           = config.angular.templateCache.urlPrefix
 		prefix           = "/#{prefix}" if useAbsolutePaths and prefix[0] isnt '/'
 		prefix
+
+	transformUrl = (url) -> # :string (for relative urls)
+		return url unless url[0] is '/'
+		url.replace '/', ''
 
 	# streams
 	# =======
@@ -53,10 +62,12 @@ module.exports = (config, gulp, taskOpts={}) ->
 		defer   = q.defer()
 		minify  = isProd and config.minify.html.views
 		minOpts = config.minify.html.options
-		opts    = {}
-		opts.root   = getRoot()
-		opts.module = config.angular.moduleName
+		opts = {}
+		opts.root         = getRoot()
+		opts.module       = config.angular.moduleName
+		opts.transformUrl = transformUrl unless config.angular.templateCache.useAbsolutePaths
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe addToDistPath()
 			.pipe gulpif config.compile.htmlScripts.client.enable, compileHtmlScripts()
 			.pipe gulpif minify, minifyHtml minOpts
@@ -67,20 +78,24 @@ module.exports = (config, gulp, taskOpts={}) ->
 				log.task "compiled html es6 scripts to: #{config.dist.app.client.dir}" if config.compile.htmlScripts.client.enable
 				log.task "created and copied #{file} to: #{config.dist.app.client.dir}"
 				log.task "minified html in #{file}" if minify
-				defer.resolve()
+				defer.resolve message: "completed: #{Task.name} run task"
 		defer.promise
 
 	run = ->
-		defer  = q.defer()
 		isProd = config.env.is.prod
 		file   = if isProd then 'min' else 'main'
 		file   = config.fileName.views[file]
 		dest   = config.dist.rb.client.scripts.dir
 		src    = [].concat glob.views.rb, glob.views.app
-		dirHelper.hasFiles(src).done (hasFiles) ->
-			return defer.resolve() unless hasFiles
-			runTask(src, dest, file, isProd).done -> defer.resolve()
-		defer.promise
+		tasks = [
+			-> dirHelper.hasFiles src
+			(hasFiles) ->
+				return promiseHelp.get() unless hasFiles
+				runTask src, dest, file, isProd
+		]
+		tasks.reduce(q.when, q()).then ->
+			# log: 'minor'
+			message: "completed task: #{Task.name}"
 
 	# API
 	# ===

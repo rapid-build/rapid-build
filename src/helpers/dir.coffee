@@ -75,6 +75,7 @@ module.exports = (config) ->
 		return promiseHelp.get defer, hasFiles unless src and src.length
 
 		gs src, opts
+			.on 'error', (e) -> defer.reject e
 			.on 'data', (file) ->
 				return unless file
 				hasFiles = true

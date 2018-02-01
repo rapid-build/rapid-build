@@ -3,7 +3,7 @@
 #	styles:  []
 #	scripts: []
 # ===================
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q        = require 'q'
 	path     = require 'path'
 	fse      = require 'fs-extra'
@@ -16,14 +16,10 @@ module.exports = (config, gulp) ->
 	# task
 	# ====
 	buildFile = (json) ->
-		defer    = q.defer()
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.files
-		fse.writeJson jsonFile, json, format, (e) ->
-			# log.task 'built files.json', 'minor'
-			clearData() # todo, optimize this
-			defer.resolve()
-		defer.promise
+		fse.writeJson(jsonFile, json, format).then ->
+			message: 'built files.json'
 
 	# for watch events: add and unlink
 	# ================================
@@ -75,40 +71,36 @@ module.exports = (config, gulp) ->
 		files.forEach (v, i) ->
 			data.client[type].push v
 
-	getFiles = (type, glob) ->
+	getFiles = (appOrRb, type, glob) ->
 		files  = []
 		defer  = q.defer()
 		opts   = allowEmpty: true
 		stream = gs glob, opts
+		stream.on 'error', (e) -> defer.reject e
 		stream.on 'data', (file) ->
 			_path = path.normalize file.path
 			_path = pathHelp.format _path
 			files.push _path
 		.on 'end', ->
 			addData type, files
-			defer.resolve()
+			defer.resolve message: "added #{appOrRb} #{type}"
 		defer.promise
 
 	getAllFiles = (type, lang) -> # sync
 		tasks    = []
-		defer    = q.defer()
 		appAndRb = Object.keys globs[lang]
-
 		appAndRb.forEach (appOrRb) ->
 			tasks.push ->
-				getFiles type, globs[lang][appOrRb]
-
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+				getFiles appOrRb, type, globs[lang][appOrRb]
+		tasks.reduce(q.when, q()).then ->
+			message: "added all #{lang} files"
 
 	buildData = -> # async
-		defer = q.defer()
 		setGlobs()
 		q.all([
 			getAllFiles 'styles', 'css'
 			getAllFiles 'scripts', 'js'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then -> message: 'built data'
 
 	addAngularBootstrap = ->
 		return if config.exclude.default.client.files
@@ -122,14 +114,14 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: -> # sync
-			defer = q.defer()
 			tasks = [
 				-> buildData()
 				-> addAngularBootstrap()
 				-> buildFile data
 			]
-			tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: 'built files.json'
 
 	# return
 	# ======

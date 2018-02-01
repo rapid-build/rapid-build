@@ -1,4 +1,4 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	path        = require 'path'
 	fse         = require 'fs-extra'
@@ -19,13 +19,10 @@ module.exports = (config, gulp) ->
 	# Build Task
 	# ==========
 	buildTask = ->
-		defer    = q.defer()
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.testFiles
-		fse.writeJson jsonFile, TestFiles, format, (e) ->
-			# log.task 'built test-files.json', 'minor'
-			defer.resolve()
-		defer.promise
+		fse.writeJson(jsonFile, TestFiles, format).then ->
+			message: "built test-files.json"
 
 	# Single Tasks
 	# ============
@@ -34,12 +31,14 @@ module.exports = (config, gulp) ->
 		appDir = pathHelp.format config.app.dir
 		src    = config.test.dist[appOrRb].client[type]
 		gulp.src src, buffer: false
+			.on 'error', (e) -> defer.reject e
 			.on 'data', (file) ->
 				_path = pathHelp.format(file.path).replace "#{appDir}/", ''
 				TestFiles.client["#{type}TestCount"]++ if appOrRb is 'app'
 				TestFiles.client[type].push _path
 			.on 'end', ->
-				defer.resolve()
+				message = "completed: #{Task.name} set test files"
+				defer.resolve { message }
 		defer.promise
 
 	addFilesToTestFiles = (type) ->
@@ -47,7 +46,7 @@ module.exports = (config, gulp) ->
 			Files[type]
 			TestFiles.client[type]
 		)
-		promiseHelp.get()
+		promiseHelp.get message: "completed: #{Task.name} added files to test files"
 
 	# Multi Tasks
 	# ===========
@@ -58,32 +57,29 @@ module.exports = (config, gulp) ->
 		Files =
 			scripts: files.client.scripts
 			styles:  files.client.styles
-		promiseHelp.get()
+		promiseHelp.get message: "completed: #{Task.name} set files"
 
 	setMultiTestFiles = -> # synchronously
-		defer = q.defer()
 		tasks = [
 			-> setTestFiles 'rb',  'scripts'
 			-> setTestFiles 'rb',  'styles'
 			-> setTestFiles 'app', 'scripts'
 			-> setTestFiles 'app', 'styles'
 		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "completed: #{Task.name} set multi test files"
 
 	addMultiFilesToTestFiles = ->
-		defer = q.defer()
 		q.all([
 			addFilesToTestFiles 'scripts'
 			addFilesToTestFiles 'styles'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then ->
+			message: "completed: #{Task.name} added multi files to test files"
 
 	# API
 	# ===
 	api =
 		runTask: -> # synchronously
-			defer       = q.defer()
 			jsonEnvFile = if config.env.is.prod then 'prod-files.json' else 'files.json'
 			tasks = [
 				-> setFiles jsonEnvFile
@@ -91,11 +87,11 @@ module.exports = (config, gulp) ->
 				-> addMultiFilesToTestFiles()
 				-> buildTask()
 			]
-			tasks.reduce(q.when, q()).done ->
+			tasks.reduce(q.when, q()).then ->
 				# log.json Files, 'Files ='
 				# log.json TestFiles, 'test files ='
-				defer.resolve()
-			defer.promise
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 	# return
 	# ======

@@ -1,22 +1,30 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
+
+	# requires
+	# ========
+	q = require 'q'
+
 	# API
 	# ===
 	api =
 		runTask: ->
 			if config.env.is.prod
 				if config.minify.html.templateCache
-					task = 'template-cache'
+					taskName = 'template-cache'
 				else
-					task = 'copy-html'
+					taskName = 'copy-html'
 			else if config.angular.templateCache.dev
-				task = 'template-cache'
+				taskName = 'template-cache'
 			else
-				task = 'copy-html'
+				taskName = 'copy-html'
 
+			defer = q.defer()
 			gulp.series([
-				"#{config.rb.prefix.task}#{task}"
-				(cb) -> cb(); taskOpts.taskCB()
+				"#{config.rb.prefix.task}#{taskName}"
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			])()
+			defer.promise
 
 	# return
 	# ======

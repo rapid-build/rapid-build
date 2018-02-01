@@ -1,53 +1,57 @@
 module.exports =
 	# props
 	# =====
+	q: null
 	bs: {}
 	bsConfig: {}
 
 	# public methods
 	# ==============
-	init: (config) ->
-		promiseHelp = require "#{config.req.helpers}/promise"
-		return promiseHelp.get() unless config.browser.reload
-		return promiseHelp.get() unless config.build.server
-		return promiseHelp.get() if config.exclude.default.server.files
+	init: (config) -> # :promise
+		q = @getQ()
+		return q() unless config.browser.reload
+		return q() unless config.build.server
+		return q() if config.exclude.default.server.files
 		@set()
 		.setBsConfig config
 		._initBs() # returns promise
 
-	isRunning: ->
+	isRunning: -> # :boolean
 		!!@bs.active
 
-	restart: ->
-		return @ unless @isRunning()
-		# console.log 'BROWSER SYNC RESTART:', @bs.name
+	restart: -> # :promise
+		q = @getQ()
+		return q() unless @isRunning()
 		@bs.reload stream:false
-		@
+		q message: 'browser-sync restarted'
 
-	delayedRestart: ->
-		return @ unless @isRunning()
+	delayedRestart: -> # :promise
+		q = @getQ()
+		return q() unless @isRunning()
+		defer = q.defer()
 		setTimeout =>
-			@restart()
+			@restart().then (res) ->
+				defer.resolve message: 'browser-sync restarted with delay'
 		, 1000
-		@
+		defer.promise
 
 	# private methods
 	# ===============
-	_initBs: ->
-		q     = require 'q'
+	_initBs: -> # :promise
+		q     = @getQ()
 		defer = q.defer()
-		# console.log 'BROWSER SYNC STARTED', @bs.name
-		@bs.init @bsConfig, ->
-			defer.resolve()
+		@bs.init @bsConfig, (e) ->
+			return defer.reject e if e
+			defer.resolve message: 'browser-sync started'
 		defer.promise
 
 	# setters
 	# =======
-	set: ->
+	set: -> # :this
 		@bs = require('browser-sync').create()
 		@
 
-	setBsConfig: (config) ->
+	setBsConfig: (config) -> # :this
 		@bsConfig =
 			ui:     port: config.ports.reloadUI
 			port:   config.ports.reload
@@ -63,11 +67,15 @@ module.exports =
 
 	# getters
 	# =======
-	get: ->
+	get: -> # :bs
 		@bs
 
-	getBsConfig: ->
+	getBsConfig: -> # :bsConfig
 		@bsConfig
+
+	getQ: -> # :{}
+		return @q if @q
+		@q = require 'q'
 
 
 

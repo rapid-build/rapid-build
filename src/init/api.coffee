@@ -1,88 +1,87 @@
 # THE BUILD'S AVAILABLE TASKS
 # ===========================
 module.exports = (gulp, config) ->
-	q        = require 'q'
-	taskHelp = require("#{config.req.helpers}/tasks") config, gulp
-	defer    = build: q.defer(), tasks: q.defer()
-	rb       = config.rb.prefix.task # task prefix
+	q     = require 'q'
+	defer = build: q.defer(), tasks: q.defer()
+	rb    = config.rb.prefix.task # task prefix
 
 	# Default
 	# =======
 	gulp.task config.rb.tasks.default, gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks.default; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks.default; done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-server"
 		"#{rb}start-server"
 		"#{rb}open-browser"
-		(cb) -> defer.tasks.resolve(); cb()
+		(done) -> defer.tasks.resolve(); done()
 	])
 
 	# Test Default: Client
 	# ====================
 	gulp.task config.rb.tasks['test:client'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['test:client']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['test:client']; done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-test-client"
 		"#{rb}run-client-tests"
-		(cb) ->
-			return cb() if config.env.is.testBoth # called from test task, it will resolve()
-			defer.tasks.resolve(); cb()
+		(done) ->
+			return done() if config.env.is.testBoth # called from test task, it will resolve()
+			defer.tasks.resolve(); done()
 	])
 
 	# Test Default: Server
 	# ====================
 	gulp.task config.rb.tasks['test:server'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['test:server']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['test:server']; done()
 		"#{rb}common"
 		"#{rb}common-server"
 		"#{rb}start-server"
 		"#{rb}common-test-server"
-		(cb) ->
-			return cb() if config.env.is.testBoth # called from test task, it will resolve()
-			defer.tasks.resolve(["#{rb}stop-server"]); cb()
+		(done) ->
+			return done() if config.env.is.testBoth # called from test task, it will resolve()
+			defer.tasks.resolve(["#{rb}stop-server"]); done()
 	])
 
 	# Test Default: Both
 	# ==================
 	gulp.task config.rb.tasks.test, gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks.test; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks.test; done()
 		"#{rb}common"
 		config.rb.tasks['test:client']
 		config.rb.tasks['test:server']
-		(cb) -> defer.tasks.resolve(["#{rb}stop-server"]); cb()
+		(done) -> defer.tasks.resolve(["#{rb}stop-server"]); done()
 	])
 
 	# Dev
 	# ===
 	gulp.task config.rb.tasks.dev, gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks.dev; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks.dev; done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-server"
 		"#{rb}start-server:dev"
 		"#{rb}browser-sync"
 		"#{rb}watch"
-		(cb) -> defer.tasks.resolve(); cb()
+		(done) -> defer.tasks.resolve(); done()
 	])
 
 	# Test Dev: Client
 	# ================
 	gulp.task config.rb.tasks['dev:test:client'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['dev:test:client']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['dev:test:client']; done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-test-client"
 		"#{rb}run-client-tests:dev"
 		"#{rb}watch"
-		(cb) -> defer.tasks.resolve(); cb()
+		(done) -> defer.tasks.resolve(); done()
 	])
 
 	# Test Dev: Server
 	# ================
 	gulp.task config.rb.tasks['dev:test:server'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['dev:test:server']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['dev:test:server']; done()
 		"#{rb}common"
 		"#{rb}common-server"
 		"#{rb}copy-server-tests"
@@ -90,13 +89,13 @@ module.exports = (gulp, config) ->
 		"#{rb}browser-sync"
 		"#{rb}run-server-tests:dev"
 		"#{rb}watch"
-		(cb) -> defer.tasks.resolve(); cb()
+		(done) -> defer.tasks.resolve(); done()
 	])
 
 	# Test Dev: Both
 	# ==============
 	gulp.task config.rb.tasks['dev:test'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['dev:test']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['dev:test']; done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-test-client"
@@ -107,15 +106,15 @@ module.exports = (gulp, config) ->
 		"#{rb}browser-sync"
 		"#{rb}run-server-tests:dev"
 		"#{rb}watch"
-		(cb) -> defer.tasks.resolve(); cb()
+		(done) -> defer.tasks.resolve(); done()
 	])
 
 	# Prod
 	# ====
 	gulp.task config.rb.tasks.prod, gulp.series([
-		(cb) ->
+		(done) ->
 			process.env.RB_MODE = config.rb.tasks.prod unless process.env.RB_MODE
-			cb()
+			done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}common-server"
@@ -123,59 +122,59 @@ module.exports = (gulp, config) ->
 			"#{rb}minify-client"
 			"#{rb}minify-server"
 		])
-		(cb) ->
-			return cb() if config.env.is.prodServer
-			defer.tasks.resolve(); cb()
+		(done) ->
+			return done() if config.env.is.prodServer
+			defer.tasks.resolve(); done()
 	])
 
 	# Prod: Server
 	# ============
 	gulp.task config.rb.tasks['prod:server'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['prod:server']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['prod:server']; done()
 		config.rb.tasks.prod
 		"#{rb}start-server"
 		"#{rb}open-browser"
-		(cb) -> defer.tasks.resolve(); cb()
+		(done) -> defer.tasks.resolve(); done()
 	])
 
 	# Test Prod: Client
 	# =================
 	gulp.task config.rb.tasks['prod:test:client'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['prod:test:client']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['prod:test:client']; done()
 		"#{rb}common"
 		"#{rb}common-client"
 		"#{rb}minify-client"
 		"#{rb}common-test-client"
 		"#{rb}run-client-tests"
 		"#{rb}clean-client-test-dist"
-		(cb) ->
-			return cb() if config.env.is.testBoth # called from test task, it will resolve()
-			defer.tasks.resolve(); cb()
+		(done) ->
+			return done() if config.env.is.testBoth # called from test task, it will resolve()
+			defer.tasks.resolve(); done()
 	])
 
 	# Test Prod: Server
 	# =================
 	gulp.task config.rb.tasks['prod:test:server'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['prod:test:server']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['prod:test:server']; done()
 		"#{rb}common"
 		"#{rb}common-server"
 		"#{rb}minify-server"
 		"#{rb}start-server"
 		"#{rb}common-test-server"
 		"#{rb}clean-server-test-dist"
-		(cb) ->
-			return cb() if config.env.is.testBoth # called from test task, it will resolve()
-			defer.tasks.resolve(["#{rb}stop-server"]); cb()
+		(done) ->
+			return done() if config.env.is.testBoth # called from test task, it will resolve()
+			defer.tasks.resolve(["#{rb}stop-server"]); done()
 	])
 
 	# Test Prod: Both
 	# ===============
 	gulp.task config.rb.tasks['prod:test'], gulp.series([
-		(cb) -> process.env.RB_MODE = config.rb.tasks['prod:test']; cb()
+		(done) -> process.env.RB_MODE = config.rb.tasks['prod:test']; done()
 		"#{rb}common"
 		config.rb.tasks['prod:test:client']
 		config.rb.tasks['prod:test:server']
-		(cb) -> defer.tasks.resolve(["#{rb}stop-server"]); cb()
+		(done) -> defer.tasks.resolve(["#{rb}stop-server"]); done()
 	])
 
 	# When Tasks Complete
@@ -184,7 +183,7 @@ module.exports = (gulp, config) ->
 		gulp.series([
 			"#{rb}pack-dist"
 			tasks...
-			(cb) -> defer.build.resolve(config); cb()
+			(done) -> defer.build.resolve(config); done()
 		])()
 
 	# Return Promise

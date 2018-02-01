@@ -1,7 +1,8 @@
-module.exports = (config) ->
-	q       = require 'q'
-	path    = require 'path'
-	nodemon = require 'gulp-nodemon'
+module.exports = (config, gulp, Task) ->
+	q           = require 'q'
+	path        = require 'path'
+	nodemon     = require 'gulp-nodemon'
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
 	# globals
 	# =======
@@ -30,12 +31,14 @@ module.exports = (config) ->
 				ignore: ignore
 
 			.on 'start', ->
-				browserSync = require "#{config.req.tasks}/browser/browser-sync"
-				browserSync.delayedRestart()
-				defer.resolve()
+				defer.resolve
+					# log: 'minor'
+					message: "completed task: #{Task.name}"
+
+			.on 'restart', ->
+				taskManager.runWatchTask 'browser-sync', run: 'delayedRestart'
 
 			defer.promise
-
 
 	# return
 	# ======

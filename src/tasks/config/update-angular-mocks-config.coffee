@@ -1,8 +1,7 @@
 # Task is only called from the common task.
 # =========================================
-module.exports = (config) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
-	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	configHelp  = require("#{config.req.helpers}/config") config
 
@@ -17,15 +16,13 @@ module.exports = (config) ->
 	# ===
 	api =
 		runTask: -> # synchronously
-			defer = q.defer()
 			tasks = [
 				-> updateConfig()
 				-> configHelp.buildFile true, 'rebuild'
 			]
-			tasks.reduce(q.when, q()).done ->
-				# log.task 'updated angular mocks config', 'info'
-				defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: 'updated angular mocks config'
 
 	# return
 	# ======

@@ -1,8 +1,7 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	path        = require 'path'
 	es          = require 'event-stream'
-	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	bowerHelper = require("#{config.req.helpers}/bower") config
 
@@ -33,13 +32,14 @@ module.exports = (config, gulp) ->
 		absSrc   = src.paths.absolute
 		excludes = getExcludeFromDist appOrRb
 		absSrc   = absSrc.concat excludes
-		gulp.src absSrc
+		srcOpts  = allowEmpty: true
+		# srcOpts = {}
+		gulp.src absSrc, srcOpts
+			.on 'error', (e) -> defer.reject e
 			.pipe addDistBasePath src.paths.relative
 			.pipe removeMin()
 			.pipe gulp.dest dest
-			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+			.on 'end', -> defer.resolve()
 		defer.promise
 
 	getComponents = (appOrRb, exclude) ->
@@ -54,16 +54,14 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: ->
-			defer     = q.defer()
 			rbExclude = true if config.exclude.default.client.files
 			rbExclude = true if config.exclude.angular.files
 			q.all([
 				getComponents 'rb', rbExclude
 				getComponents 'app'
-			]).done ->
-				log.task "copied bower components to: #{config.dist.app.client.dir}"
-				defer.resolve()
-			defer.promise
+			]).then ->
+				log: true
+				message: "copied bower components to: #{config.dist.app.client.dir}"
 
 	# return
 	# ======

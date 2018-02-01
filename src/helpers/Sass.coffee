@@ -75,6 +75,7 @@ module.exports = (config, gulp) ->
 		setImports: ->
 			defer = q.defer()
 			gulp.src @src
+				.on 'error', (e) -> defer.reject e
 				.on 'data', (file) =>
 					@addImport file
 				.on 'end', =>

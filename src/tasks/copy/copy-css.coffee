@@ -1,37 +1,39 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	log          = require "#{config.req.helpers}/log"
-	tasks        = require("#{config.req.helpers}/tasks") config
-	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
-	forWatchFile = !!taskOpts.watchFile
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFile
+
+	# requires
+	# ========
+	q           = require 'q'
+	taskRunner  = require("#{config.req.helpers}/task-runner") config
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
 	runTask = (src, dest) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log dest
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runSingle: -> # synchronously
-			defer         = q.defer()
-			watchFilePath = taskOpts.watchFile.rbDistPath
-			_tasks = [
-				-> runTask taskOpts.watchFile.path, taskOpts.watchFile.rbDistDir
-				-> taskHelp.startTask '/format/update-css-urls', { watchFilePath }
+			watchFilePath = Task.opts.watchFile.rbDistPath
+			tasks = [
+				-> runTask Task.opts.watchFile.path, Task.opts.watchFile.rbDistDir
+				-> taskManager.runWatchTask 'update-css-urls:dev', { watchFilePath }
 			]
-			_tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 		runMulti: ->
-			promise = tasks.run.async runTask, 'styles', 'css', ['client']
-			promise.done ->
-				log.task "copied css to: #{config.dist.app.client.dir}"
-			promise
+			promise = taskRunner.async runTask, 'styles', 'css', ['client'], Task
+			promise.then ->
+				log: true
+				message: "copied css to: #{config.dist.app.client.dir}"
 
 	# return
 	# ======

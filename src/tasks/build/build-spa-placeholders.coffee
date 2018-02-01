@@ -1,17 +1,21 @@
-module.exports = (config, gulp) ->
-	q            = require 'q'
-	fs           = require 'fs'
-	fse          = require 'fs-extra'
-	path         = require 'path'
-	promiseHelp  = require "#{config.req.helpers}/promise"
-	placeholders = {
+module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.spa.autoInject
+
+	# requires
+	# ========
+	q        = require 'q'
+	fse      = require 'fs-extra'
+	SPA_PATH = config.spa.temp.path
+
+	Placeholders = {
 		'scripts'
 		'styles'
 		'moduleName' # value for ng-app
 		'ngCloakStyles'
 		'clickjacking'
 	}
-	needle =
+	Needle =
 		comments:
 			'BUILD_TEMP_PLACEHOLDER_COMMENT'
 		placeholders:
@@ -19,17 +23,17 @@ module.exports = (config, gulp) ->
 
 	# helpers
 	# =======
-	has =
+	Has =
 		ph: (content, ph) ->
 			content.indexOf(ph) isnt -1
 
 		attr: (attr, content) ->
 			content.indexOf(attr) isnt -1
 
-	format =
+	Format =
 		phs: (phs) ->
 			for key, val of phs
-				phs[key] = "#{needle.placeholders.left}#{val}#{needle.placeholders.right}"
+				phs[key] = "#{Needle.placeholders.left}#{val}#{Needle.placeholders.right}"
 			phs
 
 		closing: # last closing tag
@@ -59,7 +63,7 @@ module.exports = (config, gulp) ->
 			tag       = tag.substring(0, lastIndex).trim()
 			tag      += " #{attr}=\"#{ph}\">"
 
-	pats =
+	Pats =
 		closing:
 			tag: (tag) ->
 				tag        = '.*?' if tag is '*'
@@ -73,32 +77,32 @@ module.exports = (config, gulp) ->
 
 		before:
 			tag: (tag) ->
-				pats.opening.tag tag
+				Pats.opening.tag tag
 
 		comments:
 			html:
 				new RegExp '<!--(.|\\s)*?-->', 'ig'
 			needle:
-				new RegExp needle.comments, 'g'
+				new RegExp Needle.comments, 'g'
 
-	get =
+	Get =
 		content:
 			tag: (ph, content, tags) ->
-				return content if has.ph content, ph
+				return content if Has.ph content, ph
 				for tag, loc of tags
-					pat     = pats[loc].tag tag
-					locTag  = get.tag pat, ph, loc, content
+					pat     = Pats[loc].tag tag
+					locTag  = Get.tag pat, ph, loc, content
 					continue unless locTag
 					content = content.replace pat, locTag
 					break
 				content
 
 			attr: (ph, attr, content, tags) ->
-				return content if has.ph content, ph
-				return content if has.attr attr, content
+				return content if Has.ph content, ph
+				return content if Has.attr attr, content
 				for tag in tags
 					method  = if tag is '*' then 'anyAttr' else 'indAttr'
-					info    = get.content[method] ph, attr, content, tag
+					info    = Get.content[method] ph, attr, content, tag
 					continue unless info.oTag
 					content = info.content
 					break
@@ -106,8 +110,8 @@ module.exports = (config, gulp) ->
 
 			indAttr: (ph, attr, content, tag) -> # specific tag
 				info = { oTag: null, content }
-				pat  = pats.opening.tag tag
-				info.oTag = get.attr pat, ph, attr, content # o = opening tag
+				pat  = Pats.opening.tag tag
+				info.oTag = Get.attr pat, ph, attr, content # o = opening tag
 				return info unless info.oTag
 				info.content = info.content.replace pat, info.oTag
 				info
@@ -115,12 +119,12 @@ module.exports = (config, gulp) ->
 			anyAttr: (ph, attr, content, tag) -> # any tag
 				info        = { oTag: null, content }
 				comments    = []
-				pat         = pats.opening.tag tag
-				patCmtsHtml = pats.comments.html
-				content     = content.replace patCmtsHtml, (cmt) -> comments.push cmt; needle.comments
-				info.oTag   = get.attr pat, ph, attr, content # o = opening tag
+				pat         = Pats.opening.tag tag
+				patCmtsHtml = Pats.comments.html
+				content     = content.replace patCmtsHtml, (cmt) -> comments.push cmt; Needle.comments
+				info.oTag   = Get.attr pat, ph, attr, content # o = opening tag
 				return info unless info.oTag
-				patCmtsNeedle = pats.comments.needle
+				patCmtsNeedle = Pats.comments.needle
 				info.content  = content.replace pat, info.oTag
 				return info unless comments.length
 				cmtCnt = -1
@@ -131,47 +135,63 @@ module.exports = (config, gulp) ->
 			match = pat.exec content
 			return null unless match
 			tag = match[0]
-			tag = format[loc].tag tag, ph
+			tag = Format[loc].tag tag, ph
 
 		attr: (pat, ph, attr, content) ->
 			match = pat.exec content
 			return null unless match
 			tag = match[0]
-			tag = format.attr tag, ph, attr
+			tag = Format.attr tag, ph, attr
+
+		autoInject: (type) -> # :boolean
+			injects = config.spa.autoInject
+			return true if injects.indexOf('all') isnt -1
+			injects.indexOf(type) isnt -1
 
 	# tasks
 	# =====
 	tasks =
-		getContent: (_path) ->
-			fs.readFileSync(_path).toString()
+		getContent: -> # :Promise<string>
+			fse.readFile(SPA_PATH).then (file) ->
+				file.toString()
 
-		createSpa: (_path, content) ->
-			fse.outputFileSync _path, content
+		updateContent: (content) -> # :Promise<string>
+			phs     = Format.phs Placeholders
+			content = tasks.update.clickjacking  content, phs.clickjacking  if Get.autoInject 'clickjacking'
+			content = tasks.update.styles        content, phs.styles        if Get.autoInject 'styles'
+			content = tasks.update.ngCloakStyles content, phs.ngCloakStyles if Get.autoInject 'ngCloakStyles'
+			content = tasks.update.scripts       content, phs.scripts       if Get.autoInject 'scripts'
+			content = tasks.update.moduleName    content, phs.moduleName    if Get.autoInject 'moduleName'
+			promiseHelp.get content
+
+		createSpa: (content) -> # :Promise<Object>
+			fse.outputFile(SPA_PATH, content).then ->
+				message: 'created spa file'
 
 		update:
 			clickjacking: (content, ph) ->
-				get.content.tag(
+				Get.content.tag(
 					ph
 					content
 					head: 'closing', body: 'closing', '*': 'before'
 				)
 
 			scripts: (content, ph) ->
-				get.content.tag(
+				Get.content.tag(
 					ph
 					content
 					body: 'closing', head: 'closing', '*': 'closing'
 				)
 
 			styles: (content, ph) ->
-				get.content.tag(
+				Get.content.tag(
 					ph
 					content
 					head: 'closing', body: 'opening', '*': 'before'
 				)
 
 			ngCloakStyles: (content, ph) ->
-				get.content.tag(
+				Get.content.tag(
 					ph
 					content
 					head: 'closing', body: 'opening', '*': 'before'
@@ -179,36 +199,29 @@ module.exports = (config, gulp) ->
 
 			moduleName: (content, ph) ->
 				return content if config.angular.bootstrap.enabled
-				get.content.attr(
+				Get.content.attr(
 					ph
 					'ng-app'
 					content
 					['html', 'body', '*']
 				)
 
-	autoInject = (type) ->
-		injects = config.spa.autoInject
-		return true if injects.indexOf('all') isnt -1
-		injects.indexOf(type) isnt -1
-
 	# API
 	# ===
 	api =
-		runTask: (spaPath) -> # synchronously
-			return promiseHelp.get() unless config.spa.autoInject
-			phs     = format.phs placeholders
-			content = tasks.getContent spaPath
-			content = tasks.update.clickjacking  content, phs.clickjacking  if autoInject 'clickjacking'
-			content = tasks.update.styles        content, phs.styles        if autoInject 'styles'
-			content = tasks.update.ngCloakStyles content, phs.ngCloakStyles if autoInject 'ngCloakStyles'
-			content = tasks.update.scripts       content, phs.scripts       if autoInject 'scripts'
-			content = tasks.update.moduleName    content, phs.moduleName    if autoInject 'moduleName'
-			tasks.createSpa spaPath, content
-			promiseHelp.get()
+		runTask: -> # synchronously
+			_tasks = [
+				-> tasks.getContent()
+				(content) -> tasks.updateContent content
+				(content) -> tasks.createSpa content
+			]
+			_tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: 'built spa placeholders'
 
 	# return
 	# ======
-	api.runTask config.spa.temp.path
+	api.runTask()
 
 
 

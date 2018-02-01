@@ -1,14 +1,18 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q           = require 'q'
-	fs          = require 'fs'
-	path        = require 'path'
-	tsify       = require 'tsify'
-	watchify    = require 'watchify'
-	fse         = require 'fs-extra'
-	browserify  = require 'browserify'
-	source      = require 'vinyl-source-stream'
-	log         = require "#{config.req.helpers}/log"
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.compile.typescript.client.enable
+
+	# requires
+	# ========
+	q          = require 'q'
+	fs         = require 'fs'
+	path       = require 'path'
+	tsify      = require 'tsify'
+	watchify   = require 'watchify'
+	fse        = require 'fs-extra'
+	browserify = require 'browserify'
+	source     = require 'vinyl-source-stream'
+	log        = require "#{config.req.helpers}/log"
 
 	# helpers
 	# =======
@@ -55,7 +59,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 			bundle.on 'error', (e) -> log.task e.message, 'error'
 			bundle.pipe fs.createWriteStream opts.bundle.path
 			bundle.on 'end', ->
-				defer.resolve()
+				defer.resolve message: "completed: run task"
 			defer.promise
 
 		runWatchTask: (b, paths, opts) -> # bundle then watch
@@ -66,24 +70,23 @@ module.exports = (config, gulp, taskOpts={}) ->
 				.pipe source opts.bundle.fileName
 				.pipe gulp.dest paths.dest.scripts
 				.on 'end', ->
-					return defer.resolve() unless watchPaths # init
+					return defer.resolve() unless watchPaths
 					log.watchTS watchPaths
+					defer.resolve message: "completed: run watch task"
 			bundler()
 			b.plugin(watchify, opts.watch).on 'update', bundler
 			defer.promise
 
 		init: ->
-			return promiseHelp.get() unless config.compile.typescript.client.enable
-			isDev   = config.env.is.dev
-			task    = if isDev then 'runWatchTask' else 'runTask'
-			paths   = help.getPaths()
-			opts    = help.getOpts paths
-			b       = help.getBrowserify opts
-			promise = @[task] b, paths, opts
-			promise.done ->
-				log.task "compiled typescript to: #{paths.dest.dir}"
+			isDev = config.env.is.dev
+			_task = if isDev then 'runWatchTask' else 'runTask'
+			paths = help.getPaths()
+			opts  = help.getOpts paths
+			b     = help.getBrowserify opts
+			@[_task](b, paths, opts).then ->
 				log.task 'watching client typescript files', 'minor' if isDev
-			promise
+				log: true
+				message: "compiled typescript to: #{paths.dest.dir}"
 
 	# return
 	# ======

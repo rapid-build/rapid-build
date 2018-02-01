@@ -1,9 +1,8 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q        = require 'q'
 	path     = require 'path'
 	postcss  = require 'postcss'
 	atImport = require 'postcss-import'
-	log      = require "#{config.req.helpers}/log"
 
 	# API
 	# ===
@@ -19,6 +18,7 @@ module.exports = (config, gulp) ->
 			opts     = root: config.dist.app.client.dir
 
 			gulp.src src
+				.on 'error', (e) -> defer.reject e
 				.on 'data', (file) ->
 					css = file.contents
 					return unless css
@@ -31,8 +31,9 @@ module.exports = (config, gulp) ->
 					file.contents = new Buffer output
 				.pipe gulp.dest dest
 				.on 'end', ->
-					log.task "inlined css imports in #{minFile}"
-					defer.resolve()
+					defer.resolve
+						log: true
+						message: "inlined css imports in #{minFile}"
 			defer.promise
 
 	# return

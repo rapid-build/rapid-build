@@ -1,17 +1,22 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.server
+
+	# requires
+	# ========
+	q = require 'q'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.build.server
-
+			defer = q.defer()
 			gulp.series([
 				"#{config.rb.prefix.task}copy-server-tests"
 				"#{config.rb.prefix.task}run-server-tests"
-				(cb) -> cb(); taskOpts.taskCB()
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			])()
+			defer.promise
 
 	# return
 	# ======

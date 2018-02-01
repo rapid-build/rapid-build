@@ -3,28 +3,33 @@
 # Fortunately IE 10 ups the limit to: 65,534
 # If you don't care about those piece of shit browsers, then disable this option.
 # ===============================================================================
-module.exports = (config, gulp) ->
-	q           = require 'q'
-	fs          = require 'fs'
-	fse         = require 'fs-extra'
-	path        = require 'path'
-	bless       = require 'gulp-bless'
-	log         = require "#{config.req.helpers}/log"
-	pathHelp    = require "#{config.req.helpers}/path"
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.minify.css.splitMinFile
+
+	# requires
+	# ========
+	q        = require 'q'
+	fs       = require 'fs'
+	fse      = require 'fs-extra'
+	path     = require 'path'
+	bless    = require 'gulp-bless'
+	log      = require "#{config.req.helpers}/log"
+	pathHelp = require "#{config.req.helpers}/path"
 
 	# Global Objects
 	# ==============
-	SplitFiles  = []
-	ProdFiles   = {}
+	SplitFiles = []
+	ProdFiles  = {}
 
 	# tasks
 	# =====
 	splitTask = (src, dest, ext) ->
-		defer    = q.defer()
-		opts     = imports:false, force:true
-		files    = []
+		defer = q.defer()
+		opts  = imports: false, force: true
+		files = []
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.on 'data', (file) ->
 				basename = path.basename file.path
 				files.push
@@ -49,10 +54,10 @@ module.exports = (config, gulp) ->
 			.pipe gulp.dest dest
 			.on 'end', ->
 				for file in files
-					if file.cnt
-						SplitFiles.push file
-						log.task "split #{file.name} into #{file.cnt} files"
-				defer.resolve()
+					continue unless file.cnt
+					SplitFiles.push file
+					log.task "split #{file.name} into #{file.cnt} files"
+				defer.resolve message: "completed: css split task"
 		defer.promise
 
 	updateSplitFiles = ->
@@ -60,7 +65,7 @@ module.exports = (config, gulp) ->
 		for file in SplitFiles
 			for v, i in file.newPaths
 				file.newPaths[i] = pathHelp.format(v).replace "#{appDir}/", ''
-		promiseHelp.get()
+		promiseHelp.get "completed: split files update"
 
 	updateProdFiles = ->
 		dest      = pathHelp.format config.dist.app.client.styles.dir
@@ -77,47 +82,39 @@ module.exports = (config, gulp) ->
 				break
 			styles.push v1 unless match
 		ProdFiles.client.styles = styles
-		promiseHelp.get()
+		promiseHelp.get "completed: prod files update"
 
 	buildProdFiles = ->
-		defer    = q.defer()
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.prodFiles
-		fse.writeJson jsonFile, ProdFiles, format, (e) ->
-			# log.task 'rebuilt prod-files.json because of css file split', 'minor'
-			defer.resolve()
-		defer.promise
+		fse.writeJson(jsonFile, ProdFiles, format).then ->
+			message: 'rebuilt prod-files.json because of css file split'
 
-	rebuildProdFiles = ->  # synchronously
+	rebuildProdFiles = -> # synchronously
 		return promiseHelp.get() unless SplitFiles.length
-		defer = q.defer()
 		tasks = [
 			-> updateSplitFiles()
 			-> updateProdFiles()
 			-> buildProdFiles()
 		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
-
-	runTask = (src, dest, ext) -> # synchronously
-		defer = q.defer()
-		tasks = [
-			-> splitTask src, dest, ext
-			-> rebuildProdFiles()
-		]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "completed: rebuild prod files"
 
 	# API
 	# ===
 	api =
-		runTask: ->
-			return promiseHelp.get() unless config.minify.css.splitMinFile
+		runTask: -> # synchronously
 			ext      = '.css'
 			dest     = config.dist.app.client.styles.dir
 			fileName = path.basename config.fileName.styles.min, ext
 			src      = path.join dest, "{#{fileName}#{ext},#{fileName}.*#{ext}}"
-			runTask src, dest, ext
+			tasks = [
+				-> splitTask src, dest, ext
+				-> rebuildProdFiles()
+			]
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 	# return
 	# ======

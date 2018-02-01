@@ -1,7 +1,8 @@
 module.exports = (config, options) ->
-	path = require 'path'
-	log  = require "#{config.req.helpers}/log"
-	test = require("#{config.req.helpers}/test")()
+	path   = require 'path'
+	log    = require "#{config.req.helpers}/log"
+	isType = require "#{config.req.helpers}/isType"
+	test   = require("#{config.req.helpers}/test")()
 
 	# init extra.minify
 	# minify additional client files [css|js]
@@ -16,6 +17,10 @@ module.exports = (config, options) ->
 			client:
 				css: options.extra.minify.client.css or []
 				js:  options.extra.minify.client.js  or []
+		enabled:
+			client:
+				css: false
+				js:  false
 
 	# format minify paths
 	# ===================
@@ -30,6 +35,19 @@ module.exports = (config, options) ->
 
 	formatMinifyPaths 'rb'
 	formatMinifyPaths 'app'
+
+	# set enabled
+	# ===========
+	setEnabled = ->
+		for appOrRb in ['rb','app']
+			for loc in ['client']
+				for lang in ['css','js']
+					continue if minify.enabled[loc][lang]
+					glob = minify[appOrRb][loc][lang]
+					continue unless isType.array glob
+					continue unless glob.length
+					minify.enabled[loc][lang] = true
+	setEnabled()
 
 	# add minify to config.extra
 	# ==========================

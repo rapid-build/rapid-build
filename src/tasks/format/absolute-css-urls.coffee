@@ -1,12 +1,15 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q            = require 'q'
-	log          = require "#{config.req.helpers}/log"
-	absCssUrls   = require "#{config.req.plugins}/gulp-absolute-css-urls"
-	arrayHelp    = require "#{config.req.helpers}/array"
-	promiseHelp  = require "#{config.req.helpers}/promise"
-	configHelp   = require("#{config.req.helpers}/config") config
-	taskHelp     = require("#{config.req.helpers}/tasks") config, gulp
-	forWatchFile = !!taskOpts.watchFilePath
+module.exports = (config, gulp, Task) ->
+	forWatchFile = !!Task.opts.watchFilePath
+
+	# requires
+	# ========
+	q           = require 'q'
+	log         = require "#{config.req.helpers}/log"
+	absCssUrls  = require "#{config.req.plugins}/gulp-absolute-css-urls"
+	arrayHelp   = require "#{config.req.helpers}/array"
+	promiseHelp = require "#{config.req.helpers}/promise"
+	configHelp  = require("#{config.req.helpers}/config") config
+	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
 	# global
 	# ======
@@ -16,10 +19,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# =======
 	setBuildConfigFile = ->
 		buildConfigFile = !!config.internal.getImports().length
-		promiseHelp.get()
-
-	buildSpa = ->
-		taskHelp.startTask '/watch/watch-build-spa'
+		promiseHelp.get message: "completed: set build config file"
 
 	# tasks
 	# =====
@@ -35,14 +35,14 @@ module.exports = (config, gulp, taskOpts={}) ->
 		urlOpts.rbDistPath  = config.dist.rb.client.styles.dir
 		urlOpts.prependPath = opts.prependPath
 		gulp.src src, { base }
+			.on 'error', (e) -> defer.reject e
 			.pipe absCssUrls clientDist, config, urlOpts
 			.pipe gulp.dest dest
 			.on 'end', ->
-				defer.resolve()
+				defer.resolve message: "completed task: #{Task.name}"
 		defer.promise
 
 	runMulti = ->
-		defer = q.defer()
 		q.all([
 			runTask 'rb',  'bower'
 			runTask 'rb',  'libs'
@@ -50,36 +50,37 @@ module.exports = (config, gulp, taskOpts={}) ->
 			runTask 'app', 'bower'
 			runTask 'app', 'libs'
 			runTask 'app', 'styles', prependPath: false, glob: 'all'
-		]).done ->
-			log.task 'changed all css urls to absolute'
-			defer.resolve()
-		defer.promise
+		]).then ->
+			message: 'completed: changed all css urls to absolute'
 
 	# API
 	# ===
 	api =
 		runSingle: ->
-			clone   = config.internal.getImports()
-			opts    = prependPath: false, src: taskOpts.watchFilePath, watchFileBase: true
-			promise = runTask 'app', 'styles', opts
-			promise.done ->
-				imports  = config.internal.getImports()
-				areEqual = arrayHelp.areEqual clone, imports, true
-				buildSpa() unless areEqual
-			promise
+			clone = config.internal.getImports()
+			opts  = prependPath: false, src: Task.opts.watchFilePath, watchFileBase: true
+			tasks = [
+				-> runTask 'app', 'styles', opts
+				->
+					imports  = config.internal.getImports()
+					areEqual = arrayHelp.areEqual clone, imports, true
+					return promiseHelp.get() if areEqual
+					taskManager.runWatchTask 'watch-build-spa'
+			]
+			tasks.reduce(q.when, q()).then ->
+				message: "completed task: #{Task.name}"
 
 		runTask: -> # synchronously
-			defer = q.defer()
 			tasks = [
 				-> runMulti()
 				-> setBuildConfigFile()
 				-> configHelp.buildFile buildConfigFile, 'rebuild'
 			]
-			tasks.reduce(q.when, q()).done ->
-				# console.log 'rb', config.internal.rb.client.css.imports
-				# console.log 'app', config.internal.app.client.css.imports
-				defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log.json config.internal.rb.client.css.imports, 'RB INTERNAL CSS IMPORTS:'
+				# log.json config.internal.app.client.css.imports, 'APP INTERNAL CSS IMPORTS:'
+				log: true
+				message: 'changed all css urls to absolute'
 
 	# return
 	# ======

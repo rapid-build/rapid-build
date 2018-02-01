@@ -1,14 +1,14 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q           = require 'q'
-	fs          = require 'fs'
-	path        = require 'path'
-	gulpif      = require 'gulp-if'
-	replace     = require 'gulp-replace'
-	template    = require 'gulp-template'
-	log         = require "#{config.req.helpers}/log"
-	pathHelp    = require "#{config.req.helpers}/path"
-	moduleHelp  = require "#{config.req.helpers}/module"
-	format      = require("#{config.req.helpers}/format")()
+module.exports = (config, gulp, Task) ->
+	q          = require 'q'
+	fs         = require 'fs'
+	path       = require 'path'
+	gulpif     = require 'gulp-if'
+	replace    = require 'gulp-replace'
+	template   = require 'gulp-template'
+	log        = require "#{config.req.helpers}/log"
+	pathHelp   = require "#{config.req.helpers}/path"
+	moduleHelp = require "#{config.req.helpers}/module"
+	format     = require("#{config.req.helpers}/format")()
 
 	# helpers
 	# =======
@@ -28,6 +28,7 @@ module.exports = (config, gulp, taskOpts={}) ->
 	buildTask = (src, dest, file, data={}) ->
 		defer = q.defer()
 		gulp.src src
+			.on 'error', (e) -> defer.reject e
 			.pipe runReplace 'clickjacking'
 			.pipe runReplace 'description'
 			.pipe runReplace 'moduleName'
@@ -36,10 +37,10 @@ module.exports = (config, gulp, taskOpts={}) ->
 			.pipe runReplace 'styles'
 			.pipe runReplace 'title'
 			.pipe template data
+			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
 			.on 'end', ->
-				log.task "built and copied #{file} to: #{config.dist.app.client.dir}"
-				defer.resolve()
+				defer.resolve message: 'built spa file'
 		defer.promise
 
 	# helpers
@@ -77,7 +78,6 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runTask: (env) -> # synchronously
-			defer = q.defer()
 			json  = if env is 'prod' then 'prod-files.json' else 'files.json'
 			data  = getData json
 			tasks = [
@@ -88,12 +88,13 @@ module.exports = (config, gulp, taskOpts={}) ->
 					data
 				)
 			]
-			tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				log: true
+				message: "built and copied #{config.spa.dist.file} to: #{config.dist.app.client.dir}"
 
 	# return
 	# ======
-	api.runTask taskOpts.env
+	api.runTask Task.opts.env
 
 
 

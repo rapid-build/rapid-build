@@ -1,25 +1,36 @@
+# LOGGER
+# for types see /src/bootstrap.coffee
+# ===================================
 module.exports =
-	json: (v, prefix) ->
+	json: (v, prefix) -> # :void
 		if prefix
 			console.log prefix, JSON.stringify v, null, '\t'
 		else
 			console.log JSON.stringify v, null, '\t'
 
-	task: (msg, type='attn') -> # see /src/bootstrap.coffee for types
+	task: (msg, type) -> # :void
+		type = if typeof type is 'string' then type else 'attn'
 		return unless msg
-		console.log msg[type]
+		return console.log msg[type] unless Array.isArray msg
+		console.log _msg[type] for _msg in msg
 
-	error: (e, msg='') ->
-		eMsg = e if typeof e is 'string'
-		eMsg = e.message if e and e.message
-		msg  = if msg and eMsg then "#{msg}\n#{eMsg}" else eMsg
+	error: (e, msg='') -> # :void
+		eMsg = e.error if typeof e is 'string'
+		eMsg = e.message.red if e and e.message
+		msg  = if msg and eMsg then "#{msg.error}\n#{eMsg}" else eMsg
 		msg  = " #{msg}" if msg
 		return unless msg
-		console.error "ERROR:#{msg}".error
+		prefix = 'ERROR:'.error
+		console.error "#{prefix}#{msg}"
 
-	watch: (taskName, file, opts={}) ->
+	taskError: (e, task={}) -> # :void (throws)
+		eMsg = 'task'
+		eMsg += " #{task.name}" if task.name
+		@error e, eMsg
+
+	watch: (taskName, file, opts={}) -> # :void
 		taskName = opts.logTaskName or taskName
 		@task "#{taskName} #{file.event}: #{file.path}", 'minor'
 
-	watchTS: (paths) ->
+	watchTS: (paths) -> # :void
 		@task "typescript changed: #{_path}", 'minor' for _path in paths

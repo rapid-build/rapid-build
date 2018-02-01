@@ -1,4 +1,4 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	path        = require 'path'
 	fse         = require 'fs-extra'
@@ -15,13 +15,10 @@ module.exports = (config, gulp) ->
 	# Build Task
 	# ==========
 	buildTask = ->
-		defer    = q.defer()
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.prodFilesBlueprint
-		fse.writeJson jsonFile, MinFiles, format, (e) ->
-			# log.task 'built prod-files-blueprint.json', 'minor'
-			defer.resolve()
-		defer.promise
+		fse.writeJson(jsonFile, MinFiles, format).then ->
+			message: 'built prod-files-blueprint.json'
 
 	# Single Tasks
 	# ============
@@ -35,11 +32,12 @@ module.exports = (config, gulp) ->
 		)
 		return promiseHelp.get defer unless src.length
 		gulp.src src, srcOpts
+			.on 'error', (e) -> defer.reject e
 			.on 'data', (file) ->
 				_path = pathHelp.format(file.path).replace "#{appDir}/", ''
 				MinFileExcludes[type].push _path
 			.on 'end', ->
-				defer.resolve()
+				defer.resolve message: "set min #{type} excludes"
 		defer.promise
 
 	setMinFiles = (type) ->
@@ -70,7 +68,7 @@ module.exports = (config, gulp) ->
 						files: []
 					)
 				MinFiles[type][cnt-1].files.push file
-		promiseHelp.get()
+		promiseHelp.get message: "set min #{type} files"
 
 	setMinFilesCleanup = (type) ->
 		ext      = if type is 'scripts' then 'js' else 'css'
@@ -83,7 +81,7 @@ module.exports = (config, gulp) ->
 			# console.log file.type
 		return promiseHelp.get() unless includes.total is 1
 		MinFiles[type][includes.index].name = config.fileName[type].min
-		promiseHelp.get()
+		promiseHelp.get message: "cleaned up min #{type} files"
 
 	# Multi Tasks
 	# ===========
@@ -92,37 +90,30 @@ module.exports = (config, gulp) ->
 		DevFiles =
 			scripts: files.client.scripts
 			styles:  files.client.styles
-		promiseHelp.get()
+		promiseHelp.get message: 'set dev files'
 
 	setMultiMinFileExcludes = ->
-		defer = q.defer()
 		q.all([
 			setMinFileExcludes 'scripts'
 			setMinFileExcludes 'styles'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then -> message: 'set all multi min file excludes'
 
 	setMultiMinFiles = ->
-		defer = q.defer()
 		q.all([
 			setMinFiles 'scripts'
 			setMinFiles 'styles'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then -> message: 'set all multi min files'
 
 	setMultiMinFilesCleanup = ->
-		defer = q.defer()
 		q.all([
 			setMinFilesCleanup 'scripts'
 			setMinFilesCleanup 'styles'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then -> message: 'cleaned up all multi min files'
 
 	# API
 	# ===
 	api =
 		runTask: -> # synchronously
-			defer = q.defer()
 			tasks = [
 				-> setDevFiles()
 				-> setMultiMinFileExcludes()
@@ -130,13 +121,12 @@ module.exports = (config, gulp) ->
 				-> setMultiMinFilesCleanup()
 				-> buildTask()
 			]
-			tasks.reduce(q.when, q()).done ->
+			tasks.reduce(q.when, q()).then ->
 				# log.json DevFiles, 'dev files ='
 				# log.json MinFileExcludes, 'min file excludes ='
 				# log.json MinFiles, 'min files ='
-				defer.resolve()
-			defer.promise
-
+				# log: 'minor'
+				message: 'built prod-files-blueprint.json'
 	# return
 	# ======
 	api.runTask()

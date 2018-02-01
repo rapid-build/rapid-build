@@ -1,4 +1,4 @@
-module.exports = (config, gulp) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	path        = require 'path'
 	fse         = require 'fs-extra'
@@ -14,13 +14,10 @@ module.exports = (config, gulp) ->
 	# Build Task
 	# ==========
 	buildTask = ->
-		defer    = q.defer()
 		format   = spaces: '\t'
 		jsonFile = config.generated.pkg.files.prodFiles
-		fse.writeJson jsonFile, ProdFiles, format, (e) ->
-			# log.task 'built prod-files.json', 'minor'
-			defer.resolve()
-		defer.promise
+		fse.writeJson(jsonFile, ProdFiles, format).then ->
+			message: 'built prod-files.json'
 
 	# Single Tasks
 	# ============
@@ -35,38 +32,35 @@ module.exports = (config, gulp) ->
 				minFilePath = pathHelp.format minFilePath
 				files.push minFilePath
 		ProdFiles.client[type] = files
-		promiseHelp.get()
+		promiseHelp.get message: "set prod #{type} files"
 
 	# Multi Tasks
 	# ===========
 	setBlueprint = ->
 		file      = config.generated.pkg.files.prodFilesBlueprint
 		Blueprint = require file
-		promiseHelp.get()
+		promiseHelp.get message: 'set blueprint'
 
 	setMultiProdFiles = ->
-		defer = q.defer()
 		q.all([
 			setProdFiles 'scripts'
 			setProdFiles 'styles'
-		]).done -> defer.resolve()
-		defer.promise
+		]).then -> message: 'set multi prod files'
 
 	# API
 	# ===
 	api =
 		runTask: -> # synchronously
-			defer = q.defer()
 			tasks = [
 				-> setBlueprint()
 				-> setMultiProdFiles()
 				-> buildTask()
 			]
-			tasks.reduce(q.when, q()).done ->
+			tasks.reduce(q.when, q()).then ->
 				# log.json Blueprint, 'prod files blueprint ='
 				# log.json ProdFiles, 'prod files ='
-				defer.resolve()
-			defer.promise
+				# log: 'minor'
+				message: 'built prod-files.json'
 
 	# return
 	# ======

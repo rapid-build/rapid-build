@@ -1,8 +1,9 @@
 # Updates config.ports if a port is in use.
 # =========================================
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	q           = require 'q'
 	findPort    = require 'find-port'
+	log         = require "#{config.req.helpers}/log"
 	promiseHelp = require "#{config.req.helpers}/promise"
 	configHelp  = require("#{config.req.helpers}/config") config
 
@@ -45,42 +46,41 @@ module.exports = (config, gulp, taskOpts={}) ->
 			portUsed = isPortUsed server, openPorts, configPort
 			return defer.resolve() unless portUsed
 			config.ports[server] = getNewPort openPorts
-			msg = "#{server} port switched to #{config.ports[server]} because #{configPort} was in use"
-			console.log msg.yellow
-			defer.resolve()
+			message = "#{server} port switched to #{config.ports[server]} because #{configPort} was in use"
+			log.task message, 'alert'
+			defer.resolve { message }
 		defer.promise
 
 	setPorts = (forTestClientPort) -> # synchronously
-		defer = q.defer()
 		switch !!forTestClientPort
 			when true then tasks = [ -> setPort 'test' ]
 			else
-				return promiseHelp.get defer unless config.build.server
-				return promiseHelp.get defer if config.exclude.default.server.files
+				return promiseHelp.get() unless config.build.server
+				return promiseHelp.get() if config.exclude.default.server.files
 				tasks = [
 					-> setPort 'server'
 					-> setPort 'reload'
 					-> setPort 'reloadUI'
 				]
-		tasks.reduce(q.when, q()).done -> defer.resolve()
-		defer.promise
+		tasks.reduce(q.when, q()).then ->
+			message: "server ports set"
 
 	# API
 	# ===
 	api =
 		runTask: (loc) -> # synchronously
-			defer = q.defer()
 			forTestClientPort = loc is 'test:client'
 			tasks = [
 				-> setPorts forTestClientPort
 				-> configHelp.buildFile buildConfigFile, 'rebuild'
 			]
-			tasks.reduce(q.when, q()).done -> defer.resolve()
-			defer.promise
+			tasks.reduce(q.when, q()).then ->
+				# log: 'minor'
+				message: "completed task: #{Task.name}"
 
 	# return
 	# ======
-	api.runTask taskOpts.loc
+	api.runTask Task.opts.loc
 
 
 

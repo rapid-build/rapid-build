@@ -1,7 +1,5 @@
-module.exports = (config, gulp) ->
-	q   = require 'q'
+module.exports = (config, gulp, Task) ->
 	fse = require 'fs-extra'
-	log = require "#{config.req.helpers}/log"
 
 	# helpers
 	# =======
@@ -15,16 +13,13 @@ module.exports = (config, gulp) ->
 	# ===
 	api =
 		runTask: (src, dest, file) ->
-			defer    = q.defer()
 			format   = spaces: '\t'
 			json     = getData()
 			jsonFile = config.bower.rb.path
-			fse.writeJson jsonFile, json, format, (e) ->
-				# log.task 'built bower.json', 'minor'
-				defer.resolve()
-			defer.promise
+			fse.writeJson(jsonFile, json, format).then ->
+				# log: 'minor'
+				message: 'built bower.json'
 
 	# return
 	# ======
 	api.runTask()
-

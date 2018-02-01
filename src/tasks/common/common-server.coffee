@@ -1,11 +1,16 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.server
+
+	# requires
+	# ========
+	q = require 'q'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.build.server
+			defer = q.defer()
 			gulp.series([
 				"#{config.rb.prefix.task}find-open-port"
 				gulp.parallel([
@@ -21,8 +26,9 @@ module.exports = (config, gulp, taskOpts={}) ->
 					"#{config.rb.prefix.task}compile-extra-sass:server"
 					"#{config.rb.prefix.task}copy-extra-files:server"
 				])
-				(cb) -> cb(); taskOpts.taskCB()
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			])()
+			defer.promise
 
 	# return
 	# ======

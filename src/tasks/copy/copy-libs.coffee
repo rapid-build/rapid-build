@@ -1,22 +1,20 @@
-module.exports = (config, gulp) ->
-	q   = require 'q'
-	log = require "#{config.req.helpers}/log"
+module.exports = (config, gulp, Task) ->
+	q = require 'q'
 
 	runTask = (src, dest, appOrRb) ->
 		defer   = q.defer()
 		srcOpts = { follow: true }
 		gulp.src src, srcOpts
+			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
 			.on 'end', ->
-				# console.log "copied #{appOrRb} libs".yellow
-				defer.resolve()
+				defer.resolve message: "copied #{appOrRb} libs"
 		defer.promise
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			defer = q.defer()
 			q.all([
 				runTask(
 					config.glob.src.rb.client.libs.all
@@ -28,10 +26,9 @@ module.exports = (config, gulp) ->
 					config.dist.app.client.libs.dir
 					'app'
 				)
-			]).done ->
-				log.task "copied libs to: #{config.dist.app.client.dir}"
-				defer.resolve()
-			defer.promise
+			]).then ->
+				log: true
+				message: "copied libs to: #{config.dist.app.client.dir}"
 
 	# return
 	# ======

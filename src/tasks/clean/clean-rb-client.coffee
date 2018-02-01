@@ -1,19 +1,19 @@
-module.exports = (config, gulp, taskOpts={}) ->
-	q           = require 'q'
-	del         = require 'del'
-	log         = require "#{config.req.helpers}/log"
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
-	configHelp  = require("#{config.req.helpers}/config") config
+	return promiseHelp.get() unless config.exclude.default.client.files
+
+	# requires
+	# ========
+	q          = require 'q'
+	del        = require 'del'
+	configHelp = require("#{config.req.helpers}/config") config
 
 	# tasks
 	# =====
 	cleanRbClient = ->
-		defer = q.defer()
-		src   = config.dist.rb.client.dir
+		src = config.dist.rb.client.dir
 		del(src, force:true).then (paths) ->
-			# log.task 'removed rb client dist dir', 'minor'
-			defer.resolve()
-		defer.promise
+			message: "removed rb client dist dir"
 
 	rebuildConfig = (env) ->
 		return promiseHelp.get() if env is 'test'
@@ -26,17 +26,14 @@ module.exports = (config, gulp, taskOpts={}) ->
 	# ===
 	api =
 		runTask: (env) ->
-			defer = q.defer()
 			q.all([
 				cleanRbClient()
 				rebuildConfig env
-			]).done ->
-				# log.task 'cleaned rb client dist', 'minor'
-				defer.resolve()
-			defer.promise
+			]).then ->
+				# log: 'minor'
+				message: "cleaned rb client dist"
 
 	# return
 	# ======
-	return promiseHelp.get() unless config.exclude.default.client.files
-	api.runTask taskOpts.env
+	api.runTask Task.opts.env
 

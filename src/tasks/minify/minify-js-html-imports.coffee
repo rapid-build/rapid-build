@@ -1,17 +1,22 @@
-module.exports = (config, gulp, taskOpts={}) ->
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
+
+	# requires
+	# ========
+	q = require 'q'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
-
+			defer = q.defer()
 			gulp.series(
 				"#{config.rb.prefix.task}inline-js-html-imports:prod"
 				"#{config.rb.prefix.task}minify-js" # minify js again so template string gets minified
-				(cb) -> cb(); taskOpts.taskCB()
+				(done) -> defer.resolve message: "completed task: #{Task.name}"; done()
 			)()
+			defer.promise
 
 	# return
 	# ======

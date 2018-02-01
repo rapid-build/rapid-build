@@ -1,27 +1,22 @@
-module.exports = (config) ->
-	q           = require 'q'
-	del         = require 'del'
-	log         = require "#{config.req.helpers}/log"
+module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.build.server
 
-	cleanTask = (src) ->
-		defer = q.defer()
-		del(src, force:true).then (paths) ->
-			log.task "cleaned test files in: #{config.dist.app.server.dir}"
-			defer.resolve()
-		defer.promise
+	# requires
+	# ========
+	del = require 'del'
 
 	# API
 	# ===
 	api =
 		runTask: ->
-			return promiseHelp.get() unless config.build.server
 			src = [
 				config.dist.rb.server.test.dir
 				config.dist.app.server.test.dir
 			]
-			cleanTask src
-
+			del(src, force:true).then (paths) ->
+				log: true
+				message: "cleaned test files in: #{config.dist.app.server.dir}"
 	# return
 	# ======
 	api.runTask()
