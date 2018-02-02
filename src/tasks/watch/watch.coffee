@@ -1,32 +1,19 @@
 module.exports = (config, gulp, Task) ->
+	promiseHelp = require "#{config.req.helpers}/promise"
+	return promiseHelp.get() unless config.env.is.dev
+
+	# Requires
+	# ========
 	q           = require 'q'
 	path        = require 'path'
 	gWatch      = require 'gulp-watch'
 	log         = require "#{config.req.helpers}/log"
-	promiseHelp = require "#{config.req.helpers}/promise"
+	watchStore  = require("#{config.req.manage}/watch-store") config
 	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
-	# tasks
+	# Tasks
 	# =====
-	tasks =
-		clean:         'clean-dist'
-		coffee:        'coffee:'
-		css:           'copy-css'
-		es6:           'es6:'
-		ts:            'typescript:server'
-		html:          'copy-html'
-		image:         'copy-images'
-		js:            'copy-js:'
-		less:          'less'
-		sass:          'sass'
-		templateCache: 'template-cache'
-		clientTest:    'copy-client-tests'
-		serverTest:    'copy-server-tests'
-		extraClient:   'copy-extra-files:'
-		extraServer:   'copy-extra-files:'
-		htmlAssets:    'inline-html-assets:dev'
-		jsHtmlImports: 'inline-js-html-imports:dev'
-
+	Tasks =
 		buildSpa: ->
 			return promiseHelp.get() unless config.build.client
 			taskManager.runWatchTask 'watch-build-spa'
@@ -34,11 +21,6 @@ module.exports = (config, gulp, Task) ->
 		browserSync: ->
 			return unless config.build.server
 			taskManager.runWatchTask 'browser-sync', run: 'restart'
-
-		get: (taskName, opts) -> # :string
-			taskName = @[taskName]
-			return taskName unless taskName.substr(-1) is ':'
-			taskName += if opts.loc is 'server' then 'server' else 'client'
 
 	# helpers
 	# =======
@@ -86,8 +68,7 @@ module.exports = (config, gulp, Task) ->
 	# event tasks
 	# ===========
 	changeTask = (taskName, file, opts) ->
-		tasks.browserSync() if opts.bsReload is opts.event # see extraWatches.client
-		taskName = tasks.get taskName, opts
+		Tasks.browserSync() if opts.bsReload is opts.event # see extra file watches
 		taskManager.runWatchTask taskName, watchFile: file
 
 	addTask = (taskName, file, opts) ->
@@ -95,21 +76,21 @@ module.exports = (config, gulp, Task) ->
 			return promiseHelp.get()   if opts.isTest
 			return promiseHelp.get()   if opts.taskOnly
 			return promiseHelp.get()   if opts.loc is 'server'
-			return tasks.browserSync() if opts.bsReload
-			tasks.buildSpa()
+			return Tasks.browserSync() if opts.bsReload
+			Tasks.buildSpa()
 
 	cleanTask = (taskName, file, opts) ->
 		return changeTask taskName, file, opts if opts.taskOnly
-		taskManager.runWatchTask(tasks['clean'], watchFile: file).then ->
+		taskManager.runWatchTask('clean-dist', watchFile: file).then ->
 			return promiseHelp.get()   if opts.isTest
-			return tasks.browserSync() if opts.bsReload
-			return opts.cleanCb(file).then(-> tasks.buildSpa()) if opts.cleanCb
-			tasks.buildSpa()
+			return Tasks.browserSync() if opts.bsReload
+			return opts.cleanCb(file).then(-> Tasks.buildSpa()) if opts.cleanCb
+			Tasks.buildSpa()
 
 	events = (file, taskName, opts={}) -> # add, change, unlink
 		opts.logWatch = -> log.watch taskName, file, opts
 		opts.logWatch() unless opts.silent
-		return tasks.buildSpa() if taskName is 'build spa'
+		return Tasks.buildSpa() if taskName is 'watch-build-spa'
 		return unless file
 		return unless file.event
 		return unless file.path
@@ -123,10 +104,10 @@ module.exports = (config, gulp, Task) ->
 
 	# watches
 	# =======
-	createWatch = (_glob, taskName, opts={}) ->
+	createWatch = (taskName, glob, opts={}) ->
 		defer = q.defer()
 		gOpts = read: false
-		gWatch _glob, gOpts, (file) ->
+		gWatch glob, gOpts, (file) ->
 			events file, taskName, opts
 		.on 'ready', ->
 			loc = opts.loc or 'client'
@@ -136,113 +117,23 @@ module.exports = (config, gulp, Task) ->
 			defer.resolve()
 		defer.promise
 
-	# html watch (handle angular template cache)
-	# ==========================================
-	htmlWatch = (views) ->
-		if config.angular.templateCache.dev
-			return promiseHelp.get() if config.exclude.default.client.files
-			return createWatch views, 'templateCache', lang:'html', srcType:'views', taskOnly:true, logTaskName:'template cache'
-		createWatch views, 'html', lang:'html', srcType:'views', bsReload:true
-
-	# spa watch (if custom spa file then watch it)
-	# ============================================
-	spaWatch = (spaFilePath) ->
-		return promiseHelp.get() unless config.spa.custom
-		return promiseHelp.get() if config.exclude.spa
-		createWatch spaFilePath, 'build spa', lang: config.spa.dist.file
-
-	# inline watches
-	# ==============
-	jsHtmlImportsWatch = ->
-		return promiseHelp.get() unless config.inline.jsHtmlImports.client.enable
-		_glob = [].concat(
-			config.glob.dist.app.client.scripts.all,
-			config.glob.dist.app.client.views.all
-		)
-		createWatch _glob, 'jsHtmlImports', lang:'js html import', srcType:'scripts', logTaskName:'js html import', silent: true, addLog: true
-
-	htmlAssetsWatch = ->
-		return promiseHelp.get() unless config.inline.htmlAssets.client.enable
-		_glob = [].concat(
-			# config.glob.dist.app.client.scripts.all,
-			config.glob.dist.app.client.styles.all,
-			config.glob.dist.app.client.views.all,
-			config.spa.dist.path
-		)
-		createWatch _glob, 'htmlAssets', lang:'html asset', srcType:'views', logTaskName:'html asset', silent: true, addLog: true
-
-	# callbacks
-	# =========
-	cleanStylesCb = (file) ->
-		config.internal.deleteFileImports file.rbAppOrRb, file.rbDistPath
-		promiseHelp.get()
-
 	# API
 	# ===
 	api =
 		runTask: ->
 			watches = []
-			clientWatches = [ # client watch: images, styles, scripts, views and the spa.html
-				-> createWatch config.glob.src.app.client.images.all,     'image',  lang:'image',  srcType:'images',  bsReload:true
-				-> createWatch config.glob.src.app.client.styles.css,     'css',    lang:'css',    srcType:'styles',  cleanCb: cleanStylesCb
-				-> createWatch config.glob.src.app.client.styles.less,    'less',   lang:'less',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
-				-> createWatch config.glob.src.app.client.styles.sass,    'sass',   lang:'sass',   srcType:'styles',  extDist:'css', cleanCb: cleanStylesCb
-				-> createWatch config.glob.src.app.client.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', extDist:'js'
-				-> createWatch config.glob.src.app.client.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', extDist:'js'
-				-> createWatch config.glob.src.app.client.scripts.js,     'js',     lang:'js',     srcType:'scripts'
-				-> htmlWatch config.glob.src.app.client.views.html
-				-> spaWatch config.spa.src.path
-				-> htmlAssetsWatch()
-				-> jsHtmlImportsWatch()
-			]
-			serverWatches = [ # server watch: scripts
-				-> createWatch config.glob.src.app.server.scripts.js,     'js',     lang:'js',     srcType:'scripts', loc:'server', bsReload:true
-				-> createWatch config.glob.src.app.server.scripts.es6,    'es6',    lang:'es6',    srcType:'scripts', loc:'server', bsReload:true, extDist:'js'
-				-> createWatch config.glob.src.app.server.scripts.coffee, 'coffee', lang:'coffee', srcType:'scripts', loc:'server', bsReload:true, extDist:'js'
-				->
-					return promiseHelp.get() unless config.compile.typescript.server.enable
-					tsGlob = [].concat config.glob.src.app.server.scripts.ts, "!#{config.glob.src.app.server.typings.defs}"
-					createWatch tsGlob, 'ts', lang:'typescript', srcType:'scripts', extDist:'js', loc:'server', bsReload:true, logTaskName:'typescript'
-			]
-			clientTestWatches = [
-				-> createWatch config.glob.src.app.client.test.js,     'clientTest', lang:'js',     srcType:'test', isTest:true, logTaskName:'client test'
-				-> createWatch config.glob.src.app.client.test.es6,    'clientTest', lang:'es6',    srcType:'test', isTest:true, logTaskName:'client test', extDist:'js'
-				-> createWatch config.glob.src.app.client.test.coffee, 'clientTest', lang:'coffee', srcType:'test', isTest:true, logTaskName:'client test', extDist:'js'
-			]
-			serverTestWatches = [
-				-> createWatch config.glob.src.app.server.test.js,     'serverTest', lang:'js',     srcType:'test', loc:'server', isTest:true, logTaskName:'server test'
-				-> createWatch config.glob.src.app.server.test.es6,    'serverTest', lang:'es6',    srcType:'test', loc:'server', isTest:true, logTaskName:'server test', extDist:'js'
-				-> createWatch config.glob.src.app.server.test.coffee, 'serverTest', lang:'coffee', srcType:'test', loc:'server', isTest:true, logTaskName:'server test', extDist:'js'
-			]
-			extraWatches =
-				client: ->
-					createWatch config.extra.watch.app.client, 'extraClient', lang:'extra', srcType:'root', loc:'client', bsReload:'change', logTaskName:'extra client'
-				server: ->
-					createWatch config.extra.watch.app.server, 'extraServer', lang:'extra', srcType:'root', loc:'server', bsReload:true, logTaskName:'extra server'
+			Watches = watchStore.getWatches()
 
-			# setup watch rules
-			if config.build.client
-				if config.env.is.test
-					watches = watches.concat clientWatches, clientTestWatches if config.env.is.testClient
-				else
-					watches = watches.concat clientWatches
+			for watchType, _watches of Watches # merge watches into single array
+				continue unless _watches.length
+				watches.push _watches...
 
-				watches.push extraWatches.client if config.extra.watch.app.client.length
+			promises = watches.map (watch) ->
+				createWatch watch.task, watch.glob, watch.opts
 
-			if config.build.server
-				if config.env.is.test
-					watches = watches.concat serverWatches, serverTestWatches if config.env.is.testServer
-				else
-					watches = watches.concat serverWatches
-
-				watches.push extraWatches.server if config.extra.watch.app.server.length
-
-			# activate watchers (async)
-			promises = watches.map (watch) -> watch()
 			q.all(promises).then ->
-				# log: 'minor'
+				# log: 'warn'
 				message: "file watchers activated"
-
 	# return
 	# ======
 	api.runTask()

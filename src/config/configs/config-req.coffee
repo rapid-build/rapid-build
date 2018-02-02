@@ -9,6 +9,7 @@ module.exports = (config, rbDir) ->
 		manage:  "#{rbDir}/manage"
 		plugins: "#{rbDir}/plugins"
 		tasks:   "#{rbDir}/tasks"
+		watches: "#{rbDir}/watches"
 		config:
 			path:    "#{rbDir}/config"
 			configs: "#{rbDir}/config/configs"

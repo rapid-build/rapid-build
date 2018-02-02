@@ -43,7 +43,7 @@ module.exports = (rbDir, options) ->
 	# format
 	# ======
 	req = config.req
-	delete config.req # so req will show up last
+	delete config.req # personal preference only: so req will show up last
 	config.req = req
 
 	# return
