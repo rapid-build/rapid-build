@@ -45,10 +45,11 @@ module.exports = (config, gulp, Task) ->
 			message: msg
 
 	moveTempTask = (msg) ->
-		defer = q.defer()
-		src   = config.temp.client.glob
-		dest  = config.dist.app.client.dir
-		gulp.src src
+		defer   = q.defer()
+		src     = config.temp.client.glob
+		dest    = config.dist.app.client.dir
+		srcOpts = base: config.temp.client.dir
+		gulp.src src, srcOpts
 			.on 'error', (e) -> defer.reject e
 			.pipe gulp.dest dest
 			.on 'end', ->
