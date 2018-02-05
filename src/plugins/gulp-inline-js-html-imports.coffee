@@ -14,40 +14,6 @@ require('colors').setTheme error:['red','bold'] unless 'colors'.error
 # =========
 COMMENT_PLACEHOLDER = '//RB_COMMENT_PLACEHOLDER'
 
-# HELPERS
-# =======
-Help =
-	getKeyPath: (file) -> # :string | void
-		return unless file
-		path.join file.base, file.relative
-
-	inspectFile: (file, sort=false) -> # :void (log vinyl props)
-		props = event: null, base: null, relative: null, extname: null, stem: null, basename: null, cwd: null, dirname: null, path: null, event: null
-		if sort then Object.keys(props).sort().forEach (key) -> delete props[key]; props[key] = null
-		for key of props then props[key] = file[key]
-		json = JSON.stringify(props, null, '\t').replace(/"/g, "'").replace /(\t)'(\w*)'/g, '$1$2'
-		console.log json
-
-	isObject: (val) -> # :boolean
-		return false if typeof val isnt 'object'
-		return false if val is null
-		return false if Array.isArray val
-		true
-
-	isEmptyObject: (obj) -> # :boolean
-		return false unless @isObject obj
-		!Object.getOwnPropertyNames(obj).length
-
-	isHtmlFile: (file) -> # :boolean
-		return false unless file
-		return false if typeof file.extname isnt 'string'
-		file.extname.toLowerCase().indexOf('.html') isnt -1
-
-	logJson: (json, prefix) -> # :void (log pretty json)
-		json = JSON.stringify json, null, '\t'
-		return console.log json unless prefix
-		console.log "#{prefix}:", json
-
 # REGULAR EXPRESSIONS
 # ===================
 Regx =
@@ -68,142 +34,205 @@ Regx =
 		# \btemplate(?=\s*?(;|}|\/\/|\/\*|\n|$))(?!\s+?(:|\(|from))
 		new RegExp "\\b#{variable}(?=\\s*?(;|}|\\/\\/|\\/\\*|\\n|$))(?!\\s+?(:|\\(|from))", 'g'
 
-# HTML IMPORTS (hashmap)
+# HELPERS
+# =======
+Help =
+	inspectFile: (file, sort=false) -> # :void (log vinyl props)
+		props = event: null, base: null, relative: null, extname: null, stem: null, basename: null, cwd: null, dirname: null, path: null, event: null
+		if sort then Object.keys(props).sort().forEach (key) -> delete props[key]; props[key] = null
+		for key of props then props[key] = file[key]
+		json = JSON.stringify(props, null, '\t').replace(/"/g, "'").replace /(\t)'(\w*)'/g, '$1$2'
+		console.log json
+
+	isObject: (val) -> # :boolean
+		return false if typeof val isnt 'object'
+		return false if val is null
+		return false if Array.isArray val
+		true
+
+	isEmptyObject: (obj) -> # :boolean
+		return false unless @isObject obj
+		!Object.getOwnPropertyNames(obj).length
+
+	isInlineFile: (file, extname) -> # :boolean
+		return false unless file
+		return false if typeof file.extname isnt 'string'
+		file.extname.toLowerCase().indexOf(extname) is -1
+
+	logJson: (json, prefix) -> # :void (log pretty json)
+		json = JSON.stringify json, null, '\t'
+		return console.log json unless prefix
+		console.log "#{prefix}:", json
+
+	getKeyPath: (file) -> # :string | void
+		return unless file
+		path.join file.base, file.relative
+
+# ASSETS (hashmap)
 # jsPath:                 (dist/client/scripts/xxx.js)
-# 	imports:
-# 		htmlPath:         (dist/client/views/xxx.html)
-# 			statement: '' (import template from '../views/xxx.html';)
-#           path: ''      (statement path '../views/xxx.html')
-# 			variable: ''  (template)
-# 			html: ''      (html file contents)
 # 	contents:
 # 		compiled: ''      (the inlined js file contents)
 # 		uncompiled: ''    (the uninlined js file contents)
+# 	assets:
+# 		assetPath:        (dist/client/views/xxx.html)
+# 			statement: '' (import template from '../views/xxx.html';)
+#           path: ''      (statement path '../views/xxx.html')
+# 			variable: ''  (template)
+# 			contents: ''  (html file contents)
 # ======================================================================
-HtmlImports = {}
+Assets = {}
 
 # COMPILER
 # ========
-InlineImports =
+InlineAssets =
 	# Public Methods
 	# ==============
-	get: (file, opts={}) -> # :@JS (run in order)
-		if Help.isHtmlFile file
-			@reloadJS file
-			return hasImports: false
+	get: (file, opts={}) -> # :@File (run in order)
+		@File = @getFile file
 
-		@initJS file
-		return @JS if @fromReloadJS()
+		if Help.isInlineFile file, '.js'
+			@reload @File.path # html file
+			return @File
 
-		htmlImports = @getHtmlImports()
-		@JS.hasImports = !Help.isEmptyObject htmlImports
-		@updateHtmlImportsMap htmlImports
-		return @JS unless @JS.hasImports
+		@update.File.contents.call @, file.contents.toString()
+		@update.File.changed.call @, @File.path
 
-		@inlineImports()
-		HtmlImports[@JS.path].contents.compiled = @JS.contents
-		@JS
+		# console.log 'JS File CHANGED:', @File.changed
+		return @File unless @File.changed
+		assets = @getAssets @File.contents, @File.dir, @File.relPath
+
+		if Help.isEmptyObject assets
+			@update.Assets.delete @File.path
+			@update.File.changed.call @, @File.path, false
+			# Help.logJson assets, 'JS assets'
+			return @File
+
+		inlinedContents = @getInlinedContents assets, @File.contents, @File.relPath
+		@update.Assets.add.call @, @File.path, inlinedContents, @File.contents, assets
+		# Help.logJson Assets, 'JS ASSETS'
+		@update.File.contents.call @, inlinedContents
+		@File
 
 	# Private Methods
 	# ===============
-	initJS: (file) -> # :void (@JS will be the return value for @get())
+	getFile: (file) -> # :{}<File> (called once and first in @get())
 		_path = Help.getKeyPath file
-		@JS =
-			hasImports: false                    # does js contents have html import(s)
-			dir:        path.dirname _path       # dist/client/scripts
-			path:       _path                    # dist/client/scripts/xxx.js
-			relPath:    file.relative            # scripts/xxx.js
-			extname:    file.extname             # .js
-			contents:   file.contents.toString() # original uninlined js contents (needed for html watch)
+		changed:  false              # did js change (needed for watch)
+		dir:      path.dirname _path # dist/client/scripts
+		path:     _path              # dist/client/scripts/xxx.js
+		relPath:  file.relative      # scripts/xxx.js
+		extname:  file.extname       # .js
+		contents: null               # original uninlined js contents (needed for asset watch)
 
-	fromReloadJS: -> # :boolean (for the watch)
-		return false unless !!HtmlImports[@JS.path]
-		@JS.contents is HtmlImports[@JS.path].contents.compiled
+	# Updater
+	# =======
+	update:
+		File: # (use with .call())
+			changed: (_path, changed) -> # :void
+				return @File.changed = changed if typeof changed is 'boolean'
+				assets = Assets[_path]
+				return @File.changed = true unless assets
+				@File.changed = @File.contents isnt assets.contents.compiled
 
-	getHtmlImports: -> # :htmlImports<hashmap> { jsPath: { statement:'', path:'', variable:'', html:'' }}
-		htmlImports = {}
-		@removeComments()
-		while (match = Regx.htmlImports.exec(@JS.contents)) != null
+			contents: (contents) -> # :void
+				@File.contents = contents
+
+		Assets:
+			add: (_path, compiled, uncompiled, assets={}) -> # :void
+				Assets[_path] =
+					assets: assets # {}<hashmap>
+					contents:
+						compiled: compiled     # :string (set after inlining assets)
+						uncompiled: uncompiled # :string (will use in @reload)
+
+			delete: (_path) -> # :void
+				delete Assets[_path]
+
+			contents:
+				compiled: (_path, contents) -> # :void
+					Assets[_path].contents.compiled = contents
+
+	reload: (assetPath) -> # :void (for watching asset files)
+		return if Help.isEmptyObject Assets
+		# console.log 'JS ASSET PATH:', assetPath
+		# Help.logJson Assets, 'JS ASSETS'
+		assetPaths = []
+		for _path, file of Assets
+			continue unless file.assets[assetPath]
+			assetPaths.push _path
+			
+		return unless assetPaths.length
+		# Help.logJson assetPaths
+
+		for _path in assetPaths
+			exists = fse.pathExistsSync _path
+			unless exists
+				eMsg = "failed to inline html import, file doesn't exist: #{_path}"
+				return console.error eMsg.error
+			fse.outputFileSync _path, Assets[_path].contents.uncompiled
+
+	getAssets: (contents, dir, relPath) -> # :assets<hashmap> { assetPath: { statement:'', path:'', variable:'', html:'' }}
+		assets = {}
+		file   = @removeComments contents
+		while (match = Regx.htmlImports.exec(file.contents)) != null
 			statement      = match[0] # import template from '../views/xxx.html';
 			variable       = match[1] # template
 			importPath     = match[2] # ../views/xxx.html
-			importDistPath = path.join @JS.dir, importPath # dist/client/views/xxx.html
+			importDistPath = path.join dir, importPath # dist/client/views/xxx.html
 			try
-				html = fse.readFileSync importDistPath, 'utf8'
+				assetContents = fse.readFileSync importDistPath, 'utf8'
 			catch e
-				e.message = "html import file in #{@JS.relPath} doesn't exist: #{importPath}"
+				e.message = "html import file in #{relPath} doesn't exist: #{importPath}"
 				console.error e.message.error
 				continue
-			htmlImport = { statement, path: importPath, variable, html }
-			htmlImports[importDistPath] = htmlImport
-		@addComments()
-		htmlImports
+			asset = { statement, path: importPath, variable, contents: assetContents }
+			assets[importDistPath] = asset
+		# file = @addComments file
+		assets
 
-	updateHtmlImportsMap: (htmlImports) -> # :void
-		return delete HtmlImports[@JS.path] unless @JS.hasImports
-		HtmlImports[@JS.path] = {
-			imports: htmlImports
-			contents:
-				compiled: null
-				uncompiled: @JS.contents
-		}
-
-	reloadJS: (file) -> # :void (for watching html files)
-		return if Help.isEmptyObject HtmlImports
-		htmlPath = Help.getKeyPath file
-		jsFiles  = []
-		for jsPath, jsFile of HtmlImports
-			continue unless jsFile.imports[htmlPath]
-			jsFiles.push jsPath
-		return unless jsFiles.length
-		for jsPath in jsFiles
-			fse.pathExists(jsPath).then (exists) ->
-				unless exists
-					eMsg = "failed to inline html import, file doesn't exist: #{jsPath}"
-					return console.error eMsg.error
-				fse.outputFile jsPath, HtmlImports[jsPath].contents.uncompiled
-
-	addComments: -> # :void
-		return unless @comments.length
-		i = 0; regx = new RegExp COMMENT_PLACEHOLDER, 'g'
-		@JS.contents = @JS.contents.replace regx, (match) => @comments[i++]
-
-	removeComments: -> # :void
-		@comments = []
-		@JS.contents = @JS.contents.replace Regx.comments, (match) =>
-			@comments.push match
-			COMMENT_PLACEHOLDER
-
-	inlineImports: -> # :void
-		return unless !!HtmlImports[@JS.path]
-		@removeComments()
-		for htmlPath, htmlImport of HtmlImports[@JS.path].imports
+	getInlinedContents: (assets, contents, relPath) -> # :void
+		file = @removeComments contents
+		for assetPath, asset of assets
 			hasTemplateVar = false
-			@JS.contents = @JS.contents.replace Regx.templateVar(htmlImport.variable), (match) ->
+			file.contents = file.contents.replace Regx.templateVar(asset.variable), (match) ->
 				hasTemplateVar = true
-				"`#{htmlImport.html}`"
+				"`#{asset.contents}`"
 			if hasTemplateVar
-				@JS.contents = @JS.contents.replace Regx.htmlImport(htmlImport.statement), ''
+				file.contents = file.contents.replace Regx.htmlImport(asset.statement), ''
 			else
 				console.error "
-					failed to inline js html import \"#{htmlImport.path}\"
-					in file \"#{@JS.relPath}\",
-					variable \"#{htmlImport.variable}\" unused
+					failed to inline js html import \"#{asset.path}\"
+					in file \"#{relPath}\",
+					variable \"#{asset.variable}\" unused
 				".error
-		@addComments()
+		file = @addComments file
+		file.contents
+
+	addComments: (file) -> # :{}
+		return file unless file.comments.length
+		i = 0; regx = new RegExp COMMENT_PLACEHOLDER, 'g'
+		file.contents = file.contents.replace regx, (match) => file.comments[i++]
+		file
+
+	removeComments: (contents) -> # :{}
+		comments = []
+		contents = contents.replace Regx.comments, (match) =>
+			comments.push match
+			COMMENT_PLACEHOLDER
+		{ comments, contents }
 
 # GULP PLUGIN
 # ===========
-inlineJsHtmlImports = (opts={}) ->
+inlineJsImportAssets = (opts={}) ->
 	through.obj (file, enc, cb) ->
 		return cb null, file unless file
 		return cb null, file if file.isNull()
 		return cb new PluginError PLUGIN_NAME, 'streaming not supported' if file.isStream()
 		return cb null, file unless file.isBuffer()
 		try
-			inlinedJS = InlineImports.get file, opts
-			return cb null unless inlinedJS.hasImports
-			file.contents = new Buffer inlinedJS.contents
+			js = InlineAssets.get file, opts
+			return cb null unless js.changed
+			file.contents = new Buffer js.contents
 		catch e
 			return cb new PluginError PLUGIN_NAME, e
 
@@ -211,4 +240,4 @@ inlineJsHtmlImports = (opts={}) ->
 
 # EXPORT IT!
 # ==========
-module.exports = inlineJsHtmlImports
+module.exports = inlineJsImportAssets
