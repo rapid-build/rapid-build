@@ -247,6 +247,11 @@ Below are a list of options you can use to customize your builds (place in rapid
 # extra.minify.client[css|js]                            = (array of strings) = file paths: additional files to minify in dist/client that the build didn't minify (by default, the build does not minify files in libs or bower_components)
 # extra.watch[client|server]                             = (array of strings) = file paths: additional files to watch in src/client and or src/server that the build didn't watch
 # security.client.clickjacking                           = (boolean) defaults to true = includes a clickjacking defense script in the default spa.html (set to false to disable)
+# inline.htmlAssets.enable                               = (boolean) defaults to false = set to true to inline html assets
+# inline.htmlAssets.dev                                  = (boolean) defaults to false = set to true to run on dev build
+# inline.htmlAssets.options.attribute                    = (string) by default all html assets will be inlined unless an attribute name is provided (place attribute name on html tags/assets you wish to inline)
+# inline.htmlAssets.options.svgAsImage                   = (boolean) defaults to false = set to true to convert <img src="*.svg"> to <img> and not <svg> tag
+# inline.htmlAssets.options.ignore                       = (array of strings) disable inlining based on file extension and/or html tag
 # inline.jsHtmlImports.client.enable                     = (boolean) defaults to false = set to true to inline js html imports
 # compile.htmlScripts.client.enable                      = (boolean) defaults to false = set to true to compile inline html scripts that have es6 code to es5
 # compile.typescript[client|server].enable               = (boolean) defaults to false = set to true to enable client and or server typescript compiler
