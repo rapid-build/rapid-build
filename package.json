@@ -121,7 +121,7 @@
 		"tar": "2.2.1",
 		"through2": "2.0.3",
 		"tsify": "3.0.4",
-		"typescript": "2.6.2",
+		"typescript": "2.7.1",
 		"uglify-es": "3.2.2",
 		"uglify-js": "3.2.2",
 		"vinyl-source-stream": "2.0.0",
