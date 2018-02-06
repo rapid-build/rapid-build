@@ -40,7 +40,7 @@ module.exports = (config) -> # :Object[]
 	# =====
 	Globs =
 		htmlAssets: [].concat(
-			# config.glob.dist.app.client.scripts.all
+			config.glob.dist.app.client.scripts.all
 			config.glob.dist.app.client.styles.all
 			config.glob.dist.app.client.views.all
 			config.spa.dist.path
