@@ -69,7 +69,9 @@ module.exports = (config, gulp, Task) ->
 	# ===========
 	changeTask = (taskName, file, opts) ->
 		Tasks.browserSync() if opts.bsReload is opts.event # see extra file watches
-		taskManager.runWatchTask taskName, watchFile: file
+		watchOpts = watchFile: file
+		watchOpts.keep = true if opts.keepWatchOpts
+		taskManager.runWatchTask taskName, watchOpts
 
 	addTask = (taskName, file, opts) ->
 		changeTask(taskName, file, opts).then ->

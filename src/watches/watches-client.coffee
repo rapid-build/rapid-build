@@ -70,7 +70,7 @@ module.exports = (config) -> # :Object[]
 	Watch.add 'copy-html',                  Globs.src.views.html,     lang: 'html',           srcType: 'views',   bsReload: true, logTaskName: 'html' if Watch.html()
 	Watch.add 'template-cache',             Globs.src.views.html,     lang: 'html',           srcType: 'views',   logTaskName: 'template cache', taskOnly: true if Watch.templateCache()
 	Watch.add 'inline-html-assets:dev',     Globs.htmlAssets,         lang: 'html asset',     srcType: 'views',   logTaskName: 'html asset',     addLog: true, silent: true if Watch.htmlAssets()
-	Watch.add 'inline-js-html-imports:dev', Globs.jsHtmlImports,      lang: 'js html import', srcType: 'scripts', logTaskName: 'js html import', addLog: true, silent: true if Watch.jsHtmlImports()
+	Watch.add 'inline-js-html-imports:dev', Globs.jsHtmlImports,      lang: 'js html import', srcType: 'scripts', logTaskName: 'js html import', addLog: true, silent: true, keepWatchOpts: true if Watch.jsHtmlImports()
 	Watch.add 'watch-build-spa',            Globs.spa,                lang: config.spa.src.file, logTaskName: config.spa.src.file if Watch.spa()
 
 	# Return

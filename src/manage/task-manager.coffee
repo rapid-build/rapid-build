@@ -23,6 +23,7 @@ module.exports = (config, gulp) ->
 	api =
 		runWatchTask: (taskName, watchOpts) -> # :promise
 			@runTask(taskName, watchOpts).then ->
+				return if watchOpts.keep # see watch inline-js-html-imports:dev
 				taskStore.deleteTaskOpts taskName, watchOpts, silent: true
 
 		runTask: (taskName, opts) -> # :promise
