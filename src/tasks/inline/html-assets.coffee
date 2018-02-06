@@ -1,7 +1,8 @@
 module.exports = (config, gulp, Task) ->
 	promiseHelp = require "#{config.req.helpers}/promise"
-	return promiseHelp.get() unless config.inline.htmlAssets.client.enable
+	return promiseHelp.get() unless config.inline.htmlAssets.enable
 	return promiseHelp.get() if config.env.is.prod and Task.opts.env is 'dev' # skip, will run later in minify-client
+	return promiseHelp.get() if config.env.is.dev and !config.inline.htmlAssets.dev
 	forWatchFile = !!Task.opts.watchFile
 
 	# requires
@@ -15,7 +16,7 @@ module.exports = (config, gulp, Task) ->
 		srcOpts = { base, allowEmpty: true }
 		gulp.src src, srcOpts
 			.on 'error', (e) -> defer.reject e
-			.pipe inlineHtmlAssets()
+			.pipe inlineHtmlAssets config.inline.htmlAssets.options
 			.on 'error', (e) -> defer.reject e
 			.on 'data', ->
 				Task.opts.watchFile.rbLog() if forWatchFile

@@ -78,7 +78,7 @@ InlineAssets =
 
 		# console.log 'HTML CHANGED:', @File.changed
 		return @File unless @File.changed
-		inlined = @inlineAssets @File.contents, @File.dir, @File.relPath
+		inlined = @inlineAssets @File.contents, @File.dir, @File.relPath, opts
 
 		if inlined.error or not inlined.assets.length
 			# console.log 'ERROR OR NO ASSETS:', true
@@ -150,12 +150,12 @@ InlineAssets =
 				return console.error eMsg.error
 			fse.outputFileSync _path, Assets[_path].contents.uncompiled
 
-	inlineAssets: (contents, dir, relPath) -> # :HtmlAsset{}
+	inlineAssets: (contents, dir, relPath, inlineOpts={}) -> # :HtmlAsset{}
 		inlined = assets: [], error: null, contents: null
 		try
 			opts =
+				attribute: false # included in inlineOpts
 				compress: false
-				attribute: false
 				rootpath: dir
 				handlers: [
 					(source, context) -> # next() not working with .sync
@@ -163,6 +163,7 @@ InlineAssets =
 						assetPath = Help.getInlineKeyPath source.filepath, dir
 						inlined.assets.push assetPath
 				]
+			Object.assign opts, inlineOpts
 			inlined.contents = inliner contents, opts # inliner bug: one line with no html
 		catch e
 			inlined.error = e

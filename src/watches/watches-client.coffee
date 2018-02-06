@@ -22,7 +22,8 @@ module.exports = (config) -> # :Object[]
 			not config.angular.templateCache.dev
 
 		htmlAssets: ->
-			config.inline.htmlAssets.client.enable
+			config.inline.htmlAssets.dev and
+			config.inline.htmlAssets.enable
 
 		jsHtmlImports: ->
 			config.inline.jsHtmlImports.client.enable
