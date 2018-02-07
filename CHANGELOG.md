@@ -1,3 +1,45 @@
+# [5.0.0](https://github.com/rapid-build/rapid-build/compare/v4.0.1...v5.0.0) (2018-02-07)
+
+
+Massive refactor to improve the build's error logging due to [gulp v4's strictness](https://git.io/vAfLQ).
+
+
+### Bug Fixes
+
+* **inline.jsHtmlImports build option:**
+	* should match import when "from" doesn't have a space after it ([9e26a0e](https://github.com/rapid-build/rapid-build/commit/9e26a0e))
+	* should match only ".html" imports when javascript is all on one line ([4dc718d](https://github.com/rapid-build/rapid-build/commit/4dc718d))
+	* should match template variable that's followed by "}" ([5f39670](https://github.com/rapid-build/rapid-build/commit/5f39670))
+
+
+### Features
+
+* **bump:** dep typescript to [v2.7.1](https://git.io/vNj53 'typescript v2.7 features') ([b1a1874](https://github.com/rapid-build/rapid-build/commit/b1a1874))
+* **new cli options:**
+	* -v for outputting rapid-build's version number ([65f2f1f](https://github.com/rapid-build/rapid-build/commit/65f2f1f))
+	* --location for outputting where rapid-build is installed ([03b274e](https://github.com/rapid-build/rapid-build/commit/03b274e))
+* **new build option inline.htmlAssets:**
+	* inline css, images and script files into your html (&#128526;wicked cool)
+	* useful when creating [web components](https://www.webcomponents.org/)
+	* example:
+	```html
+		this: <div><script src="/scripts/main.js"></script><div>
+		to this: <div><script>console.log('Hello world!')</script><div>
+	```
+
+
+### Minor Features
+
+* **improved error logging:** for identifying build issues
+
+
+### Breaking Changes
+
+Only applies to people using typescript.  
+Bumped typescript from v2.6.2 to v2.7.1 ([breaking changes](https://git.io/vNj5Y 'typescript v2.7 breaking changes')).
+
+
+
 ## [4.0.1](https://github.com/rapid-build/rapid-build/compare/v4.0.0...v4.0.1) (2017-12-29)
 
 
