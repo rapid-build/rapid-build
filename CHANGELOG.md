@@ -1,3 +1,12 @@
+## [5.0.1](https://github.com/rapid-build/rapid-build/compare/v5.0.0...v5.0.1) (2018-02-13)
+
+
+### Bug Fixes
+
+* **absolute css urls:** for client libs and bower_components ensure path is set correctly ([d34be06](https://github.com/rapid-build/rapid-build/commit/d34be06))
+
+
+
 # [5.0.0](https://github.com/rapid-build/rapid-build/compare/v4.0.1...v5.0.0) (2018-02-07)
 
 
