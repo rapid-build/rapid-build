@@ -53,7 +53,7 @@ pathHelp =
 		# console.log "Base: #{base} | Rel: #{rel}"
 		base        = base.split '/'
 		# console.log base
-		base        = base[base.length-2]
+		base        = base[base.length-1]
 		base        = "/#{base}" # /libs
 		# console.log "Base: #{base}"
 		rel         = rel.split '/'
