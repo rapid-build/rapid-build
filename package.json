@@ -95,7 +95,6 @@
 		"gulp-template": "5.0.0",
 		"gulp-typescript": "2.13.6",
 		"gulp-uglify": "3.0.0",
-		"gulp-watch": "5.0.0",
 		"gulp-zip": "4.1.0",
 		"inline-source": "5.2.7",
 		"jasmine": "2.9.0",

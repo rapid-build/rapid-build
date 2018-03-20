@@ -19,7 +19,10 @@ module.exports = (config, gulp, Task) ->
 			.pipe inlineHtmlAssets config.inline.htmlAssets.options
 			.on 'error', (e) -> defer.reject e
 			.on 'data', ->
-				Task.opts.watchFile.rbLog() if forWatchFile
+				try
+					Task.opts.watchFile.rbLog() if forWatchFile
+				catch e
+					console.warn "#{Task.name}\n#{e.message}".warn
 			.pipe gulp.dest dest
 			.on 'end', ->
 				defer.resolve message: "completed task: #{Task.name}"

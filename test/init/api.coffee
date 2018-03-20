@@ -7,6 +7,7 @@ module.exports =
 		'/common/common-server'
 		'/server/start-server'
 		# '/browser/open-browser' # TODO
+		'/server/stop-server'
 	]
 	dev: [
 		'/common/common'

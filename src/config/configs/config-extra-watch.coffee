@@ -1,8 +1,9 @@
 module.exports = (config, options) ->
-	path   = require 'path'
-	log    = require "#{config.req.helpers}/log"
-	isType = require "#{config.req.helpers}/isType"
-	test   = require("#{config.req.helpers}/test")()
+	path     = require 'path'
+	log      = require "#{config.req.helpers}/log"
+	isType   = require "#{config.req.helpers}/isType"
+	pathHelp = require "#{config.req.helpers}/path"
+	test     = require("#{config.req.helpers}/test")()
 
 	# init extra.watch
 	# watch and copy additional static
@@ -25,6 +26,7 @@ module.exports = (config, options) ->
 			continue unless files.length
 			for file, i in files
 				files[i] = path.join config.src[app][loc].dir, files[i]
+				files[i] = pathHelp.format files[i]
 
 	formatCopyPaths 'app'
 

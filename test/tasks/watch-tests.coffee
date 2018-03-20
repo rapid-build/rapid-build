@@ -2,9 +2,11 @@
 # ===========
 module.exports = (config, jasmine) ->
 	return unless config.test.watch
-	gWatch = require 'gulp-watch'
-	tests  = require("#{config.paths.abs.test.helpers}/tests") config
-	specs  = [ "#{config.paths.abs.test.tests.path}/**/*" ]
+	path      = require 'path'
+	gulp      = require 'gulp'
+	tests     = require("#{config.paths.abs.test.helpers}/tests") config
+	testsPath = config.paths.abs.test.tests.path.replace /\\/g, '/' # replace for windows
+	specs     = ["#{testsPath}/**/*"]
 
 	# helpers
 	# =======
@@ -16,18 +18,21 @@ module.exports = (config, jasmine) ->
 	# ====
 	createWatch = ->
 		new Promise (resolve, reject) ->
-			gWatch specs, read:false, (file) ->
-				event = file.event
-				test  = tests.get.test file.relative
-				logMsg event, test
-				return if event is 'unlink'
+			watcher = gulp.watch specs
+
+			watcher.on 'change', (_path) ->
+				relative = path.relative testsPath, _path
+				test     = tests.get.test relative
+				logMsg 'change', test
 				jasmine.init(test).reExecute()
-			.on 'ready', ->
-				console.log "watching tests".info
-				resolve()
-			.on 'error', (e) ->
+
+			watcher.on 'error', (e) ->
 				console.log "test watcher error".error
 				reject e.message
+
+			watcher.on 'ready', ->
+				console.log "watching tests".info
+				resolve()
 
 	# return
 	# ======

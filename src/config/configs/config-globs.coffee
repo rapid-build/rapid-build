@@ -239,6 +239,7 @@ module.exports = (config) ->
 					ePaths = if ePaths then ePaths else excludes[k1][k2]
 					continue unless ePaths
 					continue unless ePaths.length
+					ePaths = pathHelp.formats ePaths
 					glob.src[appOrRb][loc][k1][k2] = v2.concat ePaths
 
 	addExcludeFromDist 'client'
@@ -254,7 +255,7 @@ module.exports = (config) ->
 		nodeModsGlob    = '**/node_modules/**'
 		rbBowerGlob     = "**/#{rbBowerDirName}/**"
 		appBowerGlob    = "**/#{appBowerDirName}/**"
-		appLibsGlob     = "#{appLibsDir}/**"
+		appLibsGlob     = pathHelp.format "#{appLibsDir}/**"
 		extraGlobs      = config.extra.watch.app.client
 		ignoreGlobs     = [nodeModsGlob, rbBowerGlob, appLibsGlob]
 		ignoreGlobs.push appBowerGlob if appBowerDirName isnt rbBowerDirName

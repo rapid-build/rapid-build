@@ -99,10 +99,10 @@ module.exports = (gulp, config) ->
 
 	# inline
 	# ======
-	taskManager.addTask 'inline-js-html-imports:dev',  '/inline/js-html-imports', env: 'dev'
-	taskManager.addTask 'inline-js-html-imports:prod', '/inline/js-html-imports', env: 'prod'
 	taskManager.addTask 'inline-html-assets:dev',      '/inline/html-assets',     env: 'dev'
 	taskManager.addTask 'inline-html-assets:prod',     '/inline/html-assets',     env: 'prod'
+	taskManager.addTask 'inline-js-html-imports:dev',  '/inline/js-html-imports', env: 'dev'
+	taskManager.addTask 'inline-js-html-imports:prod', '/inline/js-html-imports', env: 'prod'
 
 	# manage
 	# ======

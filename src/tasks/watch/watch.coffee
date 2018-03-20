@@ -6,8 +6,8 @@ module.exports = (config, gulp, Task) ->
 	# ========
 	q           = require 'q'
 	path        = require 'path'
-	gWatch      = require 'gulp-watch'
 	log         = require "#{config.req.helpers}/log"
+	watchHelper = require("#{config.req.helpers}/watch") config
 	watchStore  = require("#{config.req.manage}/watch-store") config
 	taskManager = require("#{config.req.manage}/task-manager") config, gulp
 
@@ -68,10 +68,11 @@ module.exports = (config, gulp, Task) ->
 	# event tasks
 	# ===========
 	changeTask = (taskName, file, opts) ->
-		Tasks.browserSync() if opts.bsReload is opts.event # see extra file watches
 		watchOpts = watchFile: file
 		watchOpts.keep = true if opts.keepWatchOpts
-		taskManager.runWatchTask taskName, watchOpts
+		taskManager.runWatchTask(taskName, watchOpts).then ->
+			return unless opts.bsReload is opts.event # see extra file watches
+			Tasks.browserSync()
 
 	addTask = (taskName, file, opts) ->
 		changeTask(taskName, file, opts).then ->
@@ -107,16 +108,37 @@ module.exports = (config, gulp, Task) ->
 	# watches
 	# =======
 	createWatch = (taskName, glob, opts={}) ->
-		defer = q.defer()
-		gOpts = read: false
-		gWatch glob, gOpts, (file) ->
+		defer     = q.defer()
+		watchOpts = watchHelper.getOptions
+			task: taskName
+			delayTasks: ['copy-extra-files']
+
+		watcher      = gulp.watch glob, watchOpts
+		watcherGlobs = watchHelper.getGlobs glob, task: taskName
+		# log.json watcherGlobs, 'WATCHER GLOBS:'
+
+		watcher.on 'add', (_path) ->
+			file = watchHelper.getFileInfo 'add', _path, watcherGlobs
 			events file, taskName, opts
-		.on 'ready', ->
+
+		watcher.on 'change', (_path) ->
+			file = watchHelper.getFileInfo 'change', _path, watcherGlobs
+			events file, taskName, opts
+
+		watcher.on 'unlink', (_path) ->
+			file = watchHelper.getFileInfo 'unlink', _path, watcherGlobs
+			events file, taskName, opts
+
+		watcher.on 'error', (e) ->
+			log.error e, "watcher task #{taskName}"
+
+		watcher.on 'ready', ->
 			loc = opts.loc or 'client'
 			loc = "#{loc} test" if opts.isTest
 			msg = if opts.lang.indexOf('.') isnt -1 then 'file' else 'files'
 			log.task "watching #{loc} #{opts.lang} #{msg}", 'minor'
 			defer.resolve()
+
 		defer.promise
 
 	# API

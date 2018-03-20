@@ -77,7 +77,7 @@ module.exports = (config) ->
 
 		_addReporter: ->
 			@jasmine.clearReporters() # remove default reporter (needed as of jasmine v2.5.2)
-			
+
 			@jasmine.addReporter new Reporter
 				isVerbose: config.test.verbose.jasmine
 				showColors: true

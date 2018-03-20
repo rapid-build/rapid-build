@@ -4,6 +4,7 @@ module.exports = (config) -> # :Object[]
 	# Requires
 	# ========
 	log         = require "#{config.req.helpers}/log"
+	pathHelp    = require "#{config.req.helpers}/path"
 	promiseHelp = require "#{config.req.helpers}/promise"
 
 	# Watches
@@ -43,13 +44,15 @@ module.exports = (config) -> # :Object[]
 			config.glob.dist.app.client.scripts.all
 			config.glob.dist.app.client.styles.all
 			config.glob.dist.app.client.views.all
-			config.spa.dist.path
+			pathHelp.format config.spa.dist.path
 		)
 		jsHtmlImports: [].concat(
 			config.glob.dist.app.client.scripts.all
 			config.glob.dist.app.client.views.all
 		)
-		spa: config.spa.src.path
+		spa: [
+			pathHelp.format config.spa.src.path
+		]
 		src: config.glob.src.app.client
 
 	# Callbacks
