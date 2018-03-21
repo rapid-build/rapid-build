@@ -1,3 +1,20 @@
+## [5.0.2](https://github.com/rapid-build/rapid-build/compare/v5.0.1...v5.0.2) (2018-03-21)
+
+
+### Bug Fixes
+
+* **watcher:** fix watching symlinks specified in build option extra.watch for windows ([c056c22](https://github.com/rapid-build/rapid-build/commit/c056c22))
+
+
+### Minor Features
+
+* **bumped several deps notably:** ([cb2c6d3](https://github.com/rapid-build/rapid-build/commit/cb2c6d3))
+	* browserify@16.1.1
+	* typescript@2.7.2
+	* uglify-js@3.3.16
+
+
+
 ## [5.0.1](https://github.com/rapid-build/rapid-build/compare/v5.0.0...v5.0.1) (2018-02-13)
 
 
