@@ -1,3 +1,14 @@
+## [5.0.3](https://github.com/rapid-build/rapid-build/compare/v5.0.2...v5.0.3) (2018-03-23)
+
+
+### Bug Fixes
+
+* **fix watching:** ([c7fdaa5](https://github.com/rapid-build/rapid-build/commit/c7fdaa5))
+	* server files
+	* client and server tests
+
+
+
 ## [5.0.2](https://github.com/rapid-build/rapid-build/compare/v5.0.1...v5.0.2) (2018-03-21)
 
 

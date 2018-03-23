@@ -1,6 +1,6 @@
 {
 	"name": "rapid-build",
-	"version": "5.0.2",
+	"version": "5.0.3",
 	"build": {
 		"lib": "lib",
 		"tasksPrefix": "rb-"
