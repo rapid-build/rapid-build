@@ -42,11 +42,16 @@ module.exports = (config) ->
 
 	getFileInfo: (_event, _path, globs) ->
 		_path    = pathHelp.format _path
+		filename = path.basename _path
+		extname  = path.extname filename
 		cwd      = pathHelp.format process.cwd()
 		base     = @_getBasepath _path, globs
 		relative = path.relative base, _path
+		relative = pathHelp.format relative
 		file = {
 			event: _event
+			extname
+			filename
 			cwd
 			base
 			path: _path

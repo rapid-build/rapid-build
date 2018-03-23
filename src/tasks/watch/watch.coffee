@@ -6,6 +6,7 @@ module.exports = (config, gulp, Task) ->
 	# ========
 	q           = require 'q'
 	path        = require 'path'
+	pathHelp    = require "#{config.req.helpers}/path"
 	log         = require "#{config.req.helpers}/log"
 	watchHelper = require("#{config.req.helpers}/watch") config
 	watchStore  = require("#{config.req.manage}/watch-store") config
@@ -29,8 +30,8 @@ module.exports = (config, gulp, Task) ->
 		'app'
 
 	getClientOrServer = (file) ->
-		return 'client' if file.path
-			.indexOf(config.src[file.rbAppOrRb].server.scripts.dir) is -1
+		serverDir = pathHelp.format config.src[file.rbAppOrRb].server.scripts.dir
+		return 'client' if file.path.indexOf(serverDir) is -1
 		'server'
 
 	getRelative = (file) ->
@@ -38,31 +39,28 @@ module.exports = (config, gulp, Task) ->
 		return '' if dir is '.'
 		dir
 
-	getFileName = (file) ->
-		fileName = path.basename file.path
-		fileName
-
 	getDistDir = (file, opts={}) ->
 		dir = config.dist[file.rbAppOrRb][file.rbClientOrServer][opts.srcType].dir
 		dir = path.join dir, file.rbRelative
+		dir = pathHelp.format dir
 		dir
 
 	getDistPath = (file, opts={}) ->
-		fileName = file.rbFileName
-		if opts.extDist
-			extSrc   = path.extname fileName
-			fileName = fileName.replace extSrc, ".#{opts.extDist}"
-		dPath = path.join file.rbDistDir, fileName
+		filename = file.filename
+		if opts.extDist # swap src ext with dist ext
+			filename = filename.replace file.extname, ".#{opts.extDist}"
+		dPath = path.join file.rbDistDir, filename
+		dPath = pathHelp.format dPath
 		dPath
 
 	addFileProps = (file, opts={}) -> # must be in order
 		file.rbAppOrRb        = getAppOrRb file
 		file.rbClientOrServer = getClientOrServer file
 		file.rbRelative       = getRelative file
-		file.rbFileName       = getFileName file
 		file.rbDistDir        = getDistDir file, opts
 		file.rbDistPath       = getDistPath file, opts
 		file.rbLog            = opts.logWatch if opts.addLog
+		# log.json file, 'WATCH FILE:'
 		file
 
 	# event tasks
