@@ -6,8 +6,8 @@ module.exports = (config, gulp, Task) ->
 	# ========
 	q          = require 'q'
 	path       = require 'path'
-	sass       = require 'gulp-sass'
 	plumber    = require 'gulp-plumber'
+	sass       = require "#{config.req.plugins}/gulp-sass"
 	taskRunner = require("#{config.req.helpers}/task-runner") config
 	extCss     = '.css'
 
