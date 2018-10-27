@@ -1,3 +1,27 @@
+# [6.0.0](https://github.com/rapid-build/rapid-build/compare/v5.0.3...v6.0.0) (2018-10-27)
+
+
+### Bug Fixes
+
+* **install failure:** ([24508b6](https://github.com/rapid-build/rapid-build/commit/24508b6))
+	* replace node-sass with sass package
+	* node-sass can cause an install failure because it currently depends on python
+
+
+### Features
+
+* **typescript:** bumped to v3.1.3 from v2.7.2 ([76dfd23](https://github.com/rapid-build/rapid-build/commit/76dfd23))
+	* [features](https://git.io/fxXUt 'v3.1.3 features')
+	* [breaking changes](https://git.io/fxXU1 'v3.1.3 breaking changes')
+
+
+### Breaking Changes
+
+Only applies to people using typescript.  
+Bumped typescript to v3.1.3 from v2.7.2 ([breaking changes](https://git.io/fxXU1 'v3.1.3 breaking changes')).
+
+
+
 ## [5.0.3](https://github.com/rapid-build/rapid-build/compare/v5.0.2...v5.0.3) (2018-03-23)
 
 
