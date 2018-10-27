@@ -8,7 +8,6 @@ deploy:
   - provider: npm
     skip_cleanup: true
     email: rapid.build@yahoo.com
-    api_key:
-      secure: ubfQLGtejX+3PyoBPOgDudbKqSQJtOL2tMUUdp3e3DIGTPOLUTUXM/N2I333+6OToIlkBwHsIDzOHLFZEHvlckDfe8hF+KV3KzhXpRKkoZD74IPZ13BzwzdSQLjxfwjMU7Ktu6alEy+2PneyV2U5x5dtB8kNSXjgk9MtcLwdYRU5IM9727MUL6N8rI/+pCHTkXqPvaCMYPO0bSDgVJHbVGP1gsLSm9J0LjhIaFnHnlAYDuBk/95mHpaXVv91hocINy9u7/mUJ+srnC+HO37FigU9td5keHpLileiX8NRhlVDeJu/BFiCVoJ6jPrxGArjvWuadBrOBfVt7uYI3VkAauCz7xHHc50Ahjfw75MIksUs6twCWWa9y8xXHKBj4c7eWOWGZpzpBcu/cbHFWUHneM0zBgYBdi1qnrpaZdrk7XuVxKUOMO0UuAPGJ/Uv18YUOb5tNmv0NBl2XLJOggGD/tXEQX42/W0FXq2qCi274JEARE6d1pXkml9UqZuhnlZeoMjfnFBrT6xGZHMmn32NdN3ANk8d3pirE4rjoRX3IZ9zB7pBigY+zjZk395H8FAd2u5itmR/2Jj2nl0roi65XaVlP03qnvHg60ZE8hAUsgVragM/qL9mMszhlJZPWFo11jmE4qmquTHjOvlah00kEbnF5Cs/M5I0xdY/M93H7hg=
+    api_key: $NPM_TOKEN
     on:
       tags: true
